@@ -1,0 +1,68 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片裁剪及加水印</title>
+    <style>
+    .btn {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #222;
+        border-radius: 2px;
+        background: #fff;
+        text-align: center;
+        cursor: pointer;
+        margin-left: 30px;
+
+    }
+    .btn:hover{
+        background-color: #222;
+        color: #fff;
+    }
+
+    .working-container {
+        display: inline-block;
+    }
+    .preview-container {
+        display: inline-block;
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- 裁剪工作区 -->
+    <div id="J-working-container" class="working-container"></div>
+    <!-- 裁剪后预览容器 -->
+    <div id="J-preview-container" class="preview-container"></div>
+
+    <br>
+    <button id="J-select-btn" class="btn">选择图片</button>
+    <button id="J-down-btn" class="btn">缩小</button>
+    <button id="J-up-btn" class="btn">放大</button>
+    <button id="J-crop-btn" class="btn">裁剪</button>
+    <a id="J-download-btn" class="btn">下载</a>
+
+    <!-- <script src="dist/pipeImg.min.js"></script> -->
+    <script src="src/pipeImg.js"></script>
+    <script>
+        pipeImg({
+            cropSize: 300,
+            watermarkImg: 'https://jovysun.github.io/assets/favicon-32x32.ico',
+            // watermarkImg: 'assets/favicon.ico',
+            watermarkFillText: '2018',
+            onValidateFile: function(oFile){
+                console.log(oFile);
+                // return false;
+            },
+            onCropped: function(data){
+                console.log(data);
+            }
+
+        });
+    </script>
+</body>
+
+</html>
