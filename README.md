@@ -1,6 +1,6 @@
 # pipeImg
 > 关键词：裁剪 水印 HTML5
-## 出发点
+## 前言
 之前网页裁剪都是用flash实现，随着升级改造及现在只要求支持IE11以上的现代浏览器，因此考虑用HTML5来实现。
 
 ## 命令执行
@@ -26,15 +26,6 @@ gulp build
         watermarkFillText: 'UED'
     });
 </script>
-```
-webpack打包使用：
-```
-import './pipeImg.min.js';
-
-pipeImg({
-  cropSize: 300,
-  watermarkFillText: 'UED'
-});
 ```
 
 使用默认参数示例
@@ -63,19 +54,20 @@ pipeImg({
 3, 参数介绍：
 ```
 // 选择图片按钮
-selectBtn: document.getElementById('J-select-btn'),
+selectBtn: document.querySelector('#J-select-btn'),
 // 放大按钮
-upBtn: document.getElementById('J-up-btn'),
+upBtn: document.querySelector('#J-up-btn'),
 // 缩小按钮
-downBtn: document.getElementById('J-down-btn'),
+downBtn: document.querySelector('#J-down-btn'),
+
 // 裁剪按钮
-cropBtn: document.getElementById('J-crop-btn'),
+cropBtn: document.querySelector('#J-crop-btn'),
 // 下载按钮，必须为a标签
-downloadBtn: document.getElementById('J-download-btn'),
+downloadBtn: document.querySelector('#J-download-btn'),
 // 工作区容器
-workingContainer: document.getElementById('J-working-container'),
+workingContainer: document.querySelector('#J-working-container'),
 // 预览区容器
-previewContainer: document.getElementById('J-preview-container'),
+previewContainer: document.querySelector('#J-preview-container'),
 
 // 放大缩小幅度
 scaleStep: 10,
