@@ -1,4 +1,4 @@
-(function(window, document){
+!function(window, doc){
 
   function pipeImg(props) {
 
@@ -100,43 +100,8 @@
     // 展示的宽高
     sourceW1 =0,
     sourceH1 = 0;
-
-    let cacheSource;
-    let rotateCount = 0;
-
-    function getRotateNum(direction) {
-      let rotateNum = 0;
-      rotateCount += direction;
-      if (rotateCount > 3 || rotateCount < -3) {
-        rotateCount = 0;
-      }
-      if (rotateCount < 0) {
-        rotateNum = 4 + rotateCount;
-      } else {
-        rotateNum = rotateCount;
-      }
-      return rotateNum;
-    }
   
-
-    function _loadImage(data, callback) {
-      var image = new Image();
-      image.src = data;
-      image.onload = function () {
-        callback(image);
-      };
-      image.onerror = function () {
-        console.log('Error: image error!');
-      };
-    }
-    function _getCanvas(width, height) {
-      var canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      return canvas;
-    }
-
-
+  
     // 选择的源图片加载完初始化相关参数
     function loadHandler() {
       sourceW0 = sourceImgEle.naturalWidth;
@@ -173,60 +138,6 @@
       sourceImgEle.style.width = sourceW1 + 'px';
       sourceImgEle.style.height = sourceH1 + 'px';
     };
-
-    // img同drawImage第一个参数;rotateNum: 0,1,2,3，分别对应旋转的四个角度方向;imgType: 保存图片类型；cb回调函数，传参destImgData,w,h；
-    function rotate(src, rotateNum, imgType, cb){
-
-      _loadImage(src, function(img) {
-        let rotateDeg = rotateNum * 90;
-        let sourceW0 = img.naturalWidth;
-        let sourceH0 = img.naturalHeight;
-  
-        let max = Math.max(sourceW0, sourceH0);
-        let tempCvs = _getCanvas(max, max),
-          tempCtx = tempCvs.getContext('2d');
-   
-        tempCtx.translate(max/2, max/2);
-        tempCtx.rotate(rotateDeg * Math.PI / 180);
-        tempCtx.translate(-max/2, -max/2);
-        tempCtx.drawImage(img, 0, 0);
-  
-  
-        let w = sourceW0, h = sourceH0, sx = 0, sy = 0;
-        if (rotateNum === 1) {
-          w = sourceH0;
-          h = sourceW0;
-          sx = max - w;
-          sy = 0;
-  
-        } else if (rotateNum === 2) {
-          w = sourceW0;
-          h = sourceH0;
-          sx = max - w;
-          sy = max - h;
-        } else if (rotateNum === 3) {
-          w = sourceH0;
-          h = sourceW0;
-          sx = 0;
-          sy = max - h;     
-        } else {
-          w = sourceW0;
-          h = sourceH0;
-          sx = 0;
-          sy = 0;
-        }
-  
-        let cvs = _getCanvas(w, h);
-        ctx = cvs.getContext('2d');
-        ctx.drawImage(tempCvs, sx, sy, w, h, 0, 0, w, h);
-  
-        let destImgData = cvs.toDataURL(imgType);
-        cb && typeof cb === 'function' && cb(destImgData, w, h);
-        
-        // previewContainer.appendChild(cvs);
-      })
-      
-    }
   
     // 裁剪
     function crop() {
@@ -239,8 +150,10 @@
         sHeight;
       sWidth = sHeight = cropSize / sourceH1 * sourceH0;
 
-      let destCanvas = _getCanvas(cropSize, cropSize),
+      let destCanvas = document.createElement('canvas'),
         dContext = destCanvas.getContext('2d');
+  
+      destCanvas.width = destCanvas.height = cropSize;
 
       dContext.drawImage(sourceImgEle, sx, sy, sWidth, sHeight, 0, 0, cropSize, cropSize);
 
@@ -272,6 +185,7 @@
         destImgData();
       }
         
+  
       function destImgData(){
         let destImgData = destCanvas.toDataURL(cropImgType);
   
@@ -340,10 +254,10 @@
                 sourceImgEle.src = this.result;
                 sourceImgEle.style.width = 'auto';
                 sourceImgEle.style.height = 'auto';
-
-                cacheSource = this.result;
               }
             }
+
+
 
           }
         }, false);
@@ -357,21 +271,7 @@
       upBtn.addEventListener('click', function () {
         scaleImg(1);
       }, false)
-      cropBtn.addEventListener('click', crop, false);
-      document.querySelector('#J-clockwise-btn').addEventListener('click', function() {
-        let rotateNum = getRotateNum(1);
-        // sourceImgEle.style.transform = `rotate(${rotateNum * 90}deg)`;
-        rotate(cacheSource, rotateNum, cropImgType, function(data, w, h){
-          sourceImgEle.src = data;
-        })
-      }, false);
-      document.querySelector('#J-anticlockwise-btn').addEventListener('click', function() {
-        let rotateNum = getRotateNum(-1);
-        // sourceImgEle.style.transform = `rotate(${rotateNum * 90}deg)`;
-        rotate(cacheSource, rotateNum, cropImgType, function(data, w, h){
-          sourceImgEle.src = data;
-        })
-      }, false);
+      cropBtn.addEventListener('click', crop, false)
   
     }
   
@@ -438,5 +338,6 @@
 
   
   if(typeof window !== 'undefined') window.pipeImg = pipeImg;
+  if(typeof exports !== 'undefined') exports.pipeImg = pipeImg;
   
-})(window, document);
+}(window, document);

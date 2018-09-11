@@ -32,7 +32,7 @@
 </head>
 
 <body>
-
+    <!-- <img src="assets/Koala.jpg" id="myPic"> -->
     <!-- 裁剪工作区 -->
     <div id="J-working-container" class="working-container"></div>
     <!-- 裁剪后预览容器 -->
@@ -40,6 +40,10 @@
 
     <br>
     <button id="J-select-btn" class="btn">选择图片</button>
+
+    <button id="J-anticlockwise-btn" class="btn">逆时针旋转</button>
+    <button id="J-clockwise-btn" class="btn">顺时针旋转</button> 
+
     <button id="J-down-btn" class="btn">缩小</button>
     <button id="J-up-btn" class="btn">放大</button> 
     <button id="J-crop-btn" class="btn">裁剪</button>
@@ -53,11 +57,11 @@
             // watermarkImg: 'assets/favicon.ico',
             watermarkFillText: '2018',
             onValidateFile: function(oFile){
-                console.log(oFile);
+                // console.log(oFile);
                 // return false;
             },
             onCropped: function(data){
-                console.log(data);
+                // console.log(data);
             }
 
         });
