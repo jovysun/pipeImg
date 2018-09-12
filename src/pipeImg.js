@@ -216,8 +216,9 @@
           sy = 0;
         }
   
-        let cvs = _getCanvas(w, h);
-        ctx = cvs.getContext('2d');
+        let cvs = _getCanvas(w, h),
+          ctx = cvs.getContext('2d');
+          
         ctx.drawImage(tempCvs, sx, sy, w, h, 0, 0, w, h);
   
         let destImgData = cvs.toDataURL(imgType);
