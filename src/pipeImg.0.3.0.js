@@ -149,7 +149,7 @@ let defaultProps = {
   // 裁剪区边长，要求是正方形
   cropSize: 300,
   // 裁剪后的图片类型
-  mime: 'image/png',
+  cropImgType: 'image/png',
   // 遮挡区颜色
   borderColor: 'rgba(0, 0, 0, 0.8)',
 
@@ -202,7 +202,7 @@ class PipeImg {
     this.scaleStep = this.options.scaleStep;
     this.containerSize = this.options.containerSize;
     this.cropSize = this.options.cropSize <= this.containerSize ? this.options.cropSize : this.containerSize;
-    this.mime = this.options.mime;
+    this.cropImgType = this.options.cropImgType;
 
     this.borderWidth = (this.containerSize - this.cropSize) / 2;
     this.borderColor = this.options.borderColor;
@@ -308,8 +308,8 @@ class PipeImg {
 
       ctx.drawImage(tempCvs, sx, sy, w, h, 0, 0, w, h);
 
-      let data = cvs.toDataURL(imgType);
-      cb && typeof cb === 'function' && cb(data, w, h);
+      let destImgData = cvs.toDataURL(imgType);
+      cb && typeof cb === 'function' && cb(destImgData, w, h);
       
       // previewContainer.appendChild(cvs);
     })
@@ -359,7 +359,7 @@ class PipeImg {
     // 提供下载，Safari不支持
     let isSupportDownload = 'download' in document.createElement('a');
     if (isSupportDownload && this.$downloadBtn) {
-      this.$downloadBtn.download = new Date().valueOf() + '_dest.'+ this.mime.substr(this.mime.indexOf('image/')+6);
+      this.$downloadBtn.download = new Date().valueOf() + '_dest.'+ this.cropImgType.substr(this.cropImgType.indexOf('image/')+6);
       this.$downloadBtn.href = data;
     } 
   }
@@ -381,7 +381,7 @@ class PipeImg {
 
     this.watermark(destCanvas, (cvs) => {
       destCanvas = cvs;
-      let data = destCanvas.toDataURL(this.mime);
+      let data = destCanvas.toDataURL(this.cropImgType);
   
       // 提供预览
       this.preview(data);
@@ -487,14 +487,14 @@ class PipeImg {
     this.$clockwiseBtn.addEventListener('click', () => {
       let rotateNum = this.getRotateNum(1);
       // sourceImgEle.style.transform = `rotate(${rotateNum * 90}deg)`;
-      this.rotate(this.cacheSource, rotateNum, this.mime, (data, w, h) => {
+      this.rotate(this.cacheSource, rotateNum, this.cropImgType, (data, w, h) => {
         this.sourceImgEle.src = data;
       })
     }, false);
     this.$anticlockwiseBtn.addEventListener('click', () => {
       let rotateNum = this.getRotateNum(-1);
       // sourceImgEle.style.transform = `rotate(${rotateNum * 90}deg)`;
-      this.rotate(this.cacheSource, rotateNum, this.mime, (data, w, h) => {
+      this.rotate(this.cacheSource, rotateNum, this.cropImgType, (data, w, h) => {
         this.sourceImgEle.src = data;
       })
     }, false);

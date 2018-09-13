@@ -47,15 +47,29 @@
     <button id="J-down-btn" class="btn">缩小</button>
     <button id="J-up-btn" class="btn">放大</button> 
     <button id="J-crop-btn" class="btn">裁剪</button>
-    <a id="J-download-btn" class="btn">下载</a>
+    <!-- <a id="J-download-btn" class="btn">下载</a> -->
 
-    <script src="dist/pipeImg.min.js"></script>
+    <script src="dist/pipeImg.js"></script>
     <!-- <script src="src/pipeImg.js"></script> -->
     <script>
-        pipeImg({
+        // pipeImg({
+        //     cropSize: 300,
+        //     // watermarkImg: 'assets/favicon.ico',
+        //     watermarkFillText: '2018',
+        //     onValidateFile: function(oFile){
+        //         // console.log(oFile);
+        //         // return false;
+        //     },
+        //     onCropped: function(data){
+        //         // console.log(data);
+        //     }
+
+        // });
+
+        new PipeImg({
             cropSize: 300,
-            // watermarkImg: 'assets/favicon.ico',
-            watermarkFillText: '2018',
+            // markIcon: 'assets/favicon.ico',
+            markText: '2018',
             onValidateFile: function(oFile){
                 // console.log(oFile);
                 // return false;

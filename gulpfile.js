@@ -18,6 +18,19 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('dist'));
 });
 
+gulp.task('babel', function() {
+    return gulp.src('src/*.js')
+        .pipe(babel())
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('uglify', function() {
+    return gulp.src('dist/*.js')
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'));
+});
+
 gulp.task('clean', function() {
     return gulp.src('dist/*.js', {read: false})
         .pipe(clean())
@@ -26,7 +39,7 @@ gulp.task('clean', function() {
 
 //监控改动并自动刷新任务;
 gulp.task('watcher', function() {
-    gulp.watch('src/*.js', ['scripts']);
+    gulp.watch('src/*.js', ['babel']);
     gulp.watch(['dist/*.js', '*.html']).on('change', reload);
 });
 
