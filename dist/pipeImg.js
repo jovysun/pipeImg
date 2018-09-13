@@ -148,12 +148,13 @@ var defaultProps = {
 
   // 工作区边长
   containerSize: 500,
-  // 裁剪区边长，要求是正方形
-  cropSize: 300,
+  // 裁剪区边长
+  cropW: 300,
+  cropH: 200,
   // 裁剪后的图片类型
   mime: 'image/png',
   // 遮挡区颜色
-  borderColor: 'rgba(0, 0, 0, 0.8)',
+  maskColor: 'rgba(0, 0, 0, 0.8)',
 
   // 水印相关参数，若watermarkImg存在则用图片水印，否则用文字水印。
   // 是否添加水印
@@ -200,11 +201,11 @@ var PipeImg = function () {
 
     this.scaleStep = this.options.scaleStep;
     this.containerSize = this.options.containerSize;
-    this.cropSize = this.options.cropSize <= this.containerSize ? this.options.cropSize : this.containerSize;
+    this.cropW = this.options.cropW <= this.containerSize ? this.options.cropW : this.containerSize;
+    this.cropH = this.options.cropH <= this.containerSize ? this.options.cropH : this.containerSize;
     this.mime = this.options.mime;
 
-    this.borderWidth = (this.containerSize - this.cropSize) / 2;
-    this.borderColor = this.options.borderColor;
+    this.maskColor = this.options.maskColor;
 
     this.hasMark = this.options.hasMark;
     this.markIcon = this.options.markIcon;
@@ -218,17 +219,6 @@ var PipeImg = function () {
     this.onCropped = this.options.onCropped;
 
     // 全局变量
-    this.sourceImgEle = undefined;
-    // 宽高比例
-    this.sourceRatio = 0;
-    // 自然宽高
-    this.sourceW0 = 0;
-    this.sourceH0 = 0;
-    // 展示的宽高
-    this.sourceW1 = 0;
-    this.sourceH1 = 0;
-
-    this.cacheSource = '';
     this.rotateCount = 0;
 
     this.init();
@@ -248,18 +238,6 @@ var PipeImg = function () {
         rotateNum = this.rotateCount;
       }
       return rotateNum;
-    }
-
-    // 放大，缩小，约定up值为1或者-1，表示放大，缩小
-
-  }, {
-    key: 'scaleImg',
-    value: function scaleImg(scaleUp) {
-      this.sourceH1 += this.scaleStep * scaleUp;
-      this.sourceW1 = this.sourceH1 * this.sourceRatio;
-
-      this.sourceImgEle.style.width = this.sourceW1 + 'px';
-      this.sourceImgEle.style.height = this.sourceH1 + 'px';
     }
 
     // img同drawImage第一个参数;rotateNum: 0,1,2,3，分别对应旋转的四个角度方向;imgType: 保存图片类型；cb回调函数，传参destImgData,w,h；
@@ -331,10 +309,10 @@ var PipeImg = function () {
         if (this.markIcon) {
           loadImage(this.markIcon, function (img) {
             if (!_this.markX) {
-              _this.markX = _this.cropSize - img.naturalWidth;
+              _this.markX = _this.cropW - img.naturalWidth;
             }
             if (!_this.markY) {
-              _this.markY = _this.cropSize - img.naturalHeight;
+              _this.markY = _this.cropH - img.naturalHeight;
             }
             dContext.drawImage(img, _this.markX, _this.markY);
             cb(targetImg);
@@ -344,10 +322,10 @@ var PipeImg = function () {
           dContext.font = this.markFont;
           dContext.fillStyle = this.markStyle;
           if (!this.markX) {
-            this.markX = this.cropSize - 10;
+            this.markX = this.cropW - 10;
           }
           if (!this.markY) {
-            this.markY = this.cropSize - 10;
+            this.markY = this.cropH - 10;
           }
           dContext.fillText(this.markText, this.markX, this.markY);
           cb(targetImg);
@@ -376,26 +354,17 @@ var PipeImg = function () {
 
   }, {
     key: 'crop',
-    value: function crop() {
+    value: function crop(img, sx, sy, sWidth, sHeight, x, y, width, height) {
       var _this2 = this;
 
-      if (!this.sourceImgEle.src) return;
+      if (!img) return;
 
-      // 绘制要用图片的自然尺寸
-      var sy = (this.borderWidth - this.sourceImgEle.offsetTop) / this.sourceH1 * this.sourceH0,
-          sx = (this.borderWidth - this.sourceImgEle.offsetLeft) / this.sourceW1 * this.sourceW0,
-          sWidth = void 0,
-          sHeight = void 0;
-      sWidth = sHeight = this.cropSize / this.sourceH1 * this.sourceH0;
-
-      var destCanvas = getCanvas(this.cropSize, this.cropSize),
+      var destCanvas = getCanvas(width, height),
           dContext = destCanvas.getContext('2d');
+      dContext.drawImage(img, sx, sy, sWidth, sHeight, x, y, width, height);
 
-      dContext.drawImage(this.sourceImgEle, sx, sy, sWidth, sHeight, 0, 0, this.cropSize, this.cropSize);
-
-      this.watermark(destCanvas, function (cvs) {
-        destCanvas = cvs;
-        var data = destCanvas.toDataURL(_this2.mime);
+      this.watermark(destCanvas, function (resultCvs) {
+        var data = resultCvs.toDataURL(_this2.mime);
 
         // 提供预览
         _this2.preview(data);
@@ -407,44 +376,20 @@ var PipeImg = function () {
         _this2.onCropped(data);
       });
     }
-
-    // 选择的源图片加载完初始化相关参数
-
-  }, {
-    key: 'loadHandler',
-    value: function loadHandler() {
-      var self = this;
-      self.sourceW0 = self.sourceImgEle.naturalWidth;
-      self.sourceH0 = self.sourceImgEle.naturalHeight;
-      self.sourceRatio = self.sourceW0 / self.sourceH0;
-
-      var top = 0,
-          left = 0;
-
-      if (self.sourceRatio >= 1) {
-
-        self.sourceW1 = self.cropSize * self.sourceRatio;
-        self.sourceH1 = self.cropSize;
-
-        top = self.borderWidth;
-        left = (self.containerSize - self.sourceW1) / 2;
-      } else {
-
-        self.sourceH1 = self.cropSize / self.sourceRatio;
-        self.sourceW1 = self.cropSize;
-
-        left = self.borderWidth;
-        top = (self.containerSize - self.sourceH1) / 2;
-      }
-
-      self.sourceImgEle.style.cssText = 'position: absolute;width: ' + self.sourceW1 + 'px;height: ' + self.sourceH1 + 'px;top: ' + top + 'px;left: ' + left + 'px;';
-    }
   }, {
     key: 'init',
     value: function init() {
       var _this3 = this;
 
-      var self = this;
+      var sourceImgEle = void 0,
+          sourceW0 = void 0,
+          sourceH0 = void 0,
+          sourceW1 = void 0,
+          sourceH1 = void 0,
+          cacheSource = void 0,
+          borderWidth = (this.containerSize - this.cropW) / 2,
+          borderHeight = (this.containerSize - this.cropH) / 2;
+
       if (this.onCropped && typeof this.onCropped != 'function') {
         throw new Error('onCropped必须为函数');
       }
@@ -458,53 +403,100 @@ var PipeImg = function () {
       var workingAreaEle = this.$workingContainer.querySelector('.working-area');
       workingAreaEle.style.cssText = 'position: relative;overflow: hidden;width: ' + this.containerSize + 'px;height: ' + this.containerSize + 'px;';
 
-      this.sourceImgEle = this.$workingContainer.querySelector('img');
-      this.sourceImgEle.style.position = 'absolute';
+      sourceImgEle = this.$workingContainer.querySelector('img');
+      sourceImgEle.style.position = 'absolute';
 
       var maskEle = this.$workingContainer.querySelector('.mask');
-      maskEle.style.cssText = 'position: absolute;width: ' + this.cropSize + 'px;height: ' + this.cropSize + 'px;border: ' + this.borderWidth + 'px solid ' + this.borderColor + ';';
+      maskEle.style.cssText = 'position: absolute;width: ' + this.cropW + 'px;height: ' + this.cropH + 'px;border-left: ' + borderWidth + 'px solid ' + this.maskColor + ';border-right: ' + borderWidth + 'px solid ' + this.maskColor + ';border-top: ' + borderHeight + 'px solid ' + this.maskColor + ';border-bottom: ' + borderHeight + 'px solid ' + this.maskColor + ';';
 
-      drag(this.$workingContainer, this.sourceImgEle);
+      drag(this.$workingContainer, sourceImgEle);
 
-      this.sourceImgEle.addEventListener('load', function () {
-        _this3.loadHandler();
+      // 选择的源图片加载完初始化相关参数
+      var loadHandler = function loadHandler() {
+        sourceW0 = sourceImgEle.naturalWidth;
+        sourceH0 = sourceImgEle.naturalHeight;
+        var sourceRatio = sourceW0 / sourceH0;
+
+        var top = 0,
+            left = 0;
+
+        if (sourceRatio > 1) {
+          //宽大于高
+
+          sourceW1 = _this3.containerSize;
+          sourceH1 = sourceW1 / sourceRatio;
+
+          top = (_this3.containerSize - sourceH1) / 2;
+          left = 0;
+        } else {
+
+          sourceH1 = _this3.containerSize;
+          sourceW1 = sourceH1 * sourceRatio;
+
+          left = (_this3.containerSize - sourceW1) / 2;
+          top = 0;
+        }
+
+        sourceImgEle.style.cssText = 'position: absolute;width: ' + sourceW1 + 'px;height: ' + sourceH1 + 'px;top: ' + top + 'px;left: ' + left + 'px;';
+      };
+
+      sourceImgEle.addEventListener('load', function () {
+        loadHandler();
       }, false);
 
       // 按钮事件绑定
       this.$selectBtn.addEventListener('click', function () {
 
         chooseFile(_this3.$selectBtn, function (data) {
-          self.sourceImgEle.src = data;
-          self.sourceImgEle.style.width = 'auto';
-          self.sourceImgEle.style.height = 'auto';
+          sourceImgEle.src = data;
+          sourceImgEle.style.width = 'auto';
+          sourceImgEle.style.height = 'auto';
 
-          self.cacheSource = data;
+          cacheSource = data;
         });
       }, false);
 
+      // 放大，缩小，约定up值为1或者-1，表示放大，缩小
+      var scaleImg = function scaleImg(scaleUp) {
+        var sourceRatio = sourceW0 / sourceH0;
+        sourceH1 += _this3.scaleStep * scaleUp;
+        sourceW1 = sourceH1 * sourceRatio;
+
+        sourceImgEle.style.width = sourceW1 + 'px';
+        sourceImgEle.style.height = sourceH1 + 'px';
+      };
+
       this.$downBtn.addEventListener('click', function () {
-        _this3.scaleImg(-1);
+        scaleImg(-1);
       }, false);
       this.$upBtn.addEventListener('click', function () {
-        _this3.scaleImg(1);
+        scaleImg(1);
       }, false);
 
       this.$cropBtn.addEventListener('click', function () {
-        _this3.crop();
+
+        // 绘制要用图片的自然尺寸
+        var scaleRatio = sourceH0 / sourceH1;
+        var sy = (borderHeight - sourceImgEle.offsetTop) * scaleRatio,
+            sx = (borderWidth - sourceImgEle.offsetLeft) * scaleRatio,
+            sWidth = _this3.cropW * scaleRatio,
+            sHeight = _this3.cropH * scaleRatio;
+
+        _this3.crop(sourceImgEle, sx, sy, sWidth, sHeight, 0, 0, _this3.cropW, _this3.cropH);
       }, false);
 
       this.$clockwiseBtn.addEventListener('click', function () {
         var rotateNum = _this3.getRotateNum(1);
         // sourceImgEle.style.transform = `rotate(${rotateNum * 90}deg)`;
-        _this3.rotate(_this3.cacheSource, rotateNum, _this3.mime, function (data, w, h) {
-          _this3.sourceImgEle.src = data;
+        _this3.rotate(cacheSource, rotateNum, _this3.mime, function (data, w, h) {
+          sourceImgEle.src = data;
         });
       }, false);
       this.$anticlockwiseBtn.addEventListener('click', function () {
         var rotateNum = _this3.getRotateNum(-1);
         // sourceImgEle.style.transform = `rotate(${rotateNum * 90}deg)`;
-        _this3.rotate(_this3.cacheSource, rotateNum, _this3.mime, function (data, w, h) {
-          _this3.sourceImgEle.src = data;
+        _this3.rotate(cacheSource, rotateNum, _this3.mime, function (data, w, h) {
+          sourceImgEle.src = data;
         });
       }, false);
     }
