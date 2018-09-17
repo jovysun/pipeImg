@@ -7,55 +7,49 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //拖拽
-function drag(bar, target, callback) {
-  if (!bar || !target) return false;
+function drag(moveElement, dragBar, cb) {
+  if (!moveElement) return;
 
-  var getStyle = function getStyle(oElement, sName) {
-    return oElement.currentStyle ? oElement.currentStyle[sName] : getComputedStyle(oElement, null)[sName];
-  };
-
-  var left = getStyle(target, 'left'),
-      top = getStyle(target, 'top'),
-      x0,
-      y0,
-      draging = false;
+  var draging = false,
+      x0 = void 0,
+      y0 = void 0,
+      mLeft0 = void 0,
+      mTop0 = void 0,
+      mLeft1 = void 0,
+      mTop1 = void 0;
 
   var mousedownHandler = function mousedownHandler(e) {
-    var e = e || window.event;
+    e = e || window.event;
     x0 = e.clientX;
     y0 = e.clientY;
+    var mRect = moveElement.getBoundingClientRect();
+    mLeft0 = mRect.left;
+    mTop0 = mRect.top;
+
     draging = true;
   };
-
   var mousemoveHandler = function mousemoveHandler(e) {
-    var e = e || window.event;
-
+    e = e || window.event;
     if (draging) {
       var x1 = e.clientX,
           y1 = e.clientY;
-      var x = x1 - x0,
-          y = y1 - y0;
+      mLeft1 = x1 - x0 + mLeft0;
+      mTop1 = y1 - y0 + mTop0;
 
-      target.style.left = parseInt(left) + x + 'px';
-      target.style.top = parseInt(top) + y + 'px';
+      moveElement.style.left = mLeft1;
+      moveElement.style.top = mTop1;
 
-      if (typeof callback == 'function') {
-        callback((parseInt(left) || 0) + x, (parseInt(top) || 0) + y);
-      }
-
-      return false;
+      typeof cb === 'function' && cb(mLeft1, mTop1);
     }
   };
-
   var mouseupHandler = function mouseupHandler(e) {
     draging = false;
-
-    left = getStyle(target, 'left');
-    top = getStyle(target, 'top');
   };
 
   if (window.addEventListener) {
-    bar.addEventListener('mousedown', mousedownHandler, false);
+    dragBar = dragBar || document;
+
+    dragBar.addEventListener('mousedown', mousedownHandler, false);
     document.addEventListener('mousemove', mousemoveHandler, false);
     document.addEventListener('mouseup', mouseupHandler, false);
   }
@@ -65,13 +59,13 @@ function selector(el) {
   return typeof el === "string" ? document.querySelector(el) : el;
 }
 // 加载图片
-function loadImage(src, callback) {
+function loadImage(src, cb) {
   var image = new Image();
   // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
   image.setAttribute('crossorigin', 'anonymous');
   image.src = src;
   image.onload = function () {
-    callback(image);
+    typeof cb === 'function' && cb(image);
   };
   image.onerror = function () {
     console.log('Error: image error!');
@@ -97,13 +91,13 @@ function chooseFile(btn, cb, validFileCallback) {
     $file = $btn.querySelector('input[type=file]');
   }
 
-  $file.addEventListener('change', function () {
+  $file.addEventListener('change', function (e) {
     if (this.files.length > 0) {
 
       var oFile = this.files[0];
 
       var validFile = true;
-      if (validFileCallback && typeof validFileCallback === 'function' && validFileCallback(oFile) === false) {
+      if (typeof validFileCallback === 'function' && validFileCallback(oFile) === false) {
         validFile = false;
       }
 
@@ -112,18 +106,25 @@ function chooseFile(btn, cb, validFileCallback) {
         reader.readAsDataURL(oFile);
 
         reader.onload = function () {
-          cb && typeof cb === 'function' && cb(this.result);
+          typeof cb === 'function' && cb(this.result);
         };
+      } else {
+        console.log('onValidateFile function return false');
       }
     }
   }, false);
+
+  // 阻止冒泡导致两次触发selectBtn
+  $file.addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
 
   $file.click();
 }
 
 // ************************************************************************************
 // 默认配置参数
-var defaultProps = {
+var defaults = {
   // 选择图片按钮
   selectBtn: '#J-select-btn',
   // 放大按钮
@@ -150,7 +151,7 @@ var defaultProps = {
   containerSize: 500,
   // 裁剪区边长
   cropW: 300,
-  cropH: 200,
+  cropH: 300,
   // 裁剪后的图片类型
   mime: 'image/png',
   // 遮挡区颜色
@@ -176,7 +177,6 @@ var defaultProps = {
   // 上传源图片回调函数
   onValidateFile: function onValidateFile(oFile) {
     // oFile的属性值示例：name:"brandPublicty1.jpg" size:134476 type:"image/jpeg"
-    return true;
   },
   // 裁剪完成回调函数
   onCropped: function onCropped(destImgData) {}
@@ -187,7 +187,7 @@ var PipeImg = function () {
   function PipeImg(options) {
     _classCallCheck(this, PipeImg);
 
-    this.options = _extends(defaultProps, options);
+    this.options = _extends(defaults, options);
 
     this.$selectBtn = selector(this.options.selectBtn);
     this.$upBtn = selector(this.options.upBtn);
@@ -291,15 +291,17 @@ var PipeImg = function () {
         ctx.drawImage(tempCvs, sx, sy, w, h, 0, 0, w, h);
 
         var data = cvs.toDataURL(imgType);
-        cb && typeof cb === 'function' && cb(data, w, h);
+        typeof cb === 'function' && cb(data, w, h);
 
         // previewContainer.appendChild(cvs);
       });
     }
   }, {
-    key: 'watermark',
-    value: function watermark(targetImg, cb) {
+    key: 'addMark',
+    value: function addMark(targetImg, cb) {
       var _this = this;
+
+      if (typeof cb !== 'function') return false;
 
       if (targetImg.nodeName.toLowerCase() !== 'canvas') {
         targetImg = getCanvas(targetImg.width, targetImg.height);
@@ -363,7 +365,7 @@ var PipeImg = function () {
           dContext = destCanvas.getContext('2d');
       dContext.drawImage(img, sx, sy, sWidth, sHeight, x, y, width, height);
 
-      this.watermark(destCanvas, function (resultCvs) {
+      this.addMark(destCanvas, function (resultCvs) {
         var data = resultCvs.toDataURL(_this2.mime);
 
         // 提供预览
@@ -373,7 +375,7 @@ var PipeImg = function () {
 
         // TODO 直接把base64格式图片数据传到后台
         // TODO 作为文件形式用FormData提交到后台 
-        _this2.onCropped(data);
+        typeof _this2.onCropped === 'function' && _this2.onCropped(data);
       });
     }
   }, {
@@ -390,13 +392,6 @@ var PipeImg = function () {
           borderWidth = (this.containerSize - this.cropW) / 2,
           borderHeight = (this.containerSize - this.cropH) / 2;
 
-      if (this.onCropped && typeof this.onCropped != 'function') {
-        throw new Error('onCropped必须为函数');
-      }
-      if (this.onValidateFile && typeof this.onValidateFile != 'function') {
-        throw new Error('onValidateFile必须为函数');
-      }
-
       var workingAreaHtml = '<div class="working-area"><img><div class="mask"></div></div>';
       this.$workingContainer.innerHTML = workingAreaHtml;
 
@@ -409,7 +404,7 @@ var PipeImg = function () {
       var maskEle = this.$workingContainer.querySelector('.mask');
       maskEle.style.cssText = 'position: absolute;width: ' + this.cropW + 'px;height: ' + this.cropH + 'px;border-left: ' + borderWidth + 'px solid ' + this.maskColor + ';border-right: ' + borderWidth + 'px solid ' + this.maskColor + ';border-top: ' + borderHeight + 'px solid ' + this.maskColor + ';border-bottom: ' + borderHeight + 'px solid ' + this.maskColor + ';';
 
-      drag(this.$workingContainer, sourceImgEle);
+      drag(sourceImgEle, this.$workingContainer);
 
       // 选择的源图片加载完初始化相关参数
       var loadHandler = function loadHandler() {
@@ -440,20 +435,17 @@ var PipeImg = function () {
         sourceImgEle.style.cssText = 'position: absolute;width: ' + sourceW1 + 'px;height: ' + sourceH1 + 'px;top: ' + top + 'px;left: ' + left + 'px;';
       };
 
-      sourceImgEle.addEventListener('load', function () {
-        loadHandler();
-      }, false);
+      sourceImgEle.addEventListener('load', loadHandler, false);
 
       // 按钮事件绑定
-      this.$selectBtn.addEventListener('click', function () {
-
+      this.$selectBtn.addEventListener('click', function (e) {
         chooseFile(_this3.$selectBtn, function (data) {
           sourceImgEle.src = data;
           sourceImgEle.style.width = 'auto';
           sourceImgEle.style.height = 'auto';
 
           cacheSource = data;
-        });
+        }, _this3.onValidateFile);
       }, false);
 
       // 放大，缩小，约定up值为1或者-1，表示放大，缩小

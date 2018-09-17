@@ -1,57 +1,43 @@
 //拖拽
-function drag(bar, target, callback) {
-  if (!bar || !target) return false
+function drag(moveElement, dragBar, cb) {
+  if(!moveElement) return;
 
-  var getStyle = function (oElement, sName) {
-    return oElement.currentStyle ?
-      oElement.currentStyle[sName] :
-      getComputedStyle(oElement, null)[sName]
-  }
+  let draging = false, x0, y0, mLeft0, mTop0, mLeft1, mTop1;
 
-  var left = getStyle(target, 'left'),
-    top = getStyle(target, 'top'),
-    x0,
-    y0,
-    draging = false
+  let mousedownHandler = (e) => {
+    e = e || window.event;
+    x0 = e.clientX;
+    y0 = e.clientY;
+    let mRect = moveElement.getBoundingClientRect();
+    mLeft0 = mRect.left;
+    mTop0 = mRect.top;
 
-  var mousedownHandler = function (e) {
-    var e = e || window.event
-    x0 = e.clientX
-    y0 = e.clientY
-    draging = true
-  }
+    draging = true;
 
-  var mousemoveHandler = function (e) {
-    var e = e || window.event
-
+  };
+  let mousemoveHandler = (e) => {
+    e = e || window.event;
     if (draging) {
-      var x1 = e.clientX,
-        y1 = e.clientY
-      var x = x1 - x0,
-        y = y1 - y0
+      let x1 = e.clientX, y1 = e.clientY;
+      mLeft1 = x1 - x0 + mLeft0;
+      mTop1 = y1 - y0 + mTop0;
 
-      target.style.left = parseInt(left) + x + 'px'
-      target.style.top = parseInt(top) + y + 'px'
+      moveElement.style.left = mLeft1;
+      moveElement.style.top = mTop1;
 
-      if (typeof callback == 'function') {
-        callback((parseInt(left) || 0) + x, (parseInt(top) || 0) + y)
-      }
-
-      return false
+      typeof cb === 'function' && cb(mLeft1, mTop1);
     }
-  }
-
-  var mouseupHandler = function (e) {
-    draging = false
-
-    left = getStyle(target, 'left')
-    top = getStyle(target, 'top')
+  };
+  let mouseupHandler = (e) => {
+    draging = false;
   }
 
   if (window.addEventListener) {
-    bar.addEventListener('mousedown', mousedownHandler, false)
-    document.addEventListener('mousemove', mousemoveHandler, false)
-    document.addEventListener('mouseup', mouseupHandler, false)
+    dragBar = dragBar || document;
+
+    dragBar.addEventListener('mousedown', mousedownHandler, false);
+    document.addEventListener('mousemove', mousemoveHandler, false);
+    document.addEventListener('mouseup', mouseupHandler, false);
   }
 }
 // 选择器
@@ -59,13 +45,13 @@ function selector(el) {
   return (typeof el === "string" ? document.querySelector(el) : el);
 }
 // 加载图片
-function loadImage(src, callback) {
+function loadImage(src, cb) {
   let image = new Image();
   // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
   image.setAttribute('crossorigin','anonymous');
   image.src = src;
   image.onload = function () {
-    callback(image);
+    typeof cb === 'function' && cb(image);
   };
   image.onerror = function () {
     console.log('Error: image error!');
@@ -91,13 +77,13 @@ function chooseFile(btn, cb, validFileCallback) {
     $file = $btn.querySelector('input[type=file]');
   }
 
-  $file.addEventListener('change', function () {
+  $file.addEventListener('change', function (e) {
     if (this.files.length > 0) {    
 
       let oFile = this.files[0];
 
       let validFile = true;
-      if (validFileCallback && typeof validFileCallback === 'function' && validFileCallback(oFile) === false) {
+      if (typeof validFileCallback === 'function' && validFileCallback(oFile) === false) {
         validFile = false;
       }
 
@@ -106,13 +92,19 @@ function chooseFile(btn, cb, validFileCallback) {
         reader.readAsDataURL(oFile);
 
         reader.onload = function() {
-          cb && typeof cb === 'function' && cb(this.result);
-
+          typeof cb === 'function' && cb(this.result);
         }
+      } else {
+        console.log('onValidateFile function return false')
       }
 
     }
   }, false);
+
+  // 阻止冒泡导致两次触发selectBtn
+  $file.addEventListener('click', (e) => {
+    e.stopPropagation();
+  })
 
   $file.click();
 
@@ -120,7 +112,7 @@ function chooseFile(btn, cb, validFileCallback) {
 
 // ************************************************************************************
 // 默认配置参数
-let defaultProps = {
+let defaults = {
   // 选择图片按钮
   selectBtn: '#J-select-btn',
   // 放大按钮
@@ -148,7 +140,7 @@ let defaultProps = {
   containerSize: 500,
   // 裁剪区边长
   cropW: 300,
-  cropH: 200,
+  cropH: 300,
   // 裁剪后的图片类型
   mime: 'image/png',
   // 遮挡区颜色
@@ -176,7 +168,6 @@ let defaultProps = {
   // 上传源图片回调函数
   onValidateFile: (oFile) => {
     // oFile的属性值示例：name:"brandPublicty1.jpg" size:134476 type:"image/jpeg"
-    return true;
   },
   // 裁剪完成回调函数
   onCropped: (destImgData) => {}
@@ -188,7 +179,7 @@ class PipeImg {
   
   constructor(options) {
 
-    this.options = Object.assign(defaultProps, options);
+    this.options = Object.assign(defaults, options);
 
     this.$selectBtn = selector(this.options.selectBtn);
     this.$upBtn = selector(this.options.upBtn);
@@ -291,13 +282,15 @@ class PipeImg {
       ctx.drawImage(tempCvs, sx, sy, w, h, 0, 0, w, h);
 
       let data = cvs.toDataURL(imgType);
-      cb && typeof cb === 'function' && cb(data, w, h);
+      typeof cb === 'function' && cb(data, w, h);
       
       // previewContainer.appendChild(cvs);
     })
     
   }
-  watermark(targetImg, cb) {
+  addMark(targetImg, cb) {
+    if (typeof cb !== 'function') return false;
+
     if (targetImg.nodeName.toLowerCase() !== 'canvas') {
       targetImg = getCanvas(targetImg.width, targetImg.height);     
     }
@@ -353,7 +346,7 @@ class PipeImg {
       dContext = destCanvas.getContext('2d');
     dContext.drawImage(img, sx, sy, sWidth, sHeight, x, y, width, height);
 
-    this.watermark(destCanvas, (resultCvs) => {
+    this.addMark(destCanvas, (resultCvs) => {
       let data = resultCvs.toDataURL(this.mime);
   
       // 提供预览
@@ -363,7 +356,7 @@ class PipeImg {
   
       // TODO 直接把base64格式图片数据传到后台
       // TODO 作为文件形式用FormData提交到后台 
-      this.onCropped(data);      
+      typeof this.onCropped === 'function' && this.onCropped(data);      
     });
 
   }
@@ -373,14 +366,6 @@ class PipeImg {
     let sourceImgEle, sourceW0, sourceH0, sourceW1, sourceH1, cacheSource, 
       borderWidth = (this.containerSize - this.cropW) / 2, 
       borderHeight = (this.containerSize - this.cropH) / 2;
-
-    if(this.onCropped && typeof this.onCropped != 'function'){
-      throw new Error('onCropped必须为函数');
-    }
-    if(this.onValidateFile && typeof this.onValidateFile != 'function'){
-      throw new Error('onValidateFile必须为函数');
-    }
-
 
     let workingAreaHtml = '<div class="working-area"><img><div class="mask"></div></div>';
     this.$workingContainer.innerHTML = workingAreaHtml;
@@ -397,7 +382,7 @@ class PipeImg {
 
 
 
-    drag(this.$workingContainer, sourceImgEle);
+    drag(sourceImgEle, this.$workingContainer);
 
     // 选择的源图片加载完初始化相关参数
     let loadHandler = () => {
@@ -428,13 +413,10 @@ class PipeImg {
 
     }
 
-    sourceImgEle.addEventListener('load', () => {
-      loadHandler();
-    }, false);
+    sourceImgEle.addEventListener('load', loadHandler, false);
 
     // 按钮事件绑定
-    this.$selectBtn.addEventListener('click', () => {
-
+    this.$selectBtn.addEventListener('click', (e) => {
       chooseFile(this.$selectBtn, function(data) {
         sourceImgEle.src = data;
         sourceImgEle.style.width = 'auto';
@@ -442,7 +424,8 @@ class PipeImg {
 
         cacheSource = data;
         
-      })
+      }, this.onValidateFile);        
+
 
     }, false);
 
