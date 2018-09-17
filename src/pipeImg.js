@@ -426,7 +426,6 @@ class PipeImg {
         
       }, this.onValidateFile);        
 
-
     }, false);
 
 
@@ -480,7 +479,6 @@ class PipeImg {
     }, false);
 
   }
-
 
 }
 
