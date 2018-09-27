@@ -58,6 +58,6 @@ gulp.task('serve', function() {
 
 });
 
-gulp.task('dev', ['serve', 'watcher']);
+gulp.task('dev', ['serve', 'babel', 'watcher']);
 gulp.task('build', ['clean','scripts']);
 gulp.task('default', ['serve']);
