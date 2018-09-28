@@ -6,7 +6,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-;(function (global) {
+;
+(function (global) {
   //拖拽
   function drag(moveElement, dragBar, cb) {
     if (!moveElement) return;
@@ -78,6 +79,104 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     canvas.width = width;
     canvas.height = height;
     return canvas;
+  }
+  function showSize(base64url) {
+    //获取base64图片大小，返回MB数字
+    var str = base64url.replace('data:image/png;base64,', '');
+    var equalIndex = str.indexOf('=');
+    if (str.indexOf('=') > 0) {
+      str = str.substring(0, equalIndex);
+    }
+    var strLength = str.length;
+    var fileLength = parseInt(strLength - strLength / 8 * 2);
+    // 由字节转换为MB
+    // var size = "";
+    // size = (fileLength/(1024 * 1024)).toFixed(2);
+    // var sizeStr = size + "";                        //转成字符串
+    // var index = sizeStr.indexOf(".");                    //获取小数点处的索引
+    // var dou = sizeStr.substr(index + 1 ,2)            //获取小数点后两位的值
+    // if(dou == "00"){                                //判断后两位是否为00，如果是则删除00                
+    //     return sizeStr.substring(0, index) + sizeStr.substr(index + 3, 2)
+    // }
+    // return parseInt(size);
+    return fileLength;
+  }
+  // 压缩只支持image/jpeg和image/webp
+  function compress(img, width, height, ratio) {
+    // img可以是dataURL或者图片url
+
+    var canvas = getCanvas(width, height),
+        ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, width, height);
+
+    var base64 = canvas.toDataURL("image/jpeg", ratio);
+
+    return base64; // 压缩后的base64串
+  }
+
+  function base64Data2Blob(base64Data) {
+    var byteString;
+    if (base64Data.split(',')[0].indexOf('base64') >= 0) {
+      byteString = atob(base64Data.split(',')[1]);
+    } else {
+      byteString = unescape(base64Data.split(',')[1]);
+    }
+    var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ia], {
+      type: mimeString
+    });
+  };
+  function blob2FormData(blob, fileName) {
+    var formData = new FormData();
+    formData.append('file', blob);
+    if (!fileName) {
+      fileName = new Date().getTime();
+    }
+    formData.append("fileName", fileName);
+
+    return formData;
+  };
+  // canvas转成blob对象，type值为image/jpeg或者image/webp时，可使用encoderOptions（0-1）设置图片展示质量。
+  function canvas2Blob(canvas, callback, type, quality) {
+    // Polyfill
+    if (!HTMLCanvasElement.prototype.toBlob) {
+      Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
+        value: function value(callback, type, quality) {
+
+          var binStr = atob(this.toDataURL('image/jpeg', quality).split(',')[1]),
+              len = binStr.length,
+              arr = new Uint8Array(len);
+
+          for (var i = 0; i < len; i++) {
+            arr[i] = binStr.charCodeAt(i);
+          }
+
+          callback(new Blob([arr], {
+            type: type || 'image/png'
+          }));
+        }
+      });
+    }
+
+    canvas.toBlob(callback, type, quality);
+  }
+
+  function uploadFile(formData, url) {
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open('POST', url); //注意跨域问题
+    xmlHttp.send(formData);
+    xmlHttp.onreadystatechange = function () {
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        console.log(xmlHttp.responseText);
+      } else {
+        console.log(xmlHttp.statusText);
+      }
+    };
   }
   // 选择文件
   function chooseFile(btn, cb, validFileCallback) {
@@ -173,6 +272,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     markX: 0,
     // 水印字y轴位置
     markY: 0,
+    sourceImgSrc: null,
 
     // 回调事件
     // 上传源图片回调函数
@@ -215,6 +315,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       this.markText = this.options.markText;
       this.markX = this.options.markX;
       this.markY = this.options.markY;
+      this.sourceImgSrc = this.options.sourceImgSrc;
 
       this.onValidateFile = this.options.onValidateFile;
       this.onCropped = this.options.onCropped;
@@ -312,10 +413,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if (this.markIcon) {
             loadImage(this.markIcon, function (img) {
               if (!_this.markX) {
-                _this.markX = _this.cropW - img.naturalWidth;
+                _this.markX = targetImg.width - img.naturalWidth;
               }
               if (!_this.markY) {
-                _this.markY = _this.cropH - img.naturalHeight;
+                _this.markY = targetImg.height - img.naturalHeight;
               }
               dContext.drawImage(img, _this.markX, _this.markY);
               cb(targetImg);
@@ -325,10 +426,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             dContext.font = this.markFont;
             dContext.fillStyle = this.markStyle;
             if (!this.markX) {
-              this.markX = this.cropW - 10;
+              this.markX = targetImg.width - 10;
             }
             if (!this.markY) {
-              this.markY = this.cropH - 10;
+              this.markY = targetImg.height - 10;
             }
             dContext.fillText(this.markText, this.markX, this.markY);
             cb(targetImg);
@@ -368,6 +469,32 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.addMark(destCanvas, function (resultCvs) {
           var data = resultCvs.toDataURL(_this2.mime);
+
+          // 压缩
+          // 获取原始大小方案一
+          // let size0 = showSize(data);
+          // 获取原始大小方案二
+          var blob = base64Data2Blob(data);
+          var size0 = blob.size;
+
+          console.log('pre compress: ' + Math.ceil(size0 / 1024));
+
+          if (size0 > 1024 * 500) {
+            var quality = Math.floor(1024 * 500 / size0 * 10) / 10;
+
+            // 压缩并获得blob方案一
+            data = compress(resultCvs, width, height, quality);
+            blob = base64Data2Blob(data);
+
+            // 压缩并获得blob方案二
+            // canvas2Blob(resultCvs, function(resultBlob){
+            //   console.log('end compress: ' + Math.ceil(resultBlob.size/1024));
+            // }, 'image/jpeg', quality);
+          }
+          console.log('end compress: ' + Math.ceil(blob.size / 1024));
+
+          var formData = blob2FormData(blob);
+          console.log('formData: ' + formData);
 
           // 提供预览
           _this2.preview(data);
@@ -438,6 +565,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         sourceImgEle.addEventListener('load', loadHandler, false);
 
+        if (this.sourceImgSrc) {
+          sourceImgEle.src = this.sourceImgSrc;
+          sourceImgEle.style.width = 'auto';
+          sourceImgEle.style.height = 'auto';
+
+          cacheSource = this.sourceImgSrc;
+        }
         // 按钮事件绑定
         this.$selectBtn.addEventListener('click', function (e) {
           chooseFile(_this3.$selectBtn, function (data) {
@@ -475,7 +609,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               sWidth = _this3.cropW * scaleRatio,
               sHeight = _this3.cropH * scaleRatio;
 
-          _this3.crop(sourceImgEle, sx, sy, sWidth, sHeight, 0, 0, _this3.cropW, _this3.cropH);
+          _this3.crop(sourceImgEle, sx, sy, sWidth, sHeight, 0, 0, sWidth, sHeight);
         }, false);
 
         this.$clockwiseBtn.addEventListener('click', function () {
