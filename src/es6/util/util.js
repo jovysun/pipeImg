@@ -44,17 +44,31 @@ function drag(moveElement, dragBar = document, cb) {
 function $(el) {
   return (typeof el === "string" ? document.querySelector(el) : el);
 }
+function getImgPromise(src) {
+  return new Promise((resolve, reject) => {
+    let image = new Image();
+    // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
+    image.setAttribute('crossorigin', 'anonymous');
+    image.src = src;
+    image.onload = () => {
+      resolve(image);
+    };
+    image.onerror = () => {
+      reject('Error: image error!');
+    };
+  });
+}
 // 加载图片
-function loadImage(src, cb) {
+function loadImage(src, success, failure) {
   let image = new Image();
   // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
   image.setAttribute('crossorigin', 'anonymous');
   image.src = src;
   image.onload = function () {
-    typeof cb === 'function' && cb(image);
+    typeof success === 'function' && success(image);
   };
   image.onerror = function () {
-    console.log('Error: image error!');
+    typeof failure === 'function' && failure();
   };
 }
 // 创建cavas
@@ -204,4 +218,4 @@ function chooseFile(btn, cb, validFileCallback) {
   $file.click();
 
 }
-export {drag, $, loadImage, getCanvas, getBase64Size, compress, base64Data2Blob, blob2FormData, chooseFile, uploadFile}
+export {drag, $, loadImage, getCanvas, getBase64Size, compress, base64Data2Blob, blob2FormData, chooseFile, uploadFile, getImgPromise}

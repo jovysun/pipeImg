@@ -22,7 +22,7 @@ gulp.task('scripts', function() {
 gulp.task('babel', function() {
     return gulp.src('src/es6/bundle/*.js')
         .pipe(babel())
-        .pipe(gulp.dest('dist/js'));
+        .pipe(gulp.dest('src/js'));
 });
 
 gulp.task('uglify', function() {
@@ -39,11 +39,12 @@ gulp.task('clean', function() {
 });
 // js模块化处理 
 gulp.task('bundle', function() {
-  return gulp.src('src/es6/pipeImg.js')
+  return gulp.src('src/es6/index.js')
     .pipe(webpack({
       output: {
-          filename: 'pipeImg.js'
-      }
+          filename: 'index.js'
+      },
+      mode: 'development'
     }))
     .pipe(gulp.dest('src/es6/bundle'));
 });
@@ -51,7 +52,7 @@ gulp.task('bundle', function() {
 //监控改动并自动刷新任务;
 gulp.task('watcher', function() {
     gulp.watch('src/es6/*.js', ['bundle', 'babel']);
-    gulp.watch(['dist/js/*.js', '*.html']).on('change', reload);
+    gulp.watch(['src/js/*.js', '*.html']).on('change', reload);
 });
 
 // 创建本地服务器，并实时更新页面
