@@ -1,1 +1,8 @@
-node_modules/
+.idea
+.svn
+.history
+.DS_STORE
+.iml
+.vscode
+.cache
+node_modules

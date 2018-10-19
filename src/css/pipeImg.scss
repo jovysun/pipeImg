@@ -1,0 +1,129 @@
+@import './var';
+@import './reset';
+@import './cropbox';
+
+.wrapper{
+    margin: 50px auto;
+    width: 740px;
+    height: 580px;
+    background-color: #212234;
+    
+    .menu{
+        font-size: 0;
+    }
+    .item{
+        display: inline-block;
+        border-right: 1px solid rgba(255, 255, 255, 0.5);
+        border-bottom: 1px solid rgba(255, 255, 255, 0);
+        &:hover,&.active{
+            border-bottom: 1px solid brown;
+        }
+        .item-sub{
+            display: none;
+        }
+    }
+    .btn{
+        display: block;
+        padding: 10px 20px;
+        color: #fff;
+        font-size: 16px;
+        
+    }
+    .btn-close{
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    .buttons{
+        position: absolute;
+        right: 10px;
+        top: 0;
+        font-size: 0;
+        .button{
+            display: inline-block;
+            padding: 5px 20px;
+            color: #fff;
+            font-size: 16px;
+            background-color: #555d72;
+            border-radius: 4px;
+            &.button-main{
+                background-color: #48b152;
+                margin-right: 10px;
+            }
+        }
+    }
+    .header{
+        position: relative;
+        background-color: #393a4c;
+    }
+    .content{
+        // height: 454px;
+        padding: 10px 0;
+        overflow: hidden;
+        .panel{
+            display: none;
+            &.active{
+                display: block;
+            }
+        }
+        .img-box{
+            height: 420px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items:center;
+            justify-content:center;
+
+            
+            img{
+                height: 100%;
+            }
+        }
+        .content-footer{
+            position: relative;
+            padding: 5px;
+            height: 25px;
+            
+            label,.txt{
+                color: #fff;
+            }
+            input[type=checkbox]{
+                width: 20px;
+                height: 20px;
+                background: #fff;
+                color: #000;
+            }
+        }
+    
+        .btn{
+            padding: 0 20px;
+        }
+        .size{
+            display: block;
+            padding: 0 20px;
+            color: #fff;
+            font-size: 16px;
+        }
+    }
+    .footer{
+        background-color: #393a4c;
+        font-size: 0;
+        padding: 20px 10px;
+
+        .img-thumbnail{
+            display: inline-block;
+            margin-right: 10px;
+            width: 60px;
+            height: 45px;
+            opacity: 0.5;
+            text-align: center;
+            &.active{
+                opacity: 1;
+            }
+            img{
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+    }
+}

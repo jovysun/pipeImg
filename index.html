@@ -4,51 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>测试</title>
-    <style>
-    .btn {
-        padding: 8px;
-        font-size: 14px;
-        border: 1px solid #222;
-        border-radius: 2px;
-        background: #fff;
-        text-align: center;
-        cursor: pointer;
-        margin-left: 30px;
-
-    }
-    .btn:hover{
-        background-color: #222;
-        color: #fff;
-    }
-
-    .working-container {
-        display: inline-block;
-    }
-    .preview-container {
-        display: inline-block;
-    }
-    </style>
+    <title>图片编辑</title>
+    <link rel="stylesheet" href="dist/css/pipeImg.css">
 </head>
 
 <body>
-    <!-- <img src="assets/Koala.jpg" id="myPic"> -->
-    <!-- 裁剪工作区 -->
-    <div id="J-working-container" class="working-container"></div>
-    <!-- 裁剪后预览容器 -->
-    <div id="J-preview-container" class="preview-container"></div>
+    <div class="wrapper">
+        <div class="header">
+            <ul class="menu">
+                <li class="item active J-menu-item"><a class="btn btn-rotate J-btn-rotate" href="javascript:void(0)">旋转</a></li>
+                <li class="item J-menu-item"><a class="btn btn-rotate J-btn-crop" href="javascript:void(0)">裁剪</a></li>
+                <li class="item J-menu-item"><a class="btn btn-rotate J-btn-scale" href="javascript:void(0)">缩放</a></li>
+                <li class="item J-menu-item">
+                    <a class="btn btn-rotate J-btn-mark" href="javascript:void(0)">添加水印</a>
+                    <div class="item-sub">
+                        <a class="btn btn-rotate J-btn-mark-all" href="javascript:void(0)">批量添加水印</a>
+                    </div>
+                </li>
+            </ul>
+            <a class="btn btn-close J-btn-close" href="javascript:void(0)">关闭</a>
+        </div>
+        <div class="content">
+            <!-- 旋转面板 -->
+            <div class="panel active J-panel">
+                <div class="img-box J-img-box">
+                </div>
+                <div class="content-footer">
+                    <div class="item">
+                        <div class="size">
+                            <span class="J-num-width"></span>*<span class="J-num-height"></span>px
+                        </div>
+                    </div>
+                    <div class="item">
+                        <a class="btn btn-rotate J-btn-rotate-left" href="javascript:void(0)">逆时针旋转</a>
+                    </div>
+                    <div class="item">
+                        <a class="btn btn-rotate J-btn-rotate-right" href="javascript:void(0)">顺时针旋转</a>
+                    </div>
+                    <div class="buttons">
+                        <a class="button button-main J-button-save" href="javascript:void(0)">保存</a>
+                        <a class="button button-reset J-button-reset" href="javascript:void(0)">重置</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 裁剪面板 -->
+            <div class="panel J-panel">
+                <div class="img-box J-img-box00">
 
-    <br>
+                    <div class="cropbox-wrapper">
+                        <img class="J-source" src="./assets/Jellyfish.jpg" id="img1">
+                        <img class="J-source" src="./assets/Jellyfish.jpg" id="img2">
+                        <div id="main">
+                            <div class="Divmin up-left" id="up-left"></div>
+                            <div class="Divmin up" id="up"></div>
+                            <div class="Divmin up-right" id="up-right"></div>
+                            <div class="Divmin right" id="right"></div>
+                            <div class="Divmin right-down" id="right-down"></div>
+                            <div class="Divmin down" id="down"></div>
+                            <div class="Divmin left-down" id="left-down"></div>
+                            <div class="Divmin left" id="left"></div>
+                        </div>
+                    </div>
 
-    <button id="J-anticlockwise-btn" class="btn">逆时针旋转</button>
-    <button id="J-clockwise-btn" class="btn">顺时针旋转</button> 
 
-    <button id="J-down-btn" class="btn">缩小</button>
-    <button id="J-up-btn" class="btn">放大</button> 
-    <button id="J-crop-btn" class="btn">裁剪</button>
-    <a id="J-save-btn" class="btn">保存</a>
 
-    <script src="src/js/index.js"></script>
+                </div>
+                <div class="content-footer">
+                    <input class="num-width J-num-width" type="text">
+                    <label for="fixRatio">约束比例</label>
+                    <input class="fix-ratio J-btn-ratio" type="checkbox" name="fixRatio">
+                    <input class="num-height J-num-height" type="text">
+                    <span class="txt">px</span>
+
+                    <div class="buttons">
+                        <a class="button button-main J-button-save" href="javascript:void(0)">保存</a>
+                        <a class="button button-reset J-button-reset" href="javascript:void(0)">重置</a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 缩放面板 -->
+            <div class="panel J-panel">
+                <div class="img-box J-img-box"></div>
+                <div class="content-footer">
+                    <input class="num-width J-num-width" type="text">
+                    <span class="txt">X</span>
+                    <input class="num-height J-num-height" type="text">
+                    <span class="txt">px</span>
+                    <input type="range">
+
+                    <div class="buttons">
+                        <a class="button button-main J-button-save" href="javascript:void(0)">保存</a>
+                        <a class="button button-reset J-button-reset" href="javascript:void(0)">重置</a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 添加水印面板 -->
+            <div class="panel J-panel">
+                <div class="img-box J-img-box"></div>
+                <div class="content-footer">
+                    <div class="item">
+                        <label for="color">颜色：</label>
+                        <input type="radio" name="color" value="0">
+                        <input type="radio" name="color" value="1">
+                    </div>
+                    <div class="item">
+                        <label for="position">位置：</label>
+                        <input type="radio" name="position" value="0">
+                        <input type="radio" name="position" value="1">
+                        <input type="radio" name="position" value="2">
+                        <input type="radio" name="position" value="3">
+                        <input type="radio" name="position" value="4">
+                    </div>
+                    <div class="item">
+
+                        <label for="opacity">透明度：</label>
+                        <input name="opacity" type="range">
+                    </div>
+
+                    <select name="" id="">
+                        <option value="0">展示厅</option>
+                        <option value="1">公司名称</option>
+                    </select>
+                    <div class="buttons">
+                        <a class="button button-confirm J-button-confirm" href="javascript:void(0)">确定</a>
+                        <a class="button button-cancel J-button-cancel" href="javascript:void(0)">取消</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="footer J-imgs-thumbnail">
+            <!-- <a class="img-thumbnail active J-img-thumbnail" href="javascript:void(0)">
+                <img src="./assets/Jellyfish.jpg" alt="">
+            </a>
+            <a class="img-thumbnail J-img-thumbnail" href="javascript:void(0)">
+                <img src="./assets/Desert.jpg" alt="">
+            </a> -->
+        </div>
+    </div>
+
+    <div id="J-preview-container"><img></div>
+
+    <script src="./libs/jquery.js"></script>
+    <script src="./dist/js/pipeImg.js"></script>
+    <script>
+        let pipeImg = new PipeImg({
+            source: ['./assets/Jellyfish.jpg', './assets/greensock.png']
+        });
+
+    </script>
 </body>
 
 </html>

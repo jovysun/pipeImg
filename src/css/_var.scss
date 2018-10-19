@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+// base color
+$color-red: #E64545;
+// 0 70 90
+$color-blue: #1470CC;
+// 210 90 80
+$color-yellow: #FF7733;
+// 20 80 100
+
+$color-black-dark: #222;
+$color-black: #555;
+$color-black-light: #888;
+
+$color-purple: #6212B2;
+// 270 90 70
+$color-white: #FFFFFF;
+
+$color-blue-dark: #477db3;
+
+/*
+ * aid brush 颜色最浅 笔刷越大颜色越深
+ * [mini, tiny, small, medium, large, big, huge, massive]
+ */
+$color-brush-mini: #F0F1F2;
+// 210 1 95
+$color-brush-tiny: #E6ECF2;
+// 210 5 95
+$color-brush-small: #DAE0E5;
+// 210 5 90
+$color-brush-medium: #CED3D9;
+// 210 5 85
+
+/*
+ * extend color
+ * Roman Numbers
+ * i: 1, ii: 2, iii: 3, iv: 4, v: 5, vi: 6, vii: 7, viii: 8, ix: 9, x: 10
+ */
+$color-main: $color-red;
+$color-aux-i: $color-blue;
+$color-aux-ii: $color-yellow;
+
+$text-color-dark: $color-black-dark;
+$text-color: $color-black;
+$text-color-light: $color-black-light;
+
+$link-color: $color-blue;
+$link-color-hover: $color-red;
+$link-color-visited: $color-purple;
+
+//// Brand Colors
+$brand-red: $color-red !default;
+$brand-blue: $color-blue !default;
+$brand-orange: $color-yellow !default;
+$brand-blue: #00b300 !default;
+
+//// Link Colors
+$link-color: $color-blue !default;
+$hover-color: $color-red !default;
+$visited-color: #6212b3 !default;
+
+
+//responsive
+
+$responsive:    false!default;

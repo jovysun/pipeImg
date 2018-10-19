@@ -8,51 +8,46 @@ const rename = require('gulp-rename');
 const clean = require('gulp-clean');
 const browserSync = require('browser-sync').create(), //自动刷新
     reload = browserSync.reload;
-var webpack = require('webpack-stream');
+const webpack = require('webpack-stream');
 
-// babel and uglify
-gulp.task('scripts', function() {
-    return gulp.src('src/js/*.js')
-        .pipe(babel())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist'));
+const sass = require('gulp-sass');
+var named = require('vinyl-named');
+
+// scss文件编译成css
+gulp.task('sass', function () {
+    gulp.src('src/css/pipeImg.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('dist/css'))
+        .pipe(reload({stream: true}));
 });
 
 gulp.task('babel', function() {
-    return gulp.src('src/es6/bundle/*.js')
+    return gulp.src('src/js/bundle/*.js')
         .pipe(babel())
-        .pipe(gulp.dest('src/js'));
+        .pipe(gulp.dest('dist/js'))
+        .pipe(reload({stream: true}));
 });
 
 gulp.task('uglify', function() {
-    return gulp.src('dist/*.js')
+    return gulp.src('dist/js/pipeImg.js')
         .pipe(rename({ suffix: '.min' }))
         .pipe(uglify())
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('clean', function() {
-    return gulp.src('dist/js/*.min.js', {read: false})
+    return gulp.src('dist/js/*.js')
         .pipe(clean())
         .pipe(gulp.dest('dist/js'));
 });
 // js模块化处理 
 gulp.task('bundle', function() {
-  return gulp.src('src/es6/index.js')
+  return gulp.src(['src/js/pipeImg.js', 'src/js/pipeImg.0.4.1.js'])
+    .pipe(named())
     .pipe(webpack({
-      output: {
-          filename: 'index.js'
-      },
       mode: 'development'
     }))
-    .pipe(gulp.dest('src/es6/bundle'));
-});
-
-//监控改动并自动刷新任务;
-gulp.task('watcher', function() {
-    gulp.watch('src/es6/*.js', ['bundle', 'babel']);
-    gulp.watch(['src/js/*.js', '*.html']).on('change', reload);
+    .pipe(gulp.dest('src/js/bundle'));
 });
 
 // 创建本地服务器，并实时更新页面
@@ -68,8 +63,11 @@ gulp.task('serve', function() {
         }
     });
 
+    gulp.watch('src/css/*.scss', ['sass']);
+    gulp.watch('src/js/*.js', ['bundle', 'babel']);
+    gulp.watch('*.html').on('change', reload);
 });
 
-gulp.task('dev', ['serve', 'bundle', 'babel', 'watcher']);
-gulp.task('build', ['clean','uglify']);
+gulp.task('dev', ['sass', 'bundle', 'babel', 'serve']);
+gulp.task('build', ['clean', 'sass', 'bundle', 'babel', 'uglify']);
 gulp.task('default', ['serve']);

@@ -1,4 +1,4 @@
-import {drag, $, loadImage, getCanvas, getBase64Size, compress, base64Data2Blob, blob2FormData, chooseFile, uploadFile} from './util/util';
+import {drag, $, loadImage, getCanvas, getBase64Size, compress, base64Data2Blob, blob2FormData, chooseFile, uploadFile} from './util';
 
 class PipeImg {
 
