@@ -1,4 +1,4 @@
-import {drag, $, loadImage, getCanvas, getBase64Size, compress, base64Data2Blob, blob2FormData, chooseFile, uploadFile} from './util';
+import {drag, _$, loadImage, getCanvas, getBase64Size, compress, base64Data2Blob, blob2FormData, chooseFile, uploadFile} from './util';
 
 class PipeImg {
 
@@ -71,15 +71,15 @@ class PipeImg {
 
     this.options = Object.assign(defaults, options);
 
-    this.$selectBtn = $(this.options.selectBtn);
-    this.$upBtn = $(this.options.upBtn);
-    this.$downBtn = $(this.options.downBtn);
-    this.$anticlockwiseBtn = $(this.options.anticlockwiseBtn);
-    this.$clockwiseBtn = $(this.options.clockwiseBtn);
-    this.$cropBtn = $(this.options.cropBtn);
-    this.$downloadBtn = $(this.options.downloadBtn);
-    this.$workingContainer = $(this.options.workingContainer);
-    this.$previewContainer = $(this.options.previewContainer);
+    this.$selectBtn = _$(this.options.selectBtn);
+    this.$upBtn = _$(this.options.upBtn);
+    this.$downBtn = _$(this.options.downBtn);
+    this.$anticlockwiseBtn = _$(this.options.anticlockwiseBtn);
+    this.$clockwiseBtn = _$(this.options.clockwiseBtn);
+    this.$cropBtn = _$(this.options.cropBtn);
+    this.$downloadBtn = _$(this.options.downloadBtn);
+    this.$workingContainer = _$(this.options.workingContainer);
+    this.$previewContainer = _$(this.options.previewContainer);
 
     this.maxSize = this.options.maxSize;
     this.scaleStep = this.options.scaleStep;

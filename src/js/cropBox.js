@@ -1,177 +1,207 @@
 import {
-    drag
+    drag,
+    _$
 } from './util';
 class CropBox {
     constructor(options) {
         const defaults = {
-
+            ele: ''
         };
         options = Object.assign({}, defaults, options);
+        this.ele = options.ele;
 
         this.init();
     }
     init() {
-        var mainDiv = $('main');
-        var rightDiv = $('right');
-        var leftDiv = $('left');
-        var upDiv = $('up');
-        var downDiv = $('down');
-        var upleftDiv = $('up-left');
-        var uprightDiv = $('up-right');
-        var rightdownDiv = $('right-down');
-        var leftdownDiv = $('left-down');
+        this.$ele = typeof this.ele === 'string' ? document.querySelector(this.ele) : this.ele;
+
+        var src = this.$ele.getAttribute('src');
+
+        this.html = `<div class="cropbox-wrapper">
+                        <img class="J-source" src="${src}" id="img1">
+                        <img class="J-source" src="${src}" id="img2">
+                        <div id="main">
+                            <div class="Divmin up-left" id="up-left"></div>
+                            <div class="Divmin up" id="up"></div>
+                            <div class="Divmin up-right" id="up-right"></div>
+                            <div class="Divmin right" id="right"></div>
+                            <div class="Divmin right-down" id="right-down"></div>
+                            <div class="Divmin down" id="down"></div>
+                            <div class="Divmin left-down" id="left-down"></div>
+                            <div class="Divmin left" id="left"></div>
+                        </div>
+                    </div>`;
+
+        this.$ele.parentNode.innerHTML = this.html;
+
+        this.$mainDiv = _$('#main');
+        this.$rightDiv = _$('#right');
+        this.$leftDiv = _$('#left');
+        this.$upDiv = _$('#up');
+        this.$downDiv = _$('#down');
+        this.$upleftDiv = _$('#up-left');
+        this.$uprightDiv = _$('#up-right');
+        this.$rightdownDiv = _$('#right-down');
+        this.$leftdownDiv = _$('#left-down');
+       
+        this._bind();
         
-        var isDraging = false;
-        var contact = ""; //表示被按下的触点
+        
+        drag(this.$mainDiv, this.$mainDiv, () => {
+            this.setChoice();
+        })
+    }
+    _bind() {
+        let isDraging = false;
+        let contact = ""; //表示被按下的触点
         //鼠标按下时
-        rightDiv.onmousedown = function (e) {
+        
+        this.$rightDiv.onmousedown = function (e) {
             e.stopPropagation();
             isDraging = true;
             contact = "right";
         }
-        leftDiv.onmousedown = function (e) {
+        this.$leftDiv.onmousedown = function (e) {
             e.stopPropagation();
             isDraging = true;
             contact = "left";
         }
-        upDiv.onmousedown = function (e) {
+        this.$upDiv.onmousedown = function (e) {
             e.stopPropagation();
             isDraging = true;
             contact = "up";
         }
-        downDiv.onmousedown = function (e) {
+        this.$downDiv.onmousedown = function (e) {
             e.stopPropagation();
             isDraging = true;
             contact = "down";
         }
-        rightdownDiv.onmousedown = function (e) {
+        this.$rightdownDiv.onmousedown = function (e) {
             e.stopPropagation();
             isDraging = true;
             contact = "right-down";
         }
-        leftdownDiv.onmousedown = function (e) {
+        this.$leftdownDiv.onmousedown = function (e) {
             e.stopPropagation();
             isDraging = true;
             contact = "left-down";
         }
-        upleftDiv.onmousedown = function (e) {
+        this.$upleftDiv.onmousedown = function (e) {
             e.stopPropagation();
             isDraging = true;
             contact = "up-left";
         }
-        uprightDiv.onmousedown = function (e) {
+        this.$uprightDiv.onmousedown = function (e) {
             e.stopPropagation();
             isDraging = true;
             contact = "up-right";
         }
         //鼠标松开时
-        window.onmouseup = function () {
+        window.onmouseup = () => {
             isDraging = false;
+            this.boxData = {
+                left: this.$mainDiv.offsetLeft,
+                top: this.$mainDiv.offsetTop,
+                width: this.$mainDiv.offsetWidth,
+                height: this.$mainDiv.offsetHeight
+            };
         }
         
-        window.onmousemove = function (e) {
+        window.onmousemove = (e) => {
             var e = e || window.event;
             if (isDraging == true) {
                 switch (contact) {
                     case "up":
-                        upMove(e);
+                    this.upMove(e);
                         break;
                     case "right":
-                        rightMove(e);
+                    this.rightMove(e);
                         break;
                     case "down":
-                        downMove(e);
+                    this.downMove(e);
                         break;
                     case "left":
-                        leftMove(e);
+                    this.leftMove(e);
                         break;
                     case "up-right":
-                        upMove(e);
-                        rightMove(e);
+                    this.upMove(e);
+                    this.rightMove(e);
                         break;
                     case "right-down":
-                        downMove(e);
-                        rightMove(e);
+                    this.downMove(e);
+                    this.rightMove(e);
                         break;
                     case "left-down":
-                        downMove(e);
-                        leftMove(e);
+                    this.downMove(e);
+                    this.leftMove(e);
                         break;
                     case "up-left":
-                        upMove(e);
-                        leftMove(e);
+                    this.upMove(e);
+                    this.leftMove(e);
                         break;
                 }
             }
         }
-        //获取id的函数
-        function $(id) {
-            return document.getElementById(id);
+    }
+
+    //获取元素相对于屏幕左边及上边的距离，利用offsetLeft
+    getPosition(el) {
+        var left = el.offsetLeft;
+        var top = el.offsetTop;
+        var parent = el.offsetParent;
+        while (parent != null) {
+            left += parent.offsetLeft;
+            top += parent.offsetTop;
+            parent = parent.offsetParent;
         }
-        //获取元素相对于屏幕左边及上边的距离，利用offsetLeft
-        function getPosition(el) {
-            var left = el.offsetLeft;
-            var top = el.offsetTop;
-            var parent = el.offsetParent;
-            while (parent != null) {
-                left += parent.offsetLeft;
-                top += parent.offsetTop;
-                parent = parent.offsetParent;
-            }
-            return {
-                "left": left,
-                "top": top
-            };
-        }
-        //up移动
-        function upMove(e) {
-            var y = e.clientY; //鼠标位置的纵坐标
-            var heightBefore = mainDiv.offsetHeight - 2; //选取框变化前的高度
-            var addHeight = getPosition(mainDiv).top - y; //增加的高度
-            mainDiv.style.height = heightBefore + addHeight + 'px'; //选取框变化后的宽度
-            mainDiv.style.top = mainDiv.offsetTop - addHeight + 'px'; //相当于变化后左上角的纵坐标，鼠标向上移纵坐标减小，下移增大
-            setChoice();
-        }
-        //right移动
-        function rightMove(e) {
-            var x = e.clientX; //鼠标位置的横坐标
-            var widthBefore = mainDiv.offsetWidth - 2; //选取框变化前的宽度
-            //var widthBefore = mainDiv.clientWidth;
-            var addWidth = x - getPosition(mainDiv).left - widthBefore; //鼠标移动后选取框增加的宽度
-            mainDiv.style.width = widthBefore + addWidth + 'px'; //选取框变化后的宽度
-            setChoice();
-        }
-        //down移动
-        function downMove(e) {
-            var heightBefore = mainDiv.offsetHeight - 2;
-            var addHeight = e.clientY - getPosition(mainDiv).top - mainDiv.offsetHeight;
-            mainDiv.style.height = heightBefore + addHeight + 'px';
-            setChoice();
-        }
-        //left移动
-        function leftMove(e) {
-            var widthBefore = mainDiv.offsetWidth - 2;
-            var addWidth = getPosition(mainDiv).left - e.clientX; //增加的宽度等于距离屏幕左边的距离减去鼠标位置横坐标
-            mainDiv.style.width = widthBefore + addWidth + 'px';
-            mainDiv.style.left = mainDiv.offsetLeft - addWidth + 'px'; //左边的距离（相当于左边位置横坐标）等于选取框距父级元素的距离减去增加的宽度
-            setChoice();
-        }
-        
-        
-        
-        //设置选取框图片区域明亮显示
-        function setChoice() {
-            var top = mainDiv.offsetTop;
-            var right = mainDiv.offsetLeft + mainDiv.offsetWidth;
-            var bottom = mainDiv.offsetTop + mainDiv.offsetHeight;
-            var left = mainDiv.offsetLeft;
-            img2.style.clip = "rect(" + top + "px," + right + "px," + bottom + "px," + left + "px)";
-        }
-        
-        
-        drag(mainDiv, mainDiv, function () {
-            setChoice();
-        })
+        return {
+            "left": left,
+            "top": top
+        };
+    }
+    //up移动
+    upMove(e) {
+        var y = e.clientY; //鼠标位置的纵坐标
+        var heightBefore = this.$mainDiv.offsetHeight; //选取框变化前的高度
+        var addHeight = this.getPosition(this.$mainDiv).top - y; //增加的高度
+        this.$mainDiv.style.height = heightBefore + addHeight + 'px'; //选取框变化后的宽度
+        this.$mainDiv.style.top = this.$mainDiv.offsetTop - addHeight + 'px'; //相当于变化后左上角的纵坐标，鼠标向上移纵坐标减小，下移增大
+        this.setChoice();
+    }
+    //right移动
+    rightMove(e) {
+        var x = e.clientX; //鼠标位置的横坐标
+        var widthBefore = this.$mainDiv.offsetWidth; //选取框变化前的宽度
+        //var widthBefore = mainDiv.clientWidth;
+        var addWidth = x - this.getPosition(this.$mainDiv).left - widthBefore; //鼠标移动后选取框增加的宽度
+        this.$mainDiv.style.width = widthBefore + addWidth + 'px'; //选取框变化后的宽度
+        this.setChoice();
+    }
+    //down移动
+    downMove(e) {
+        var heightBefore = this.$mainDiv.offsetHeight;
+        var addHeight = e.clientY - this.getPosition(this.$mainDiv).top - this.$mainDiv.offsetHeight;
+        this.$mainDiv.style.height = heightBefore + addHeight + 'px';
+        this.setChoice();
+    }
+    //left移动
+    leftMove(e) {
+        var widthBefore = this.$mainDiv.offsetWidth;
+        var addWidth = this.getPosition(this.$mainDiv).left - e.clientX; //增加的宽度等于距离屏幕左边的距离减去鼠标位置横坐标
+        this.$mainDiv.style.width = widthBefore + addWidth + 'px';
+        this.$mainDiv.style.left = this.$mainDiv.offsetLeft - addWidth + 'px'; //左边的距离（相当于左边位置横坐标）等于选取框距父级元素的距离减去增加的宽度
+        this.setChoice();
+    }
+    
+    
+    
+    //设置选取框图片区域明亮显示
+    setChoice() {
+        var top = this.$mainDiv.offsetTop;
+        var right = this.$mainDiv.offsetLeft + this.$mainDiv.offsetWidth;
+        var bottom = this.$mainDiv.offsetTop + this.$mainDiv.offsetHeight;
+        var left = this.$mainDiv.offsetLeft;
+        img2.style.clip = "rect(" + top + "px," + right + "px," + bottom + "px," + left + "px)";
     }
 }
 

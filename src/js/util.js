@@ -245,6 +245,10 @@ function chooseFile(btn, cb, validFileCallback) {
     $file.click();
 
 }
+function _$(ele) {
+    return typeof ele === 'string' ? document.querySelector(ele) : ele;
+}
+
 export {
     drag,
     loadImage,
@@ -256,5 +260,6 @@ export {
     blob2FormData,
     chooseFile,
     uploadFile,
-    getImgPromise
+    getImgPromise,
+    _$
 }

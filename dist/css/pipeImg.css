@@ -176,7 +176,8 @@ h1, h2, h3, h4, h5, h6 {
   /*第三层需用绝对定位浮在上面*/
   width: 100%;
   height: 100%;
-  border: 1px solid #fff; }
+  border: 1px solid #fff;
+  box-sizing: border-box; }
 
 .Divmin {
   position: absolute;
@@ -257,7 +258,7 @@ h1, h2, h3, h4, h5, h6 {
   .wrapper .buttons {
     position: absolute;
     right: 10px;
-    top: 0;
+    top: 10px;
     font-size: 0; }
     .wrapper .buttons .button {
       display: inline-block;
@@ -273,7 +274,6 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     background-color: #393a4c; }
   .wrapper .content {
-    padding: 10px 0;
     overflow: hidden; }
     .wrapper .content .panel {
       display: none; }
@@ -281,16 +281,15 @@ h1, h2, h3, h4, h5, h6 {
         display: block; }
     .wrapper .content .img-box {
       height: 420px;
-      margin-bottom: 10px;
+      margin: 10px;
       display: flex;
       align-items: center;
       justify-content: center; }
-      .wrapper .content .img-box img {
-        height: 100%; }
     .wrapper .content .content-footer {
       position: relative;
-      padding: 5px;
-      height: 25px; }
+      padding: 10px 0;
+      height: 34px;
+      background-color: #212234; }
       .wrapper .content .content-footer label, .wrapper .content .content-footer .txt {
         color: #fff; }
       .wrapper .content .content-footer input[type=checkbox] {
@@ -299,10 +298,10 @@ h1, h2, h3, h4, h5, h6 {
         background: #fff;
         color: #000; }
     .wrapper .content .btn {
-      padding: 0 20px; }
+      padding: 5px 20px; }
     .wrapper .content .size {
       display: block;
-      padding: 0 20px;
+      padding: 5px 20px;
       color: #fff;
       font-size: 16px; }
   .wrapper .footer {
