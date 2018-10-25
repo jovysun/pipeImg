@@ -157,8 +157,13 @@ class PipeImg {
                 // $('.J-source').removeAttr('style');
 
             }
-            if (index != 2) {
-                
+            // 离开缩放
+            if (index != 2 && oldActiveIndex === 2) {
+                self.imgHandler.scaleRatio = self.scaleRatio;
+                self.imgHandler.scale();
+
+                self.activeImg = self.imgHandler.results[self.imgHandler.results.length - 1];
+                self._refresh();
             }
 
         })
@@ -169,6 +174,39 @@ class PipeImg {
         // 保存
         $('.J-button-save').on('click', () => {
             this._save();
+        })
+
+        // 缩放事件
+        let $numWidth = $('.J-num-width');
+        let $numHeight = $('.J-num-height');
+        let $scaleRange = $('.J-scale-range');
+        let max = parseInt($scaleRange.attr('max'));
+        $scaleRange.on('change', (e) => {
+            let sourceData = this._getSourceData();
+            let $this = $(e.target);
+            let scaleRatio = parseInt($this.val()) / max;
+            $numWidth.val(sourceData.w0 * scaleRatio);
+            $numHeight.val(sourceData.h0 * scaleRatio);
+            
+            this._scale(scaleRatio);
+        })
+        $numWidth.on('change', (e) => {
+            let sourceData = this._getSourceData();
+            let $this = $(e.target);       
+            let scaleRatio = parseInt($this.val()) / sourceData.w0;
+            $numHeight.val(sourceData.h0 * scaleRatio);
+            $scaleRange.val(max * scaleRatio);
+            
+            this._scale(scaleRatio);
+        })
+        $numHeight.on('change', (e) => {
+            let sourceData = this._getSourceData();
+            let $this = $(e.target);        
+            let scaleRatio = parseInt($this.val()) / sourceData.h0;
+            $numWidth.val(sourceData.w0 * scaleRatio);
+            $scaleRange.val(max * scaleRatio);
+            
+            this._scale(scaleRatio);
         })
 
     }
@@ -338,8 +376,11 @@ class PipeImg {
         }
         
     }
-    _scale() {
-        this.scaleRatio = 0.6;
+    _scale(scaleRatio) {
+        this.scaleRatio = scaleRatio;
+        $('.J-source').css({
+            'transform': `scale(${this.scaleRatio})`
+        });
     }
     _getRotateNum(direction) {
         this.rotateNum += direction;
