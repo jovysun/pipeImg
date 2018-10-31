@@ -34,6 +34,7 @@ class ImgHandler {
             // 水印相关参数，若watermarkImg存在则用图片水印，否则用文字水印。
             // 是否添加水印
             hasMark: true,
+            textAlign: 'left',
             // 水印字体，值同css的font
             markFont: '16px microsoft yahei',
             // 水印字样式，可选值：color,gradient,pattern
@@ -59,6 +60,7 @@ class ImgHandler {
         this.mime = options.mime;
 
         this.hasMark = options.hasMark;
+        this.textAlign = options.textAlign;
         this.markFont = options.markFont;
         this.markStyle = options.markStyle;
         this.markText = options.markText;
@@ -177,15 +179,10 @@ class ImgHandler {
         let dContext = canvas.getContext('2d');
         dContext.drawImage(targetImg, 0, 0);
         if (this.hasMark) {
-            dContext.textAlign = "end";
+            dContext.textBaseline = "top";
+            dContext.textAlign = this.textAlign;
             dContext.font = this.markFont;
             dContext.fillStyle = this.markStyle;
-            if (!this.markX) {
-                this.markX = canvas.width - 10;
-            }
-            if (!this.markY) {
-                this.markY = canvas.height - 10;
-            }
             dContext.fillText(this.markText, this.markX, this.markY);
 
         }

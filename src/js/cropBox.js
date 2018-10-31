@@ -17,7 +17,7 @@ class CropBox {
 
         var src = this.$ele.getAttribute('src');
 
-        this.html = `<div class="cropbox-wrapper">
+        this.html = `<div class="dragbox-wrapper J-dragbox-wrapper">
                         <img class="J-source" src="${src}" id="img1">
                         <img class="J-source" src="${src}" id="img2">
                         <div id="main">

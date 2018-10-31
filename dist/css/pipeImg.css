@@ -179,6 +179,15 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #fff;
   box-sizing: border-box; }
 
+.drag-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 50px;
+  border: 1px solid #fff;
+  box-sizing: border-box; }
+
 .Divmin {
   position: absolute;
   width: 8px;
@@ -230,93 +239,172 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: -4px;
   cursor: w-resize; }
 
-.wrapper {
+.markbox-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); }
+
+* {
+  user-select: none; }
+
+.dragbox-wrapper {
+  position: relative; }
+  .dragbox-wrapper .mark-txt {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    color: #000;
+    text-align: center; }
+  .dragbox-wrapper .drag-box {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    /*第三层需用绝对定位浮在上面*/
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fff;
+    box-sizing: border-box; }
+    .dragbox-wrapper .drag-box .drag-point {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #fff; }
+    .dragbox-wrapper .drag-box .up-left {
+      margin-top: -4px;
+      margin-left: -4px;
+      cursor: nw-resize; }
+    .dragbox-wrapper .drag-box .up {
+      left: 50%;
+      /*父元素盒子main宽度的一半，注意要有绝对定位*/
+      margin-left: -4px;
+      top: -4px;
+      cursor: n-resize; }
+    .dragbox-wrapper .drag-box .up-right {
+      top: -4px;
+      right: -4px;
+      cursor: ne-resize; }
+    .dragbox-wrapper .drag-box .right {
+      top: 50%;
+      margin-top: -4px;
+      right: -4px;
+      cursor: e-resize; }
+    .dragbox-wrapper .drag-box .right-down {
+      right: -4px;
+      bottom: -4px;
+      cursor: se-resize; }
+    .dragbox-wrapper .drag-box .down {
+      bottom: -4px;
+      left: 50%;
+      margin-left: -4px;
+      cursor: s-resize; }
+    .dragbox-wrapper .drag-box .left-down {
+      left: -4px;
+      bottom: -4px;
+      cursor: sw-resize; }
+    .dragbox-wrapper .drag-box .left {
+      left: -4px;
+      top: 50%;
+      margin-top: -4px;
+      cursor: w-resize; }
+
+.pipeImg-wrapper {
   margin: 50px auto;
   width: 740px;
   height: 580px;
   background-color: #212234; }
-  .wrapper .menu {
+  .pipeImg-wrapper .menu {
     font-size: 0; }
-  .wrapper .item {
+  .pipeImg-wrapper .item {
     display: inline-block;
     border-right: 1px solid rgba(255, 255, 255, 0.5);
     border-bottom: 1px solid rgba(255, 255, 255, 0); }
-    .wrapper .item:hover, .wrapper .item.active {
+    .pipeImg-wrapper .item:hover, .pipeImg-wrapper .item.active {
       border-bottom: 1px solid brown; }
-    .wrapper .item .item-sub {
+    .pipeImg-wrapper .item .item-sub {
       display: none; }
-  .wrapper .btn {
+  .pipeImg-wrapper .btn {
     display: block;
     padding: 10px 20px;
     color: #fff;
     font-size: 16px; }
-  .wrapper .btn-close {
+  .pipeImg-wrapper .btn-close {
     position: absolute;
     right: 0;
     top: 0;
     border-left: 1px solid rgba(255, 255, 255, 0.5); }
-  .wrapper .buttons {
+  .pipeImg-wrapper .buttons {
     position: absolute;
     right: 10px;
     top: 10px;
     font-size: 0; }
-    .wrapper .buttons .button {
+    .pipeImg-wrapper .buttons .button {
       display: inline-block;
       padding: 5px 20px;
       color: #fff;
       font-size: 16px;
       background-color: #555d72;
       border-radius: 4px; }
-      .wrapper .buttons .button.button-main {
+      .pipeImg-wrapper .buttons .button.button-main {
         background-color: #48b152;
         margin-right: 10px; }
-  .wrapper .header {
+      .pipeImg-wrapper .buttons .button.button-confirm {
+        background-color: #E64545;
+        margin-right: 10px; }
+  .pipeImg-wrapper .header {
     position: relative;
     background-color: #393a4c; }
-  .wrapper .content {
+  .pipeImg-wrapper .content {
     overflow: hidden; }
-    .wrapper .content .panel {
+    .pipeImg-wrapper .content .panel {
       display: none; }
-      .wrapper .content .panel.active {
+      .pipeImg-wrapper .content .panel.active {
         display: block; }
-    .wrapper .content .img-box {
+    .pipeImg-wrapper .content .img-box {
+      position: relative;
       height: 420px;
       margin: 10px;
       display: flex;
       align-items: center;
       justify-content: center; }
-    .wrapper .content .content-footer {
+    .pipeImg-wrapper .content .content-footer {
       position: relative;
       padding: 10px 0;
       height: 34px;
       background-color: #212234; }
-      .wrapper .content .content-footer label, .wrapper .content .content-footer .txt {
+      .pipeImg-wrapper .content .content-footer label, .pipeImg-wrapper .content .content-footer .txt {
         color: #fff; }
-      .wrapper .content .content-footer input[type=checkbox] {
+      .pipeImg-wrapper .content .content-footer input[type=checkbox] {
         width: 20px;
         height: 20px;
         background: #fff;
         color: #000; }
-    .wrapper .content .btn {
+    .pipeImg-wrapper .content .btn {
       padding: 5px 20px; }
-    .wrapper .content .size {
+    .pipeImg-wrapper .content .size {
       display: block;
       padding: 5px 20px;
       color: #fff;
       font-size: 16px; }
-  .wrapper .footer {
+  .pipeImg-wrapper .footer {
     background-color: #393a4c;
     font-size: 0;
     padding: 20px 10px; }
-    .wrapper .footer .img-thumbnail {
+    .pipeImg-wrapper .footer .img-thumbnail {
       display: inline-block;
       margin-right: 10px;
       width: 60px;
       height: 45px;
       opacity: 0.5;
       text-align: center; }
-      .wrapper .footer .img-thumbnail.active {
+      .pipeImg-wrapper .footer .img-thumbnail.active {
         opacity: 1; }
-      .wrapper .footer .img-thumbnail img {
+      .pipeImg-wrapper .footer .img-thumbnail img {
         max-width: 100%;
         max-height: 100%; }
