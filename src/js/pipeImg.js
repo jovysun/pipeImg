@@ -157,8 +157,7 @@ class PipeImg {
             }
             // 进入裁剪
             if (index === 1) {
-
-
+                self._initCrop();
             }
             // 离开裁剪
             if (index !== 1 && oldActiveIndex === 1) {
@@ -239,10 +238,6 @@ class PipeImg {
         })
 
 
-
-        // 水印事件
-
-
     }
     _getSourceData() {
 
@@ -284,19 +279,57 @@ class PipeImg {
             targetImgRatio: targetImgRatio
         }
     }
+    _initCrop() {
+        let $wrapper = $('.J-pipeImg-wrapper');
+        let $cropPanel = $wrapper.find('.J-crop-panel');
+        let $numWidth = $cropPanel.find('.J-num-width');
+        let $numHeight = $cropPanel.find('.J-num-height');
+        let $fixRatio = $cropPanel.find('.J-fix-ratio');
+        
+        let isFixed = $fixRatio.prop('checked');
+
+        let width = $numWidth.val();
+        let height = $numHeight.val();
+        $numWidth.on('input', (e) => {
+            width = $(e.target).val();
+            if (isFixed) {
+                height = width / this.cropBox.boxData.ratio;
+                $numHeight.val(height);
+            }
+            this.cropBox.update(width / this.sourceData.ratio, height / this.sourceData.ratio);
+        })
+        $numHeight.on('input', (e) => {
+            height = $(e.target).val();
+            if (isFixed) {
+                width = height * this.cropBox.boxData.ratio;
+                $numWidth.val(width);
+            }
+            this.cropBox.update(width / this.sourceData.ratio, height / this.sourceData.ratio);
+        })
+        $fixRatio.on('change', (e) => {     
+            this.cropBox.fixRatio = isFixed = !isFixed;
+        })
+    }
     _initScale() {
         let $wrapper = $('.J-pipeImg-wrapper');
-        let $scaleRange = $wrapper.find('.J-scale-range');
-        let $numWidth = $wrapper.find('.J-num-width');
-        let $numHeight = $wrapper.find('.J-num-height');
+        let $scalePanel = $wrapper.find('.J-scale-panel');
+        let $scaleImgBox = $scalePanel.find('.J-img-box');
+        let $scaleRange = $scalePanel.find('.J-scale-range');
+        let $numWidth = $scalePanel.find('.J-num-width');
+        let $numHeight = $scalePanel.find('.J-num-height');
         let max = parseInt($scaleRange.attr('max'));
 
+        // 去除预览图的缩放显示
+        $scaleImgBox.find('.J-source').css({
+            width: 'auto',
+            height: 'auto'
+        })
         // 初始化滑块值
         $scaleRange.val($scaleRange.attr('max'));
         this.scaleRatio = 1;
 
         // 缩放事件绑定
-        $scaleRange.on('change', (e) => {
+        $scaleRange.on('input', (e) => {
             let sourceData = this._getSourceData();
             let $this = $(e.target);
             let scaleRatio = parseInt($this.val()) / max;
@@ -305,7 +338,7 @@ class PipeImg {
 
             this._scale(scaleRatio);
         })
-        $numWidth.on('change', (e) => {
+        $numWidth.on('input', (e) => {
             let sourceData = this._getSourceData();
             let $this = $(e.target);
             let scaleRatio = parseInt($this.val()) / sourceData.w0;
@@ -314,7 +347,7 @@ class PipeImg {
 
             this._scale(scaleRatio);
         })
-        $numHeight.on('change', (e) => {
+        $numHeight.on('input', (e) => {
             let sourceData = this._getSourceData();
             let $this = $(e.target);
             let scaleRatio = parseInt($this.val()) / sourceData.h0;
@@ -334,7 +367,7 @@ class PipeImg {
         })
 
         // 事件绑定
-        $wrapper.find('[name=color],[name=opacity]').on('change', () => {
+        $wrapper.find('[name=color],[name=opacity]').on('input', () => {
 
             this._getMarkParams();
 

@@ -13,6 +13,7 @@ class DragBox {
             markText: 'producttest.en.made-in-china.com',
             // 是否有明暗效果，主要是裁剪图片效果
             hasLight: false,
+            fixRatio: false,
             // 拖动触点回调函数
             onDragPoint: (boxData) => {},
             onDragComplete: () => {}
@@ -24,6 +25,7 @@ class DragBox {
         this.height = options.height;
         this.markText = options.markText;
         this.hasLight = options.hasLight;
+        this.fixRatio = options.fixRatio;
         this.onDragPoint = options.onDragPoint;
         this.onDragComplete = options.onDragComplete;
 
@@ -75,6 +77,14 @@ class DragBox {
 
 
         this.$mainDiv = this.$dragBox.get(0);
+
+        this.boxData = {
+            left: this.$mainDiv.offsetLeft,
+            top: this.$mainDiv.offsetTop,
+            width: this.$mainDiv.offsetWidth,
+            height: this.$mainDiv.offsetHeight,
+            ratio: this.$mainDiv.offsetWidth / this.$mainDiv.offsetHeight
+        };
        
         this._bind();
         
@@ -84,23 +94,20 @@ class DragBox {
             this.onDragComplete(left, top);
         });
 
-        this.boxData = {
-            left: this.$mainDiv.offsetLeft,
-            top: this.$mainDiv.offsetTop,
-            width: this.$mainDiv.offsetWidth,
-            height: this.$mainDiv.offsetHeight
-        };
+        
     }
     _bind() {
         let isDraging = false;
         let contact = ""; //表示被按下的触点
         const DRAGPOINT = ['up-left', 'up', 'up-right', 'right', 'right-down', 'down', 'left-down', 'left'];
+        let dragBoxRatio = this.boxData.width / this.boxData.height;
         //鼠标按下时
         this.$dragPoint.on('mousedown', (e) => {
             e.stopPropagation();
             isDraging = true;
             let index = $(e.target).index();
             contact = DRAGPOINT[index];
+            dragBoxRatio = this.boxData.width / this.boxData.height;
         })
         
         $(document).on('mouseup', (e) => {
@@ -109,19 +116,21 @@ class DragBox {
                 left: this.$mainDiv.offsetLeft,
                 top: this.$mainDiv.offsetTop,
                 width: this.$mainDiv.offsetWidth,
-                height: this.$mainDiv.offsetHeight
+                height: this.$mainDiv.offsetHeight,
+                ratio: this.$mainDiv.offsetWidth / this.$mainDiv.offsetHeight
             };
         })
         $(document).on('mousemove', (e) => {
             if (isDraging == true) {
-                this._move(e, contact);
+                this._move(e, contact, dragBoxRatio);
                 this._light();
 
                 this.boxData = {
                     left: this.$mainDiv.offsetLeft,
                     top: this.$mainDiv.offsetTop,
                     width: this.$mainDiv.offsetWidth,
-                    height: this.$mainDiv.offsetHeight
+                    height: this.$mainDiv.offsetHeight,
+                    ratio: this.$mainDiv.offsetWidth / this.$mainDiv.offsetHeight
                 };
                 
                 this.onDragPoint(this.boxData);
@@ -131,7 +140,7 @@ class DragBox {
     }
 
     //获取元素相对于屏幕左边及上边的距离，利用offsetLeft
-    getPosition(el) {
+    _getPosition(el) {
         var left = el.offsetLeft;
         var top = el.offsetTop;
         var parent = el.offsetParent;
@@ -146,46 +155,102 @@ class DragBox {
         };
     }
 
-    _move(e, contact) {
+    _move(e, contact, dragBoxRatio) {
         let x = e.clientX,
             y = e.clientY;
         let oldWidth = this.$mainDiv.offsetWidth; //选取框变化前的宽度
         let oldHeight = this.$mainDiv.offsetHeight; //选取框变化前的高度
-        let position = this.getPosition(this.$mainDiv);
+        let position = this._getPosition(this.$mainDiv);
         let top = position.top;
         let left = position.left;
+        if (this.fixRatio) {
+            
+            if (contact === 'up-left') {
+                var addWidth = left - x;
+                let newWidth = oldWidth + addWidth;
+                let newHeight = newWidth / dragBoxRatio;
+                let addHeight = newHeight - oldHeight;
 
-        if(contact.indexOf('up') != -1){         
-            var addHeight = top - y;
-            this.$mainDiv.style.height = oldHeight + addHeight + 'px';
-            this.$mainDiv.style.top = this.$mainDiv.offsetTop - addHeight + 'px';
+                this.$mainDiv.style.width = newWidth + 'px';
+                this.$mainDiv.style.height = newHeight + 'px';
+                this.$mainDiv.style.left = this.$mainDiv.offsetLeft - addWidth + 'px';
+                this.$mainDiv.style.top = this.$mainDiv.offsetTop - addHeight + 'px';
+            }
+            else if(contact === 'up-right'){
+                var addWidth = x - left - oldWidth;
+                let newWidth = oldWidth + addWidth;
+                let newHeight = newWidth / dragBoxRatio;
+                let addHeight = newHeight - oldHeight;
+
+                this.$mainDiv.style.width = newWidth + 'px';
+                this.$mainDiv.style.height = newHeight + 'px';
+                this.$mainDiv.style.top = this.$mainDiv.offsetTop - addHeight + 'px';
+            }
+            else if(contact === 'right-down'){
+                var addWidth = x - left - oldWidth;
+                let newWidth = oldWidth + addWidth;
+                let newHeight = newWidth / dragBoxRatio;
+                let addHeight = newHeight - oldHeight;
+
+                this.$mainDiv.style.width = newWidth + 'px';
+                this.$mainDiv.style.height = newHeight + 'px';
+            }
+            else if(contact === 'left-down'){
+                var addWidth = left - x;
+                let newWidth = oldWidth + addWidth;
+                let newHeight = newWidth / dragBoxRatio;
+                let addHeight = newHeight - oldHeight;
+
+                this.$mainDiv.style.width = newWidth + 'px';
+                this.$mainDiv.style.height = newHeight + 'px';
+                this.$mainDiv.style.left = this.$mainDiv.offsetLeft - addWidth + 'px';
+            }
+
+        }else{
+            if(contact.indexOf('up') != -1){         
+                var addHeight = top - y;
+                this.$mainDiv.style.height = oldHeight + addHeight + 'px';
+                this.$mainDiv.style.top = this.$mainDiv.offsetTop - addHeight + 'px';
+            }
+            if(contact.indexOf('right') != -1){
+                var addWidth = x - left - oldWidth;
+                this.$mainDiv.style.width = oldWidth + addWidth + 'px';
+            }
+            if(contact.indexOf('down') != -1){
+                var addHeight = y - top - oldHeight;
+                this.$mainDiv.style.height = oldHeight + addHeight + 'px';
+            }
+            if(contact.indexOf('left') != -1){
+                var addWidth = left - x;
+                this.$mainDiv.style.width = oldWidth + addWidth + 'px';
+                this.$mainDiv.style.left = this.$mainDiv.offsetLeft - addWidth + 'px';
+            }
         }
-        if(contact.indexOf('right') != -1){
-            var addWidth = x - left - oldWidth;
-            this.$mainDiv.style.width = oldWidth + addWidth + 'px';
-        }
-        if(contact.indexOf('down') != -1){
-            var addHeight = y - top - oldHeight;
-            this.$mainDiv.style.height = oldHeight + addHeight + 'px';
-        }
-        if(contact.indexOf('left') != -1){
-            var addWidth = left - x;
-            this.$mainDiv.style.width = oldWidth + addWidth + 'px';
-            this.$mainDiv.style.left = this.$mainDiv.offsetLeft - addWidth + 'px';
-        }
+
+
+
     }
     _light() {
         if (this.hasLight) {
-            this.setChoice();
+            this._setChoice();
         }
     }
     //设置选取框图片区域明亮显示
-    setChoice() {
+    _setChoice() {
         var top = this.$mainDiv.offsetTop;
         var right = this.$mainDiv.offsetLeft + this.$mainDiv.offsetWidth;
         var bottom = this.$mainDiv.offsetTop + this.$mainDiv.offsetHeight;
         var left = this.$mainDiv.offsetLeft;
         img2.style.clip = "rect(" + top + "px," + right + "px," + bottom + "px," + left + "px)";
+    }
+
+    update(width, height) {
+        this.width = width;
+        this.height = height;
+        this.$dragBox.css({
+            width: this.width,
+            height: this.height
+        });
     }
 }
 
