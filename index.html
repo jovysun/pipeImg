@@ -9,24 +9,27 @@
 </head>
 
 <body>
-    <div class="pipeImg-wrapper J-pipeImg-wrapper">
+    <h1 style="text-align:center;padding: 10px;"><button class="J-btn-edit" style="font-size: 20px;">编辑</button></h1>
+    
+    <!-- 弹框代码 -->
+    <div class="pipeImg-wrapper J-pipeImg-wrapper" style="display:none;">
         <div class="header">
             <ul class="menu">
-                <li class="item active J-menu-item"><a class="btn btn-rotate J-btn-rotate" href="javascript:void(0)">旋转</a></li>
-                <li class="item J-menu-item"><a class="btn btn-rotate J-btn-crop" href="javascript:void(0)">裁剪</a></li>
-                <li class="item J-menu-item"><a class="btn btn-rotate J-btn-scale" href="javascript:void(0)">缩放</a></li>
+                <li class="item active J-menu-item"><a class="btn J-btn-rotate" href="javascript:void(0)">旋转</a></li>
+                <li class="item J-menu-item"><a class="btn J-btn-crop" href="javascript:void(0)">裁剪</a></li>
+                <li class="item J-menu-item"><a class="btn J-btn-scale" href="javascript:void(0)">缩放</a></li>
                 <li class="item J-menu-item">
-                    <a class="btn btn-rotate J-btn-mark" href="javascript:void(0)">添加水印</a>
-                    <div class="item-sub">
-                        <a class="btn btn-rotate J-btn-mark-all" href="javascript:void(0)">批量添加水印</a>
-                    </div>
+                    <a class="btn J-btn-mark" href="javascript:void(0)">添加水印</a>
+                </li>
+                <li class="item J-menu-item">
+                    <a class="btn J-btn-mark-all" href="javascript:void(0)">批量添加水印</a>
                 </li>
             </ul>
-            <a class="btn btn-close J-btn-close" href="javascript:void(0)">关闭</a>
+            <a class="btn btn-close J-button-close" href="javascript:void(0)">关闭</a>
         </div>
         <div class="content">
             <!-- 旋转面板 -->
-            <div class="panel active J-panel">
+            <div class="panel active J-panel J-rotate-panel">
                 <div class="img-box J-img-box">
                 </div>
                 <div class="content-footer">
@@ -84,7 +87,7 @@
 
             </div>
             <!-- 添加水印面板 -->
-            <div class="panel J-panel">
+            <div class="panel J-panel J-mark-panel">
                 <div class="img-box J-img-box J-mark-box">
 
                 </div>
@@ -96,19 +99,19 @@
                     </div>
                     <div class="item">
                         <label for="position">位置：</label>
-                        <input type="radio" name="position" value="0" checked autocomplete="off">
-                        <input type="radio" name="position" value="1" autocomplete="off">
-                        <input type="radio" name="position" value="2" autocomplete="off">
-                        <input type="radio" name="position" value="3" autocomplete="off">
-                        <input type="radio" name="position" value="4" autocomplete="off">
+                        <input class="J-position" type="radio" name="position" value="0" checked autocomplete="off">
+                        <input class="J-position" type="radio" name="position" value="1" autocomplete="off">
+                        <input class="J-position" type="radio" name="position" value="2" autocomplete="off">
+                        <input class="J-position" type="radio" name="position" value="3" autocomplete="off">
+                        <input class="J-position" type="radio" name="position" value="4" autocomplete="off">
                     </div>
                     <div class="item">
 
                         <label for="opacity">透明度：</label>
-                        <input name="opacity" type="range" min="0" max="1" step="0.1" value="0.6">
+                        <input class="J-opacity" name="opacity" type="range" min="0" max="1" step="0.1" value="0.8">
                     </div>
 
-                    <select name="markTxt" id="">
+                    <select class="J-markTxt" name="markTxt">
                         <option value="0" selected="selected">展示厅</option>
                         <option value="1">公司名称</option>
                     </select>
@@ -119,7 +122,42 @@
                 </div>
 
             </div>
+            <!-- 批量添加水印面板 -->
+            <div class="panel J-panel J-mark-all-panel">
+                <div class="img-box J-img-box J-mark-box-all">
 
+                </div>
+                <div class="content-footer">
+                    <div class="item">
+                        <label for="colorAll">颜色：</label>
+                        <input class="J-color" type="radio" name="colorAll" value="0" autocomplete="off">
+                        <input class="J-color" type="radio" name="colorAll" value="1" checked autocomplete="off">
+                    </div>
+                    <div class="item">
+                        <label for="positionAll">位置：</label>
+                        <input class="J-position" type="radio" name="positionAll" value="0" checked autocomplete="off">
+                        <input class="J-position" type="radio" name="positionAll" value="1" autocomplete="off">
+                        <input class="J-position" type="radio" name="positionAll" value="2" autocomplete="off">
+                        <input class="J-position" type="radio" name="positionAll" value="3" autocomplete="off">
+                        <input class="J-position" type="radio" name="positionAll" value="4" autocomplete="off">
+                    </div>
+                    <div class="item">
+
+                        <label for="opacityAll">透明度：</label>
+                        <input class="J-opacity" name="opacityAll" type="range" min="0" max="1" step="0.1" value="0.8">
+                    </div>
+
+                    <select class="J-markTxt" name="markTxtAll">
+                        <option value="0" selected="selected">展示厅</option>
+                        <option value="1">公司名称</option>
+                    </select>
+                    <div class="buttons">
+                        <a class="button button-confirm J-button-confirm-all" href="javascript:void(0)">保存</a>
+                        <a class="button button-cancel J-button-cancel" href="javascript:void(0)">取消</a>
+                    </div>
+                </div>
+
+            </div>
         </div>
         <div class="footer J-imgs-thumbnail">
             <!-- <a class="img-thumbnail active J-img-thumbnail" href="javascript:void(0)">
@@ -131,14 +169,20 @@
         </div>
     </div>
 
-    <div id="J-preview-container"><img></div>
+    <div id="J-preview-container"></div>
 
     <script src="./libs/jquery.js"></script>
     <script src="./dist/js/pipeImg.js"></script>
     <script>
-        let pipeImg = new PipeImg({
-            source: ['./assets/Jellyfish.jpg', './assets/greensock.png']
-        });
+        var pipeImg;
+        $('.J-btn-edit').on('click', function(){
+            $('.J-pipeImg-wrapper').show();
+
+            pipeImg = pipeImg || new PipeImg({
+                source: ['./assets/Jellyfish.jpg', './assets/greensock.png']
+            });
+        })
+
 
     </script>
 </body>

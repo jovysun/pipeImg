@@ -1,11 +1,11 @@
 //拖拽
-function drag(moveElement, dragBar = document, cb) {
+function drag(moveElement, dragBar = document, container, cb) {
     if (!moveElement) return;
 
-    let draging = false,
+    var draging = false,
         x0, y0, mLeft0, mTop0, mLeft1, mTop1;
 
-    let mousedownHandler = (e) => {
+    var mousedownHandler = (e) => {
         e = e || window.event;
         x0 = e.clientX;
         y0 = e.clientY;
@@ -15,13 +15,25 @@ function drag(moveElement, dragBar = document, cb) {
         draging = true;
 
     };
-    let mousemoveHandler = (e) => {
+    var mousemoveHandler = (e) => {
         e = e || window.event;
         if (draging) {
-            let x1 = e.clientX,
+            var x1 = e.clientX,
                 y1 = e.clientY;
             mLeft1 = x1 - x0 + mLeft0;
             mTop1 = y1 - y0 + mTop0;
+
+
+            if (container) {
+                // 计算可移动位置的大小， 保证元素不会超过可移动范围
+                // 此处就是父元素的宽度减去子元素宽度
+                var width = container.clientWidth - moveElement.offsetWidth;
+                var height = container.clientHeight - moveElement.offsetHeight;
+                // min方法保证不会超过右边界，max保证不会超过左边界
+                mLeft1 = Math.min(Math.max(0, mLeft1), width);
+                mTop1 = Math.min(Math.max(0, mTop1), height);
+            }
+
 
             moveElement.style.left = mLeft1;
             moveElement.style.top = mTop1;
@@ -29,7 +41,7 @@ function drag(moveElement, dragBar = document, cb) {
             typeof cb === 'function' && cb(mLeft1, mTop1);
         }
     };
-    let mouseupHandler = (e) => {
+    var mouseupHandler = (e) => {
         draging = false;
     }
 

@@ -29,6 +29,7 @@
         height: 100%;
         border: 1px solid #fff;
         box-sizing: border-box;
+        cursor: move;
 
         .drag-point {
             position: absolute;
@@ -88,6 +89,10 @@
             top: 50%;
             margin-top: -4px;
             cursor: w-resize;
+        }
+
+        .up,.down,.left,.right{
+            display: none;
         }
     }
     

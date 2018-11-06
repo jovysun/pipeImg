@@ -1,15 +1,5 @@
 import {
-    drag,
-    $,
-    loadImage,
     getCanvas,
-    getBase64Size,
-    compress,
-    base64Data2Blob,
-    blob2FormData,
-    chooseFile,
-    uploadFile,
-    getImgPromise
 } from './util';
 
 class ImgHandler {
@@ -86,7 +76,12 @@ class ImgHandler {
 
     init() {
         this.results.push(this.sourceImg);
-        
+
+        let targetImgData = this._getTargetImg();
+        let canvas = getCanvas(targetImgData.sourceW0, targetImgData.sourceH0);
+        let ctx = canvas.getContext('2d');
+        ctx.drawImage(this.sourceImg, 0, 0);
+        this.result = canvas;
     }
     _getTargetImg() {
         let targetImg = this.results[this.results.length - 1];
@@ -163,7 +158,7 @@ class ImgHandler {
         context.drawImage(tempCvs, sx, sy, w, h, 0, 0, w, h);
 
         this.base64Data = canvas.toDataURL(this.mime);
-
+        this.result = canvas;
         this.results.push(canvas);
         return this;
     }
@@ -188,6 +183,7 @@ class ImgHandler {
         }
 
         this.base64Data = canvas.toDataURL(this.mime);
+        this.result = canvas;
         this.results.push(canvas);
         return this;
     }
@@ -204,6 +200,7 @@ class ImgHandler {
         context.drawImage(targetImg, this.sx, this.sy, this.cropW, this.cropH, 0, 0, this.cropW, this.cropH);
 
         this.base64Data = canvas.toDataURL(this.mime);
+        this.result = canvas;
         this.results.push(canvas);
         return this;
     }
@@ -222,6 +219,7 @@ class ImgHandler {
         context.drawImage(targetImg, 0, 0, sourceW0, sourceH0, 0, 0, resultW, resultH);
 
         this.base64Data = canvas.toDataURL(this.mime);
+        this.result = canvas;
         this.results.push(canvas);
         return this;
     }
