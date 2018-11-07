@@ -99,6 +99,8 @@ class ImgHandler {
     }
     // 重置
     reset() {
+        this.rotateNum = 0;
+        this.scaleRatio = 1;
         this.results = this.results.slice(0, 1);
     }
     // 回退

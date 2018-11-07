@@ -11,9 +11,11 @@
 <body>
     <h1 style="text-align:center;padding: 10px;"><button class="J-btn-edit" style="font-size: 20px;">编辑</button></h1>
     
+    <div id="J-preview-container"></div>
+    <script type="text/template" id="J-pipeImg-template">
     <!-- 弹框代码 -->
-    <div class="pipeImg-wrapper J-pipeImg-wrapper" style="display:none;">
-        <div class="header">
+    <div class="pipeImg-wrapper J-pipe-wrapper">
+        <div class="pipe-header">
             <ul class="menu">
                 <li class="item active J-menu-item"><a class="btn J-btn-rotate" href="javascript:void(0)">旋转</a></li>
                 <li class="item J-menu-item"><a class="btn J-btn-crop" href="javascript:void(0)">裁剪</a></li>
@@ -27,7 +29,7 @@
             </ul>
             <a class="btn btn-close J-button-close" href="javascript:void(0)">关闭</a>
         </div>
-        <div class="content">
+        <div class="pipe-content">
             <!-- 旋转面板 -->
             <div class="panel active J-panel J-rotate-panel">
                 <div class="img-box J-img-box">
@@ -159,28 +161,19 @@
 
             </div>
         </div>
-        <div class="footer J-imgs-thumbnail">
-            <!-- <a class="img-thumbnail active J-img-thumbnail" href="javascript:void(0)">
-                <img src="./assets/Jellyfish.jpg" alt="">
-            </a>
-            <a class="img-thumbnail J-img-thumbnail" href="javascript:void(0)">
-                <img src="./assets/Desert.jpg" alt="">
-            </a> -->
-        </div>
+        <div class="pipe-footer J-imgs-thumbnail"></div>
     </div>
-
-    <div id="J-preview-container"></div>
-
+    </script>
     <script src="./libs/jquery.js"></script>
     <script src="./dist/js/pipeImg.js"></script>
     <script>
-        var pipeImg;
-        $('.J-btn-edit').on('click', function(){
-            $('.J-pipeImg-wrapper').show();
-
-            pipeImg = pipeImg || new PipeImg({
+        var pipeImg = new PipeImg({
                 source: ['./assets/Jellyfish.jpg', './assets/greensock.png']
             });
+        $('.J-btn-edit').on('click', function(){
+            // $('.J-pipeImg-wrapper').show();
+            pipeImg.showDialog()
+            
         })
 
 

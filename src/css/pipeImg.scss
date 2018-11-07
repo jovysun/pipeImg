@@ -3,11 +3,30 @@
 @import './cropbox';
 @import './dragbox';
 
+.pipe-dialog{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 2025;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+    .pipe-mask{
+        height: 100%;
+        background: rgb(0, 0, 0) none repeat scroll 0% 0%;
+        opacity: 0.4;
+    }
+}
 .pipeImg-wrapper{
-    margin: 50px auto;
-    width: 740px;
-    height: 580px;
+    // width: 740px;
+    // height: 580px;
     background-color: #212234;
+    position: absolute;
+    top: 50%;
+    margin-top: -290px;
+    left: 50%;
+    margin-left: -370px;
     
     .menu{
         font-size: 0;
@@ -58,11 +77,11 @@
             }
         }
     }
-    .header{
+    .pipe-header{
         position: relative;
         background-color: #393a4c;
     }
-    .content{
+    .pipe-content{
         // height: 454px;
         // padding: 10px 0;
         overflow: hidden;
@@ -74,6 +93,7 @@
         }
         .img-box{
             position: relative;
+            width: 720px;
             height: 420px;
             margin: 10px;
             display: flex;
@@ -112,7 +132,7 @@
             font-size: 16px;
         }
     }
-    .footer{
+    .pipe-footer{
         background-color: #393a4c;
         font-size: 0;
         padding: 20px 10px;
@@ -133,4 +153,6 @@
             }
         }
     }
+
+
 }
