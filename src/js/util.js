@@ -129,7 +129,7 @@ function getBase64Size(base64Data) {
     return parseInt(strLength - (strLength / 8) * 2);
 }
 // 压缩只支持image/jpeg和image/webp
-function compress(img, quality = 0.6, width, height, mime = 'images/jpeg') { //  Image 对象，或者是 Canvas 元素
+function compress(img, quality = 1, width, height, mime = 'images/jpeg') { //  Image 对象，或者是 Canvas 元素
     let canvas = getCanvas(width, height),
         ctx = canvas.getContext("2d");
     if (width && height) {
@@ -138,7 +138,10 @@ function compress(img, quality = 0.6, width, height, mime = 'images/jpeg') { // 
         ctx.drawImage(img, 0, 0);
     }
 
-    let base64 = canvas.toDataURL(mime, quality);
+    let base64 = canvas.toDataURL(mime);
+    if (quality < 1) {
+        base64 = canvas.toDataURL(mime, quality);
+    }
 
     return base64; // 压缩后的base64串
 }

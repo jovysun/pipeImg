@@ -199,7 +199,7 @@ class ImgHandler {
         let context = canvas.getContext('2d');
         context.drawImage(targetImg, this.sx, this.sy, this.cropW, this.cropH, 0, 0, this.cropW, this.cropH);
 
-        this.base64Data = canvas.toDataURL(this.mime);
+        // this.base64Data = canvas.toDataURL(this.mime);
         this.result = canvas;
         this.results.push(canvas);
         return this;
@@ -218,7 +218,7 @@ class ImgHandler {
         let context = canvas.getContext('2d');
         context.drawImage(targetImg, 0, 0, sourceW0, sourceH0, 0, 0, resultW, resultH);
 
-        this.base64Data = canvas.toDataURL(this.mime);
+        // this.base64Data = canvas.toDataURL(this.mime);
         this.result = canvas;
         this.results.push(canvas);
         return this;

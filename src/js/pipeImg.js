@@ -3,7 +3,8 @@ import {
     compress,
     base64Data2Blob,
     blob2FormData,
-    loadImages
+    loadImages,
+    getCanvas
 } from './util';
 import {
     ImgHandler
@@ -177,7 +178,7 @@ class PipeImg {
             if (index === 3) {
                 self._initMark();
             }
-            
+
             // 进入批量水印
             if (index === 4) {
                 self._initMarkAll();
@@ -313,7 +314,7 @@ class PipeImg {
             }
 
             let activeImg = this.resultList[this.resultList.length - 1];
-            let base64Data = activeImg.toDataURL(this.mime);
+            let base64Data = activeImg.toDataURL(this.mime, 1);
             let $activeThumbnail = this.$ele.find('.J-img-thumbnail.active');
             // 更新底部缩略图显示
             $activeThumbnail.find('img').attr('src', base64Data);
@@ -528,8 +529,8 @@ class PipeImg {
         let $dragBoxWrapper = this.markBox.$dragBox.parent();
         let dragBoxWrapperWidth = $dragBoxWrapper.width();
         let dragBoxWrapperHeight = $dragBoxWrapper.height();
-        let dragBoxWidth = this.markBox.$dragBox.width() < dragBoxWrapperWidth ? this.markBox.$dragBox.width() : dragBoxWrapperWidth;
-        let dragBoxHeight = this.markBox.$dragBox.height() < dragBoxWrapperHeight ? this.markBox.$dragBox.height() : dragBoxWrapperHeight;
+        let dragBoxWidth = this.markBox.$dragBox.outerWidth() < dragBoxWrapperWidth ? this.markBox.$dragBox.outerWidth() : dragBoxWrapperWidth;
+        let dragBoxHeight = this.markBox.$dragBox.outerHeight() < dragBoxWrapperHeight ? this.markBox.$dragBox.outerHeight() : dragBoxWrapperHeight;
 
         switch (POSITION[positionVal]) {
             case 'center':
@@ -664,7 +665,7 @@ class PipeImg {
         })
     }
     _refresh() {
-        let base64Data = this.resultList[this.resultList.length - 1].toDataURL(this.mime);
+        let base64Data = this.resultList[this.resultList.length - 1].toDataURL(this.mime, 1);
 
         if ($('.J-img-box').find('.J-source').length > 0) {
             $('.J-img-box').find('.J-source').attr('src', base64Data);
@@ -712,13 +713,7 @@ class PipeImg {
         if (cvs.nodeName.toLowerCase() !== 'canvas') {
             return false;
         }
-        let data = cvs.toDataURL(this.mime);
-        let size0 = getBase64Size(data);
-        // console.log('start compress: ' + Math.ceil(size0 / 1024));
-        if (size0 > 1024 * this.maxSize) {
-            let quality = Math.floor(1024 * this.maxSize / size0 * 10) / 10;
-            data = compress(resultCvs, quality);
-        }
+        let data = this._compress(cvs);
         // 模拟处理后图片展示
         $('#J-preview-container').append($('<img>').attr('src', data));
 
@@ -733,6 +728,55 @@ class PipeImg {
             processData: false, // 不处理数据
             contentType: false // 不设置内容类型
         });
+    }
+    _compress(cvs, isSimple) {
+        let quality = 1;
+        let minWH = 800;
+        let scaleRatio = 0.9;
+        let qualityStep = 0.1;
+        // 质量压缩只支持'images/jpeg'，'image/webp'
+        let qualityType = 'images/jpeg';
+        const MAX = this.maxSize * 1024;
+        let width = cvs.width;
+        let height = cvs.height;
+        let cvsRatio = width / height;
+        let data = cvs.toDataURL(this.mime, 1);
+        let size0 = getBase64Size(data);
+        console.log('start compress: ' + Math.ceil(size0 / 1024));
+        if (isSimple) {
+            quality = Math.floor(1024 * this.maxSize / size0 * 10) / 10;
+            data = canvas.toDataURL(qualityType, quality);
+        } else {
+            // 优先缩放
+            while (size0 > MAX && (width > minWH || height > minWH)) {
+                let newWidth, newHeight;
+                if (cvsRatio > 1) {
+                    newWidth = width * scaleRatio > minWH ? width * scaleRatio : minWH;
+                    newHeight = newWidth / cvsRatio;
+                } else {
+                    newHeight = height * scaleRatio > minWH ? height * scaleRatio : minWH;
+                    newWidth = newHeight * cvsRatio;
+                }
+
+                let canvas = getCanvas(newWidth, newHeight),
+                    ctx = canvas.getContext("2d");
+                ctx.drawImage(cvs, 0, 0, newWidth, newHeight);
+
+                data = canvas.toDataURL(this.mime, 1);
+                size0 = getBase64Size(data);
+                width = newWidth;
+                height = newHeight;
+                cvs = canvas;
+            }
+            // 降低质量
+            while (size0 > MAX) {
+                quality -= qualityStep;
+                data = canvas.toDataURL(qualityType, quality);
+                size0 = getBase64Size(data);
+            }
+        }
+        console.log('end compress: ' + Math.ceil(size0 / 1024));
+        return data;
     }
 
 
