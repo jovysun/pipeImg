@@ -140,7 +140,7 @@ class PipeImg {
             this.resultList = [this.imgHandler.result];
 
             this._refresh();
-            // this._initPanel();
+            this._initPanel();
         })
 
         // 菜单切换
@@ -289,7 +289,8 @@ class PipeImg {
 
                 this.save(imgHandler.result);
             })
-            this.hideDialog();
+            
+            this.destory();
         })
 
         // 重置
@@ -323,15 +324,16 @@ class PipeImg {
 
             this.save(activeImg);
         })
+        // 关闭
         this.$el.find('.J-button-close').on('click', (e) => {
-            this.hideDialog();
+            this.destory();
         })
 
     }
     _initPanel() {
         this._initCrop();
         this._initScale();
-        this._initMark();
+        // this._initMark();
         this._initMarkAll();
     }
     _goHome() {

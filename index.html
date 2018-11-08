@@ -16,11 +16,11 @@
     <script src="./libs/jquery.js"></script>
     <script src="./dist/js/pipeImg.js"></script>
     <script>
-        var pipeImg = new PipeImg({
-            source: ['./assets/Jellyfish.jpg', './assets/greensock.png']
-        });
+        
         $('.J-btn-edit').on('click', function(){
-            pipeImg.showDialog()
+            var pipeImg = new PipeImg({
+                source: ['./assets/Jellyfish.jpg', './assets/greensock.png']
+            });
             
         })
 
