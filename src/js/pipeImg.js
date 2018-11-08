@@ -140,7 +140,7 @@ class PipeImg {
             this.resultList = [this.imgHandler.result];
 
             this._refresh();
-            this._initPanel();
+            // this._initPanel();
         })
 
         // 菜单切换
@@ -575,8 +575,8 @@ class PipeImg {
         let $dragBoxWrapper = this.markAllBox.$dragBox.parent();
         let dragBoxWrapperWidth = $dragBoxWrapper.width();
         let dragBoxWrapperHeight = $dragBoxWrapper.height();
-        let dragBoxWidth = this.markBox.$dragBox.outerWidth() < dragBoxWrapperWidth ? this.markBox.$dragBox.outerWidth() : dragBoxWrapperWidth;
-        let dragBoxHeight = this.markBox.$dragBox.outerHeight() < dragBoxWrapperHeight ? this.markBox.$dragBox.outerHeight() : dragBoxWrapperHeight;
+        let dragBoxWidth = this.markAllBox.$dragBox.outerWidth() < dragBoxWrapperWidth ? this.markAllBox.$dragBox.outerWidth() : dragBoxWrapperWidth;
+        let dragBoxHeight = this.markAllBox.$dragBox.outerHeight() < dragBoxWrapperHeight ? this.markAllBox.$dragBox.outerHeight() : dragBoxWrapperHeight;
 
 
         switch (POSITION[positionVal]) {
