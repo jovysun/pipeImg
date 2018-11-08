@@ -45,7 +45,16 @@ gulp.task('bundle', function() {
   return gulp.src(['src/js/pipeImg.js', 'src/js/pipeImg.0.4.1.js'])
     .pipe(named())
     .pipe(webpack({
-      mode: 'development'
+      mode: 'development',
+      module:{
+        rules: [
+            {
+                test: /\.tpl$/,
+                use: 'raw-loader'
+            }
+        ]
+    },
+    devtool: 'eval-source-map'
     }))
     .pipe(gulp.dest('src/js/bundle'));
 });

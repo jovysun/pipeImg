@@ -8,8 +8,8 @@ class ImgHandler {
 
         // 默认配置参数
         let defaults = {
-            // 源图片
-            sourceImg: '',
+            // 源图片元素
+            sourceImg: null,
 
             rotateNum: 0,
 
@@ -75,28 +75,25 @@ class ImgHandler {
 
 
     init() {
-        this.results.push(this.sourceImg);
-
-        let targetImgData = this._getTargetImg();
-        let canvas = getCanvas(targetImgData.sourceW0, targetImgData.sourceH0);
-        let ctx = canvas.getContext('2d');
-        ctx.drawImage(this.sourceImg, 0, 0);
-        this.result = canvas;
-    }
-    _getTargetImg() {
-        let targetImg = this.results[this.results.length - 1];
+        let targetImg = this.sourceImg;
         let sourceW0 = targetImg.width;
         let sourceH0 = targetImg.height;
+
         if (targetImg.nodeName.toLowerCase() === 'img') {
             sourceW0 = targetImg.naturalWidth;
             sourceH0 = targetImg.naturalHeight;
+            // img装成canvas
+            let canvas = getCanvas(sourceW0, sourceH0);
+            let ctx = canvas.getContext('2d');
+            ctx.drawImage(targetImg, 0, 0);
+            targetImg = canvas;
         }
-        return {
-            targetImg: targetImg,
-            sourceW0: sourceW0,
-            sourceH0: sourceH0
-        }
+
+        this.result = targetImg;
+        this.results.push(this.result);
+
     }
+
     // 重置
     reset() {
         this.rotateNum = 0;
@@ -109,10 +106,9 @@ class ImgHandler {
     }
     // 旋转
     rotate() {
-        let targetImgObj = this._getTargetImg();
-        let targetImg = targetImgObj.targetImg;
-        let sourceW0 = targetImgObj.sourceW0;
-        let sourceH0 = targetImgObj.sourceH0;
+        let targetImg = this.result;
+        let sourceW0 = targetImg.width;
+        let sourceH0 = targetImg.height;
 
 
         let rotateDeg = this.rotateNum * 90;
@@ -159,7 +155,7 @@ class ImgHandler {
 
         context.drawImage(tempCvs, sx, sy, w, h, 0, 0, w, h);
 
-        this.base64Data = canvas.toDataURL(this.mime);
+        // this.base64Data = canvas.toDataURL(this.mime);
         this.result = canvas;
         this.results.push(canvas);
         return this;
@@ -167,10 +163,9 @@ class ImgHandler {
 
     // 水印
     mark() {
-        let targetImgObj = this._getTargetImg();
-        let targetImg = targetImgObj.targetImg;
-        let sourceW0 = targetImgObj.sourceW0;
-        let sourceH0 = targetImgObj.sourceH0;
+        let targetImg = this.result;
+        let sourceW0 = targetImg.width;
+        let sourceH0 = targetImg.height;
 
         let canvas = getCanvas(sourceW0, sourceH0);
         let dContext = canvas.getContext('2d');
@@ -184,7 +179,7 @@ class ImgHandler {
 
         }
 
-        this.base64Data = canvas.toDataURL(this.mime);
+        // this.base64Data = canvas.toDataURL(this.mime);
         this.result = canvas;
         this.results.push(canvas);
         return this;
@@ -192,10 +187,9 @@ class ImgHandler {
 
     // 裁剪
     crop() {
-        let targetImgObj = this._getTargetImg();
-        let targetImg = targetImgObj.targetImg;
-        let sourceW0 = targetImgObj.sourceW0;
-        let sourceH0 = targetImgObj.sourceH0;
+        let targetImg = this.result;
+        let sourceW0 = targetImg.width;
+        let sourceH0 = targetImg.height;
 
         let canvas = getCanvas(this.cropW, this.cropH);
         let context = canvas.getContext('2d');
@@ -208,10 +202,9 @@ class ImgHandler {
     }
     // 缩放
     scale() {
-        let targetImgObj = this._getTargetImg();
-        let targetImg = targetImgObj.targetImg;
-        let sourceW0 = targetImgObj.sourceW0;
-        let sourceH0 = targetImgObj.sourceH0;
+        let targetImg = this.result;
+        let sourceW0 = targetImg.width;
+        let sourceH0 = targetImg.height;
 
         let resultW = this.scaleRatio * sourceW0;
         let resultH = this.scaleRatio * sourceH0;
@@ -227,10 +220,9 @@ class ImgHandler {
     }
     // 压缩
     compress() {
-        let targetImgObj = this._getTargetImg();
-        let targetImg = targetImgObj.targetImg;
-        let sourceW0 = targetImgObj.sourceW0;
-        let sourceH0 = targetImgObj.sourceH0;
+        let targetImg = this.result;
+        let sourceW0 = targetImg.width;
+        let sourceH0 = targetImg.height;
 
         let canvas = getCanvas(sourceW0, sourceH0);
         let ctx = canvas.getContext("2d");

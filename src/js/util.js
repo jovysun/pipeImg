@@ -51,10 +51,7 @@ function drag(moveElement, dragBar = document, container, cb) {
         document.addEventListener('mouseup', mouseupHandler, false);
     }
 }
-// 选择器
-// function $(el) {
-//   return (typeof el === "string" ? document.querySelector(el) : el);
-// }
+
 function getImgPromise(src) {
     return new Promise((resolve, reject) => {
         let image = new Image();
@@ -71,7 +68,7 @@ function getImgPromise(src) {
 }
 // 加载图片
 function loadImage(src, success, failure) {
-    let image = new Image();
+    var image = new Image();
     // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
     image.setAttribute('crossorigin', 'anonymous');
     image.src = src;
@@ -84,13 +81,13 @@ function loadImage(src, success, failure) {
 }
 
 function loadImages(srcList, success, failure) {
-    let images = [];
-    let index = srcList.length;
-    let _loadImage = () => {
+    var images = [];
+    var index = srcList.length;
+    var _loadImage = () => {
         if (index === 0) {
             return false;
         }
-        let image = new Image();
+        var image = new Image();
         // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
         image.setAttribute('crossorigin', 'anonymous');
         image.src = srcList[--index];
@@ -120,17 +117,17 @@ function getCanvas(width, height) {
 //获取base64图片大小
 function getBase64Size(base64Data) {
     // 'data:image/jpeg;base64,xxxxxx...xxx='
-    let str = base64Data.replace(/^data:image\/[\w]*;base64,$/, '');
-    let equalIndex = str.indexOf('=');
+    var str = base64Data.replace(/^data:image\/[\w]*;base64,$/, '');
+    var equalIndex = str.indexOf('=');
     if (equalIndex > 0) {
         str = str.substring(0, equalIndex);
     }
-    let strLength = str.length;
+    var strLength = str.length;
     return parseInt(strLength - (strLength / 8) * 2);
 }
 // 压缩只支持image/jpeg和image/webp
 function compress(img, quality = 1, width, height, mime = 'images/jpeg') { //  Image 对象，或者是 Canvas 元素
-    let canvas = getCanvas(width, height),
+    var canvas = getCanvas(width, height),
         ctx = canvas.getContext("2d");
     if (width && height) {
         ctx.drawImage(img, 0, 0, width, height);
@@ -138,7 +135,7 @@ function compress(img, quality = 1, width, height, mime = 'images/jpeg') { //  I
         ctx.drawImage(img, 0, 0);
     }
 
-    let base64 = canvas.toDataURL(mime);
+    var base64 = canvas.toDataURL(mime);
     if (quality < 1) {
         base64 = canvas.toDataURL(mime, quality);
     }
@@ -148,7 +145,7 @@ function compress(img, quality = 1, width, height, mime = 'images/jpeg') { //  I
 
 
 function base64Data2Blob(base64Data, mime) {
-    let binStr = atob(base64Data.split(',')[1]),
+    var binStr = atob(base64Data.split(',')[1]),
         len = binStr.length,
         arr = new Uint8Array(len);
     if (!mime) {
@@ -167,7 +164,7 @@ function base64Data2Blob(base64Data, mime) {
 }
 
 function blob2FormData(blob, fileName) {
-    let formData = new FormData();
+    var formData = new FormData();
     formData.append('file', blob);
     if (!fileName) {
         fileName = new Date().getTime();
