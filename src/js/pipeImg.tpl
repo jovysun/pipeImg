@@ -1,14 +1,14 @@
 <div class="pipeImg-wrapper J-pipe-wrapper">
     <div class="pipe-header">
         <ul class="menu">
-            <li class="item active J-menu-item"><a class="btn J-btn-rotate" href="javascript:void(0)">旋转</a></li>
-            <li class="item J-menu-item"><a class="btn J-btn-crop" href="javascript:void(0)">裁剪</a></li>
-            <li class="item J-menu-item"><a class="btn J-btn-scale" href="javascript:void(0)">缩放</a></li>
+            <li class="item active J-menu-item"><a class="btn J-menu-rotate" href="javascript:void(0)">旋转</a></li>
+            <li class="item J-menu-item"><a class="btn J-menu-crop" href="javascript:void(0)">裁剪</a></li>
+            <li class="item J-menu-item"><a class="btn J-menu-scale" href="javascript:void(0)">缩放</a></li>
             <li class="item J-menu-item">
-                <a class="btn J-btn-mark" href="javascript:void(0)">添加水印</a>
+                <a class="btn J-menu-mark" href="javascript:void(0)">添加水印</a>
             </li>
             <li class="item J-menu-item">
-                <a class="btn J-btn-mark-all" href="javascript:void(0)">批量添加水印</a>
+                <a class="btn J-menu-mark-all" href="javascript:void(0)">批量添加水印</a>
             </li>
         </ul>
         <a class="btn btn-close J-button-close" href="javascript:void(0)">关闭</a>
@@ -42,10 +42,10 @@
 
             </div>
             <div class="content-footer">
-                <input class="num-width J-num-width" type="text">
+                <input class="num-width J-num-width J-input-crop-width" type="text">
                 <label for="fixRatio">约束比例</label>
-                <input class="fix-ratio J-fix-ratio" type="checkbox" name="fixRatio">
-                <input class="num-height J-num-height" type="text">
+                <input class="fix-ratio J-fix-ratio J-radio-crop-fix" type="checkbox" name="fixRatio">
+                <input class="num-height J-num-height J-input-crop-height" type="text">
                 <span class="txt">px</span>
 
                 <div class="buttons">
@@ -59,11 +59,11 @@
         <div class="panel J-panel J-scale-panel">
             <div class="img-box J-img-box"></div>
             <div class="content-footer">
-                <input class="num-width J-num-width" type="text">
+                <input class="num-width J-num-width J-input-scale-width" type="text">
                 <span class="txt">X</span>
-                <input class="num-height J-num-height" type="text">
+                <input class="num-height J-num-height J-input-scale-width" type="text">
                 <span class="txt">px</span>
-                <input class="J-scale-range" type="range" name="scaleRatio" min="1" max="20" step="1" value="20">
+                <input class="J-scale-range J-range-scale-ratio" type="range" name="scaleRatio" min="1" max="20" step="1" value="20">
 
                 <div class="buttons">
                     <a class="button button-main J-button-save" href="javascript:void(0)">保存</a>
@@ -80,24 +80,24 @@
             <div class="content-footer">
                 <div class="item">
                     <label for="color">颜色：</label>
-                    <input class="J-color" type="radio" name="color" value="0" autocomplete="off">
-                    <input class="J-color" type="radio" name="color" value="1" checked autocomplete="off">
+                    <input class="J-color J-radio-mark-color" type="radio" name="color" value="0" autocomplete="off">
+                    <input class="J-color J-radio-mark-color" type="radio" name="color" value="1" checked autocomplete="off">
                 </div>
                 <div class="item">
                     <label for="position">位置：</label>
-                    <input class="J-position" type="radio" name="position" value="0" checked autocomplete="off">
-                    <input class="J-position" type="radio" name="position" value="1" autocomplete="off">
-                    <input class="J-position" type="radio" name="position" value="2" autocomplete="off">
-                    <input class="J-position" type="radio" name="position" value="3" autocomplete="off">
-                    <input class="J-position" type="radio" name="position" value="4" autocomplete="off">
+                    <input class="J-position J-radio-mark-position" type="radio" name="position" value="0" checked autocomplete="off">
+                    <input class="J-position J-radio-mark-position" type="radio" name="position" value="1" autocomplete="off">
+                    <input class="J-position J-radio-mark-position" type="radio" name="position" value="2" autocomplete="off">
+                    <input class="J-position J-radio-mark-position" type="radio" name="position" value="3" autocomplete="off">
+                    <input class="J-position J-radio-mark-position" type="radio" name="position" value="4" autocomplete="off">
                 </div>
                 <div class="item">
 
                     <label for="opacity">透明度：</label>
-                    <input class="J-opacity" name="opacity" type="range" min="0" max="1" step="0.1" value="0.8">
+                    <input class="J-opacity J-range-mark-opacity" name="opacity" type="range" min="0" max="1" step="0.1" value="0.8">
                 </div>
 
-                <select class="J-markTxt" name="markTxt">
+                <select class="J-markTxt J-select-mark-txt" name="markTxt">
                     <option value="0" selected="selected">展示厅</option>
                     <option value="1">公司名称</option>
                 </select>
@@ -116,24 +116,24 @@
             <div class="content-footer">
                 <div class="item">
                     <label for="colorAll">颜色：</label>
-                    <input class="J-color" type="radio" name="colorAll" value="0" autocomplete="off">
-                    <input class="J-color" type="radio" name="colorAll" value="1" checked autocomplete="off">
+                    <input class="J-color J-radio-markAll-color" type="radio" name="colorAll" value="0" autocomplete="off">
+                    <input class="J-color J-radio-markAll-color" type="radio" name="colorAll" value="1" checked autocomplete="off">
                 </div>
                 <div class="item">
                     <label for="positionAll">位置：</label>
-                    <input class="J-position" type="radio" name="positionAll" value="0" checked autocomplete="off">
-                    <input class="J-position" type="radio" name="positionAll" value="1" autocomplete="off">
-                    <input class="J-position" type="radio" name="positionAll" value="2" autocomplete="off">
-                    <input class="J-position" type="radio" name="positionAll" value="3" autocomplete="off">
-                    <input class="J-position" type="radio" name="positionAll" value="4" autocomplete="off">
+                    <input class="J-position J-radio-markAll-position" type="radio" name="positionAll" value="0" checked autocomplete="off">
+                    <input class="J-position J-radio-markAll-position" type="radio" name="positionAll" value="1" autocomplete="off">
+                    <input class="J-position J-radio-markAll-position" type="radio" name="positionAll" value="2" autocomplete="off">
+                    <input class="J-position J-radio-markAll-position" type="radio" name="positionAll" value="3" autocomplete="off">
+                    <input class="J-position J-radio-markAll-position" type="radio" name="positionAll" value="4" autocomplete="off">
                 </div>
                 <div class="item">
 
                     <label for="opacityAll">透明度：</label>
-                    <input class="J-opacity" name="opacityAll" type="range" min="0" max="1" step="0.1" value="0.8">
+                    <input class="J-opacity J-range-markAll-opacity" name="opacityAll" type="range" min="0" max="1" step="0.1" value="0.8">
                 </div>
 
-                <select class="J-markTxt" name="markTxtAll">
+                <select class="J-markTxt J-select-markAll-txt" name="markTxtAll">
                     <option value="0" selected="selected">展示厅</option>
                     <option value="1">公司名称</option>
                 </select>

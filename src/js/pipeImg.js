@@ -13,6 +13,7 @@ import {
     DragBox
 } from './dragBox';
 import tpl from './pipeImg.tpl';
+import { Dialog } from './dialog';
 
 class PipeImg {
 
@@ -23,7 +24,8 @@ class PipeImg {
             source: ['./assets/Jellyfish.jpg'],
             mime: 'image/jpeg',
             maxSize: 500,
-            template: tpl
+            template: tpl,
+            markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing']
         };
 
 
@@ -32,7 +34,7 @@ class PipeImg {
         this.mime = options.mime;
         this.maxSize = options.maxSize;
         this.template = options.template;
-
+        this.markTextList = options.markTextList;
 
 
         this._init();
@@ -40,11 +42,14 @@ class PipeImg {
     }
 
     _init() {
-        let html = '<div class="pipe-dialog J-pipe-dialog"><div class="pipe-mask J-pipe-mask"></div>'+ this. template +'</div>';
+        // this.dialog = new Dialog();
+
+        let html = '<div class="pipe-dialog J-pipe-dialog" onselectstart="return false" ondragstart="return false"><div class="pipe-mask J-pipe-mask"></div>'+ this. template +'</div>';
         $('body').append(html);
         
         this.$el = $('.J-pipe-dialog');
         this.$pipeWrapper = this.$el.find('.J-pipe-wrapper');
+
 
         // 全局变量
         this.rotateNum = 0;
@@ -99,24 +104,39 @@ class PipeImg {
         // 初始化水印框
         this.markBox = new DragBox({
             ele: '.J-mark-box .J-source',
-            width: 340,
-            height: 35,
+            fixRatio: false,
             markText: 'producttest.en.made-in-china.com',
             onDragComplete: (left, top) => {
                 this.markX = left * this.activeData.ratio;
                 this.markY = top * this.activeData.ratio;
-            }
+            },
+            onDragPoint: (boxData) => {
+                console.log(boxData.height);
+                this.markBox.$dragBox.find('.J-mark-txt').css({
+                    'font-size': boxData.height / 1.5
+                })
+                this.markBox.$dragBox.css({
+                    width: this.markBox.$dragBox.find('.J-mark-txt').outerWidth()
+                })
+            } 
         });
         // 初始化批量水印框
         this.markAllBox = new DragBox({
             ele: '.J-mark-box-all .J-source',
-            width: 340,
-            height: 35,
             markText: 'producttest.en.made-in-china.com',
             onDragComplete: (left, top) => {
                 this.markXAll = left * this.activeData.ratio;
                 this.markYAll = top * this.activeData.ratio;
-            }
+            },
+            onDragPoint: (boxData) => {
+                console.log(boxData.height);
+                this.markAllBox.$dragBox.find('.J-mark-txt').css({
+                    'font-size': boxData.height / 1.5
+                })
+                this.markAllBox.$dragBox.css({
+                    width: this.markAllBox.$dragBox.find('.J-mark-txt').outerWidth()
+                })
+            } 
         });
         // 事件绑定
         this._bind();
@@ -289,7 +309,7 @@ class PipeImg {
 
                 this.save(imgHandler.result);
             })
-            
+
             this.destory();
         })
 
@@ -328,12 +348,16 @@ class PipeImg {
         this.$el.find('.J-button-close').on('click', (e) => {
             this.destory();
         })
+        // 禁用鼠标右击菜单
+        this.$el.on('contextmenu', (e) => {
+            return false;
+        })
 
     }
     _initPanel() {
         this._initCrop();
         this._initScale();
-        // this._initMark();
+        this._initMark();
         this._initMarkAll();
     }
     _goHome() {
@@ -470,11 +494,24 @@ class PipeImg {
         $markPanel.find('.J-position').eq(0).prop('checked', true);
         $markPanel.find('.J-opacity').val(0.8);
         $markPanel.find('.J-markTxt option:first').prop('selected', true);
+        
+        let dragBoxWrapperWidth = this.activeData.w1;
+        let dragBoxWrapperHeight = this.activeData.h1;
+        let dragBoxWidth = 340 < dragBoxWrapperWidth ? 340 : dragBoxWrapperWidth;
+        let dragBoxHeight = 35 < dragBoxWrapperHeight ? 35 : dragBoxWrapperHeight;
 
-        this._updateMark();
+        this.markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
+        this.markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
+        this.markBox.$dragBox.css({
+            left: this.markX / this.activeData.ratio,
+            top: this.markY / this.activeData.ratio,
+            width: this.markBox.$dragBox.find('.J-mark-txt').outerWidth(),
+            height: this.markBox.$dragBox.find('.J-mark-txt').outerHeight()
+        })
+
+
     }
     _updateMark() {
-        const MARKTXT = ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'];
         const POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
 
         let $markPanel = this.$el.find('.J-mark-panel');
@@ -490,11 +527,10 @@ class PipeImg {
 
         this.markFont = 20 * this.activeData.ratio + 'px microsoft yahei';
         this.markStyle = markStyle;
-        this.markText = MARKTXT[markTxtVal];
+        this.markText = this.markTextList[markTxtVal];
 
-        let $dragBoxWrapper = this.markBox.$dragBox.parent();
-        let dragBoxWrapperWidth = $dragBoxWrapper.width();
-        let dragBoxWrapperHeight = $dragBoxWrapper.height();
+        let dragBoxWrapperWidth = this.activeData.w1;
+        let dragBoxWrapperHeight = this.activeData.h1;
         let dragBoxWidth = this.markBox.$dragBox.outerWidth() < dragBoxWrapperWidth ? this.markBox.$dragBox.outerWidth() : dragBoxWrapperWidth;
         let dragBoxHeight = this.markBox.$dragBox.outerHeight() < dragBoxWrapperHeight ? this.markBox.$dragBox.outerHeight() : dragBoxWrapperHeight;
 
@@ -529,8 +565,8 @@ class PipeImg {
         this.markBox.$dragBox.css({
             left: this.markX / this.activeData.ratio,
             top: this.markY / this.activeData.ratio,
-            width: dragBoxWidth,
-            height: dragBoxHeight
+            width: this.markBox.$dragBox.find('.J-mark-txt').outerWidth(),
+            height: this.markBox.$dragBox.find('.J-mark-txt').outerHeight()
         })
     }
     _saveMark() {
@@ -553,10 +589,22 @@ class PipeImg {
         $markPanel.find('.J-position').eq(0).prop('checked', true);
         $markPanel.find('.J-opacity').val(0.8);
         $markPanel.find('.J-markTxt option:first').prop('selected', true);
-        this._updateMarkAll();
+
+        let dragBoxWrapperWidth = this.activeData.w1;
+        let dragBoxWrapperHeight = this.activeData.h1;
+        let dragBoxWidth = 340 < dragBoxWrapperWidth ? 340 : dragBoxWrapperWidth;
+        let dragBoxHeight = 35 < dragBoxWrapperHeight ? 35 : dragBoxWrapperHeight;
+
+        this.markXAll = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
+        this.markYAll = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
+        this.markAllBox.$dragBox.css({
+            left: this.markXAll / this.activeData.ratio,
+            top: this.markYAll / this.activeData.ratio,
+            width: this.markAllBox.$dragBox.find('.J-mark-txt').outerWidth(),
+            height: this.markAllBox.$dragBox.find('.J-mark-txt').outerHeight()
+        })
     }
     _updateMarkAll() {
-        const MARKTXT = ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'];
         const POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
 
         let $markPanel = this.$el.find('.J-mark-all-panel');
@@ -572,11 +620,10 @@ class PipeImg {
 
         this.markFontAll = 20 * this.activeData.ratio + 'px microsoft yahei';
         this.markStyleAll = markStyle;
-        this.markTextAll = MARKTXT[markTxtVal];
+        this.markTextAll = this.markTextList[markTxtVal];
 
-        let $dragBoxWrapper = this.markAllBox.$dragBox.parent();
-        let dragBoxWrapperWidth = $dragBoxWrapper.width();
-        let dragBoxWrapperHeight = $dragBoxWrapper.height();
+        let dragBoxWrapperWidth = this.activeData.w1;
+        let dragBoxWrapperHeight = this.activeData.h1;
         let dragBoxWidth = this.markAllBox.$dragBox.outerWidth() < dragBoxWrapperWidth ? this.markAllBox.$dragBox.outerWidth() : dragBoxWrapperWidth;
         let dragBoxHeight = this.markAllBox.$dragBox.outerHeight() < dragBoxWrapperHeight ? this.markAllBox.$dragBox.outerHeight() : dragBoxWrapperHeight;
 
@@ -611,7 +658,9 @@ class PipeImg {
         });
         this.markAllBox.$dragBox.css({
             left: this.markXAll / this.activeData.ratio,
-            top: this.markYAll / this.activeData.ratio
+            top: this.markYAll / this.activeData.ratio,
+            width: this.markAllBox.$dragBox.find('.J-mark-txt').outerWidth(),
+            height: this.markAllBox.$dragBox.find('.J-mark-txt').outerHeight()
         })
     }
     _showSize(w0, h0) {
@@ -673,11 +722,13 @@ class PipeImg {
         let ratio;
         if (imgRatio < this.imgBoxRatio) {
             h1 = this.imgBoxHeight;
-            w1 = 'auto';
+            // w1 = 'auto';
+            w1 = h1 * imgRatio;
             ratio = h0 / h1;
         } else {
             w1 = this.imgBoxWidth;
-            h1 = 'auto';
+            // h1 = 'auto';
+            h1 = w1 / imgRatio;
             ratio = w0 / w1;
         }
 

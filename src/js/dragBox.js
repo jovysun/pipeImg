@@ -16,7 +16,8 @@ class DragBox {
             fixRatio: false,
             // 拖动触点回调函数
             onDragPoint: (boxData) => {},
-            onDragComplete: () => {}
+            // 拖动框回调函数
+            onDragComplete: (left, top) => {}
         };
 
         options = Object.assign({}, defaults, options);
@@ -69,10 +70,13 @@ class DragBox {
 
         $parent.html(dragBoxHtml);
         this.$dragBox = $parent.find('.J-drag-box');
-        this.$dragBox.css({
-            width: this.width,
-            height: this.height
-        });
+        if (!this.hasLight) {
+            this.$dragBox.css({
+                width: this.$dragBox.find('.J-mark-txt').width(),
+                height: this.$dragBox.find('.J-mark-txt').height()
+            });
+        }
+
         this.$dragPoint = this.$dragBox.find('.J-drag-point');
 
 
@@ -230,9 +234,7 @@ class DragBox {
         this.boxEl.style.left = newLeft + 'px';
         this.boxEl.style.top = newTop + 'px';
     }
-    _limitedField() {
 
-    }
     _light() {
         if (this.hasLight) {
             this._setChoice();
