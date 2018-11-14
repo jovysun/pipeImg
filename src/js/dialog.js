@@ -1,19 +1,10 @@
 import {
-    getBase64Size,
-    compress,
-    base64Data2Blob,
-    blob2FormData,
-    loadImages,
-    getCanvas
+    drag
 } from './util';
-import {
-    ImgHandler
-} from './imgHandler';
 import {
     DragBox
 } from './dragBox';
-
-import tpl from './pipeImg.tpl';
+import tpl from './dialog.tpl';
 
 class Dialog {
 
@@ -21,23 +12,101 @@ class Dialog {
 
         // 默认配置参数
         let defaults = {
+            imgList: [],
             template: tpl,
-            markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing']
+            markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
+            
+            closeBtnTxt: '关闭',
+            saveBtnTxt: '保存',
+            resetBtnTxt: '重置',
+            confirmBtnTxt: '确定',
+            cancelBtnTxt: '取消',
+            rotateMenuTxt: '旋转',
+            turnLeftTxt: '逆时针旋转',
+            turnRightTxt: '顺时针旋转',
+            cropMenuTxt: '裁剪',                
+            scaleMenuTxt: '缩放',
+            markMenuTxt: '添加水印',
+            colorTxt: '颜色',
+            positionTxt: '位置',
+            opacityTxt: '透明度',
+            showRoomTxt: '展示厅',
+            companyNameTxt: '公司名称',
+            markAllMenuTxt: '批量添加水印',
+
+            onSaveRotate: (args, cb) => {},
+            onSaveCrop: (args, cb) => {},
+            onSaveScale: (args, cb) => {},
+            onSaveMark: (args, cb) => {},
+            onReset: (cb) => {},
+            onSave: (cb) => {},
+            onChangeActive: (options, cb) => {},
+            onSaveMarkAll: (cb) => {}
+            
         };
 
 
         options = Object.assign({}, defaults, options);
 
+        this.imgList = options.imgList;
         this.template = options.template;
         this.markTextList = options.markTextList;
 
+        this.closeBtnTxt = options.closeBtnTxt;
+        this.saveBtnTxt = options.saveBtnTxt;
+        this.resetBtnTxt = options.resetBtnTxt;
+        this.confirmBtnTxt = options.confirmBtnTxt;
+        this.cancelBtnTxt = options.cancelBtnTxt;
+        this.rotateMenuTxt = options.rotateMenuTxt;
+        this.turnLeftTxt = options.turnLeftTxt;
+        this.turnRightTxt = options.turnRightTxt;
+        this.cropMenuTxt = options.cropMenuTxt;
+        this.scaleMenuTxt = options.scaleMenuTxt;
+        this.markMenuTxt = options.markMenuTxt;
+        this.colorTxt = options.colorTxt;
+        this.positionTxt = options.positionTxt;
+        this.opacityTxt = options.opacityTxt;
+        this.showRoomTxt = options.showRoomTxt;
+        this.companyNameTxt = options.companyNameTxt;
+        this.markAllMenuTxt = options.markAllMenuTxt;
+
+        this.onSaveRotate = options.onSaveRotate;
+        this.onSaveCrop = options.onSaveCrop;
+        this.onSaveScale = options.onSaveScale;
+        this.onSaveMark = options.onSaveMark;
+        this.onReset = options.onReset;
+        this.onSave = options.onSave;
+        this.onChangeActive = options.onChangeActive;
+        this.onSaveMarkAll = options.onSaveMarkAll;
 
         this._init();
 
     }
 
     _init() {
-        let html = '<div class="pipe-dialog J-pipe-dialog" onselectstart="return false" ondragstart="return false"><div class="pipe-mask J-pipe-mask"></div>'+ this. template +'</div>';
+        let templateHtml = template(this.template, {
+            imgList: this.imgList,
+
+            closeBtnTxt: this.closeBtnTxt,
+            saveBtnTxt: this.saveBtnTxt,
+            resetBtnTxt: this.resetBtnTxt,
+            confirmBtnTxt: this.confirmBtnTxt,
+            cancelBtnTxt: this.cancelBtnTxt,
+            rotateMenuTxt: this.rotateMenuTxt,
+            turnLeftTxt: this.turnLeftTxt,
+            turnRightTxt: this.turnRightTxt,
+            cropMenuTxt: this.cropMenuTxt,                
+            scaleMenuTxt: this.scaleMenuTxt,
+            markMenuTxt: this.markMenuTxt,
+            colorTxt: this.colorTxt,
+            positionTxt: this.positionTxt,
+            opacityTxt: this.opacityTxt,
+            showRoomTxt: this.showRoomTxt,
+            companyNameTxt: this.companyNameTxt,
+            markAllMenuTxt: this.markAllMenuTxt
+        });
+
+        let html = '<div class="pipe-dialog J-pipe-dialog" onselectstart="return false" ondragstart="return false"><div class="pipe-mask J-pipe-mask"></div>'+ templateHtml +'</div>';
         $('body').append(html);
         
         this.$el = $('.J-pipe-dialog');
@@ -52,11 +121,11 @@ class Dialog {
         this.$btnSaveAll = this.$el.find('.J-button-confirm-all');
         this.$imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
         // 菜单导航
-        this.$menuRotate = this.$el.find('.J-menu-rotate');
-        this.$menuCrop = this.$el.find('.J-menu-crop');
-        this.$menuScale = this.$el.find('.J-menu-scale');
-        this.$menuMark = this.$el.find('.J-menu-mark');
-        this.$menuMarkAll = this.$el.find('.J-menu-mark-all');
+        // this.$menuRotate = this.$el.find('.J-menu-rotate');
+        // this.$menuCrop = this.$el.find('.J-menu-crop');
+        // this.$menuScale = this.$el.find('.J-menu-scale');
+        // this.$menuMark = this.$el.find('.J-menu-mark');
+        // this.$menuMarkAll = this.$el.find('.J-menu-mark-all');
         // 模块按钮
         // 旋转
         this.$btnRotateLeft = this.$el.find('.J-btn-rotate-left');
@@ -80,37 +149,145 @@ class Dialog {
         this.$rangeMarkAllOpacity = this.$el.find('.J-range-markAll-opacity');
         this.$selectMarkAllTxt = this.$el.find('.J-select-markAll-txt');
 
+        // 全局变量
+        this.isChange = false;
+        this.rotateNum = 0;
+        this.scaleRatio = 1;
+
+        this.imgBoxHeight = this.$el.find('.J-img-box').height();
+        this.imgBoxWidth = this.$el.find('.J-img-box').width();
+        this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
+
+        this.activeImg = this.imgList[0];
+
+        
+
+
+        // 初始化裁剪框
+        this.cropBox = new DragBox({
+            ele: '.J-crop-box .J-source',
+            hasLight: true,
+            onDragPoint: (data) => {
+                this._showSize(data.width * this.activeData.ratio, data.height * this.activeData.ratio);
+                this.isChange = true;
+            }
+        });
+        // 初始化缩放
+        let $scalePanel = this.$el.find('.J-scale-panel');
+        let $scaleImgWrapper = $scalePanel.find('.J-scale-img-wrapper');
+        let imgEl = $scalePanel.find('.J-source').get(0);
+        drag(imgEl, imgEl, $scaleImgWrapper.get(0));
+        // 初始化水印框
+        this.markBox = new DragBox({
+            ele: '.J-mark-box .J-source',
+            fixRatio: false,
+            markText: 'producttest.en.made-in-china.com',
+            onDragComplete: (left, top) => {
+                this.markX = left * this.activeData.ratio;
+                this.markY = top * this.activeData.ratio;
+
+                this.$el.find('.J-mark-panel').find('.J-position').prop('checked', false);
+
+                this.isChange = true;
+            },
+            onDragPoint: (boxData) => {
+                this.$el.find('.J-mark-panel').find('.J-mark-txt').css({
+                    'font-size': parseInt(this.markBox.$dragBox.css('height')) / 1.5
+                })
+                this._updateMark();
+            } 
+        });
+        // 初始化批量水印框
+        this.markAllBox = new DragBox({
+            ele: '.J-mark-box-all .J-source',
+            markText: 'producttest.en.made-in-china.com',
+            onDragComplete: (left, top) => {
+                this.markXAll = left * this.activeData.ratio;
+                this.markYAll = top * this.activeData.ratio;
+
+                this.$el.find('.J-mark-all-panel').find('.J-position').prop('checked', false);
+
+                this.isChange = true;
+            },
+            onDragPoint: (boxData) => {
+                this.$el.find('.J-mark-all-panel').find('.J-mark-txt').css({
+                    'font-size': parseInt(this.markAllBox.$dragBox.css('height')) / 1.5
+                })
+                this._updateMarkAll();
+            } 
+        });
+
+        this._refresh();
         this._bind();
     }
     _bind() {
         // 切换编辑图片
-        this.$imgsThumbnail.on('click', '.J-img-thumbnail', (e) => {
+        this.$el.find('.J-footer-normal').on('click', '.J-img-thumbnail', (e) => {
+
             let $thumbnail = $(e.target).parent();
             $thumbnail.addClass('active').siblings().removeClass('active');
-            
+
+            this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', $thumbnail.find('img').attr('src'));
+            let targetImg = this.$el.find('.J-source:first').get(0);
+
+            // let targetImg = $thumbnail.find('img').get(0);
+
+            this.activeImg = targetImg;
+            this._refresh();
+            this._initPanel();
+
+            let options = {
+                activeImg: targetImg
+            };
+            this.onChangeActive(options, (img) => {
+
+            });
+        })
+        // 批量水印切换编辑图片
+        this.$el.find('.J-mark-all-panel').on('click', '.J-img-thumbnail', (e) => {
+
+            let $thumbnail = $(e.target).parent();
+            $thumbnail.addClass('active').siblings().removeClass('active');
+
+            this.$el.find('.J-mark-all-panel').find('.J-source').attr('src', $thumbnail.find('img').attr('src'));
+            let targetImg = this.$el.find('.J-mark-all-panel').find('.J-source:first').get(0);
+
+            // let targetImg = $thumbnail.find('img').get(0);
+            this.activeImg = targetImg;
+            this._refresh();
+            this._initMarkAll();
+
+            let options = {
+                activeImg: targetImg
+            };
+            this.onChangeActive(options, (img) => {
+
+            });
         })
 
         // 菜单切换
-        this.$el.find('.J-menu-item').on('click', (e) => {
+        this.$el.find('.J-menu-btn').on('click', (e) => {
             let $item = $(e.target).parent();
             let index = $item.index();
             let oldActiveIndex = $item.parent().find('.active:first').index();
             $item.addClass('active').siblings().removeClass('active');
             this.$el.find('.J-panel').eq(index).addClass('active').siblings().removeClass('active');
 
-            // 离开旋转，裁剪，缩放面板进行保存
-            switch (oldActiveIndex) {
-                case 0:
-                    this._saveRotate();
-                    break;
-                case 1:
-                    this._saveCrop();
-                    break;
-                case 2:
-                    this._saveScale();
-                    break;
-                default:
-                    break;
+            // 若有编辑操作，离开旋转，裁剪，缩放面板进行保存
+            if (this.isChange) {
+                switch (oldActiveIndex) {
+                    case 0:
+                        this._saveRotate();
+                        break;
+                    case 1:
+                        this._saveCrop();
+                        break;
+                    case 2:
+                        this._saveScale();
+                        break;
+                    default:
+                        break;
+                }
             }
 
             // 进入裁剪
@@ -121,118 +298,175 @@ class Dialog {
             if (index === 2) {
                 this._initScale();
             }
-            // 进入水印
+            // // 进入水印
             if (index === 3) {
                 this._initMark();
             }
 
-            // 进入批量水印
-            if (index === 4) {
-                this._reset();
-                this._initMarkAll();
-            }
-
         })
+        this.$el.find('.J-item').on('click', '.J-menu-btn', (e) => {
+            if (!$(e.target).parent().hasClass('J-item-mark-all')) {
+                this.$el.find('.J-footer-normal').show();
+                this.$el.find('.J-footer-special').hide();
+                this.$el.find('.J-item-mark').show();
+                this.$el.find('.J-item-mark-all').hide();              
+            }
+        })
+        this.$el.find('.J-item').on('click', '.J-menu-btn-sub', (e) => {
+            if ($(e.target).parent().parent().hasClass('J-item-mark')) {
+                let $markPanel = this.$el.find('.J-mark-all-panel');
+                let $activeImg = $markPanel.find('.J-img-thumbnail.active img');
+                this.$el.find('.J-item-mark-all').addClass('active').siblings().removeClass('active');
+                this.$el.find('.J-mark-all-panel').addClass('active').siblings().removeClass('active');
+                this.$el.find('.J-item-mark').hide();
+                this.$el.find('.J-item-mark-all').show();
+                
+                this.$el.find('.J-footer-normal').hide();
+                this.$el.find('.J-footer-special').show();
 
+                $markPanel.find('.J-source').attr('src', $activeImg.attr('src'));
+                this.rotateNum = 0;
+                this.scaleRatio = 1;
+                this.activeImg = $activeImg.get(0);
+                this._refresh();
+                this._initMarkAll();
+
+                this.isChange = false;
+
+            } else {         
+                this.$el.find('.J-item-mark').addClass('active').siblings().removeClass('active');
+                this.$el.find('.J-mark-panel').addClass('active').siblings().removeClass('active');
+                this.$el.find('.J-item-mark').show();
+                this.$el.find('.J-item-mark-all').hide();
+                this._initPanel();
+                this.$el.find('.J-footer-normal').show();
+                this.$el.find('.J-footer-special').hide();               
+
+            }
+        })
 
         // 旋转++++++++++++++++
         // 逆时针旋转
-        this.$el.find('.J-btn-rotate-left').on('click', () => {
+        this.$btnRotateLeft.on('click', () => {
             this._getRotateNum(-1);
             this._updateRotate();
         })
         // 顺时针旋转
-        this.$el.find('.J-btn-rotate-right').on('click', () => {
+        this.$btnRotateRight.on('click', () => {
             this._getRotateNum(1);
             this._updateRotate();
         })
         // 裁剪++++++++++++
-        let $cropPanel = this.$el.find('.J-crop-panel');
-        $cropPanel.find('.J-num-width').on('input', (e) => {
+        this.$inputCropWidth.on('input', (e) => {
             this.cropBox.width = $(e.target).val() / this.activeData.ratio;
             if (this.cropBox.fixRatio) {
                 this.cropBox.height = this.cropBox.width / this.cropBox.boxData.ratio;
             }
             this._updateCrop();
         })
-        $cropPanel.find('.J-num-height').on('input', (e) => {
+        this.$inputCropHeight.on('input', (e) => {
             this.cropBox.height = $(e.target).val() / this.activeData.ratio;
             if (this.cropBox.fixRatio) {
                 this.cropBox.width = this.cropBox.height * this.cropBox.boxData.ratio;
             }
             this._updateCrop();
         })
-        $cropPanel.find('.J-fix-ratio').on('change', (e) => {
+        this.$radioCropFix.on('change', (e) => {
             this.cropBox.fixRatio = !this.cropBox.fixRatio;
         })
 
         // 缩放++++++++++++++
-        let $scalePanel = this.$el.find('.J-scale-panel');
-        $scalePanel.find('.J-scale-range').on('input', (e) => {
+        this.$inputScaleWidth.on('input', (e) => {
+            let $this = $(e.target);
+            this.scaleRatio = parseInt($this.val()) / this.activeData.w0;
+            this._updateScale();
+        })
+        this.$inputScaleHeight.on('input', (e) => {
+            let $this = $(e.target);
+            this.scaleRatio = parseInt($this.val()) / this.activeData.h0;
+            this._updateScale();
+        })
+        this.$rangeScaleRatio.on('input', (e) => {
             let $this = $(e.target);
             let max = parseInt($this.attr('max'));
             this.scaleRatio = parseInt($this.val()) / max;
             this._updateScale();
         })
-        $scalePanel.find('.J-num-width').on('input', (e) => {
-            let $this = $(e.target);
-            this.scaleRatio = parseInt($this.val()) / this.activeData.w0;
-            this._updateScale();
-        })
-        $scalePanel.find('.J-num-height').on('input', (e) => {
-            let $this = $(e.target);
-            this.scaleRatio = parseInt($this.val()) / this.activeData.h0;
-            this._updateScale();
-        })
-
         // 水印++++++++++++++
-        let $markPanel = this.$el.find('.J-mark-panel');
-        $markPanel.find('[name=color],[name=opacity]').on('input', () => {
+        this.$radioMarkColor.on('input', () => {
             this._updateMark();
         })
-        $markPanel.find('[name=markTxt]').on('change', () => {
+        this.$rangeMarkOpacity.on('input', () => {
             this._updateMark();
         })
-        $markPanel.find('[name=position]').on('change', () => {
+        this.$selectMarkTxt.on('change', () => {
+            this._updateMark();
+        })
+        this.$radioMarkPosition.on('change', () => {
             this._updateMark();
         })
 
         // 批量水印++++++++++++++
-        let $markAllPanel = this.$el.find('.J-mark-all-panel');
-        $markAllPanel.find('[name=colorAll],[name=opacityAll]').on('input', () => {
+        this.$radioMarkAllColor.on('input', () => {
             this._updateMarkAll();
         })
-        $markAllPanel.find('[name=markTxtAll]').on('change', () => {
+        this.$rangeMarkAllOpacity.on('input', () => {
             this._updateMarkAll();
         })
-        $markAllPanel.find('[name=positionAll]').on('change', () => {
+        this.$selectMarkAllTxt.on('change', () => {
+            this._updateMarkAll();
+        })
+        this.$radioMarkAllPosition.on('change', () => {
             this._updateMarkAll();
         })
 
 
         // 水印确定
-        $markPanel.find('.J-button-confirm').on('click', () => {
-            this._confirmMark();
+        this.$btnConfirm.on('click', () => {
+            this._saveMark();
         })
         // 水印取消
-        this.$el.find('.J-button-cancel').on('click', () => {
+        this.$btnCancel.on('click', () => {
             this._cancelMark();
         })
         // 批量水印确定
-        $markAllPanel.find('.J-button-confirm-all').on('click', () => {
-            this._saveAll();
+        this.$btnSaveAll.on('click', () => {
+            this._saveMarkAll();
         })
         // 重置
-        this.$el.find('.J-button-reset').on('click', () => {
+        this.$btnReset.on('click', () => {
             this._reset();
         })
         // 保存
-        this.$el.find('.J-button-save').on('click', (e) => {
+        this.$btnSave.on('click', (e) => {
+            if (this.isChange) {
+                let panelIndex = $(e.target).parents('.J-panel').index();
+                switch (panelIndex) {
+                    case 0:
+                        this._saveRotate();
+                        break;
+                    case 1:
+                        this._saveCrop();
+                        break;
+                    case 2:
+                        this._saveScale();
+                    default:
+                        break;
+                }           
+            }
             this._save();
         })
         // 关闭
-        this.$el.find('.J-button-close').on('click', (e) => {
-            this._close();
+        this.$btnClose.on('click', (e) => {
+            if (this.isChange) {
+                let result = confirm('Leave without saving?');
+                if (result) {
+                    this.destory();
+                }
+            } else {
+                this.destory();
+            }
+            
         })
         // 禁用鼠标右击菜单
         this.$el.on('contextmenu', (e) => {
@@ -241,20 +475,21 @@ class Dialog {
 
     }
     _initPanel() {
+
         this._initCrop();
         this._initScale();
         this._initMark();
-        this._initMarkAll();
+        this._goHome();
     }
     _goHome() {
-        this.$el.find('.J-menu-item:first').click();
+        this.$el.find('.J-menu-btn').parent(':first').addClass('active').siblings().removeClass('active');
+        this.$el.find('.J-panel:first').addClass('active').siblings().removeClass('active');
     }
 
     _initRotate() {
         this.rotateNum = 0;
     }
     _updateRotate() {
-
         this.$el.find('.J-source').css({
             'transform': `rotate(${this.rotateNum * 90}deg)`
         });
@@ -274,7 +509,6 @@ class Dialog {
             }
 
         } else {
-
             if (this.activeData.imgRatio < this.imgBoxRatio) {
                 this.$el.find('.J-source').css({
                     'width': 'auto',
@@ -288,16 +522,19 @@ class Dialog {
             }
         }
 
+        this.isChange = true;
     }
     _saveRotate() {
-        this.imgHandler.rotateNum = this.rotateNum;
-        this.imgHandler.rotate();
-        this.imgHandler.rotateNum = this.rotateNum = 0;
+        let options = {
+            rotateNum: this.rotateNum
+        };
+        this.onSaveRotate(options, (img) => {
+            this.rotateNum = 0;
+            this.activeImg = img;
+            this._refresh();
 
-        this.resultList.push(this.imgHandler.result);
-
-        this._refresh();
-
+            this.isChange = false;
+        });
     }
     _initCrop() {
         let $cropPanel = this.$el.find('.J-crop-panel');
@@ -308,32 +545,53 @@ class Dialog {
     }
     _updateCrop() {
         this.cropBox.update();
+        this.isChange = true;
     }
     _saveCrop() {
-        this.sx = this.cropBox.boxData.left * this.activeData.ratio;
-        this.sy = this.cropBox.boxData.top * this.activeData.ratio;
-        this.cropW = this.cropBox.boxData.width * this.activeData.ratio;
-        this.cropH = this.cropBox.boxData.height * this.activeData.ratio;
+        let options = {
+            sx: this.cropBox.boxData.left * this.activeData.ratio,
+            sy: this.cropBox.boxData.top * this.activeData.ratio,
+            cropW: this.cropBox.boxData.width * this.activeData.ratio,
+            cropH: this.cropBox.boxData.height * this.activeData.ratio
+        };
+        this.onSaveCrop(options, (img) => {
+            this.sx = 0;
+            this.sy = 0;
+            this.cropW = img.width;
+            this.cropH = img.height;     
 
-        this.imgHandler.cropW = this.cropW;
-        this.imgHandler.cropH = this.cropH;
-        this.imgHandler.sx = this.sx;
-        this.imgHandler.sy = this.sy;
-        this.imgHandler.crop();
+            this.activeImg = img;
+            this._refresh();
 
-        this.resultList.push(this.imgHandler.result);
-
-        this._refresh();
+            this.isChange = false;
+        })
     }
     _initScale() {
         let $scalePanel = this.$el.find('.J-scale-panel');
         let $scaleImgBox = $scalePanel.find('.J-img-box');
         let $scaleRange = $scalePanel.find('.J-scale-range');
+        let $scaleImgWrapper = $scalePanel.find('.J-scale-img-wrapper');
 
+        let $img = $scaleImgBox.find('.J-source');
+
+        let width = this.activeData.w0 + (this.activeData.w0 - this.imgBoxWidth);
+        let height = this.activeData.h0 + (this.activeData.h0 - this.imgBoxHeight);
+        $scaleImgWrapper.css({
+            'width': width,
+            'height': height,
+            'margin-left': -width / 2,
+            'margin-top': -height / 2
+        });
         // 去除预览图的缩放显示
-        $scaleImgBox.find('.J-source').css({
-            width: 'auto',
-            height: 'auto'
+        $img.css({
+            'position': 'absolute',
+            'left': (width - this.activeData.w0) / 2,
+            'top': (height - this.activeData.h0) / 2,
+            'width': this.activeData.w0,
+            'height': this.activeData.h0,
+            'max-width': 'none',
+            'max-height': 'none',
+            'cursor': 'move'
         })
         // 初始化滑块值
         $scaleRange.val($scaleRange.attr('max'));
@@ -359,197 +617,185 @@ class Dialog {
             $scaleRange.val(max * scaleRatio);
         }
 
-
         $('.J-source').css({
             'transform': `scale(${this.scaleRatio})`
         });
+
+        this.isChange = true;
     }
     _saveScale() {
-        this.imgHandler.scaleRatio = this.scaleRatio;
-        this.imgHandler.scale();
-        this.imgHandler.scaleRatio = this.scaleRatio = 0;
+        let options = {
+            scaleRatio: this.scaleRatio,
+        };
+        this.onSaveScale(options, (img) => {
+            this.scaleRatio = 1;
+            this.activeImg = img;
+            this._refresh();
 
-        this.resultList.push(this.imgHandler.result);
-
-        this._refresh();
+            this.isChange = false;
+        })
 
     }
-    _initMark() {
-        let $markPanel = this.$el.find('.J-mark-panel');
-        $markPanel.find('.J-color').eq(1).prop('checked', true);
-        $markPanel.find('.J-position').eq(0).prop('checked', true);
-        $markPanel.find('.J-opacity').val(0.8);
-        $markPanel.find('.J-markTxt option:first').prop('selected', true);
+    _setMarkPosition(type) {
+        const POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
+
+        let $markPanel, $dragBox, markX, markY;
+        if (type === 'all') {
+            $markPanel = this.$el.find('.J-mark-all-panel');
+            $dragBox = this.markAllBox.$dragBox;
+            markX = this.markXAll;
+            markY = this.markYAll;
+        } else {
+            $markPanel = this.$el.find('.J-mark-panel');         
+            $dragBox = this.markBox.$dragBox;   
+            markX = this.markX;
+            markY = this.markY;
+        }
+
+        let positionVal = $markPanel.find('.J-position:checked').val();
         
         let dragBoxWrapperWidth = this.activeData.w1;
         let dragBoxWrapperHeight = this.activeData.h1;
-        let dragBoxWidth = 340 < dragBoxWrapperWidth ? 340 : dragBoxWrapperWidth;
-        let dragBoxHeight = 35 < dragBoxWrapperHeight ? 35 : dragBoxWrapperHeight;
-
-        this.markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
-        this.markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
-        this.markBox.$dragBox.css({
-            left: this.markX / this.activeData.ratio,
-            top: this.markY / this.activeData.ratio,
-            width: this.markBox.$dragBox.find('.J-mark-txt').outerWidth(),
-            height: this.markBox.$dragBox.find('.J-mark-txt').outerHeight()
-        })
-
-
-    }
-    _updateMark() {
-        const POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
-
-        let $markPanel = this.$el.find('.J-mark-panel');
-        let colorVal = $markPanel.find('.J-color:checked').val();
-        let positionVal = $markPanel.find('.J-position:checked').val();
-        let opacityVal = $markPanel.find('.J-opacity').val();
-        let markTxtVal = $markPanel.find('.J-markTxt').val();
-
-        let markStyle = `rgba(255, 255, 255, ${opacityVal})`;
-        if (colorVal === '1') {
-            markStyle = `rgba(0, 0, 0, ${opacityVal})`;
-        }
-
-        this.markFont = 20 * this.activeData.ratio + 'px microsoft yahei';
-        this.markStyle = markStyle;
-        this.markText = this.markTextList[markTxtVal];
-
-        let dragBoxWrapperWidth = this.activeData.w1;
-        let dragBoxWrapperHeight = this.activeData.h1;
-        let dragBoxWidth = this.markBox.$dragBox.outerWidth() < dragBoxWrapperWidth ? this.markBox.$dragBox.outerWidth() : dragBoxWrapperWidth;
-        let dragBoxHeight = this.markBox.$dragBox.outerHeight() < dragBoxWrapperHeight ? this.markBox.$dragBox.outerHeight() : dragBoxWrapperHeight;
+        let dragBoxWidth = $dragBox.find('.J-mark-txt').outerWidth();
+        let dragBoxHeight = $dragBox.find('.J-mark-txt').outerHeight();
 
         switch (POSITION[positionVal]) {
             case 'center':
-                this.markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
-                this.markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
+                markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
+                markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
                 break;
             case 'upLeft':
-                this.markX = 0;
-                this.markY = 0;
+                markX = 0;
+                markY = 0;
                 break;
             case 'upRight':
-                this.markX = (dragBoxWrapperWidth - dragBoxWidth) * this.activeData.ratio;
-                this.markY = 0;
+                markX = (dragBoxWrapperWidth - dragBoxWidth) * this.activeData.ratio;
+                markY = 0;
                 break;
             case 'downLeft':
-                this.markX = 0;
-                this.markY = (dragBoxWrapperHeight - dragBoxHeight) * this.activeData.ratio;
+                markX = 0;
+                markY = (dragBoxWrapperHeight - dragBoxHeight) * this.activeData.ratio;
                 break;
             case 'downRight':
-                this.markX = (dragBoxWrapperWidth - dragBoxWidth) * this.activeData.ratio;
-                this.markY = (dragBoxWrapperHeight - dragBoxHeight) * this.activeData.ratio;
+                markX = (dragBoxWrapperWidth - dragBoxWidth) * this.activeData.ratio;
+                markY = (dragBoxWrapperHeight - dragBoxHeight) * this.activeData.ratio;
                 break;
             default:
                 break;
         }
 
-        $markPanel.find('.J-mark-txt').text(this.markText).css({
-            color: this.markStyle
-        });
-        this.markBox.$dragBox.css({
-            left: this.markX / this.activeData.ratio,
-            top: this.markY / this.activeData.ratio,
-            width: this.markBox.$dragBox.find('.J-mark-txt').outerWidth(),
-            height: this.markBox.$dragBox.find('.J-mark-txt').outerHeight()
+        $dragBox.css({
+            'left': markX / this.activeData.ratio,
+            'top': markY / this.activeData.ratio,
+            'width': dragBoxWidth,
+            'height': dragBoxHeight
         })
+
+        if (type === 'all') {
+            this.markXAll = markX;
+            this.markYAll = markY;         
+        } else {
+            this.markX = markX;
+            this.markY = markY;
+        }
+    }
+    _setMarkStyle(type) {
+        // let font = fontSize * this.activeData.ratio + 'px microsoft yahei';
+        let $markPanel;
+        if (type === 'all') {
+            $markPanel = this.$el.find('.J-mark-all-panel');
+        } else {
+            $markPanel = this.$el.find('.J-mark-panel');            
+        }
+        let $markTxt = $markPanel.find('.J-mark-txt');
+        let colorVal = $markPanel.find('.J-color:checked').val();
+        let opacityVal = $markPanel.find('.J-opacity').val();
+        let txtVal = $markPanel.find('.J-markTxt:selected').val();
+        
+
+        let color = `rgba(255, 255, 255, ${opacityVal})`;
+        if (colorVal === '1') {
+            color = `rgba(0, 0, 0, ${opacityVal})`;
+        }
+        let text = this.markTextList[txtVal];
+
+        $markTxt.text(text).css({
+            'color': color
+        });
+        if (type === 'all') {
+            this.markStyleAll = color;
+            this.markTextAll = text;            
+        } else {
+            this.markStyle = color;
+            this.markText = text;
+        }
+        
+    }
+    _initMark() {
+        let $markPanel = this.$el.find('.J-mark-panel');
+        let $markTxt = $markPanel.find('.J-mark-txt');
+
+        let font = parseInt($markTxt.css('font-size')) + 'px microsoft yahei';
+        this.markFont = font;
+
+        $markPanel.find('.J-color:last').prop('checked', true);
+        $markPanel.find('.J-position:first').prop('checked', true);
+        $markPanel.find('.J-opacity').val($markPanel.find('.J-opacity').attr('max'));
+        $markPanel.find('.J-markTxt:first').prop('selected', true);
+
+        this._setMarkStyle();
+        this._setMarkPosition();
+    }
+    _updateMark() {
+        this._setMarkStyle();
+        this._setMarkPosition();
+
+        this.isChange = true;
     }
     _saveMark() {
-        this.imgHandler.markX = this.markX;
-        this.imgHandler.markY = this.markY;
-        this.imgHandler.markText = this.markText;
-        this.imgHandler.markFont = this.markFont;
-        this.imgHandler.markStyle = this.markStyle;
-        this.imgHandler.mark();
+        let options = {
+            markX: this.markX,
+            markY: this.markY,
+            markText: this.markText,
+            markFont: this.markFont,
+            markStyle: this.markStyle
+        };
+        
+        this.onSaveMark(options, (img) => {
+            this.activeImg = img;
+            this._refresh();
+            this._goHome();
 
-        this.resultList.push(this.imgHandler.result);
-
-        this._refresh();
-
+            this.isChange = false;
+        })  
+    }
+    _cancelMark() {
         this._goHome();
     }
     _initMarkAll() {
         let $markPanel = this.$el.find('.J-mark-all-panel');
-        $markPanel.find('.J-color').eq(1).prop('checked', true);
-        $markPanel.find('.J-position').eq(0).prop('checked', true);
-        $markPanel.find('.J-opacity').val(0.8);
-        $markPanel.find('.J-markTxt option:first').prop('selected', true);
+        let $markTxt = $markPanel.find('.J-mark-txt');
 
-        let dragBoxWrapperWidth = this.activeData.w1;
-        let dragBoxWrapperHeight = this.activeData.h1;
-        let dragBoxWidth = 340 < dragBoxWrapperWidth ? 340 : dragBoxWrapperWidth;
-        let dragBoxHeight = 35 < dragBoxWrapperHeight ? 35 : dragBoxWrapperHeight;
+        let font = parseInt($markTxt.css('font-size')) + 'px microsoft yahei';
+        this.markFontAll = font;
 
-        this.markXAll = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
-        this.markYAll = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
-        this.markAllBox.$dragBox.css({
-            left: this.markXAll / this.activeData.ratio,
-            top: this.markYAll / this.activeData.ratio,
-            width: this.markAllBox.$dragBox.find('.J-mark-txt').outerWidth(),
-            height: this.markAllBox.$dragBox.find('.J-mark-txt').outerHeight()
-        })
+        $markPanel.find('.J-color:last').prop('checked', true);
+        $markPanel.find('.J-position:first').prop('checked', true);
+        $markPanel.find('.J-opacity').val($markPanel.find('.J-opacity').attr('max'));
+        $markPanel.find('.J-markTxt:first').prop('selected', true);
+
+        this._setMarkStyle('all');
+        this._setMarkPosition('all');
     }
     _updateMarkAll() {
-        const POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
+        this._setMarkStyle('all');
+        this._setMarkPosition('all');
 
-        let $markPanel = this.$el.find('.J-mark-all-panel');
-        let colorVal = $markPanel.find('.J-color:checked').val();
-        let positionVal = $markPanel.find('.J-position:checked').val();
-        let opacityVal = $markPanel.find('.J-opacity').val();
-        let markTxtVal = $markPanel.find('.J-markTxt').val();
-
-        let markStyle = `rgba(255, 255, 255, ${opacityVal})`;
-        if (colorVal === '1') {
-            markStyle = `rgba(0, 0, 0, ${opacityVal})`;
-        }
-
-        this.markFontAll = 20 * this.activeData.ratio + 'px microsoft yahei';
-        this.markStyleAll = markStyle;
-        this.markTextAll = this.markTextList[markTxtVal];
-
-        let dragBoxWrapperWidth = this.activeData.w1;
-        let dragBoxWrapperHeight = this.activeData.h1;
-        let dragBoxWidth = this.markAllBox.$dragBox.outerWidth() < dragBoxWrapperWidth ? this.markAllBox.$dragBox.outerWidth() : dragBoxWrapperWidth;
-        let dragBoxHeight = this.markAllBox.$dragBox.outerHeight() < dragBoxWrapperHeight ? this.markAllBox.$dragBox.outerHeight() : dragBoxWrapperHeight;
-
-
-        switch (POSITION[positionVal]) {
-            case 'center':
-                this.markXAll = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
-                this.markYAll = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
-                break;
-            case 'upLeft':
-                this.markXAll = 0;
-                this.markYAll = 0;
-                break;
-            case 'upRight':
-                this.markXAll = (dragBoxWrapperWidth - dragBoxWidth) * this.activeData.ratio;
-                this.markYAll = 0;
-                break;
-            case 'downLeft':
-                this.markXAll = 0;
-                this.markYAll = (dragBoxWrapperHeight - dragBoxHeight) * this.activeData.ratio;
-                break;
-            case 'downRight':
-                this.markXAll = (dragBoxWrapperWidth - dragBoxWidth) * this.activeData.ratio;
-                this.markYAll = (dragBoxWrapperHeight - dragBoxHeight) * this.activeData.ratio;
-                break;
-            default:
-                break;
-        }
-
-        $markPanel.find('.J-mark-txt').text(this.markTextAll).css({
-            color: this.markStyleAll
-        });
-        this.markAllBox.$dragBox.css({
-            left: this.markXAll / this.activeData.ratio,
-            top: this.markYAll / this.activeData.ratio,
-            width: this.markAllBox.$dragBox.find('.J-mark-txt').outerWidth(),
-            height: this.markAllBox.$dragBox.find('.J-mark-txt').outerHeight()
-        })
+        this.isChange = true;
     }
     _showSize(w0, h0) {
+        w0 = Math.round(w0);
+        h0 = Math.round(h0);
         // 显示活动图片原始宽高
         let $numWidth = this.$el.find('.J-num-width');
         let $numHeight = this.$el.find('.J-num-height');
@@ -571,13 +817,17 @@ class Dialog {
     _refresh() {
 
         this._updateActiveData();
-
-        let base64Data = this.activeData.cvs.toDataURL(this.mime, 1.0);
+        let src = '';
+        if (this.activeData.img.nodeName.toLowerCase() === 'img') {
+            src = this.activeData.img.src;
+        } else {
+            src = this.activeData.img.toDataURL(this.mime, 1.0);
+        }
 
         if (this.$el.find('.J-img-box').find('.J-source').length > 0) {
-            this.$el.find('.J-img-box').find('.J-source').attr('src', base64Data);
+            this.$el.find('.J-img-box').find('.J-source').attr('src', src);
         } else {
-            this.$el.find('.J-img-box').append(`<img class="J-source" src="${base64Data}">`);
+            this.$el.find('.J-img-box').append(`<img class="J-source" src="${src}">`);
         }
 
         this.$el.find('.J-source').removeAttr('style');
@@ -593,8 +843,7 @@ class Dialog {
     }
     // 更新正在编辑图片的数据
     _updateActiveData() {
-
-        let targetImg = this.resultList[this.resultList.length - 1];
+        let targetImg = this.activeImg;
         let w0 = targetImg.width;
         let h0 = targetImg.height;
         if (targetImg.nodeName.toLowerCase() === 'img') {
@@ -625,7 +874,7 @@ class Dialog {
             h1: h1,
             ratio: ratio,
             imgRatio: imgRatio,
-            cvs: targetImg
+            img: targetImg
         }
     }
     _getRotateNum(direction) {
@@ -639,92 +888,45 @@ class Dialog {
     }
 
     _reset() {
-        this.rotateNum = 0;
-        this.scaleRatio = 1;
+        this.onReset((img) => {
+            this.rotateNum = 0;
+            this.scaleRatio = 1;
+            this.activeImg = img;
+            this._refresh();
 
-        this.resultList = this.resultList.slice(0, 1);
-        this.imgHandler = new ImgHandler({
-            sourceImg: this.resultList[0]
-        })
-
-        this._refresh();
+            this.isChange = false;
+        });  
     }
-    save(cvs) {
-        let max = this.maxSize * 1024;
-        let data = this._compress(cvs, max, false);
-        // 模拟处理后图片展示
-        $('#J-preview-container').append($('<img>').attr('src', data));
+    _save() {
+        this.onSave((data) => {
 
-        this._getFormData(data);
+            let $activeThumb = this.$el.find('.J-footer-normal').find('.J-img-thumbnail.active');
+            $activeThumb.addClass('new').find('img').attr('src', data.src);
+
+            let index = $activeThumb.index();
+            this.$el.find('.J-mark-all-panel').find('.J-img-thumbnail').eq(index).find('img').attr('src', data.src);
+
+            this.isChange = false;
+            this.imgList = this.$el.find('.J-footer-normal').find('.J-img-thumbnail img');
+
+        });  
     }
-    _getFormData(data) {
+    _saveMarkAll() {
+        let options = {
+            markX: this.markXAll,
+            markY: this.markYAll,
+            markText: this.markTextAll,
+            markFont: this.markFontAll,
+            markStyle: this.markStyleAll
+        };
+        this.onSaveMarkAll(options, (data) => {
 
-        let blob = base64Data2Blob(data, this.mime);
-        // console.log('end compress: ' + Math.ceil(blob.size / 1024));
-        let formData = blob2FormData(blob);
+            this.destory();
+            this.isChange = false;
 
-        $.ajax({
-            url: "/saveFile",
-            type: "POST",
-            data: formData,
-            processData: false, // 不处理数据
-            contentType: false // 不设置内容类型
-        });
+        })          
     }
-    // 只对'image/jpeg'格式有效
-    _compress(cvs, max, isSimple) {
-        let quality = 1;
-        let minWH = 800;
-        let scaleRatio = 0.9;
-        let qualityStep = 0.1;
-        // 质量压缩只支持'image/jpeg'，'image/webp'(chrome支持)
-        let qualityType = 'image/jpeg';
-
-        let width = cvs.width;
-        let height = cvs.height;
-        let cvsRatio = width / height;
-        let data = cvs.toDataURL(qualityType, 1.0);
-        let size0 = getBase64Size(data);
-        console.log('start compress: ' + Math.ceil(size0 / 1024));
-        if (isSimple) {
-            while (size0 > max) {
-                quality = Math.floor(max / size0 * 10) / 10;
-                data = cvs.toDataURL(qualityType, quality);
-                size0 = getBase64Size(data);
-            }
-
-        } else {
-            // 优先缩放
-            while (size0 > max && (width > minWH || height > minWH)) {
-                let newWidth, newHeight;
-                if (cvsRatio > 1) {
-                    newWidth = width * scaleRatio > minWH ? width * scaleRatio : minWH;
-                    newHeight = newWidth / cvsRatio;
-                } else {
-                    newHeight = height * scaleRatio > minWH ? height * scaleRatio : minWH;
-                    newWidth = newHeight * cvsRatio;
-                }
-
-                let canvas = getCanvas(newWidth, newHeight),
-                    ctx = canvas.getContext("2d");
-                ctx.drawImage(cvs, 0, 0, newWidth, newHeight);
-
-                data = canvas.toDataURL(this.mime, 1.0);
-                size0 = getBase64Size(data);
-                width = newWidth;
-                height = newHeight;
-                cvs = canvas;
-            }
-            // 降低质量
-            while (size0 > max) {
-                quality -= qualityStep;
-                data = cvs.toDataURL(qualityType, quality);
-                size0 = getBase64Size(data);
-            }
-        }
-        console.log('end compress: ' + Math.ceil(size0 / 1024));
-        return data;
-    }
+ 
     destory() {
         this.$el.remove();
     }

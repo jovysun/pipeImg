@@ -341,24 +341,35 @@ h1, h2, h3, h4, h5, h6 {
   margin-left: -370px; }
   .pipeImg-wrapper .menu {
     font-size: 0; }
+    .pipeImg-wrapper .menu .item:hover, .pipeImg-wrapper .menu .item.active {
+      border-bottom: 1px solid #8ac3d4; }
+    .pipeImg-wrapper .menu .item:hover .item-sub {
+      display: block; }
+    .pipeImg-wrapper .menu .item .item-sub {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 45px;
+      width: 150px;
+      z-index: 3;
+      border-right: none;
+      background-color: #393a4c; }
   .pipeImg-wrapper .item {
+    position: relative;
     display: inline-block;
-    border-right: 1px solid rgba(255, 255, 255, 0.5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0); }
-    .pipeImg-wrapper .item:hover, .pipeImg-wrapper .item.active {
-      border-bottom: 1px solid brown; }
-    .pipeImg-wrapper .item .item-sub {
-      display: none; }
+    border-right: 1px solid #48495d;
+    box-sizing: border-box; }
   .pipeImg-wrapper .btn {
     display: block;
-    padding: 10px 20px;
+    padding: 0 20px;
+    line-height: 44px;
     color: #fff;
-    font-size: 16px; }
+    font-size: 14px; }
   .pipeImg-wrapper .btn-close {
     position: absolute;
     right: 0;
     top: 0;
-    border-left: 1px solid rgba(255, 255, 255, 0.5); }
+    border-left: 1px solid #48495d; }
   .pipeImg-wrapper .buttons {
     position: absolute;
     right: 10px;
@@ -366,9 +377,10 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0; }
     .pipeImg-wrapper .buttons .button {
       display: inline-block;
-      padding: 5px 20px;
+      padding: 0 10px;
+      line-height: 26px;
       color: #fff;
-      font-size: 16px;
+      font-size: 14px;
       background-color: #555d72;
       border-radius: 4px; }
       .pipeImg-wrapper .buttons .button.button-main {
@@ -380,12 +392,40 @@ h1, h2, h3, h4, h5, h6 {
   .pipeImg-wrapper .pipe-header {
     position: relative;
     background-color: #393a4c; }
+  .pipeImg-wrapper .pipe-content-container {
+    display: none; }
+    .pipeImg-wrapper .pipe-content-container.active {
+      display: block; }
   .pipeImg-wrapper .pipe-content {
     overflow: hidden; }
     .pipeImg-wrapper .pipe-content .panel {
       display: none; }
       .pipeImg-wrapper .pipe-content .panel.active {
         display: block; }
+      .pipeImg-wrapper .pipe-content .panel.panel-mark-all {
+        position: relative; }
+        .pipeImg-wrapper .pipe-content .panel.panel-mark-all .img-box {
+          width: 600px;
+          padding-right: 120px; }
+        .pipeImg-wrapper .pipe-content .panel.panel-mark-all .imgs-thumbnail {
+          position: absolute;
+          right: 20px;
+          top: 0; }
+          .pipeImg-wrapper .pipe-content .panel.panel-mark-all .imgs-thumbnail .img-thumbnail {
+            display: block;
+            margin-bottom: 10px;
+            max-width: 86px;
+            height: 62px;
+            opacity: 0.5; }
+            .pipeImg-wrapper .pipe-content .panel.panel-mark-all .imgs-thumbnail .img-thumbnail.active {
+              opacity: 1; }
+            .pipeImg-wrapper .pipe-content .panel.panel-mark-all .imgs-thumbnail .img-thumbnail img {
+              max-width: 100%;
+              max-height: 100%; }
+    .pipeImg-wrapper .pipe-content .scale-img-wrapper {
+      position: absolute;
+      left: 50%;
+      top: 50%; }
     .pipeImg-wrapper .pipe-content .img-box {
       position: relative;
       width: 720px;
@@ -414,18 +454,35 @@ h1, h2, h3, h4, h5, h6 {
       color: #fff;
       font-size: 16px; }
   .pipeImg-wrapper .pipe-footer {
+    position: relative;
     background-color: #393a4c;
     font-size: 0;
     padding: 20px 10px; }
     .pipeImg-wrapper .pipe-footer .img-thumbnail {
+      position: relative;
       display: inline-block;
       margin-right: 10px;
-      width: 60px;
+      max-width: 60px;
       height: 45px;
       opacity: 0.5;
       text-align: center; }
       .pipeImg-wrapper .pipe-footer .img-thumbnail.active {
         opacity: 1; }
+      .pipeImg-wrapper .pipe-footer .img-thumbnail.new .circle {
+        visibility: visible; }
+      .pipeImg-wrapper .pipe-footer .img-thumbnail .circle {
+        visibility: hidden;
+        position: absolute;
+        left: -4px;
+        top: -4px;
+        display: block;
+        width: 8px;
+        height: 8px;
+        background-color: #48b152;
+        border-radius: 50%; }
       .pipeImg-wrapper .pipe-footer .img-thumbnail img {
         max-width: 100%;
         max-height: 100%; }
+    .pipeImg-wrapper .pipe-footer.mark-all-footer {
+      height: 45px;
+      padding: 0; }

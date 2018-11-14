@@ -14,12 +14,18 @@
     <div id="J-preview-container"></div>
 
     <script src="./libs/jquery.js"></script>
+    <script src="./libs/template.js"></script>
     <script src="./dist/js/pipeImg.js"></script>
     <script>
         
         $('.J-btn-edit').on('click', function(){
-            var pipeImg = new PipeImg({
-                source: ['./assets/Jellyfish.jpg', './assets/greensock.png']
+            var pipeImg = new PipeImg({          
+                source: ['./assets/Jellyfish.jpg', './assets/greensock.png'],
+                ajaxUrl: '/pic.do?xcase=uploadWs',
+                debug: true,
+                onComplete: (data) => {
+                    $('#J-preview-container').append($('<img>').attr('src', data.src));
+                }
             });
             
         })

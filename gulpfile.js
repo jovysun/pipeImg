@@ -42,7 +42,7 @@ gulp.task('clean', function() {
 });
 // js模块化处理 
 gulp.task('bundle', function() {
-  return gulp.src(['src/js/pipeImg.js', 'src/js/pipeImg.0.4.1.js'])
+  return gulp.src(['src/js/pipeImg.js'])
     .pipe(named())
     .pipe(webpack({
       mode: 'development',
@@ -73,8 +73,8 @@ gulp.task('serve', function() {
     });
 
     gulp.watch('src/css/*.scss', ['sass']);
-    gulp.watch('src/js/*.js', ['bundle', 'babel']);
-    gulp.watch('*.html').on('change', reload);
+    gulp.watch(['src/js/*.js', 'src/js/*.tpl'], ['bundle', 'babel']);
+    gulp.watch(['*.html']).on('change', reload);
 });
 
 gulp.task('dev', ['sass', 'bundle', 'babel', 'serve']);

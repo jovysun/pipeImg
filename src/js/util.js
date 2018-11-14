@@ -92,7 +92,7 @@ function loadImages(srcList, success, failure) {
         image.setAttribute('crossorigin', 'anonymous');
         image.src = srcList[--index];
         image.onload = function () {
-            images.push(image);
+            images.unshift(image);
             if (images.length === srcList.length) {
                 typeof success === 'function' && success(images);
                 return false;
@@ -108,7 +108,7 @@ function loadImages(srcList, success, failure) {
 }
 // 创建cavas
 function getCanvas(width, height) {
-    let canvas = document.createElement('canvas');
+    var canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
     return canvas;
@@ -125,22 +125,63 @@ function getBase64Size(base64Data) {
     var strLength = str.length;
     return parseInt(strLength - (strLength / 8) * 2);
 }
-// 压缩只支持image/jpeg和image/webp
-function compress(img, quality = 1, width, height, mime = 'images/jpeg') { //  Image 对象，或者是 Canvas 元素
-    var canvas = getCanvas(width, height),
-        ctx = canvas.getContext("2d");
-    if (width && height) {
-        ctx.drawImage(img, 0, 0, width, height);
+// 只对'image/jpeg'格式有效
+function compress(img, max, isSimple) {
+    let cvs = img;
+    if (cvs.nodeName.toLowerCase() === 'img') {
+        cvs = img2cvs(cvs);
+    }
+    let quality = 1;
+    let minWH = 800;
+    let scaleRatio = 0.9;
+    let qualityStep = 0.1;
+    // 质量压缩只支持'image/jpeg'，'image/webp'(chrome支持)
+    let qualityType = 'image/jpeg';
+
+    let width = cvs.width;
+    let height = cvs.height;
+    let cvsRatio = width / height;
+    let data = cvs.toDataURL(qualityType, 1.0);
+    let size0 = getBase64Size(data);
+    console.log('start compress: ' + Math.ceil(size0 / 1024));
+    if (isSimple) {
+        while (size0 > max) {
+            quality = Math.floor(max / size0 * 10) / 10;
+            data = cvs.toDataURL(qualityType, quality);
+            size0 = getBase64Size(data);
+        }
+
     } else {
-        ctx.drawImage(img, 0, 0);
-    }
+        // 优先缩放
+        while (size0 > max && (width > minWH || height > minWH)) {
+            let newWidth, newHeight;
+            if (cvsRatio > 1) {
+                newWidth = width * scaleRatio > minWH ? width * scaleRatio : minWH;
+                newHeight = newWidth / cvsRatio;
+            } else {
+                newHeight = height * scaleRatio > minWH ? height * scaleRatio : minWH;
+                newWidth = newHeight * cvsRatio;
+            }
 
-    var base64 = canvas.toDataURL(mime);
-    if (quality < 1) {
-        base64 = canvas.toDataURL(mime, quality);
-    }
+            let canvas = getCanvas(newWidth, newHeight),
+                ctx = canvas.getContext("2d");
+            ctx.drawImage(cvs, 0, 0, newWidth, newHeight);
 
-    return base64; // 压缩后的base64串
+            data = canvas.toDataURL(qualityType, 1.0);
+            size0 = getBase64Size(data);
+            width = newWidth;
+            height = newHeight;
+            cvs = canvas;
+        }
+        // 降低质量
+        while (size0 > max) {
+            quality -= qualityStep;
+            data = cvs.toDataURL(qualityType, quality);
+            size0 = getBase64Size(data);
+        }
+    }
+    console.log('end compress: ' + Math.ceil(size0 / 1024));
+    return data;
 }
 
 
@@ -260,6 +301,14 @@ function chooseFile(btn, cb, validFileCallback) {
 function _$(ele) {
     return typeof ele === 'string' ? document.querySelector(ele) : ele;
 }
+function img2cvs(img) {
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    ctx.drawImage(img, 0, 0);
+    return canvas;
+}
 
 export {
     drag,
@@ -273,5 +322,6 @@ export {
     chooseFile,
     uploadFile,
     getImgPromise,
-    _$
+    _$,
+    img2cvs
 }

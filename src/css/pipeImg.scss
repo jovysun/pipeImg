@@ -30,30 +30,47 @@
     
     .menu{
         font-size: 0;
+        .item{
+            &:hover,&.active{
+                border-bottom: 1px solid #8ac3d4;           
+            }
+            &:hover{
+                .item-sub{
+                    display: block;
+                }
+            }
+            .item-sub{
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 45px;
+                width: 150px;
+                z-index: 3;
+                border-right: none;
+                background-color: #393a4c;
+            }
+        }
     }
     .item{
+        position: relative;
         display: inline-block;
-        border-right: 1px solid rgba(255, 255, 255, 0.5);
-        border-bottom: 1px solid rgba(255, 255, 255, 0);
-        &:hover,&.active{
-            border-bottom: 1px solid brown;
-        }
-        .item-sub{
-            display: none;
-        }
+        border-right: 1px solid #48495d;
+        box-sizing: border-box;
+       
     }
     .btn{
         display: block;
-        padding: 10px 20px;
+        padding: 0 20px;
+        line-height: 44px;
         color: #fff;
-        font-size: 16px;
+        font-size: 14px;
         
     }
     .btn-close{
         position: absolute;
         right: 0;
         top: 0;
-        border-left: 1px solid rgba(255, 255, 255, 0.5);
+        border-left: 1px solid #48495d;
     }
     .buttons{
         position: absolute;
@@ -62,9 +79,10 @@
         font-size: 0;
         .button{
             display: inline-block;
-            padding: 5px 20px;
+            padding: 0 10px;
+            line-height: 26px;
             color: #fff;
-            font-size: 16px;
+            font-size: 14px;
             background-color: #555d72;
             border-radius: 4px;
             &.button-main{
@@ -81,6 +99,12 @@
         position: relative;
         background-color: #393a4c;
     }
+    .pipe-content-container{
+        display: none;
+        &.active{
+            display: block;
+        }
+    }
     .pipe-content{
         // height: 454px;
         // padding: 10px 0;
@@ -90,6 +114,40 @@
             &.active{
                 display: block;
             }
+            &.panel-mark-all{
+                position: relative;
+                .img-box{
+                    width: 600px;
+                    padding-right: 120px;
+                }
+                .imgs-thumbnail{
+                    position: absolute;
+                    right: 20px;
+                    top: 0;
+
+
+
+                    .img-thumbnail{
+                        display: block;
+                        margin-bottom: 10px;
+                        max-width: 86px;
+                        height: 62px;
+                        opacity: 0.5;
+                        &.active{
+                            opacity: 1;
+                        }
+                        img{
+                            max-width: 100%;
+                            max-height: 100%;
+                        }
+                    }
+                }
+            }
+        }
+        .scale-img-wrapper{
+            position: absolute;
+            left: 50%;
+            top: 50%;
         }
         .img-box{
             position: relative;
@@ -100,10 +158,6 @@
             align-items:center;
             justify-content:center;
 
-            
-            img{
-                // height: 100%;
-            }
         }
         .content-footer{
             position: relative;
@@ -133,24 +187,47 @@
         }
     }
     .pipe-footer{
+        position: relative;
         background-color: #393a4c;
         font-size: 0;
         padding: 20px 10px;
 
         .img-thumbnail{
+            position: relative;
             display: inline-block;
             margin-right: 10px;
-            width: 60px;
+            max-width: 60px;
             height: 45px;
             opacity: 0.5;
             text-align: center;
             &.active{
                 opacity: 1;
             }
+            &.new{
+                .circle{
+                    visibility: visible;
+                }         
+            }
+            .circle{
+                visibility: hidden;
+                position: absolute;
+                left: -4px;
+                top: -4px;
+                display: block;
+                width: 8px;
+                height: 8px;
+                background-color: #48b152;
+                border-radius: 50%;
+            }
             img{
                 max-width: 100%;
                 max-height: 100%;
             }
+        }
+
+        &.mark-all-footer{
+            height: 45px;
+            padding: 0;
         }
     }
 
