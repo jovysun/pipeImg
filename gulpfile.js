@@ -74,7 +74,7 @@ gulp.task('serve', function() {
 
     gulp.watch('src/css/*.scss', ['sass']);
     gulp.watch(['src/js/*.js', 'src/js/*.tpl'], ['bundle', 'babel']);
-    gulp.watch(['*.html']).on('change', reload);
+    gulp.watch(['*.html','dist/js/*.js']).on('change', reload);
 });
 
 gulp.task('dev', ['sass', 'bundle', 'babel', 'serve']);

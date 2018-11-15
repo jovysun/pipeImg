@@ -1,3 +1,4 @@
+// 依赖jquery.js，template.js
 import {
     compress,
     base64Data2Blob,

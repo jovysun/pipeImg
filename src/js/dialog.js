@@ -700,7 +700,6 @@ class Dialog {
         }
     }
     _setMarkStyle(type) {
-        // let font = fontSize * this.activeData.ratio + 'px microsoft yahei';
         let $markPanel;
         if (type === 'all') {
             $markPanel = this.$el.find('.J-mark-all-panel');
@@ -710,8 +709,7 @@ class Dialog {
         let $markTxt = $markPanel.find('.J-mark-txt');
         let colorVal = $markPanel.find('.J-color:checked').val();
         let opacityVal = $markPanel.find('.J-opacity').val();
-        let txtVal = $markPanel.find('.J-markTxt:selected').val();
-        
+        let txtVal = $markPanel.find('.J-markTxt:selected').val();   
 
         let color = `rgba(255, 255, 255, ${opacityVal})`;
         if (colorVal === '1') {
@@ -740,7 +738,7 @@ class Dialog {
 
         $markPanel.find('.J-color:last').prop('checked', true);
         $markPanel.find('.J-position:first').prop('checked', true);
-        $markPanel.find('.J-opacity').val($markPanel.find('.J-opacity').attr('max'));
+        $markPanel.find('.J-opacity').val($markPanel.find('.J-opacity').attr('defaultValue'));
         $markPanel.find('.J-markTxt:first').prop('selected', true);
 
         this._setMarkStyle();
@@ -781,8 +779,8 @@ class Dialog {
 
         $markPanel.find('.J-color:last').prop('checked', true);
         $markPanel.find('.J-position:first').prop('checked', true);
-        $markPanel.find('.J-opacity').val($markPanel.find('.J-opacity').attr('max'));
-        $markPanel.find('.J-markTxt:first').prop('selected', true);
+        $markPanel.find('.J-opacity').val($markPanel.find('.J-opacity').attr('defaultValue'));
+        $markPanel.find('.J-select-markAll-txt:first').prop('selected', true);
 
         this._setMarkStyle('all');
         this._setMarkPosition('all');

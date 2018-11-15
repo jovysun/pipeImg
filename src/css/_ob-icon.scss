@@ -1,0 +1,47 @@
+%base-icon {
+    font-family: 'Mic-icon';
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    font-size: 16px;
+    line-height: 1;
+    vertical-align: middle;
+    text-decoration: none !important;
+}
+.ob-icon {
+    @extend %base-icon;
+    
+    &.icon-refresh {
+        &:before { content: '\e046'; }
+    }
+    &.icon-crop {
+        &:before { content: '\e108'; }
+    }
+    &.icon-scaling {
+        &:before { content: '\e055'; }
+    }
+    &.icon-add-l {
+        &:before { content: '\e005'; }
+    }
+    &.icon-batch {
+        &:before { content: '\e052'; }
+    }
+    &.icon-delete {
+        &:before { content: '\e00c'; }
+    }
+    &.icon-rotate-r {
+        &:before { content: '\e053'; }
+    }
+    &.icon-rotate-l {
+        &:before { content: '\e054'; }
+    }
+    &.icon-lock {
+        &:before { content: '\e048'; }
+    }
+
+}
+

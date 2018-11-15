@@ -53,8 +53,8 @@ class DragBox {
                             </div>`;
         if (this.hasLight) {
             dragBoxHtml = `<div class="dragbox-wrapper J-dragbox-wrapper">
-                                <img class="J-source" src="${src}" id="img1">
-                                <img class="J-source" src="${src}" id="img2">
+                                <img class="J-source img-dark" src="${src}">
+                                <img class="J-source img-light J-img-light" src="${src}">
                                 <div class="drag-box J-drag-box">
                                     <div class="drag-point up-left J-drag-point"></div>
                                     <div class="drag-point up J-drag-point"></div>
@@ -82,6 +82,7 @@ class DragBox {
 
         this.boxEl = this.$dragBox.get(0);
         this.containerEl = this.boxEl.parentNode;
+        this.imgLight = $parent.find('.J-img-light:first').get(0);
 
         this.boxData = {
             left: this.boxEl.offsetLeft,
@@ -246,7 +247,7 @@ class DragBox {
         var right = this.boxEl.offsetLeft + this.boxEl.offsetWidth;
         var bottom = this.boxEl.offsetTop + this.boxEl.offsetHeight;
         var left = this.boxEl.offsetLeft;
-        img2.style.clip = "rect(" + top + "px," + right + "px," + bottom + "px," + left + "px)";
+        this.imgLight.style.clip = "rect(" + top + "px," + right + "px," + bottom + "px," + left + "px)";
     }
 
     update(width, height) {
