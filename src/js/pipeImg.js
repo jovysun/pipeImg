@@ -5,10 +5,10 @@ import {
     blob2FormData,
     loadImages
 } from './util';
-import {
-    ImgHandler
-} from './imgHandler';
-import { Dialog } from './dialog';
+import ImgHandler from './imgHandler';
+import Dialog from './dialog';
+
+import '../css/pipeImg.scss';
 
 class PipeImg {
 
@@ -191,13 +191,4 @@ class PipeImg {
 
 }
 
-
-if (typeof module !== "undefined" && module.exports) {
-    module.exports = PipeImg;
-} else if (typeof define === "function" && define.amd) {
-    define(function () {
-        return PipeImg;
-    });
-} else {
-    window.PipeImg = PipeImg;
-}
+export { PipeImg }

@@ -104,7 +104,7 @@ $color-txt: #999ba7;
             font-size: 12px;
             background-color: #4b5668;
             border-radius: 4px;
-            &:hover{
+            &.active:hover{
                 color: #fff;
             }
             &.button-main{
@@ -140,6 +140,9 @@ $color-txt: #999ba7;
                     position: absolute;
                     right: 20px;
                     top: 0;
+                    height: 100%;
+                    overflow: auto;
+                    box-sizing: border-box;
 
                     .img-thumbnail{
                         display: block;
@@ -364,6 +367,9 @@ $color-txt: #999ba7;
         background-color: #393a4c;
         font-size: 0;
         padding: 20px 10px;
+        width: 100%;
+        overflow: auto;
+        box-sizing: border-box;
 
         .img-thumbnail{
             position: relative;
@@ -398,9 +404,22 @@ $color-txt: #999ba7;
             }
         }
 
-        &.mark-all-footer{
+        .imgs-thumbnail{
+            display: block;
+        }
+        .buttons{
+            display: none;
+            top: 10px;
+        }
+        &.mark-all{
             height: 45px;
             padding: 0;
+            .imgs-thumbnail{
+                display: none;
+            }
+            .buttons{
+                display: block;
+            }
         }
     }
 

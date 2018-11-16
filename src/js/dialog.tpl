@@ -6,14 +6,10 @@
             <li class="item J-item"><a class="btn J-menu-btn" href="javascript:void(0)"><i class="ob-icon icon-scaling"></i>{{=scaleMenuTxt}}</a></li>
             <li class="item J-item J-item-mark">
                 <a class="btn J-menu-btn" href="javascript:void(0)"><i class="ob-icon icon-add-l"></i>{{=markMenuTxt}}</a>
+                <div class="btn J-menu-txt" style="display:none;"><i class="ob-icon icon-add-l"></i>{{=markMenuTxt}}</div>
                 <div class="item item-sub">
-                    <a class="btn J-menu-btn-sub" href="javascript:void(0)"><i class="ob-icon icon-batch"></i>{{=markAllMenuTxt}}</a>
-                </div>
-            </li>
-            <li class="item J-item J-item-mark-all" style="display:none;">
-                <a class="btn J-menu-btn" href="javascript:void(0)"><i class="ob-icon icon-batch"></i>{{=markAllMenuTxt}}</a>
-                <div class="item item-sub">
-                    <a class="btn J-menu-btn-sub" href="javascript:void(0)"><i class="ob-icon icon-add-l"></i>{{=markMenuTxt}}</a>
+                    <a class="btn J-menu-btn-mark-all" href="javascript:void(0)"><i class="ob-icon icon-batch"></i>{{=markAllMenuTxt}}</a>
+                    <a class="btn J-menu-btn-mark" href="javascript:void(0)" style="display:none;"><i class="ob-icon icon-add-l"></i>{{=markMenuTxt}}</a>
                 </div>
             </li>
         </ul>
@@ -106,7 +102,7 @@
                 </div>
                 <div class="item">
                     <div class="txt-label">{{=opacityTxt}}:</div>
-                    <input class="opacity-range J-opacity J-range-mark-opacity" name="opacity" type="range" min="0" max="1" step="0.1" defaultValue="0.8">
+                    <input class="opacity-range J-opacity J-range-mark-opacity" name="opacity" type="range" min="10" max="100" step="1" defaultValue="80">
                 </div>
 
                 <select class="J-markTxt J-select-mark-txt" name="markTxt">
@@ -157,7 +153,7 @@
                 </div>
                 <div class="item">
                     <div class="txt-label">{{=opacityTxt}}:</div>
-                    <input class="opacity-range J-opacity J-range-markAll-opacity" name="opacityAll" type="range" min="0" max="1" step="0.1" defaultValue="0.8">
+                    <input class="opacity-range J-opacity J-range-markAll-opacity" name="opacityAll" type="range" min="10" max="100" step="1" defaultValue="80">
                 </div>
 
                 <select class="J-markTxt J-select-markAll-txt" name="markTxtAll">
@@ -169,19 +165,20 @@
 
         </div>
     </div>
-    <div class="pipe-footer J-imgs-thumbnail J-footer-normal">
-        {{ for(var i=0;i<imgList.length;i++) { }} <a class="img-thumbnail {{=i === 0 ? 'active' : ''}} J-img-thumbnail"
-            href="javascript:void(0)">
-            <img src="{{-imgList[i].src}}">
-            <span class="circle"></span>
-            </a>
-            {{ } }}
-    </div>
-    <div class="pipe-footer mark-all-footer J-footer-special" style="display:none;">
+    <div class="pipe-footer J-pipe-footer">
+        <div class="imgs-thumbnail">
+                {{ for(var i=0;i<imgList.length;i++) { }} <a class="img-thumbnail {{=i === 0 ? 'active' : ''}} J-img-thumbnail"
+                href="javascript:void(0)">
+                <img src="{{-imgList[i].src}}">
+                <span class="circle"></span>
+                </a>
+                {{ } }}
+        </div>  
+
         <div class="buttons">
             <a class="button button-confirm J-button-confirm-all" href="javascript:void(0)">{{=saveBtnTxt}}</a>
             <a class="button button-cancel J-button-cancel" href="javascript:void(0)">{{=cancelBtnTxt}}</a>
-        </div>
+        </div>            
     </div>
 
 </div>

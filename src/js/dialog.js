@@ -15,7 +15,7 @@ class Dialog {
             imgList: [],
             template: tpl,
             markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
-            
+
             closeBtnTxt: '关闭',
             saveBtnTxt: '保存',
             resetBtnTxt: '重置',
@@ -24,7 +24,7 @@ class Dialog {
             rotateMenuTxt: '旋转',
             turnLeftTxt: '逆时针旋转',
             turnRightTxt: '顺时针旋转',
-            cropMenuTxt: '裁剪',                
+            cropMenuTxt: '裁剪',
             scaleMenuTxt: '缩放',
             markMenuTxt: '添加水印',
             colorTxt: '颜色',
@@ -42,7 +42,7 @@ class Dialog {
             onSave: (cb) => {},
             onChangeActive: (options, cb) => {},
             onSaveMarkAll: (cb) => {}
-            
+
         };
 
 
@@ -95,7 +95,7 @@ class Dialog {
             rotateMenuTxt: this.rotateMenuTxt,
             turnLeftTxt: this.turnLeftTxt,
             turnRightTxt: this.turnRightTxt,
-            cropMenuTxt: this.cropMenuTxt,                
+            cropMenuTxt: this.cropMenuTxt,
             scaleMenuTxt: this.scaleMenuTxt,
             markMenuTxt: this.markMenuTxt,
             colorTxt: this.colorTxt,
@@ -106,9 +106,9 @@ class Dialog {
             markAllMenuTxt: this.markAllMenuTxt
         });
 
-        let html = '<div class="pipe-dialog J-pipe-dialog" onselectstart="return false" ondragstart="return false"><div class="pipe-mask J-pipe-mask"></div>'+ templateHtml +'</div>';
+        let html = '<div class="pipe-dialog J-pipe-dialog" onselectstart="return false" ondragstart="return false"><div class="pipe-mask J-pipe-mask"></div>' + templateHtml + '</div>';
         $('body').append(html);
-        
+
         this.$el = $('.J-pipe-dialog');
         this.$pipeWrapper = this.$el.find('.J-pipe-wrapper');
 
@@ -119,7 +119,7 @@ class Dialog {
         this.$btnConfirm = this.$el.find('.J-button-confirm');
         this.$btnCancel = this.$el.find('.J-button-cancel');
         this.$btnSaveAll = this.$el.find('.J-button-confirm-all');
-        this.$imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
+
         // 菜单导航
         // this.$menuRotate = this.$el.find('.J-menu-rotate');
         // this.$menuCrop = this.$el.find('.J-menu-crop');
@@ -160,8 +160,6 @@ class Dialog {
 
         this.activeImg = this.imgList[0];
 
-        
-
 
         // 初始化裁剪框
         this.cropBox = new DragBox({
@@ -169,7 +167,8 @@ class Dialog {
             hasLight: true,
             onDragPoint: (data) => {
                 this._showSize(data.width * this.activeData.ratio, data.height * this.activeData.ratio);
-                this.isChange = true;
+                // this.isChange = true;
+                this._updateIsChange(true);
             }
         });
         // 初始化缩放
@@ -188,14 +187,15 @@ class Dialog {
 
                 this.$el.find('.J-mark-panel').find('.J-position').prop('checked', false);
 
-                this.isChange = true;
+                // this.isChange = true;
+                this._updateIsChange(true);
             },
             onDragPoint: (boxData) => {
                 this.$el.find('.J-mark-panel').find('.J-mark-txt').css({
                     'font-size': parseInt(this.markBox.$dragBox.css('height')) / 1.5
                 })
                 this._updateMark();
-            } 
+            }
         });
         // 初始化批量水印框
         this.markAllBox = new DragBox({
@@ -207,14 +207,15 @@ class Dialog {
 
                 this.$el.find('.J-mark-all-panel').find('.J-position').prop('checked', false);
 
-                this.isChange = true;
+                // this.isChange = true;
+                this._updateIsChange(true);
             },
             onDragPoint: (boxData) => {
                 this.$el.find('.J-mark-all-panel').find('.J-mark-txt').css({
                     'font-size': parseInt(this.markAllBox.$dragBox.css('height')) / 1.5
                 })
                 this._updateMarkAll();
-            } 
+            }
         });
 
         this._refresh();
@@ -222,7 +223,7 @@ class Dialog {
     }
     _bind() {
         // 切换编辑图片
-        this.$el.find('.J-footer-normal').on('click', '.J-img-thumbnail', (e) => {
+        this.$el.find('.J-pipe-footer').on('click', '.J-img-thumbnail', (e) => {
 
             let $thumbnail = $(e.target).parent();
             $thumbnail.addClass('active').siblings().removeClass('active');
@@ -267,6 +268,9 @@ class Dialog {
 
         // 菜单切换
         this.$el.find('.J-menu-btn').on('click', (e) => {
+            if (!this._isGoOn()) {
+                return false;
+            }
             let $item = $(e.target).parent();
             let index = $item.index();
             let oldActiveIndex = $item.parent().find('.active:first').index();
@@ -298,52 +302,72 @@ class Dialog {
             if (index === 2) {
                 this._initScale();
             }
-            // // 进入水印
+            // 进入水印
             if (index === 3) {
                 this._initMark();
+                this.$el.find('.J-item-mark').find('.J-menu-btn').hide();
+                this.$el.find('.J-item-mark').find('.J-menu-txt').show();
             }
+            // 非水印
+            if (index !== 3) {
+                this.$el.find('.J-item-mark').find('.J-menu-btn').show();
+                this.$el.find('.J-item-mark').find('.J-menu-txt').hide();
+            }
+            this.$el.find('.J-pipe-footer').removeClass('mark-all');
 
         })
-        this.$el.find('.J-item').on('click', '.J-menu-btn', (e) => {
-            if (!$(e.target).parent().hasClass('J-item-mark-all')) {
-                this.$el.find('.J-footer-normal').show();
-                this.$el.find('.J-footer-special').hide();
-                this.$el.find('.J-item-mark').show();
-                this.$el.find('.J-item-mark-all').hide();              
+        // 切换水印
+        this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark', (e) => {
+            if (!this._isGoOn()) {
+                return false;
             }
+
+            let txt = this.$el.find('.J-item-mark').find('.J-menu-btn-mark').html();
+            this.$el.find('.J-item-mark').find('.J-menu-txt').html(txt);
+            this.$el.find('.J-item-mark').find('.J-menu-btn-mark-all').show();
+            this.$el.find('.J-item-mark').find('.J-menu-btn-mark').hide();
+            
+            this.$el.find('.J-item-mark').addClass('active').siblings().removeClass('active');
+            this.$el.find('.J-mark-panel').addClass('active').siblings().removeClass('active');
+
+            this.$el.find('.J-pipe-footer').removeClass('mark-all');
+            
+            this._initPanel();
         })
-        this.$el.find('.J-item').on('click', '.J-menu-btn-sub', (e) => {
-            if ($(e.target).parent().parent().hasClass('J-item-mark')) {
-                let $markPanel = this.$el.find('.J-mark-all-panel');
-                let $activeImg = $markPanel.find('.J-img-thumbnail.active img');
-                this.$el.find('.J-item-mark-all').addClass('active').siblings().removeClass('active');
-                this.$el.find('.J-mark-all-panel').addClass('active').siblings().removeClass('active');
-                this.$el.find('.J-item-mark').hide();
-                this.$el.find('.J-item-mark-all').show();
-                
-                this.$el.find('.J-footer-normal').hide();
-                this.$el.find('.J-footer-special').show();
-
-                $markPanel.find('.J-source').attr('src', $activeImg.attr('src'));
-                this.rotateNum = 0;
-                this.scaleRatio = 1;
-                this.activeImg = $activeImg.get(0);
-                this._refresh();
-                this._initMarkAll();
-
-                this.isChange = false;
-
-            } else {         
-                this.$el.find('.J-item-mark').addClass('active').siblings().removeClass('active');
-                this.$el.find('.J-mark-panel').addClass('active').siblings().removeClass('active');
-                this.$el.find('.J-item-mark').show();
-                this.$el.find('.J-item-mark-all').hide();
-                this._initPanel();
-                this.$el.find('.J-footer-normal').show();
-                this.$el.find('.J-footer-special').hide();               
-
+        // 切换批量水印
+        this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark-all', (e) => {
+            if (!this._isGoOn()) {
+                return false;
             }
+            this.$el.find('.J-item-mark').addClass('active').siblings().removeClass('active');
+            let $markPanel = this.$el.find('.J-mark-all-panel');
+            let $activeImg = $markPanel.find('.J-img-thumbnail.active img');
+
+            $markPanel.addClass('active').siblings().removeClass('active');
+
+            this.$el.find('.J-item-mark').find('.J-menu-btn').hide();
+            this.$el.find('.J-item-mark').find('.J-menu-txt').show();
+
+            this.$el.find('.J-pipe-footer').addClass('mark-all');
+
+            let txt = this.$el.find('.J-item-mark').find('.J-menu-btn-mark-all').html();
+            this.$el.find('.J-item-mark').find('.J-menu-txt').html(txt);
+            this.$el.find('.J-item-mark').find('.J-menu-btn-mark-all').hide();
+            this.$el.find('.J-item-mark').find('.J-menu-btn-mark').show();
+
+
+            $markPanel.find('.J-source').attr('src', $activeImg.attr('src'));
+            this.rotateNum = 0;
+            this.scaleRatio = 1;
+            this.activeImg = $activeImg.get(0);
+            this._refresh();
+            this._initMarkAll();
+
+            // this.isChange = true;
+            this._updateIsChange(true);
+
         })
+
 
         // 旋转++++++++++++++++
         // 逆时针旋转
@@ -386,6 +410,14 @@ class Dialog {
             this.scaleRatio = parseInt($this.val()) / this.activeData.h0;
             this._updateScale();
         })
+        // IE11下change事件连续触发
+        this.$rangeScaleRatio.on('change', (e) => {
+            let $this = $(e.target);
+            let max = parseInt($this.attr('max'));
+            this.scaleRatio = parseInt($this.val()) / max;
+            this._updateScale();
+        })
+        // chrome下input事件连续触发，change只有停止拖动时触发
         this.$rangeScaleRatio.on('input', (e) => {
             let $this = $(e.target);
             let max = parseInt($this.attr('max'));
@@ -397,6 +429,9 @@ class Dialog {
             this._updateMark();
         })
         this.$rangeMarkOpacity.on('input', () => {
+            this._updateMark();
+        })
+        this.$rangeMarkOpacity.on('change', () => {
             this._updateMark();
         })
         this.$selectMarkTxt.on('change', () => {
@@ -411,6 +446,9 @@ class Dialog {
             this._updateMarkAll();
         })
         this.$rangeMarkAllOpacity.on('input', () => {
+            this._updateMarkAll();
+        })
+        this.$rangeMarkAllOpacity.on('change', () => {
             this._updateMarkAll();
         })
         this.$selectMarkAllTxt.on('change', () => {
@@ -452,21 +490,18 @@ class Dialog {
                         this._saveScale();
                     default:
                         break;
-                }           
+                }
+                this._save();
             }
-            this._save();
+            
         })
         // 关闭
         this.$btnClose.on('click', (e) => {
-            if (this.isChange) {
-                let result = confirm('Leave without saving?');
-                if (result) {
-                    this.destory();
-                }
-            } else {
-                this.destory();
+            if (!this._isGoOn()) {
+                return false;
             }
-            
+            this.destory();
+
         })
         // 禁用鼠标右击菜单
         this.$el.on('contextmenu', (e) => {
@@ -479,11 +514,14 @@ class Dialog {
         this._initCrop();
         this._initScale();
         this._initMark();
-        this._goHome();
+        // this._goHome();
     }
     _goHome() {
         this.$el.find('.J-menu-btn').parent(':first').addClass('active').siblings().removeClass('active');
         this.$el.find('.J-panel:first').addClass('active').siblings().removeClass('active');
+
+        this.$el.find('.J-item-mark').find('.J-menu-btn').show();
+        this.$el.find('.J-item-mark').find('.J-menu-txt').hide();
     }
 
     _initRotate() {
@@ -522,7 +560,8 @@ class Dialog {
             }
         }
 
-        this.isChange = true;
+        // this.isChange = true;
+        this._updateIsChange(true);
     }
     _saveRotate() {
         let options = {
@@ -533,7 +572,8 @@ class Dialog {
             this.activeImg = img;
             this._refresh();
 
-            this.isChange = false;
+            // this.isChange = true;
+            this._updateIsChange(true);
         });
     }
     _initCrop() {
@@ -545,7 +585,8 @@ class Dialog {
     }
     _updateCrop() {
         this.cropBox.update();
-        this.isChange = true;
+        // this.isChange = true;
+        this._updateIsChange(true);
     }
     _saveCrop() {
         let options = {
@@ -558,12 +599,13 @@ class Dialog {
             this.sx = 0;
             this.sy = 0;
             this.cropW = img.width;
-            this.cropH = img.height;     
+            this.cropH = img.height;
 
             this.activeImg = img;
             this._refresh();
 
-            this.isChange = false;
+            // this.isChange = true;
+            this._updateIsChange(true);
         })
     }
     _initScale() {
@@ -621,7 +663,8 @@ class Dialog {
             'transform': `scale(${this.scaleRatio})`
         });
 
-        this.isChange = true;
+        // this.isChange = true;
+        this._updateIsChange(true);
     }
     _saveScale() {
         let options = {
@@ -632,7 +675,8 @@ class Dialog {
             this.activeImg = img;
             this._refresh();
 
-            this.isChange = false;
+            // this.isChange = true;
+            this._updateIsChange(true);
         })
 
     }
@@ -646,14 +690,14 @@ class Dialog {
             markX = this.markXAll;
             markY = this.markYAll;
         } else {
-            $markPanel = this.$el.find('.J-mark-panel');         
-            $dragBox = this.markBox.$dragBox;   
+            $markPanel = this.$el.find('.J-mark-panel');
+            $dragBox = this.markBox.$dragBox;
             markX = this.markX;
             markY = this.markY;
         }
 
         let positionVal = $markPanel.find('.J-position:checked').val();
-        
+
         let dragBoxWrapperWidth = this.activeData.w1;
         let dragBoxWrapperHeight = this.activeData.h1;
         let dragBoxWidth = $dragBox.find('.J-mark-txt').outerWidth();
@@ -693,7 +737,7 @@ class Dialog {
 
         if (type === 'all') {
             this.markXAll = markX;
-            this.markYAll = markY;         
+            this.markYAll = markY;
         } else {
             this.markX = markX;
             this.markY = markY;
@@ -704,12 +748,12 @@ class Dialog {
         if (type === 'all') {
             $markPanel = this.$el.find('.J-mark-all-panel');
         } else {
-            $markPanel = this.$el.find('.J-mark-panel');            
+            $markPanel = this.$el.find('.J-mark-panel');
         }
         let $markTxt = $markPanel.find('.J-mark-txt');
         let colorVal = $markPanel.find('.J-color:checked').val();
-        let opacityVal = $markPanel.find('.J-opacity').val();
-        let txtVal = $markPanel.find('.J-markTxt:selected').val();   
+        let opacityVal = $markPanel.find('.J-opacity').val() / parseInt($markPanel.find('.J-opacity').attr('max'));
+        let txtVal = $markPanel.find('.J-markTxt:selected').val();
 
         let color = `rgba(255, 255, 255, ${opacityVal})`;
         if (colorVal === '1') {
@@ -722,12 +766,12 @@ class Dialog {
         });
         if (type === 'all') {
             this.markStyleAll = color;
-            this.markTextAll = text;            
+            this.markTextAll = text;
         } else {
             this.markStyle = color;
             this.markText = text;
         }
-        
+
     }
     _initMark() {
         let $markPanel = this.$el.find('.J-mark-panel');
@@ -748,7 +792,8 @@ class Dialog {
         this._setMarkStyle();
         this._setMarkPosition();
 
-        this.isChange = true;
+        // this.isChange = true;
+        this._updateIsChange(true);
     }
     _saveMark() {
         let options = {
@@ -758,14 +803,15 @@ class Dialog {
             markFont: this.markFont,
             markStyle: this.markStyle
         };
-        
+
         this.onSaveMark(options, (img) => {
             this.activeImg = img;
             this._refresh();
             this._goHome();
 
-            this.isChange = false;
-        })  
+            // this.isChange = true;
+            this._updateIsChange(true);
+        })
     }
     _cancelMark() {
         this._goHome();
@@ -789,7 +835,8 @@ class Dialog {
         this._setMarkStyle('all');
         this._setMarkPosition('all');
 
-        this.isChange = true;
+        // this.isChange = true;
+        this._updateIsChange(true);
     }
     _showSize(w0, h0) {
         w0 = Math.round(w0);
@@ -829,7 +876,7 @@ class Dialog {
         }
 
         this.$el.find('.J-source').removeAttr('style');
-        this.cropBox && (this.cropBox.boxEl.style = '');
+        this.cropBox && this.cropBox.boxEl.removeAttribute('style');
 
         this.$el.find('.J-img-box').find('.J-source').css({
             width: this.activeData.w1,
@@ -884,7 +931,23 @@ class Dialog {
             this.rotateNum = 3;
         }
     }
-
+    _isGoOn() {
+        let result = true;
+        if (this.isChange) {
+            result = confirm('Leave without saving?');
+        }
+        return result;
+    }
+    _updateIsChange(isChange) {
+        this.isChange = isChange;
+        let $buttons = this.$el.find('.J-button-save, .J-button-reset');
+        if (isChange) {
+            $buttons.addClass('active');
+        } else {
+            $buttons.removeClass('active');
+        }
+        
+    }
     _reset() {
         this.onReset((img) => {
             this.rotateNum = 0;
@@ -892,22 +955,24 @@ class Dialog {
             this.activeImg = img;
             this._refresh();
 
-            this.isChange = false;
-        });  
+            // this.isChange = false;
+            this._updateIsChange(false);
+        });
     }
     _save() {
         this.onSave((data) => {
 
-            let $activeThumb = this.$el.find('.J-footer-normal').find('.J-img-thumbnail.active');
+            let $activeThumb = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
             $activeThumb.addClass('new').find('img').attr('src', data.src);
 
             let index = $activeThumb.index();
             this.$el.find('.J-mark-all-panel').find('.J-img-thumbnail').eq(index).find('img').attr('src', data.src);
 
-            this.isChange = false;
-            this.imgList = this.$el.find('.J-footer-normal').find('.J-img-thumbnail img');
+            // this.isChange = false;
+            this._updateIsChange(false);
+            this.imgList = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail img');
 
-        });  
+        });
     }
     _saveMarkAll() {
         let options = {
@@ -920,11 +985,12 @@ class Dialog {
         this.onSaveMarkAll(options, (data) => {
 
             this.destory();
-            this.isChange = false;
+            // this.isChange = false;
+            this._updateIsChange(false);
 
-        })          
+        })
     }
- 
+
     destory() {
         this.$el.remove();
     }
@@ -937,4 +1003,4 @@ class Dialog {
 
 }
 
-export {Dialog}
+export default Dialog

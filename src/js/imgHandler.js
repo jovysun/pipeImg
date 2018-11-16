@@ -240,4 +240,4 @@ class ImgHandler {
 }
 
 
-export {ImgHandler}
+export default ImgHandler
