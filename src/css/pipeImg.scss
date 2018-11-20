@@ -2,6 +2,7 @@
 @import './reset';
 @import './font';
 @import './ob-icon';
+@import './select';
 @import './dragbox';
 
 $color-txt: #999ba7;
@@ -124,7 +125,7 @@ $color-txt: #999ba7;
     .pipe-content{
         // height: 454px;
         // padding: 10px 0;
-        overflow: hidden;
+        
         .panel{
             display: none;
             &.active{
@@ -159,6 +160,9 @@ $color-txt: #999ba7;
                         }
                     }
                 }
+            }
+            &.scale-panel{
+                overflow: hidden;
             }
         }
         
@@ -286,53 +290,93 @@ $color-txt: #999ba7;
             }
 
             .scale-range{
-                margin-top: 8px;
+                margin-top: 2px;
                 margin-left: 10;
                 width: 120px;
             }
             .opacity-range{
-                margin-top: 8px;
+                margin-top: 2px;
                 width: 75px;
             }
             // range标签样式美化
             input[type="range"] {
-                // box-shadow: 0 1px 0 0px #424242, 0 1px 0 #060607 inset, 0px 2px 10px 0px black inset, 1px 0px 2px rgba(0, 0, 0, 0.4) inset, 0 0px 1px rgba(0, 0, 0, 0.6) inset;
-                
-                background-color: #2f4260;
-                border-radius: 6px;
-                
+                // 去除浏览器默认的样式
                 -webkit-appearance: none;
-                height:5px;
-                border: 1px solid #000;
-            }
-            input[type="range"]::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                cursor: default;
-                height: 12px;
-                width: 12px;
-                transform: translateY(0px);
-                background: none repeat scroll 0 0 #406989;
-                border-radius: 10px;
-                box-shadow: 0 -1px 1px black inset;
-            }
-
-            // select美化样式
-            select{
-                background-color: #507194;
-                color: $color-txt;
-                border: 1px solid #000;
-                border-radius: 3px;
-                outline: none;
-                height: 20px;
-                line-height: 20px;
-                min-width: 100px;
-                background-image: none !important;
-                filter: none !important;
-
-                &:hover{
-                    background-color: #092646;
+                -moz-appearance: none;
+                -ms-appearance: none;
+                &:focus {
+                    // 去除落焦时的外边框效果
+                    outline: none;
                 }
+                background-color: #212234;
             }
+            // 轨道样式
+            input[type=range]::-webkit-slider-runnable-track{
+                height: 5px;
+                border-radius: 5px; /*将轨道设为圆角的*/
+                background: #2f4260;
+                border: none;
+            }
+            input[type=range]::-moz-range-track{
+                height: 5px;
+                border-radius: 5px; /*将轨道设为圆角的*/
+                background: #2f4260;
+                border: none;
+            }
+
+            // 滑块样式
+            input[type=range]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                position: relative;
+                top: -3px;
+                background: #406989;
+                border: none;
+            }
+            input[type=range]::-moz-range-thumb {
+                -moz-appearance: none;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                position: relative;
+                top: -3px;
+                background: #406989;
+                border: none;
+            }
+            input[type=range]::-ms-thumb {
+                -ms-appearance: none;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                position: relative;
+                top: -3px;
+                background: #406989;
+                border: none;
+            }
+            // IE轨道样式
+            input[type=range]::-ms-track {
+                height: 5px;
+                border-radius: 5px;
+                border-color: transparent; /*去除原有边框*/
+                color: transparent; /*去除轨道内的竖线*/
+                background: #2f4260;
+                border: none;
+            } 
+            input[type=range]::-ms-fill-lower {
+                /*进度条已填充的部分*/
+                height: 5px;
+                border-radius: 5px;
+                background: #2f4260;
+            } 
+            input[type=range]::-ms-fill-upper {
+                /*进度条未填充的部分*/
+                height: 5px;
+                border-radius: 5px;
+                background: #2f4260;
+            } 
+
 
             input[type="text"]{   
                 width: 46px;          

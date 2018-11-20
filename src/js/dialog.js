@@ -5,6 +5,7 @@ import {
     DragBox
 } from './dragBox';
 import tpl from './dialog.tpl';
+import ThinSelect from './thinSelect';
 
 class Dialog {
 
@@ -218,8 +219,12 @@ class Dialog {
             }
         });
 
+        
+
         this._refresh();
         this._bind();
+
+        ThinSelect.use('.J-markTxt');
     }
     _bind() {
         // 切换编辑图片
@@ -268,9 +273,9 @@ class Dialog {
 
         // 菜单切换
         this.$el.find('.J-menu-btn').on('click', (e) => {
-            if (!this._isGoOn()) {
-                return false;
-            }
+            // if (!this._isGoOn()) {
+            //     return false;
+            // }
             let $item = $(e.target).parent();
             let index = $item.index();
             let oldActiveIndex = $item.parent().find('.active:first').index();
@@ -573,7 +578,7 @@ class Dialog {
             this._refresh();
 
             // this.isChange = true;
-            this._updateIsChange(true);
+            this._updateIsChange(false);
         });
     }
     _initCrop() {
@@ -605,7 +610,7 @@ class Dialog {
             this._refresh();
 
             // this.isChange = true;
-            this._updateIsChange(true);
+            this._updateIsChange(false);
         })
     }
     _initScale() {

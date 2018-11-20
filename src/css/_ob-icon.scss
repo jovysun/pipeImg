@@ -42,6 +42,11 @@
     &.icon-lock {
         &:before { content: '\e048'; }
     }
-
+    &.icon-down {
+        &:before { content: '\e006'; }
+    }
+    &.icon-down-big {
+        &:before { content: '\e059'; }
+    }
 }
 

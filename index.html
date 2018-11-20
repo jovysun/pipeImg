@@ -1,0 +1,38 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片编辑</title>
+    <!-- <link rel="stylesheet" href="dist/css/pipeImg.css"> -->
+</head>
+
+<body>
+    <h1 style="text-align:center;padding: 10px;"><button class="J-btn-edit" style="font-size: 20px;">编辑</button></h1>
+    
+    <div id="J-preview-container"></div>
+
+    <script src="/libs/jquery.js"></script>
+    <script src="/libs/template.js"></script>
+    <script src="./dist/js/pipeImg.bundle.min.js"></script>
+    <!-- <script src="./dist/js/pipeImg.thin.min.js"></script> -->
+    <script>
+        
+        $('.J-btn-edit').on('click', function(){
+            var pipeImg = new PipeImg({          
+                source: ['./images/Jellyfish.jpg', './images/greensock.png', './images/Lighthouse.jpg'],
+                ajaxUrl: '/pic.do?xcase=uploadWs',
+                debug: true,
+                onComplete: function(data) {
+                    $('#J-preview-container').append($('<img>').attr('src', data.src));
+                }
+            });
+            
+        })
+
+
+    </script>
+</body>
+
+</html>

@@ -1,20 +1,18 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
+    mode: 'production',
     entry: {
-        pipeImg: __dirname + "/src/js/pipeImg.js"
+        'pipeImg.bundle': "./src/js/pipeImg.js",
+        'pipeImg.thin': "./src/js/pipeImg.thin.js"
     },
     output: {
-        path: __dirname + "/dist/js",
-        filename: "[name].bundle.js",
+        path: path.resolve(__dirname, "dist/js"),
+        filename: "[name].min.js",
         libraryTarget: 'umd'
     },
-    mode: 'development',
-    devtool: 'cheap-module-eval-source-map',
-    devServer: {
-        contentBase: './',
-        compress: true,
-        port: 9000
-    },
+
+    devtool: 'cheap-module-source-map',
     module: {
         rules: [{
                 test: /\.js$/,
@@ -61,9 +59,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: __dirname + "/src/test.html"
-        })
+        new CleanWebpackPlugin(['dist/js'])
     ]
 
 }

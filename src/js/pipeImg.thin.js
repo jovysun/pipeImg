@@ -8,8 +8,6 @@ import {
 import ImgHandler from './imgHandler';
 import Dialog from './dialog';
 
-import '../css/pipeImg.scss';
-
 class PipeImg {
 
     constructor(options) {
@@ -20,7 +18,6 @@ class PipeImg {
             debug: false,
             mime: 'image/jpeg',
             maxSize: 500,    
-            onInited: () => {},
             onComplete: (response) => {}
         };
 
@@ -32,7 +29,6 @@ class PipeImg {
         this.mime = options.mime;
         this.maxSize = options.maxSize;
         
-        this.onInited = options.onInited;
         this.onComplete = options.onComplete;
 
         this.resultList = [];
@@ -78,10 +74,6 @@ class PipeImg {
                     this._saveMarkAll(options, cb);
                 }
             })
-
-            
-
-            this.onInited();
 
         })
 

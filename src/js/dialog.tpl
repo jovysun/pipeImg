@@ -54,7 +54,7 @@
 
         </div>
         <!-- 缩放面板 -->
-        <div class="panel J-panel J-scale-panel">
+        <div class="panel scale-panel J-panel J-scale-panel">
             <div class="img-box J-img-box">
                 <div class="scale-img-wrapper J-scale-img-wrapper">
                     <img class="J-source" src="{{-imgList[0].src}}">
