@@ -15,22 +15,72 @@ class PipeImg {
     constructor(options) {
         // 默认配置参数
         let defaults = {
-            source: ['./assets/Jellyfish.jpg'],
-            ajaxUrl: '/pic.do?xcase=uploadWs',
+            // 必填，图片src字符串数组
+            source: [],
+            // 上传图片地址
+            ajaxUrl: '',
             debug: false,
             mime: 'image/jpeg',
+            // 保存图片最大体积
             maxSize: 500,    
+            // 文案
+            markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
+            closeBtnTxt: '关闭',
+            saveBtnTxt: '保存',
+            resetBtnTxt: '重置',
+            confirmBtnTxt: '确定',
+            cancelBtnTxt: '取消',
+            rotateMenuTxt: '旋转',
+            turnLeftTxt: '逆时针旋转',
+            turnRightTxt: '顺时针旋转',
+            cropMenuTxt: '裁剪',
+            scaleMenuTxt: '缩放',
+            markMenuTxt: '添加水印',
+            colorTxt: '颜色',
+            positionTxt: '位置',
+            opacityTxt: '透明度',
+            showRoomTxt: '展示厅',
+            companyNameTxt: '公司名称',
+            markAllMenuTxt: '批量添加水印',
+            // 初始化完成回调
             onInited: () => {},
+            // 上传保存完成回调
             onComplete: (response) => {}
         };
 
         options = Object.assign({}, defaults, options);
         this.source = options.source;
+        if (!this.source) {
+            throw new Error('PipeImg: source is not found!');
+        }
+        if (!(Array.isArray(this.source) || typeof this.source === 'string')) {
+            throw new Error('PipeImg: source类型错误，只能为字符串或者数组！');
+        }
         this.ajaxUrl = options.ajaxUrl;
 
         this.debug = options.debug;
         this.mime = options.mime;
         this.maxSize = options.maxSize;
+
+        this.markTextList = options.markTextList;
+        this.closeBtnTxt = options.closeBtnTxt;
+        this.saveBtnTxt = options.saveBtnTxt;
+        this.resetBtnTxt = options.resetBtnTxt;
+        this.confirmBtnTxt = options.confirmBtnTxt;
+        this.cancelBtnTxt = options.cancelBtnTxt;
+        this.rotateMenuTxt = options.rotateMenuTxt;
+        this.turnLeftTxt = options.turnLeftTxt;
+        this.turnRightTxt = options.turnRightTxt;
+        this.cropMenuTxt = options.cropMenuTxt;
+        this.scaleMenuTxt = options.scaleMenuTxt;
+        this.markMenuTxt = options.markMenuTxt;
+        this.colorTxt = options.colorTxt;
+        this.positionTxt = options.positionTxt;
+        this.opacityTxt = options.opacityTxt;
+        this.showRoomTxt = options.showRoomTxt;
+        this.companyNameTxt = options.companyNameTxt;
+        this.markAllMenuTxt = options.markAllMenuTxt;
+
         
         this.onInited = options.onInited;
         this.onComplete = options.onComplete;
@@ -53,6 +103,26 @@ class PipeImg {
 
             this.dialog = new Dialog({
                 imgList: images,
+
+                markTextList: this.markTextList,
+                closeBtnTxt: this.closeBtnTxt,
+                saveBtnTxt: this.saveBtnTxt,
+                resetBtnTxt: this.resetBtnTxt,
+                confirmBtnTxt: this.confirmBtnTxt,
+                cancelBtnTxt: this.cancelBtnTxt,
+                rotateMenuTxt: this.rotateMenuTxt,
+                turnLeftTxt: this.turnLeftTxt,
+                turnRightTxt: this.turnRightTxt,
+                cropMenuTxt: this.cropMenuTxt,
+                scaleMenuTxt: this.scaleMenuTxt,
+                markMenuTxt: this.markMenuTxt,
+                colorTxt: this.colorTxt,
+                positionTxt: this.positionTxt,
+                opacityTxt: this.opacityTxt,
+                showRoomTxt: this.showRoomTxt,
+                companyNameTxt: this.companyNameTxt,
+                markAllMenuTxt: this.markAllMenuTxt,
+
                 onSaveRotate: (options, cb) => {
                     this._saveRotate(options, cb);
                 },
@@ -79,14 +149,13 @@ class PipeImg {
                 }
             })
 
-            
-
             this.onInited();
 
+        }, () => {
+            throw new Error('PipeImg: source图片加载失败！');
         })
 
     }
-
     _saveRotate(options, cb) {
         this.imgHandler.rotateNum = options.rotateNum;
         this.imgHandler.rotate();

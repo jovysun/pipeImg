@@ -81,6 +81,9 @@ function loadImage(src, success, failure) {
 }
 
 function loadImages(srcList, success, failure) {
+    if (typeof srcList === 'string') {
+        srcList = [srcList];
+    }
     var images = [];
     var index = srcList.length;
     var _loadImage = () => {

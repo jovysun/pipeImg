@@ -23,6 +23,7 @@
             var pipeImg = new PipeImg({          
                 source: ['./images/Jellyfish.jpg', './images/greensock.png', './images/Lighthouse.jpg'],
                 ajaxUrl: '/pic.do?xcase=uploadWs',
+                rotateMenuTxt: 'rotate',
                 debug: true,
                 onComplete: function(data) {
                     $('#J-preview-container').append($('<img>').attr('src', data.src));
