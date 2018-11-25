@@ -14,6 +14,7 @@ class Dialog {
 
         // 默认配置参数
         let defaults = {
+            debug: false,
             imgList: [],
             template: tpl,
             mime: 'image/jpeg',
@@ -54,6 +55,7 @@ class Dialog {
 
         options = Object.assign({}, defaults, options);
 
+        this.debug = options.debug;
         this.imgList = options.imgList;
         this.template = options.template;
         this.mime = options.mime;
@@ -394,7 +396,6 @@ class Dialog {
         this.$inputScaleHeight.on('input', (e) => {
             let value = parseInt($(e.target).val());
             value = value >= 0 ? value : 0;
-            console.log(value)
             this.scaleRatio = value / this.activeData.h0;
 
             this._updateScale();
@@ -501,7 +502,7 @@ class Dialog {
         })
         // 禁用鼠标右击菜单
         this.$el.on('contextmenu', (e) => {
-            // return false;
+            return this.debug;
         })
 
     }

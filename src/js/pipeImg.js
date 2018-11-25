@@ -125,6 +125,7 @@ class PipeImg {
             this.resultList.push(this.imgHandler.result);
 
             this.dialog = new Dialog({
+                debug: this.debug,
                 imgList: images,
                 mime: this.mime,
 
@@ -298,7 +299,7 @@ class PipeImg {
 
         let xPercent = options.markX / this.resultList[this.resultList.length - 1].width;
         let yPercent = options.markY / this.resultList[this.resultList.length - 1].height;
-        console.log(this.sourceImgList);
+
         $(this.sourceImgList).each((index, element) => {
             let imgHandler = new ImgHandler({
                 sourceImg: element

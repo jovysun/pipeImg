@@ -30,12 +30,13 @@
             }
         ];
         $('.J-btn-edit').on('click', function(){
-            var pipeImg = new PipeImg({          
+            var pipeImg = new PipeImg({     
+                debug: true,     
                 source: source,
                 uploadUrl: '/pic.do?xcase=uploadWs',
                 sendDataType: 'blob',
                 type: '0',
-                debug: true,
+                
                 onInited: function() {
 
                 },
