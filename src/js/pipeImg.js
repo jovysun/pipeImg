@@ -15,14 +15,18 @@ class PipeImg {
     constructor(options) {
         // 默认配置参数
         let defaults = {
-            // 必填，图片src字符串数组
+            // 必填，[{"id":"567701","url":"./images/Jellyfish.jpg"}]
             source: [],
             // 上传图片地址
-            ajaxUrl: '',
+            uploadUrl: '',
+            // 发送文件类型，可以使二进制流'blob'可以是表单数据'formdata'，默认二进制流
+            sendDataType: 'formdata',
+            // 图片编辑界面类型: '0'单图编辑, '1'批量水印
+            type: '0',
             debug: false,
             mime: 'image/jpeg',
             // 保存图片最大体积
-            maxSize: 500,    
+            maxSize: 500,
             // 文案
             markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
             closeBtnTxt: '关闭',
@@ -42,6 +46,9 @@ class PipeImg {
             showRoomTxt: '展示厅',
             companyNameTxt: '公司名称',
             markAllMenuTxt: '批量添加水印',
+            tipTitleTxt: '提示',
+            tipContentTxt: '尚未保存，是否确定离开？',
+            tipConfirmBtnTxt: '确定',
             // 初始化完成回调
             onInited: () => {},
             // 上传保存完成回调
@@ -56,7 +63,9 @@ class PipeImg {
         if (!(Array.isArray(this.source) || typeof this.source === 'string')) {
             throw new Error('PipeImg: source类型错误，只能为字符串或者数组！');
         }
-        this.ajaxUrl = options.ajaxUrl;
+        this.uploadUrl = options.uploadUrl;
+        this.sendDataType = options.sendDataType;
+        this.type = options.type;
 
         this.debug = options.debug;
         this.mime = options.mime;
@@ -80,20 +89,34 @@ class PipeImg {
         this.showRoomTxt = options.showRoomTxt;
         this.companyNameTxt = options.companyNameTxt;
         this.markAllMenuTxt = options.markAllMenuTxt;
+        this.tipTitleTxt = options.tipTitleTxt;
+        this.tipContentTxt = options.tipContentTxt;
+        this.tipConfirmBtnTxt = options.tipConfirmBtnTxt;
 
-        
+
         this.onInited = options.onInited;
         this.onComplete = options.onComplete;
 
         this.resultList = [];
         this.sourceImgList = [];
+        this.returnJson = [];
+        this.methods = [];
+
+        this.activeIndex = 0;
+        this.isSaveAll = false;
+        this.finishedNum = 0;
 
         this._init();
 
     }
 
     _init() {
-        loadImages(this.source, (images) => {
+        this.returnJson = this.source;
+        let urlList = this.source.map((element, index) => {
+            return element.url;
+        })
+
+        loadImages(urlList, (images) => {
             this.sourceImgList = images;
 
             this.imgHandler = new ImgHandler({
@@ -103,6 +126,7 @@ class PipeImg {
 
             this.dialog = new Dialog({
                 imgList: images,
+                mime: this.mime,
 
                 markTextList: this.markTextList,
                 closeBtnTxt: this.closeBtnTxt,
@@ -122,6 +146,9 @@ class PipeImg {
                 showRoomTxt: this.showRoomTxt,
                 companyNameTxt: this.companyNameTxt,
                 markAllMenuTxt: this.markAllMenuTxt,
+                tipTitleTxt: this.tipTitleTxt,
+                tipContentTxt: this.tipContentTxt,
+                tipConfirmBtnTxt: this.tipConfirmBtnTxt,
 
                 onSaveRotate: (options, cb) => {
                     this._saveRotate(options, cb);
@@ -147,12 +174,14 @@ class PipeImg {
                 onSaveMarkAll: (options, cb) => {
                     this._saveMarkAll(options, cb);
                 }
-            })
+            });
+
 
             this.onInited();
+            this._executeMethods();
 
         }, () => {
-            throw new Error('PipeImg: source图片加载失败！');
+            throw new Error('PipeImg: source load failure!');
         })
 
     }
@@ -197,46 +226,79 @@ class PipeImg {
         })
         cb(this.resultList[0]);
     }
-    _save(cb) {
+    _save(cb, index) {
+        index = index === undefined ? this.activeIndex : index;
         let max = this.maxSize * 1024;
         let base64Data = compress(this.resultList[this.resultList.length - 1], max, false);
 
         if (this.debug) {
             // 模拟返回
-            let data = {src: base64Data};
+            let data = [{
+                "picHeight": 1024,
+                "picWidth": 768,
+                "tempPhotoId": "5675810",
+                "url": base64Data
+            }];
 
             let img = new Image();
-            img.src = data.src;
+            img.src = data[0].url;
             this.resultList = [img];
-            cb(data);
-            this.onComplete(data);
+            cb(data[0]);
+            this._saveSuccess(data[0], index);
         } else {
-            let blob = base64Data2Blob(base64Data, this.mime);
-            let formData = blob2FormData(blob);
+            let sendData = base64Data2Blob(base64Data, this.mime);;
+            if (this.sendDataType === 'formdata') {
+                sendData = blob2FormData(sendData);
+            }
             $.ajax({
-                url: this.ajaxUrl,
+                url: this.uploadUrl,
                 type: "POST",
-                data: formData,
+                data: sendData,
                 processData: false, // 不处理数据
                 contentType: false, // 不设置内容类型
                 success: (response) => {
+                    // response: [{"picHeight":1024,"picWidth":768,"tempPhotoId":"567581","url":"image?tid=40&amp;id=pyUpfAPGRadq&amp;cache=0&amp;lan_code=0"}]
+
                     let img = new Image();
-                    img.src = response.src;
+                    img.src = response[0].url;
                     this.resultList = [img];
-                    cb(response);
-                    this.onComplete(response);
+                    cb(response[0]);
+                    this._saveSuccess(response[0], index);
                 },
                 error: () => {
-                    alert('后台错误');
+                    console.log('upload failure!');
                 }
-            });            
+            });
         }
 
     }
+
+    _saveSuccess(data, index) {
+        let o = {
+            "id": data.tempPhotoId,
+            "url": data.url,
+            "picWidth": data.picWidth,
+            "picHeight": data.picHeight
+        };
+        this.returnJson[index] = o;
+        if (this.isSaveAll) {
+            this.finishedNum++;
+            if (this.finishedNum === this.sourceImgList.length) {
+                this.onComplete(this.returnJson);
+            }
+
+        } else {
+            this.onComplete(this.returnJson);
+        }
+
+    }
+
     _saveMarkAll(options, cb) {
-        
+        this.isSaveAll = true;
+
         let xPercent = options.markX / this.resultList[this.resultList.length - 1].width;
         let yPercent = options.markY / this.resultList[this.resultList.length - 1].height;
+        console.log(this.sourceImgList);
         $(this.sourceImgList).each((index, element) => {
             let imgHandler = new ImgHandler({
                 sourceImg: element
@@ -251,11 +313,12 @@ class PipeImg {
             imgHandler.mark();
             this.resultList.push(imgHandler.result);
 
-            this._save(cb);
+            this._save(cb, index);
         })
-        
+
     }
     _changeActive(options, cb) {
+        this.activeIndex = options.activeIndex;
         this.imgHandler = new ImgHandler({
             sourceImg: options.activeImg
         })
@@ -263,7 +326,33 @@ class PipeImg {
         cb(this.imgHandler.result);
     }
 
+    show(options) {
+        this.methods.push({
+            "name": "show",
+            "params": options
+        });
+    }
+    _show(options) {
+
+        if (this.type === '1') {
+            this.dialog.showModel(this.type);
+        } else {
+            if (options && options.selected) {
+                this.dialog.showSource(options.selected);
+            }
+        }
+
+    }
+    _executeMethods() {
+        this.methods.forEach(element => {
+            this['_' + element.name](element.params);
+        });
+        this.methods = [];
+    }
+
 
 }
 
-export { PipeImg }
+export {
+    PipeImg
+}

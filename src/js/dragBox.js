@@ -7,7 +7,7 @@ class DragBox {
         // 默认配置参数
         const defaults = {
             // 待编辑图片元素
-            ele: '',
+            el: '',
             width: '100%',
             height: '100%',
             markText: 'producttest.en.made-in-china.com',
@@ -21,7 +21,7 @@ class DragBox {
         };
 
         options = Object.assign({}, defaults, options);
-        this.ele = options.ele;
+        this.el = options.el;
         this.width = options.width;
         this.height = options.height;
         this.markText = options.markText;
@@ -33,9 +33,9 @@ class DragBox {
         this.init();
     }
     init() {
-        this.$ele = $(this.ele);
-        let src = this.$ele.attr('src');
-        let $parent = this.$ele.parent();
+        this.$el = $(this.el);
+        let src = this.$el.attr('src');
+        let $parent = this.$el.parent();
 
         let dragBoxHtml = `<div class="dragbox-wrapper J-dragbox-wrapper">
                                 <img class="J-source" src="${src}">
@@ -166,8 +166,8 @@ class DragBox {
 
         let x = e.clientX,
             y = e.clientY;
-        let oldWidth = this.boxEl.offsetWidth; //选取框变化前的宽度
-        let oldHeight = this.boxEl.offsetHeight; //选取框变化前的高度
+        let oldWidth = this.boxEl.offsetWidth - 2; //选取框变化前的宽度
+        let oldHeight = this.boxEl.offsetHeight - 2; //选取框变化前的高度
         let position = this._getPosition();
         let top = position.top;
         let left = position.left;
@@ -200,7 +200,7 @@ class DragBox {
         if (contact.indexOf('up') != -1) {
             let addHeight;
             if (this.fixRatio) {
-                newHeight = newWidth / dragBoxRatio;
+                newHeight = Math.round(newWidth / dragBoxRatio);
                 addHeight = newHeight - oldHeight;
             } else {
                 addHeight = top - y;
@@ -215,7 +215,7 @@ class DragBox {
         if (contact.indexOf('down') != -1) {
             let addHeight;
             if (this.fixRatio) {
-                newHeight = newWidth / dragBoxRatio;
+                newHeight = Math.round(newWidth / dragBoxRatio);
                 addHeight = newHeight - oldHeight;
                 newTop = this.boxEl.offsetTop;
             } else {
@@ -250,9 +250,7 @@ class DragBox {
         this.imgLight.style.clip = "rect(" + top + "px," + right + "px," + bottom + "px," + left + "px)";
     }
 
-    update(width, height) {
-        width && (this.width = width);
-        height && (this.height = height);
+    update() {
         this.$dragBox.css({
             width: this.width,
             height: this.height

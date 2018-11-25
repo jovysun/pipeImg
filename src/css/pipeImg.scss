@@ -18,7 +18,7 @@ $color-txt: #999ba7;
         clear: both;
     }
 }
-.pipe-dialog{
+.pipeImg-dialog{
     // display: none;
     width: 100%;
     height: 100%;
@@ -28,9 +28,11 @@ $color-txt: #999ba7;
     left: 0px;
     overflow: hidden;
     .pipe-mask{
+        position: relative;
+        z-index: 1;
         height: 100%;
         background: rgb(0, 0, 0) none repeat scroll 0% 0%;
-        opacity: 0.4;
+        opacity: 0.6;
     }
 }
 .pipeImg-wrapper{
@@ -38,6 +40,7 @@ $color-txt: #999ba7;
     // height: 580px;
     background-color: #212234;
     position: absolute;
+    z-index: 2;
     top: 50%;
     margin-top: -290px;
     left: 50%;
@@ -48,9 +51,9 @@ $color-txt: #999ba7;
         margin-right: 4px;
     }
     
-    .menu{
+    .pipeImg-menu{
         font-size: 0;
-        .item{
+        .pipeImg-item{
             position: relative;
             display: inline-block;
             border-right: 1px solid #48495d;
@@ -68,14 +71,14 @@ $color-txt: #999ba7;
                 position: absolute;
                 left: 0;
                 top: 41px;
-                width: 150px;
+                width: 178px;
                 z-index: 3;
                 border-right: none;
                 background-color: #393a4c;
             }
         }
     }
-    .btn{
+    .pipeImg-btn{
         display: block;
         padding: 0 20px;
         line-height: 40px;
@@ -92,12 +95,12 @@ $color-txt: #999ba7;
         }
     }
     
-    .buttons{
+    .pipeImg-buttons{
         position: absolute;
         right: 10px;
         top: 7px;
         font-size: 0;
-        .button{
+        .pipeImg-button{
             display: inline-block;
             padding: 0 15px;
             line-height: 26px;
@@ -118,21 +121,33 @@ $color-txt: #999ba7;
             }
         }
     }
-    .pipe-header{
+    .pipeImg-header{
         position: relative;
         background-color: #393a4c;
     }
-    .pipe-content{
+    .pipeImg-content{
         // height: 454px;
         // padding: 10px 0;
-        
-        .panel{
-            display: none;
+        position: relative;
+        width: 740px;
+        height: 480px;
+
+        .pipeImg-panel{
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            // z-index: 1;
+            // display: none;
+            visibility: hidden;
             &.active{
-                display: block;
+                // display: block;
+                visibility: visible;
+                // z-index: 2;
             }
             &.panel-mark-all{
-                position: relative;
+                // position: relative;
+     
                 .img-box{
                     width: 600px;
                     padding-right: 120px;
@@ -142,6 +157,7 @@ $color-txt: #999ba7;
                     right: 20px;
                     top: 0;
                     height: 100%;
+                    padding: 10px 0;
                     overflow: auto;
                     box-sizing: border-box;
 
@@ -175,11 +191,20 @@ $color-txt: #999ba7;
             align-items:center;
             justify-content:center;
 
+            img{
+                max-width: 100%;
+                max-height: 100%;
+            }
             .scale-img-wrapper{
                 position: absolute;
                 left: 50%;
                 top: 50%;
+                img{
+                    max-width: none;
+                    max-height: none;
+                }
             }
+            
         }
         .content-footer{
             @include clearfix;
@@ -194,12 +219,12 @@ $color-txt: #999ba7;
                 color: $color-txt;
                 font-size: 12px;
                 padding-right: 25px;
-                line-height: 21px;
+                line-height: 20px;
             }
             .btn-rotate{
                 // float: left;
                 display: block;
-                line-height: 21px;
+                line-height: 20px;
                 padding: 0 25px;
                 border-left: 1px solid #48495d;
             }
@@ -213,7 +238,7 @@ $color-txt: #999ba7;
                 display: inline-block;
                 padding-right: 8px;
             }
-            .item{
+            .pipeImg-item{
                 display: flex;
             }
             .color{
@@ -279,7 +304,7 @@ $color-txt: #999ba7;
                     border-top: 2px solid #4f8b4d;
                 }
             }
-            .item{
+            .pipeImg-item{
                 float: left;
                 padding: 0 14px;
                 border-left: 1px solid #48495d;
@@ -395,6 +420,7 @@ $color-txt: #999ba7;
                 color: $color-txt;
                 justify-content:center;
                 align-items:center;  
+                cursor: pointer;
                 .ob-icon{
                     margin: 0;
                 }
@@ -406,7 +432,7 @@ $color-txt: #999ba7;
         }
         
     }
-    .pipe-footer{
+    .pipeImg-footer{
         position: relative;
         background-color: #393a4c;
         font-size: 0;
@@ -451,7 +477,7 @@ $color-txt: #999ba7;
         .imgs-thumbnail{
             display: block;
         }
-        .buttons{
+        .pipeImg-buttons{
             display: none;
             top: 10px;
         }
@@ -461,11 +487,56 @@ $color-txt: #999ba7;
             .imgs-thumbnail{
                 display: none;
             }
-            .buttons{
+            .pipeImg-buttons{
                 display: block;
             }
         }
     }
 
 
+}
+.pipeImg-tip{
+    display: none;
+    width: 176px;
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    margin-top: -50px;
+    left: 50%;
+    margin-left: -88px;
+    color: #ecf6ff;
+    border: 1px solid #222;
+    .pipeImg-tip-header{
+        background-color: #3a5978;
+        height: 32px;
+        padding-left: 10px;
+        line-height: 32px;
+    }
+    .pipeImg-tip-main{
+        background-color: #294867;
+        text-align: center;
+        padding: 10px;    
+        .pipeImg-tip-content{
+            padding-bottom: 10px;
+        }
+
+        .pipeImg-button{
+            display: inline-block;
+            padding: 0 15px;
+            line-height: 24px;
+            color: #ecf6ff;
+            font-size: 12px;
+            background-color: #42658d;
+            border-radius: 2px;
+            border: 1px solid #222;
+            
+            &.button-confirm{
+                background-color: #174374;
+                margin-right: 10px;
+            }
+            &.pipeImg-button:hover{
+                background-color: #0e2746;
+            }
+        }
+    }
 }

@@ -1,5 +1,6 @@
 import {
-    drag
+    drag,
+    loadImage
 } from './util';
 import {
     DragBox
@@ -15,6 +16,7 @@ class Dialog {
         let defaults = {
             imgList: [],
             template: tpl,
+            mime: 'image/jpeg',
             markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
 
             closeBtnTxt: '关闭',
@@ -34,6 +36,9 @@ class Dialog {
             showRoomTxt: '展示厅',
             companyNameTxt: '公司名称',
             markAllMenuTxt: '批量添加水印',
+            tipTitleTxt: '提示',
+            tipContentTxt: '尚未保存，是否确定离开？',
+            tipConfirmBtnTxt: '确定',
 
             onSaveRotate: (args, cb) => {},
             onSaveCrop: (args, cb) => {},
@@ -51,8 +56,8 @@ class Dialog {
 
         this.imgList = options.imgList;
         this.template = options.template;
+        this.mime = options.mime;
         this.markTextList = options.markTextList;
-
         this.closeBtnTxt = options.closeBtnTxt;
         this.saveBtnTxt = options.saveBtnTxt;
         this.resetBtnTxt = options.resetBtnTxt;
@@ -70,6 +75,9 @@ class Dialog {
         this.showRoomTxt = options.showRoomTxt;
         this.companyNameTxt = options.companyNameTxt;
         this.markAllMenuTxt = options.markAllMenuTxt;
+        this.tipTitleTxt = options.tipTitleTxt;
+        this.tipContentTxt = options.tipContentTxt;
+        this.tipConfirmBtnTxt = options.tipConfirmBtnTxt;
 
         this.onSaveRotate = options.onSaveRotate;
         this.onSaveCrop = options.onSaveCrop;
@@ -104,10 +112,13 @@ class Dialog {
             opacityTxt: this.opacityTxt,
             showRoomTxt: this.showRoomTxt,
             companyNameTxt: this.companyNameTxt,
-            markAllMenuTxt: this.markAllMenuTxt
+            markAllMenuTxt: this.markAllMenuTxt,
+            tipTitleTxt: this.tipTitleTxt,
+            tipContentTxt: this.tipContentTxt,
+            tipConfirmBtnTxt: this.tipConfirmBtnTxt
         });
 
-        let html = '<div class="pipe-dialog J-pipe-dialog" onselectstart="return false" ondragstart="return false"><div class="pipe-mask J-pipe-mask"></div>' + templateHtml + '</div>';
+        let html = '<div class="pipeImg-dialog J-pipe-dialog" onselectstart="return false" ondragstart="return false"><div class="pipe-mask J-pipe-mask"></div>' + templateHtml + '</div>';
         $('body').append(html);
 
         this.$el = $('.J-pipe-dialog');
@@ -120,35 +131,34 @@ class Dialog {
         this.$btnConfirm = this.$el.find('.J-button-confirm');
         this.$btnCancel = this.$el.find('.J-button-cancel');
         this.$btnSaveAll = this.$el.find('.J-button-confirm-all');
+        this.$btnCancelAll = this.$el.find('.J-button-cancel-all');
 
-        // 菜单导航
-        // this.$menuRotate = this.$el.find('.J-menu-rotate');
-        // this.$menuCrop = this.$el.find('.J-menu-crop');
-        // this.$menuScale = this.$el.find('.J-menu-scale');
-        // this.$menuMark = this.$el.find('.J-menu-mark');
-        // this.$menuMarkAll = this.$el.find('.J-menu-mark-all');
         // 模块按钮
         // 旋转
         this.$btnRotateLeft = this.$el.find('.J-btn-rotate-left');
         this.$btnRotateRight = this.$el.find('.J-btn-rotate-right');
         // 裁剪
-        this.$inputCropWidth = this.$el.find('.J-input-crop-width');
-        this.$inputCropHeight = this.$el.find('.J-input-crop-height');
-        this.$radioCropFix = this.$el.find('.J-radio-crop-fix');
+        let $cropPanel = this.$el.find('.J-crop-panel');
+        this.$inputCropWidth = $cropPanel.find('.J-num-width');
+        this.$inputCropHeight = $cropPanel.find('.J-num-height');
+        this.$radioCropFix = $cropPanel.find('.J-fix-ratio');
         // 缩放
-        this.$inputScaleWidth = this.$el.find('.J-input-scale-width');
-        this.$inputScaleHeight = this.$el.find('.J-input-scale-height');
-        this.$rangeScaleRatio = this.$el.find('.J-range-scale-ratio');
+        this.$scalePanel = this.$el.find('.J-scale-panel');
+        this.$inputScaleWidth = this.$scalePanel.find('.J-num-width');
+        this.$inputScaleHeight = this.$scalePanel.find('.J-num-height');
+        this.$rangeScaleRatio = this.$scalePanel.find('.J-scale-range');
         // 添加水印
-        this.$radioMarkColor = this.$el.find('.J-radio-mark-color');
-        this.$radioMarkPosition = this.$el.find('.J-radio-mark-position');
-        this.$rangeMarkOpacity = this.$el.find('.J-range-mark-opacity');
-        this.$selectMarkTxt = this.$el.find('.J-select-mark-txt');
+        this.$markPanel = this.$el.find('.J-mark-panel');
+        this.$radioMarkColor = this.$markPanel.find('.J-color');
+        this.$radioMarkPosition = this.$markPanel.find('.J-position');
+        this.$rangeMarkOpacity = this.$markPanel.find('.J-opacity');
+        this.$selectMarkTxt = this.$markPanel.find('.J-markTxt');
         // 批量添加水印
-        this.$radioMarkAllColor = this.$el.find('.J-radio-markAll-color');
-        this.$radioMarkAllPosition = this.$el.find('.J-radio-markAll-position');
-        this.$rangeMarkAllOpacity = this.$el.find('.J-range-markAll-opacity');
-        this.$selectMarkAllTxt = this.$el.find('.J-select-markAll-txt');
+        this.$markAllPanel = this.$el.find('.J-mark-all-panel');
+        this.$radioMarkAllColor = this.$markAllPanel.find('.J-color');
+        this.$radioMarkAllPosition = this.$markAllPanel.find('.J-position');
+        this.$rangeMarkAllOpacity = this.$markAllPanel.find('.J-opacity');
+        this.$selectMarkAllTxt = this.$markAllPanel.find('.J-markTxt');
 
         // 全局变量
         this.isChange = false;
@@ -164,31 +174,24 @@ class Dialog {
 
         // 初始化裁剪框
         this.cropBox = new DragBox({
-            ele: '.J-crop-box .J-source',
+            el: $cropPanel.find('.J-source'),
             hasLight: true,
             onDragPoint: (data) => {
                 this._showSize(data.width * this.activeData.ratio, data.height * this.activeData.ratio);
-                // this.isChange = true;
                 this._updateIsChange(true);
             }
         });
         // 初始化缩放
-        let $scalePanel = this.$el.find('.J-scale-panel');
-        let $scaleImgWrapper = $scalePanel.find('.J-scale-img-wrapper');
-        let imgEl = $scalePanel.find('.J-source').get(0);
+        let $scaleImgWrapper = this.$scalePanel.find('.J-scale-img-wrapper');
+        let imgEl = this.$scalePanel.find('.J-source').get(0);
         drag(imgEl, imgEl, $scaleImgWrapper.get(0));
         // 初始化水印框
         this.markBox = new DragBox({
-            ele: '.J-mark-box .J-source',
+            el: this.$markPanel.find('.J-source'),
             fixRatio: false,
-            markText: 'producttest.en.made-in-china.com',
+            markText: this.markTextList[0],
             onDragComplete: (left, top) => {
-                this.markX = left * this.activeData.ratio;
-                this.markY = top * this.activeData.ratio;
-
                 this.$el.find('.J-mark-panel').find('.J-position').prop('checked', false);
-
-                // this.isChange = true;
                 this._updateIsChange(true);
             },
             onDragPoint: (boxData) => {
@@ -200,15 +203,10 @@ class Dialog {
         });
         // 初始化批量水印框
         this.markAllBox = new DragBox({
-            ele: '.J-mark-box-all .J-source',
-            markText: 'producttest.en.made-in-china.com',
+            el: this.$markAllPanel.find('.J-source'),
+            markText: this.markTextList[0],
             onDragComplete: (left, top) => {
-                this.markXAll = left * this.activeData.ratio;
-                this.markYAll = top * this.activeData.ratio;
-
                 this.$el.find('.J-mark-all-panel').find('.J-position').prop('checked', false);
-
-                // this.isChange = true;
                 this._updateIsChange(true);
             },
             onDragPoint: (boxData) => {
@@ -219,12 +217,17 @@ class Dialog {
             }
         });
 
-        
 
         this._refresh();
-        this._bind();
 
         ThinSelect.use('.J-markTxt');
+
+
+        this._setMarkPosition();
+        this._setMarkPosition('all');
+
+
+        this._bind();
     }
     _bind() {
         // 切换编辑图片
@@ -232,55 +235,48 @@ class Dialog {
 
             let $thumbnail = $(e.target).parent();
             $thumbnail.addClass('active').siblings().removeClass('active');
+            let activeIndex = $thumbnail.index();
 
-            this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', $thumbnail.find('img').attr('src'));
-            let targetImg = this.$el.find('.J-source:first').get(0);
+            let newSrc = $thumbnail.find('img').attr('src');
+            this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', newSrc);
 
-            // let targetImg = $thumbnail.find('img').get(0);
+            loadImage(newSrc, (img) => {
+                this._updateActiveImg(img, activeIndex);
 
-            this.activeImg = targetImg;
-            this._refresh();
-            this._initPanel();
+                this._goHome();
 
-            let options = {
-                activeImg: targetImg
-            };
-            this.onChangeActive(options, (img) => {
+                this._initData();
 
-            });
+            })
+
         })
         // 批量水印切换编辑图片
-        this.$el.find('.J-mark-all-panel').on('click', '.J-img-thumbnail', (e) => {
+        this.$markAllPanel.on('click', '.J-img-thumbnail', (e) => {
 
             let $thumbnail = $(e.target).parent();
             $thumbnail.addClass('active').siblings().removeClass('active');
+            let activeIndex = $thumbnail.index();
 
-            this.$el.find('.J-mark-all-panel').find('.J-source').attr('src', $thumbnail.find('img').attr('src'));
-            let targetImg = this.$el.find('.J-mark-all-panel').find('.J-source:first').get(0);
+            let newSrc = $thumbnail.find('img').attr('src');
+            this.$markAllPanel.find('.J-source').attr('src', newSrc);
 
-            // let targetImg = $thumbnail.find('img').get(0);
-            this.activeImg = targetImg;
-            this._refresh();
-            this._initMarkAll();
+            loadImage(newSrc, (img) => {
 
-            let options = {
-                activeImg: targetImg
-            };
-            this.onChangeActive(options, (img) => {
+                this._updateActiveImg(img, activeIndex);
+                this._setMarkPosition('all');
+                this._initData();
 
-            });
+            })
         })
 
         // 菜单切换
         this.$el.find('.J-menu-btn').on('click', (e) => {
-            // if (!this._isGoOn()) {
-            //     return false;
-            // }
             let $item = $(e.target).parent();
             let index = $item.index();
             let oldActiveIndex = $item.parent().find('.active:first').index();
-            $item.addClass('active').siblings().removeClass('active');
-            this.$el.find('.J-panel').eq(index).addClass('active').siblings().removeClass('active');
+
+            this.showModel('0');
+            this.showMenu(index);
 
             // 若有编辑操作，离开旋转，裁剪，缩放面板进行保存
             if (this.isChange) {
@@ -309,67 +305,49 @@ class Dialog {
             }
             // 进入水印
             if (index === 3) {
-                this._initMark();
-                this.$el.find('.J-item-mark').find('.J-menu-btn').hide();
-                this.$el.find('.J-item-mark').find('.J-menu-txt').show();
+
+                // this.$el.find('.J-item-mark').find('.J-menu-btn').hide();
+                // this.$el.find('.J-item-mark').find('.J-menu-txt').show();
             }
             // 非水印
             if (index !== 3) {
-                this.$el.find('.J-item-mark').find('.J-menu-btn').show();
-                this.$el.find('.J-item-mark').find('.J-menu-txt').hide();
+                // this.$el.find('.J-item-mark').find('.J-menu-btn').show();
+                // this.$el.find('.J-item-mark').find('.J-menu-txt').hide();
             }
-            this.$el.find('.J-pipe-footer').removeClass('mark-all');
 
         })
         // 切换水印
         this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark', (e) => {
-            if (!this._isGoOn()) {
-                return false;
-            }
 
-            let txt = this.$el.find('.J-item-mark').find('.J-menu-btn-mark').html();
-            this.$el.find('.J-item-mark').find('.J-menu-txt').html(txt);
-            this.$el.find('.J-item-mark').find('.J-menu-btn-mark-all').show();
-            this.$el.find('.J-item-mark').find('.J-menu-btn-mark').hide();
-            
-            this.$el.find('.J-item-mark').addClass('active').siblings().removeClass('active');
-            this.$el.find('.J-mark-panel').addClass('active').siblings().removeClass('active');
+            this._confirm(() => {
+                let $thumbnail = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
+                let activeIndex = $thumbnail.index();
+                let newSrc = $thumbnail.find('img').attr('src');
+                loadImage(newSrc, (img) => {
+                    this._updateActiveImg(img, activeIndex);
+                    this.showModel('0');
+                    this.showMenu(3);
+                })
+            })
 
-            this.$el.find('.J-pipe-footer').removeClass('mark-all');
-            
-            this._initPanel();
+
+
         })
         // 切换批量水印
         this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark-all', (e) => {
-            if (!this._isGoOn()) {
-                return false;
-            }
-            this.$el.find('.J-item-mark').addClass('active').siblings().removeClass('active');
-            let $markPanel = this.$el.find('.J-mark-all-panel');
-            let $activeImg = $markPanel.find('.J-img-thumbnail.active img');
 
-            $markPanel.addClass('active').siblings().removeClass('active');
+            this._confirm(() => {
+                let $thumbnail = this.$markAllPanel.find('.J-img-thumbnail.active');
+                let activeIndex = $thumbnail.index();
+                let newSrc = $thumbnail.find('img').attr('src');
+                loadImage(newSrc, (img) => {
+                    this._updateActiveImg(img, activeIndex);
+                    this.showModel('1');
+                    this._initData();
+                    this._updateIsChange(true);
+                })
+            })
 
-            this.$el.find('.J-item-mark').find('.J-menu-btn').hide();
-            this.$el.find('.J-item-mark').find('.J-menu-txt').show();
-
-            this.$el.find('.J-pipe-footer').addClass('mark-all');
-
-            let txt = this.$el.find('.J-item-mark').find('.J-menu-btn-mark-all').html();
-            this.$el.find('.J-item-mark').find('.J-menu-txt').html(txt);
-            this.$el.find('.J-item-mark').find('.J-menu-btn-mark-all').hide();
-            this.$el.find('.J-item-mark').find('.J-menu-btn-mark').show();
-
-
-            $markPanel.find('.J-source').attr('src', $activeImg.attr('src'));
-            this.rotateNum = 0;
-            this.scaleRatio = 1;
-            this.activeImg = $activeImg.get(0);
-            this._refresh();
-            this._initMarkAll();
-
-            // this.isChange = true;
-            this._updateIsChange(true);
 
         })
 
@@ -387,14 +365,16 @@ class Dialog {
         })
         // 裁剪++++++++++++
         this.$inputCropWidth.on('input', (e) => {
-            this.cropBox.width = $(e.target).val() / this.activeData.ratio;
+            let value = parseInt($(e.target).val());
+            this.cropBox.width = value / this.activeData.ratio;
             if (this.cropBox.fixRatio) {
                 this.cropBox.height = this.cropBox.width / this.cropBox.boxData.ratio;
             }
             this._updateCrop();
         })
         this.$inputCropHeight.on('input', (e) => {
-            this.cropBox.height = $(e.target).val() / this.activeData.ratio;
+            let value = parseInt($(e.target).val());
+            this.cropBox.height = value / this.activeData.ratio;
             if (this.cropBox.fixRatio) {
                 this.cropBox.width = this.cropBox.height * this.cropBox.boxData.ratio;
             }
@@ -406,31 +386,37 @@ class Dialog {
 
         // 缩放++++++++++++++
         this.$inputScaleWidth.on('input', (e) => {
-            let $this = $(e.target);
-            this.scaleRatio = parseInt($this.val()) / this.activeData.w0;
+            let value = parseInt($(e.target).val());
+            value = value >= 0 ? value : 0;
+            this.scaleRatio = value / this.activeData.w0;
             this._updateScale();
         })
         this.$inputScaleHeight.on('input', (e) => {
-            let $this = $(e.target);
-            this.scaleRatio = parseInt($this.val()) / this.activeData.h0;
+            let value = parseInt($(e.target).val());
+            value = value >= 0 ? value : 0;
+            console.log(value)
+            this.scaleRatio = value / this.activeData.h0;
+
             this._updateScale();
         })
         // IE11下change事件连续触发
         this.$rangeScaleRatio.on('change', (e) => {
             let $this = $(e.target);
             let max = parseInt($this.attr('max'));
-            this.scaleRatio = parseInt($this.val()) / max;
+            let value = parseInt($this.val());
+            this.scaleRatio = value / max;
             this._updateScale();
         })
         // chrome下input事件连续触发，change只有停止拖动时触发
         this.$rangeScaleRatio.on('input', (e) => {
             let $this = $(e.target);
             let max = parseInt($this.attr('max'));
-            this.scaleRatio = parseInt($this.val()) / max;
+            let value = parseInt($this.val());
+            this.scaleRatio = value / max;
             this._updateScale();
         })
         // 水印++++++++++++++
-        this.$radioMarkColor.on('input', () => {
+        this.$radioMarkColor.on('change', () => {
             this._updateMark();
         })
         this.$rangeMarkOpacity.on('input', () => {
@@ -447,7 +433,7 @@ class Dialog {
         })
 
         // 批量水印++++++++++++++
-        this.$radioMarkAllColor.on('input', () => {
+        this.$radioMarkAllColor.on('change', () => {
             this._updateMarkAll();
         })
         this.$rangeMarkAllOpacity.on('input', () => {
@@ -476,6 +462,12 @@ class Dialog {
         this.$btnSaveAll.on('click', () => {
             this._saveMarkAll();
         })
+        // 批量水印取消
+        this.$btnCancelAll.on('click', () => {
+            this._confirm(() => {
+                this.destory();
+            })
+        })
         // 重置
         this.$btnReset.on('click', () => {
             this._reset();
@@ -498,14 +490,13 @@ class Dialog {
                 }
                 this._save();
             }
-            
+
         })
         // 关闭
         this.$btnClose.on('click', (e) => {
-            if (!this._isGoOn()) {
-                return false;
-            }
-            this.destory();
+            this._confirm(() => {
+                this.destory();
+            })
 
         })
         // 禁用鼠标右击菜单
@@ -514,13 +505,7 @@ class Dialog {
         })
 
     }
-    _initPanel() {
 
-        this._initCrop();
-        this._initScale();
-        this._initMark();
-        // this._goHome();
-    }
     _goHome() {
         this.$el.find('.J-menu-btn').parent(':first').addClass('active').siblings().removeClass('active');
         this.$el.find('.J-panel:first').addClass('active').siblings().removeClass('active');
@@ -565,7 +550,6 @@ class Dialog {
             }
         }
 
-        // this.isChange = true;
         this._updateIsChange(true);
     }
     _saveRotate() {
@@ -577,20 +561,16 @@ class Dialog {
             this.activeImg = img;
             this._refresh();
 
-            // this.isChange = true;
             this._updateIsChange(false);
         });
     }
     _initCrop() {
-        let $cropPanel = this.$el.find('.J-crop-panel');
-
-        this.cropBox.isFixed = $cropPanel.find('.J-fix-ratio').prop('checked');
-        this.cropBox.width = $cropPanel.find('.J-num-width').val() / this.activeData.ratio;
-        this.cropBox.height = $cropPanel.find('.J-num-height').val() / this.activeData.ratio;
+        this.cropBox.isFixed = this.$radioCropFix.prop('checked');
+        this.cropBox.width = this.$inputCropWidth.val() / this.activeData.ratio;
+        this.cropBox.height = this.$inputCropHeight.val() / this.activeData.ratio;
     }
     _updateCrop() {
         this.cropBox.update();
-        // this.isChange = true;
         this._updateIsChange(true);
     }
     _saveCrop() {
@@ -609,15 +589,14 @@ class Dialog {
             this.activeImg = img;
             this._refresh();
 
-            // this.isChange = true;
             this._updateIsChange(false);
         })
     }
+
     _initScale() {
-        let $scalePanel = this.$el.find('.J-scale-panel');
-        let $scaleImgBox = $scalePanel.find('.J-img-box');
-        let $scaleRange = $scalePanel.find('.J-scale-range');
-        let $scaleImgWrapper = $scalePanel.find('.J-scale-img-wrapper');
+        let $scaleImgBox = this.$scalePanel.find('.J-img-box');
+        let $scaleRange = this.$scalePanel.find('.J-scale-range');
+        let $scaleImgWrapper = this.$scalePanel.find('.J-scale-img-wrapper');
 
         let $img = $scaleImgBox.find('.J-source');
 
@@ -648,10 +627,9 @@ class Dialog {
     _updateScale() {
         let scaleRatio = this.scaleRatio;
 
-        let $scalePanel = this.$el.find('.J-scale-panel');
-        let $scaleRange = $scalePanel.find('.J-scale-range');
-        let $scaleNumWidth = $scalePanel.find('.J-num-width');
-        let $scaleNumHeight = $scalePanel.find('.J-num-height');
+        let $scaleRange = this.$rangeScaleRatio;
+        let $scaleNumWidth = this.$inputScaleWidth;
+        let $scaleNumHeight = this.$inputScaleHeight;
         let max = parseInt($scaleRange.attr('max'));
 
         if ($scaleNumWidth.val() != this.activeData.w0 * scaleRatio) {
@@ -664,11 +642,10 @@ class Dialog {
             $scaleRange.val(max * scaleRatio);
         }
 
-        $('.J-source').css({
+        this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').css({
             'transform': `scale(${this.scaleRatio})`
         });
 
-        // this.isChange = true;
         this._updateIsChange(true);
     }
     _saveScale() {
@@ -680,28 +657,22 @@ class Dialog {
             this.activeImg = img;
             this._refresh();
 
-            // this.isChange = true;
             this._updateIsChange(true);
         })
 
     }
+
+    // 水印相关操作start++++++++++++++++++++++++++++++++++++++++
     _setMarkPosition(type) {
         const POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
 
-        let $markPanel, $dragBox, markX, markY;
-        if (type === 'all') {
-            $markPanel = this.$el.find('.J-mark-all-panel');
-            $dragBox = this.markAllBox.$dragBox;
-            markX = this.markXAll;
-            markY = this.markYAll;
-        } else {
-            $markPanel = this.$el.find('.J-mark-panel');
-            $dragBox = this.markBox.$dragBox;
-            markX = this.markX;
-            markY = this.markY;
-        }
+        let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
+        let $dragBox = type === 'all' ? this.markAllBox.$dragBox : this.markBox.$dragBox;
 
-        let positionVal = $markPanel.find('.J-position:checked').val();
+        let markX = parseInt($dragBox.css('left')) * this.activeData.ratio;
+        let markY = parseInt($dragBox.css('top')) * this.activeData.ratio;
+
+        let positionVal = $panel.find('.J-position:checked').val();
 
         let dragBoxWrapperWidth = this.activeData.w1;
         let dragBoxWrapperHeight = this.activeData.h1;
@@ -739,26 +710,14 @@ class Dialog {
             'width': dragBoxWidth,
             'height': dragBoxHeight
         })
-
-        if (type === 'all') {
-            this.markXAll = markX;
-            this.markYAll = markY;
-        } else {
-            this.markX = markX;
-            this.markY = markY;
-        }
     }
     _setMarkStyle(type) {
-        let $markPanel;
-        if (type === 'all') {
-            $markPanel = this.$el.find('.J-mark-all-panel');
-        } else {
-            $markPanel = this.$el.find('.J-mark-panel');
-        }
-        let $markTxt = $markPanel.find('.J-mark-txt');
-        let colorVal = $markPanel.find('.J-color:checked').val();
-        let opacityVal = $markPanel.find('.J-opacity').val() / parseInt($markPanel.find('.J-opacity').attr('max'));
-        let txtVal = $markPanel.find('.J-markTxt:selected').val();
+        let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
+
+        let $markTxt = $panel.find('.J-mark-txt');
+        let colorVal = $panel.find('.J-color:checked').val();
+        let opacityVal = parseInt($panel.find('.J-opacity').val()) / parseInt($panel.find('.J-opacity').attr('max'));
+        let txtVal = $panel.find('.J-markTxt').val();
 
         let color = `rgba(255, 255, 255, ${opacityVal})`;
         if (colorVal === '1') {
@@ -769,80 +728,78 @@ class Dialog {
         $markTxt.text(text).css({
             'color': color
         });
-        if (type === 'all') {
-            this.markStyleAll = color;
-            this.markTextAll = text;
-        } else {
-            this.markStyle = color;
-            this.markText = text;
-        }
 
     }
-    _initMark() {
-        let $markPanel = this.$el.find('.J-mark-panel');
-        let $markTxt = $markPanel.find('.J-mark-txt');
 
-        let font = parseInt($markTxt.css('font-size')) + 'px microsoft yahei';
-        this.markFont = font;
-
-        $markPanel.find('.J-color:last').prop('checked', true);
-        $markPanel.find('.J-position:first').prop('checked', true);
-        $markPanel.find('.J-opacity').val($markPanel.find('.J-opacity').attr('defaultValue'));
-        $markPanel.find('.J-markTxt:first').prop('selected', true);
-
-        this._setMarkStyle();
-        this._setMarkPosition();
-    }
     _updateMark() {
         this._setMarkStyle();
         this._setMarkPosition();
 
-        // this.isChange = true;
         this._updateIsChange(true);
     }
+    _updateMarkAll() {
+        this._setMarkStyle('all');
+        this._setMarkPosition('all');
+
+        this._updateIsChange(true);
+    }
+    // 获取水印相关参数
+    _getMarkParams(type) {
+        let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
+        let $dragBox = type === 'all' ? this.markAllBox.$dragBox : this.markBox.$dragBox;
+        let $markTxt = $panel.find('.J-mark-txt');
+        let markFont = parseInt($markTxt.css('font-size')) + 'px microsoft yahei';
+
+        let $opacity = $panel.find('.J-opacity');
+        let opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));
+        let colorVal = $panel.find('.J-color:checked').val();
+
+        let color = `rgba(255, 255, 255, ${opacityVal})`;
+        if (colorVal === '1') {
+            color = `rgba(0, 0, 0, ${opacityVal})`;
+        }
+
+        let txtVal = $panel.find('.J-markTxt').val();
+        let text = this.markTextList[txtVal];
+
+        let markX = parseInt($dragBox.css('left')) * this.activeData.ratio;
+        let markY = parseInt($dragBox.css('top')) * this.activeData.ratio;
+
+        return {
+            markX: markX,
+            markY: markY,
+            markText: text,
+            markFont: markFont,
+            markStyle: color
+        }
+
+    }
     _saveMark() {
-        let options = {
-            markX: this.markX,
-            markY: this.markY,
-            markText: this.markText,
-            markFont: this.markFont,
-            markStyle: this.markStyle
-        };
+        let options = this._getMarkParams();
 
         this.onSaveMark(options, (img) => {
             this.activeImg = img;
             this._refresh();
             this._goHome();
 
-            // this.isChange = true;
             this._updateIsChange(true);
         })
     }
     _cancelMark() {
         this._goHome();
     }
-    _initMarkAll() {
-        let $markPanel = this.$el.find('.J-mark-all-panel');
-        let $markTxt = $markPanel.find('.J-mark-txt');
+    _saveMarkAll() {
+        let options = this._getMarkParams('all');
+        this.onSaveMarkAll(options, (data) => {
 
-        let font = parseInt($markTxt.css('font-size')) + 'px microsoft yahei';
-        this.markFontAll = font;
+            this.destory();
+            this._updateIsChange(false);
 
-        $markPanel.find('.J-color:last').prop('checked', true);
-        $markPanel.find('.J-position:first').prop('checked', true);
-        $markPanel.find('.J-opacity').val($markPanel.find('.J-opacity').attr('defaultValue'));
-        $markPanel.find('.J-select-markAll-txt:first').prop('selected', true);
-
-        this._setMarkStyle('all');
-        this._setMarkPosition('all');
+        })
     }
-    _updateMarkAll() {
-        this._setMarkStyle('all');
-        this._setMarkPosition('all');
+    // 水印相关操作end++++++++++++++++++++++++++++++++++++++++
 
-        // this.isChange = true;
-        this._updateIsChange(true);
-    }
+
     _showSize(w0, h0) {
         w0 = Math.round(w0);
         h0 = Math.round(h0);
@@ -907,12 +864,10 @@ class Dialog {
         let ratio;
         if (imgRatio < this.imgBoxRatio) {
             h1 = this.imgBoxHeight;
-            // w1 = 'auto';
             w1 = h1 * imgRatio;
             ratio = h0 / h1;
         } else {
             w1 = this.imgBoxWidth;
-            // h1 = 'auto';
             h1 = w1 / imgRatio;
             ratio = w0 / w1;
         }
@@ -936,13 +891,31 @@ class Dialog {
             this.rotateNum = 3;
         }
     }
-    _isGoOn() {
-        let result = true;
-        if (this.isChange) {
-            result = confirm('Leave without saving?');
-        }
-        return result;
+    // TODO 独立出Tip组件
+    _confirm(yesCallback, noCallback) {
+        let $tip = this.$el.find('.J-pipeImg-tip');
+        let hideTip = () => {
+            this.$pipeWrapper.css('z-index', 2);
+            $tip.hide();
+            $tip.off('click');
+        };
+        let showTip = () => {
+            $tip.show();
+            this.$pipeWrapper.css('z-index', 0);
+        };
+
+        showTip();
+
+        $tip.on('click', '.J-tip-confirm', (e) => {
+            yesCallback();
+            hideTip();
+        })
+        $tip.on('click', '.J-tip-cancel', (e) => {
+            noCallback && noCallback();
+            hideTip();
+        })
     }
+
     _updateIsChange(isChange) {
         this.isChange = isChange;
         let $buttons = this.$el.find('.J-button-save, .J-button-reset');
@@ -951,7 +924,7 @@ class Dialog {
         } else {
             $buttons.removeClass('active');
         }
-        
+
     }
     _reset() {
         this.onReset((img) => {
@@ -960,50 +933,108 @@ class Dialog {
             this.activeImg = img;
             this._refresh();
 
-            // this.isChange = false;
             this._updateIsChange(false);
         });
     }
     _save() {
         this.onSave((data) => {
-
+            let newSrc = data.url.replace("&amp;", "&");
             let $activeThumb = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
-            $activeThumb.addClass('new').find('img').attr('src', data.src);
+            $activeThumb.addClass('new').find('img').attr('src', newSrc);
 
             let index = $activeThumb.index();
-            this.$el.find('.J-mark-all-panel').find('.J-img-thumbnail').eq(index).find('img').attr('src', data.src);
+            this.$el.find('.J-mark-all-panel').find('.J-img-thumbnail').eq(index).find('img').attr('src', newSrc);
 
-            // this.isChange = false;
             this._updateIsChange(false);
             this.imgList = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail img');
 
         });
     }
-    _saveMarkAll() {
+
+    _initData() {
+        this.rotateNum = 0;
+        this.scaleRatio = 1;
+    }
+    _updateActiveImg(img, index) {
+        this.activeImg = img;
+        this._refresh();
         let options = {
-            markX: this.markXAll,
-            markY: this.markYAll,
-            markText: this.markTextAll,
-            markFont: this.markFontAll,
-            markStyle: this.markStyleAll
+            activeImg: this.activeImg,
+            activeIndex: index
         };
-        this.onSaveMarkAll(options, (data) => {
+        this.onChangeActive(options, (img) => {});
+    }
+    showMenu(index) {
+        this.$el.find('.J-item').eq(index).addClass('active').siblings().removeClass('active');
+        this.$el.find('.J-panel').eq(index).addClass('active').siblings().removeClass('active');
+        // 若是水印，设置鼠标指针状态
+        if (index === 3) {
+            // 切换水印按钮状态
+            let $itemMark = this.$el.find('.J-item-mark');
+            $itemMark.find('.J-menu-btn').hide();
+            $itemMark.find('.J-menu-txt').show();
+        }
+    }
+    showSource(index) {
+        let $thumbnail = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail').eq(index);
+        $thumbnail.addClass('active').siblings().removeClass('active');
 
-            this.destory();
-            // this.isChange = false;
-            this._updateIsChange(false);
+        let newSrc = $thumbnail.find('img').attr('src');
+        this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', newSrc);
 
+        loadImage(newSrc, (img) => {
+            this._updateActiveImg(img, index);
         })
     }
+    // 
+    showModel(type) {
+        // 编辑界面类型
+        const TYPE = {
+            SINGLE: "0",
+            MULTIPLE: "1"
+        };
+        if (type === TYPE.MULTIPLE) {
+            let $itemMark = this.$el.find('.J-item-mark');
+            // 切换菜单及面板状态
+            $itemMark.addClass('active').siblings().removeClass('active');
+            this.$markAllPanel.addClass('active').siblings().removeClass('active');
+            // 切换水印按钮状态
+            $itemMark.find('.J-menu-btn').hide();
+            $itemMark.find('.J-menu-txt').show();
 
+            let txt = $itemMark.find('.J-menu-btn-mark-all').html();
+            $itemMark.find('.J-menu-txt').html(txt);
+            $itemMark.find('.J-menu-btn-mark-all').hide();
+            $itemMark.find('.J-menu-btn-mark').show();
+            // 切换页脚状态
+            this.$el.find('.J-pipe-footer').addClass('mark-all');
+
+        } else {
+            let $itemMark = this.$el.find('.J-item-mark');
+            // 切换菜单及面板状态
+            this.$el.find('.J-item:first').addClass('active').siblings().removeClass('active');
+            this.$el.find('.J-panel:first').addClass('active').siblings().removeClass('active');
+            // 切换水印按钮状态
+            $itemMark.find('.J-menu-btn').show();
+            $itemMark.find('.J-menu-txt').hide();
+
+            let txt = $itemMark.find('.J-menu-btn-mark').html();
+            $itemMark.find('.J-menu-txt').html(txt);
+            $itemMark.find('.J-menu-btn-mark-all').show();
+            $itemMark.find('.J-menu-btn-mark').hide();
+
+            // 切换页脚状态
+            this.$el.find('.J-pipe-footer').removeClass('mark-all');
+        }
+    }
     destory() {
         this.$el.remove();
     }
     showDialog() {
-        this.$el.show();
+        this.$el.fadeIn(100);
     }
     hideDialog() {
-        this.$el.hide();
+        this.$el.fadeOut(100);
     }
 
 }

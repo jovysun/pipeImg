@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack",
     "dev": "webpack-dev-server --open",
+    "build-js": "webpack --config prod.config.js",
     "build": "webpack --config prod.config.js & gulp build"
   },
   "keywords": [],

@@ -1,11 +1,12 @@
 //拖拽
-function drag(moveElement, dragBar = document, container, cb) {
+function drag(moveElement, dragBar, container, cb) {
     if (!moveElement) return;
+    dragBar = dragBar || moveElement;
 
     var draging = false,
         x0, y0, mLeft0, mTop0, mLeft1, mTop1;
 
-    var mousedownHandler = (e) => {
+    var mousedownHandler = function (e) {
         e = e || window.event;
         x0 = e.clientX;
         y0 = e.clientY;
@@ -15,7 +16,7 @@ function drag(moveElement, dragBar = document, container, cb) {
         draging = true;
 
     };
-    var mousemoveHandler = (e) => {
+    var mousemoveHandler = function (e) {
         e = e || window.event;
         if (draging) {
             var x1 = e.clientX,
@@ -35,13 +36,13 @@ function drag(moveElement, dragBar = document, container, cb) {
             }
 
 
-            moveElement.style.left = mLeft1;
-            moveElement.style.top = mTop1;
+            moveElement.style.left = mLeft1 + 'px';
+            moveElement.style.top = mTop1 + 'px';
 
             typeof cb === 'function' && cb(mLeft1, mTop1);
         }
     };
-    var mouseupHandler = (e) => {
+    var mouseupHandler = function (e) {
         draging = false;
     }
 
@@ -301,9 +302,11 @@ function chooseFile(btn, cb, validFileCallback) {
     $file.click();
 
 }
+
 function _$(ele) {
     return typeof ele === 'string' ? document.querySelector(ele) : ele;
 }
+
 function img2cvs(img) {
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');

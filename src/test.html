@@ -15,17 +15,41 @@
     <script src="/libs/jquery.js"></script>
     <script src="/libs/template.js"></script>
     <script>       
+        var source = [
+            {
+                "id":"567701",
+                "url":"./images/Jellyfish.jpg"
+            },
+            {
+                "id":"567711",
+                "url":"./images/greensock.png"
+            },
+            {
+                "id":"567721",
+                "url":"./images/Lighthouse.jpg"
+            }
+        ];
         $('.J-btn-edit').on('click', function(){
             var pipeImg = new PipeImg({          
-                source: ['./images/Jellyfish.jpg', './images/greensock.png', './images/Lighthouse.jpg'],
-                ajaxUrl: '/pic.do?xcase=uploadWs',
+                source: source,
+                uploadUrl: '/pic.do?xcase=uploadWs',
+                sendDataType: 'blob',
+                type: '0',
                 debug: true,
                 onInited: function() {
-                    // Select.use('.J-markTxt');
+
                 },
                 onComplete: function(data) {
-                    $('#J-preview-container').append($('<img>').attr('src', data.src));
+                    console.log('resultJson: ', JSON.stringify(data));
+                    for (var i = 0; i < data.length; i++) {
+                        var element = data[i];
+                        $('#J-preview-container').append($('<img>').attr('src', element.url));
+                    }
+                    
                 }
+            });
+            pipeImg.show({
+                "selected": 2
             });
             
         })

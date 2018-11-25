@@ -1,18 +1,22 @@
 * {
     user-select: none
 }
+
 .dragbox-wrapper {
     position: relative;
-    .img-dark{
+
+    .img-dark {
         opacity: 0.3;
     }
-    .img-light{
+
+    .img-light {
         position: absolute;
         top: 0;
         left: 0;
         clip: rect(0, 100%, 100%, 0);
     }
-    .mark-txt{
+
+    .mark-txt {
         position: relative;
         left: 0;
         top: 0;
@@ -23,7 +27,8 @@
         white-space: nowrap;
         padding: 0 5px;
     }
-    .drag-box{
+
+    .drag-box {
         position: absolute;
         left: 0;
         top: 0;
@@ -32,7 +37,7 @@
         width: 100%;
         height: 100%;
         border: 1px solid #fff;
-        box-sizing: border-box;
+        // box-sizing: border-box;
         cursor: move;
 
         .drag-point {
@@ -42,13 +47,13 @@
             background: #fff;
             z-index: 2;
         }
-        
+
         .up-left {
             margin-top: -4px;
             margin-left: -4px;
             cursor: nw-resize;
         }
-        
+
         .up {
             left: 50%;
             /*父元素盒子main宽度的一半，注意要有绝对定位*/
@@ -56,39 +61,39 @@
             top: -4px;
             cursor: n-resize;
         }
-        
+
         .up-right {
             top: -4px;
             right: -4px;
             cursor: ne-resize;
         }
-        
+
         .right {
             top: 50%;
             margin-top: -4px;
             right: -4px;
             cursor: e-resize;
         }
-        
+
         .right-down {
             right: -4px;
             bottom: -4px;
             cursor: se-resize;
         }
-        
+
         .down {
             bottom: -4px;
             left: 50%;
             margin-left: -4px;
             cursor: s-resize;
         }
-        
+
         .left-down {
             left: -4px;
             bottom: -4px;
             cursor: sw-resize;
         }
-        
+
         .left {
             left: -4px;
             top: 50%;
@@ -96,9 +101,12 @@
             cursor: w-resize;
         }
 
-        .up,.down,.left,.right{
+        .up,
+        .down,
+        .left,
+        .right {
             display: none;
         }
     }
-    
+
 }

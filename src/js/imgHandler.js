@@ -218,24 +218,6 @@ class ImgHandler {
         this.results.push(canvas);
         return this;
     }
-    // 压缩
-    compress() {
-        let targetImg = this.result;
-        let sourceW0 = targetImg.width;
-        let sourceH0 = targetImg.height;
-
-        let canvas = getCanvas(sourceW0, sourceH0);
-        let ctx = canvas.getContext("2d");
-
-        if (this.cropW && this.cropH) {
-            ctx.drawImage(targetImg, 0, 0, this.cropW, this.cropH);
-        } else {
-            ctx.drawImage(targetImg, 0, 0);
-        }
-        this.base64Data = canvas.toDataURL(this.mime, this.quality);
-
-        return this.base64Data;
-    }
 
 }
 
