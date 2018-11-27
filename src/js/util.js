@@ -147,7 +147,7 @@ function compress(img, max, isSimple) {
     let cvsRatio = width / height;
     let data = cvs.toDataURL(qualityType, 1.0);
     let size0 = getBase64Size(data);
-    console.log('start compress: ' + Math.ceil(size0 / 1024));
+    // console.log('start compress: ' + Math.ceil(size0 / 1024));
     if (isSimple) {
         while (size0 > max) {
             quality = Math.floor(max / size0 * 10) / 10;
@@ -184,7 +184,7 @@ function compress(img, max, isSimple) {
             size0 = getBase64Size(data);
         }
     }
-    console.log('end compress: ' + Math.ceil(size0 / 1024));
+    // console.log('end compress: ' + Math.ceil(size0 / 1024));
     return data;
 }
 

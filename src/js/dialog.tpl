@@ -17,7 +17,7 @@
     </div>
     <div class="pipeImg-content">
         <!-- 旋转面板 -->
-        <div class="pipeImg-panel active J-panel J-rotate-panel">
+        <div class="pipeImg-panel rotate-panel active J-panel J-rotate-panel">
             <div class="img-box J-img-box">
                 <img class="J-source" src="{{-imgList[0].src}}">
             </div>

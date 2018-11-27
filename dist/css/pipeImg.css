@@ -299,7 +299,7 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     line-height: 1.5;
     white-space: nowrap;
-    padding: 0 5px; }
+    text-align: center; }
   .dragbox-wrapper .drag-box {
     position: absolute;
     left: 0;
@@ -309,6 +309,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: 100%;
     border: 1px solid #fff;
+    box-sizing: border-box;
     cursor: move; }
     .dragbox-wrapper .drag-box .drag-point {
       position: absolute;
@@ -485,9 +486,6 @@ h1, h2, h3, h4, h5, h6 {
       display: flex;
       align-items: center;
       justify-content: center; }
-      .pipeImg-wrapper .pipeImg-content .img-box img {
-        max-width: 100%;
-        max-height: 100%; }
       .pipeImg-wrapper .pipeImg-content .img-box .scale-img-wrapper {
         position: absolute;
         left: 50%;
@@ -548,7 +546,8 @@ h1, h2, h3, h4, h5, h6 {
         vertical-align: middle;
         box-sizing: border-box;
         border: 2px solid #9a9bad;
-        margin-left: 4px; }
+        margin-left: 4px;
+        cursor: pointer; }
         .pipeImg-wrapper .pipeImg-content .content-footer .position:first-child {
           margin-left: 0; }
         .pipeImg-wrapper .pipeImg-content .content-footer .position .line {
@@ -584,10 +583,12 @@ h1, h2, h3, h4, h5, h6 {
       .pipeImg-wrapper .pipeImg-content .content-footer .scale-range {
         margin-top: 2px;
         margin-left: 10;
-        width: 120px; }
+        width: 120px;
+        cursor: pointer; }
       .pipeImg-wrapper .pipeImg-content .content-footer .opacity-range {
         margin-top: 2px;
-        width: 75px; }
+        width: 75px;
+        cursor: pointer; }
       .pipeImg-wrapper .pipeImg-content .content-footer input[type="range"] {
         -webkit-appearance: none;
         -moz-appearance: none;

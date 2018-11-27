@@ -166,8 +166,8 @@ class DragBox {
 
         let x = e.clientX,
             y = e.clientY;
-        let oldWidth = this.boxEl.offsetWidth - 2; //选取框变化前的宽度
-        let oldHeight = this.boxEl.offsetHeight - 2; //选取框变化前的高度
+        let oldWidth = this.boxEl.offsetWidth; //选取框变化前的宽度
+        let oldHeight = this.boxEl.offsetHeight; //选取框变化前的高度
         let position = this._getPosition();
         let top = position.top;
         let left = position.left;
@@ -230,10 +230,10 @@ class DragBox {
         }
 
 
-        this.boxEl.style.width = newWidth + 'px';
-        this.boxEl.style.height = newHeight + 'px';
-        this.boxEl.style.left = newLeft + 'px';
-        this.boxEl.style.top = newTop + 'px';
+        this.boxEl.style.width = Math.min(newWidth, this.containerEl.offsetWidth) + 'px';
+        this.boxEl.style.height = Math.min(newHeight, this.containerEl.offsetHeight) + 'px';
+        this.boxEl.style.left = Math.max(newLeft, 0) + 'px';
+        this.boxEl.style.top = Math.max(newTop, 0) + 'px';
     }
 
     _light() {

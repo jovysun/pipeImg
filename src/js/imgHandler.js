@@ -1,5 +1,8 @@
 import {
     getCanvas,
+    base64Data2Blob,
+    blob2FormData,
+    getBase64Size
 } from './util';
 
 class ImgHandler {
@@ -8,6 +11,7 @@ class ImgHandler {
 
         // 默认配置参数
         let defaults = {
+            debug: false,
             // 源图片元素
             sourceImg: null,
 
@@ -20,6 +24,7 @@ class ImgHandler {
 
             // 裁剪后的图片类型
             mime: 'image/jpeg',
+            minWH: 800,
 
             // 水印相关参数，若watermarkImg存在则用图片水印，否则用文字水印。
             // 是否添加水印
@@ -48,6 +53,7 @@ class ImgHandler {
         this.cropH = options.cropH;
 
         this.mime = options.mime;
+        this.minWH = options.minWH;
 
         this.hasMark = options.hasMark;
         this.textAlign = options.textAlign;
@@ -217,6 +223,70 @@ class ImgHandler {
         this.result = canvas;
         this.results.push(canvas);
         return this;
+    }
+    // 只对'image/jpeg'格式有效
+    compress(isSimple) {
+        let cvs = this.result;
+        let max = this.maxSize * 1024;
+        let quality = 1;
+        let minWH = this.minWH;
+        let scaleRatio = 0.9;
+        let qualityStep = 0.1;
+        // 质量压缩只支持'image/jpeg'，'image/webp'(chrome支持)
+        let qualityType = 'image/jpeg';
+
+        let width = cvs.width;
+        let height = cvs.height;
+        let cvsRatio = width / height;
+        let data = cvs.toDataURL(qualityType, 1.0);
+        let size0 = getBase64Size(data);
+        this.debug && console.log('start compress: ' + Math.ceil(size0 / 1024));
+        if (isSimple) {
+            while (size0 > max) {
+                quality = Math.floor(max / size0 * 10) / 10;
+                data = cvs.toDataURL(qualityType, quality);
+                size0 = getBase64Size(data);
+            }
+
+        } else {
+            // 优先缩放
+            while (size0 > max && (width > minWH || height > minWH)) {
+                let newWidth, newHeight;
+                if (cvsRatio > 1) {
+                    newWidth = width * scaleRatio > minWH ? width * scaleRatio : minWH;
+                    newHeight = newWidth / cvsRatio;
+                } else {
+                    newHeight = height * scaleRatio > minWH ? height * scaleRatio : minWH;
+                    newWidth = newHeight * cvsRatio;
+                }
+
+                let canvas = getCanvas(newWidth, newHeight),
+                    ctx = canvas.getContext("2d");
+                ctx.drawImage(cvs, 0, 0, newWidth, newHeight);
+
+                data = canvas.toDataURL(qualityType, 1.0);
+                size0 = getBase64Size(data);
+                width = newWidth;
+                height = newHeight;
+                cvs = canvas;
+            }
+            // 降低质量
+            while (size0 > max) {
+                quality -= qualityStep;
+                data = cvs.toDataURL(qualityType, quality);
+                size0 = getBase64Size(data);
+            }
+        }
+        this.debug && console.log('end compress: ' + Math.ceil(size0 / 1024));
+
+        let blobData = base64Data2Blob(data, this.mime);;    
+        let formdata = blob2FormData(blobData);
+        
+        return {
+            "base64": data,
+            "blob": blobData,
+            "formdata": formdata
+        };
     }
 
 }

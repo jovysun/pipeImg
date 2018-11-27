@@ -1,8 +1,5 @@
 // 依赖jquery.js，template.js
 import {
-    compress,
-    base64Data2Blob,
-    blob2FormData,
     loadImages
 } from './util';
 import ImgHandler from './imgHandler';
@@ -49,10 +46,11 @@ class PipeImg {
             tipTitleTxt: '提示',
             tipContentTxt: '尚未保存，是否确定离开？',
             tipConfirmBtnTxt: '确定',
-            // 初始化完成回调
+            // 初始化完成
             onInited: () => {},
-            // 上传保存完成回调
-            onComplete: (response) => {}
+            // 上传保存完成
+            onComplete: (response) => {},
+            onClose: () => {}
         };
 
         options = Object.assign({}, defaults, options);
@@ -96,6 +94,7 @@ class PipeImg {
 
         this.onInited = options.onInited;
         this.onComplete = options.onComplete;
+        this.onClose = options.onClose;
 
         this.resultList = [];
         this.sourceImgList = [];
@@ -120,6 +119,7 @@ class PipeImg {
             this.sourceImgList = images;
 
             this.imgHandler = new ImgHandler({
+                debug: this.debug,
                 sourceImg: images[0]
             });
             this.resultList.push(this.imgHandler.result);
@@ -174,6 +174,9 @@ class PipeImg {
                 },
                 onSaveMarkAll: (options, cb) => {
                     this._saveMarkAll(options, cb);
+                },
+                onClose: () => {
+                    this.onClose();
                 }
             });
 
@@ -223,14 +226,14 @@ class PipeImg {
 
         this.resultList = this.resultList.slice(0, 1);
         this.imgHandler = new ImgHandler({
+            debug: this.debug,
             sourceImg: this.resultList[0]
         })
         cb(this.resultList[0]);
     }
     _save(cb, index) {
         index = index === undefined ? this.activeIndex : index;
-        let max = this.maxSize * 1024;
-        let base64Data = compress(this.resultList[this.resultList.length - 1], max, false);
+        let compressData = this.imgHandler.compress();
 
         if (this.debug) {
             // 模拟返回
@@ -238,7 +241,7 @@ class PipeImg {
                 "picHeight": 1024,
                 "picWidth": 768,
                 "tempPhotoId": "5675810",
-                "url": base64Data
+                "url": compressData.base64
             }];
 
             let img = new Image();
@@ -247,10 +250,7 @@ class PipeImg {
             cb(data[0]);
             this._saveSuccess(data[0], index);
         } else {
-            let sendData = base64Data2Blob(base64Data, this.mime);;
-            if (this.sendDataType === 'formdata') {
-                sendData = blob2FormData(sendData);
-            }
+            let sendData = this.sendDataType === 'blob' ? compressData.blob : compressData.formdata;
             $.ajax({
                 url: this.uploadUrl,
                 type: "POST",
@@ -277,7 +277,7 @@ class PipeImg {
     _saveSuccess(data, index) {
         let o = {
             "id": data.tempPhotoId,
-            "url": data.url,
+            "url": data.url.replace("&amp;", "&"),
             "picWidth": data.picWidth,
             "picHeight": data.picHeight
         };
@@ -301,18 +301,19 @@ class PipeImg {
         let yPercent = options.markY / this.resultList[this.resultList.length - 1].height;
 
         $(this.sourceImgList).each((index, element) => {
-            let imgHandler = new ImgHandler({
+            this.imgHandler = new ImgHandler({
+                debug: this.debug,
                 sourceImg: element
             });
-            imgHandler.markX = element.width * xPercent;
-            imgHandler.markY = element.height * yPercent;
+            this.imgHandler.markX = element.width * xPercent;
+            this.imgHandler.markY = element.height * yPercent;
 
-            imgHandler.markText = options.markText;
-            imgHandler.markFont = options.markFont;
-            imgHandler.markStyle = options.markStyle;
+            this.imgHandler.markText = options.markText;
+            this.imgHandler.markFont = options.markFont;
+            this.imgHandler.markStyle = options.markStyle;
 
-            imgHandler.mark();
-            this.resultList.push(imgHandler.result);
+            this.imgHandler.mark();
+            this.resultList.push(this.imgHandler.result);
 
             this._save(cb, index);
         })
@@ -321,6 +322,7 @@ class PipeImg {
     _changeActive(options, cb) {
         this.activeIndex = options.activeIndex;
         this.imgHandler = new ImgHandler({
+            debug: this.debug,
             sourceImg: options.activeImg
         })
         this.resultList = [this.imgHandler.result];

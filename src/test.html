@@ -41,7 +41,7 @@
 
                 },
                 onComplete: function(data) {
-                    console.log('resultJson: ', JSON.stringify(data));
+                    // console.log('resultJson: ', JSON.stringify(data));
                     for (var i = 0; i < data.length; i++) {
                         var element = data[i];
                         $('#J-preview-container').append($('<img>').attr('src', element.url));

@@ -94,10 +94,9 @@ ThinSelect.use = (el) => {
     if (!el) {
         throw new Error('ThinSelect: el is not found!');
     }
-
-    Array.prototype.slice.call(document.querySelectorAll(el)).forEach(element => {
+    $(el).each((index, element) => {
         new ThinSelect({'el': element});
-    });
+    })
 }
 
 export default ThinSelect
