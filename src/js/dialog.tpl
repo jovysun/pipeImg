@@ -182,6 +182,7 @@
     </div>
 
 </div>
+
 <div class="pipeImg-tip J-pipeImg-tip">
     <div class="pipeImg-tip-header">{{=tipTitleTxt}}</div>
     <div class="pipeImg-tip-main">
@@ -189,4 +190,8 @@
         <a class="pipeImg-button button-confirm J-tip-confirm" href="javascript:void(0)">{{=tipConfirmBtnTxt}}</a>
         <a class="pipeImg-button button-cancel J-tip-cancel" href="javascript:void(0)">{{=cancelBtnTxt}}</a>        
     </div>
+</div>
+
+<div class="pipeImg-progress-bar J-pipeImg-progress">
+    <div class="pipeImg-progress-val"></div>
 </div>

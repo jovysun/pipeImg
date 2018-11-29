@@ -11,7 +11,6 @@ class ImgHandler {
 
         // 默认配置参数
         let defaults = {
-            debug: false,
             // 源图片元素
             sourceImg: null,
 
@@ -29,7 +28,7 @@ class ImgHandler {
             // 水印相关参数，若watermarkImg存在则用图片水印，否则用文字水印。
             // 是否添加水印
             hasMark: true,
-            textAlign: 'left',
+            textAlign: 'start',
             // 水印字体，值同css的font
             markFont: '16px microsoft yahei',
             // 水印字样式，可选值：color,gradient,pattern
@@ -240,7 +239,7 @@ class ImgHandler {
         let cvsRatio = width / height;
         let data = cvs.toDataURL(qualityType, 1.0);
         let size0 = getBase64Size(data);
-        this.debug && console.log('start compress: ' + Math.ceil(size0 / 1024));
+        // console.log('start compress: ' + Math.ceil(size0 / 1024));
         if (isSimple) {
             while (size0 > max) {
                 quality = Math.floor(max / size0 * 10) / 10;
@@ -277,7 +276,7 @@ class ImgHandler {
                 size0 = getBase64Size(data);
             }
         }
-        this.debug && console.log('end compress: ' + Math.ceil(size0 / 1024));
+        // console.log('end compress: ' + Math.ceil(size0 / 1024));
 
         let blobData = base64Data2Blob(data, this.mime);;    
         let formdata = blob2FormData(blobData);

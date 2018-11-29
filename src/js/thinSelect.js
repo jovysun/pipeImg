@@ -88,15 +88,24 @@ class ThinSelect{
         $(document).off('click.thinSelect');
         this.$thinSelect.remove();
     }
+    select(index) {
+        let $item = this.$thinSelect.find('.J-opt').parent().eq(index);
+        $item.siblings().find('.J-opt').removeClass('selected');
+        let txt = $item.find('.J-opt').addClass('selected').text();
+        this.$thinSelect.find('.J-text').text(txt);
+    }
 }
 
 ThinSelect.use = (el) => {
     if (!el) {
         throw new Error('ThinSelect: el is not found!');
     }
+    let instances = [];
     $(el).each((index, element) => {
-        new ThinSelect({'el': element});
+        let instance = new ThinSelect({'el': element});
+        instances.push(instance);
     })
+    return instances;
 }
 
 export default ThinSelect

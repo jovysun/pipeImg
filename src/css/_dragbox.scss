@@ -5,9 +5,11 @@
 .dragbox-wrapper {
     position: relative;
 
-    .img-dark {
-        opacity: 0.3;
+    img{
         vertical-align: middle;
+    }
+    .img-dark {
+        opacity: 0.3;     
     }
 
     .img-light {
@@ -15,7 +17,6 @@
         top: 0;
         left: 0;
         clip: rect(0, 100%, 100%, 0);
-        vertical-align: middle;
     }
 
     .mark-txt {

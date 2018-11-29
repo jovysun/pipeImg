@@ -12,6 +12,7 @@ class PipeImg {
     constructor(options) {
         // 默认配置参数
         let defaults = {
+            debug: false,
             // 必填，[{"id":"567701","url":"./images/Jellyfish.jpg"}]
             source: [],
             // 上传图片地址
@@ -20,12 +21,11 @@ class PipeImg {
             sendDataType: 'formdata',
             // 图片编辑界面类型: '0'单图编辑, '1'批量水印
             type: '0',
-            debug: false,
             mime: 'image/jpeg',
             // 保存图片最大体积
             maxSize: 500,
             // 文案
-            markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
+            markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product SourcingFocus Service Co - Product Sourcing'],
             closeBtnTxt: '关闭',
             saveBtnTxt: '保存',
             resetBtnTxt: '重置',
@@ -54,6 +54,7 @@ class PipeImg {
         };
 
         options = Object.assign({}, defaults, options);
+        this.debug = options.debug;
         this.source = options.source;
         if (!this.source) {
             throw new Error('PipeImg: source is not found!');
@@ -65,7 +66,6 @@ class PipeImg {
         this.sendDataType = options.sendDataType;
         this.type = options.type;
 
-        this.debug = options.debug;
         this.mime = options.mime;
         this.maxSize = options.maxSize;
 
@@ -119,7 +119,6 @@ class PipeImg {
             this.sourceImgList = images;
 
             this.imgHandler = new ImgHandler({
-                debug: this.debug,
                 sourceImg: images[0]
             });
             this.resultList.push(this.imgHandler.result);
@@ -226,7 +225,6 @@ class PipeImg {
 
         this.resultList = this.resultList.slice(0, 1);
         this.imgHandler = new ImgHandler({
-            debug: this.debug,
             sourceImg: this.resultList[0]
         })
         cb(this.resultList[0]);
@@ -234,50 +232,43 @@ class PipeImg {
     _save(cb, index) {
         index = index === undefined ? this.activeIndex : index;
         let compressData = this.imgHandler.compress();
+        let sendData = this.sendDataType === 'blob' ? compressData.blob : compressData.formdata;
+        
+        // 模拟返回
+        setTimeout(() => {
+            // let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":"image?tid=40&amp;id=gCfpAUFcYRlB&amp;cache=0&amp;lan_code=0"}];
+            let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":compressData.base64}];
+            this._saveSuccess(response[0], index, cb);
+        }, 1000);
 
-        if (this.debug) {
-            // 模拟返回
-            let data = [{
-                "picHeight": 1024,
-                "picWidth": 768,
-                "tempPhotoId": "5675810",
-                "url": compressData.base64
-            }];
-
-            let img = new Image();
-            img.src = data[0].url;
-            this.resultList = [img];
-            cb(data[0]);
-            this._saveSuccess(data[0], index);
-        } else {
-            let sendData = this.sendDataType === 'blob' ? compressData.blob : compressData.formdata;
-            $.ajax({
-                url: this.uploadUrl,
-                type: "POST",
-                data: sendData,
-                processData: false, // 不处理数据
-                contentType: false, // 不设置内容类型
-                success: (response) => {
-                    // response: [{"picHeight":1024,"picWidth":768,"tempPhotoId":"567581","url":"image?tid=40&amp;id=pyUpfAPGRadq&amp;cache=0&amp;lan_code=0"}]
-
-                    let img = new Image();
-                    img.src = response[0].url;
-                    this.resultList = [img];
-                    cb(response[0]);
-                    this._saveSuccess(response[0], index);
-                },
-                error: () => {
-                    console.log('upload failure!');
-                }
-            });
-        }
+        
+        // $.ajax({
+        //     url: this.uploadUrl,
+        //     type: "POST",
+        //     data: sendData,
+        //     processData: false,
+        //     contentType: false,
+        //     success: (response) => {
+        //         this._saveSuccess(response[0], index, cb);
+        //     },
+        //     error: () => {
+        //         console.log('upload failure!');
+        //     }
+        // });            
+        
 
     }
 
-    _saveSuccess(data, index) {
+    _saveSuccess(data, index, cb) {
+        data.url = data.url.replace("&amp;", "&");
+        let img = new Image();
+        img.src = data.url;
+        this.resultList = [img];
+        cb(data);
+
         let o = {
             "id": data.tempPhotoId,
-            "url": data.url.replace("&amp;", "&"),
+            "url": data.url,
             "picWidth": data.picWidth,
             "picHeight": data.picHeight
         };
@@ -302,7 +293,6 @@ class PipeImg {
 
         $(this.sourceImgList).each((index, element) => {
             this.imgHandler = new ImgHandler({
-                debug: this.debug,
                 sourceImg: element
             });
             this.imgHandler.markX = element.width * xPercent;
@@ -322,7 +312,6 @@ class PipeImg {
     _changeActive(options, cb) {
         this.activeIndex = options.activeIndex;
         this.imgHandler = new ImgHandler({
-            debug: this.debug,
             sourceImg: options.activeImg
         })
         this.resultList = [this.imgHandler.result];

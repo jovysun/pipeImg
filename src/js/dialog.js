@@ -176,6 +176,7 @@ class Dialog {
         this.activeImg = this.imgList[0];
 
 
+
         // 初始化裁剪框
         this.cropBox = new DragBox({
             el: $cropPanel.find('.J-source'),
@@ -200,7 +201,7 @@ class Dialog {
             },
             onDragPoint: (boxData) => {
                 this.$markPanel.find('.J-mark-txt').css({
-                    'font-size': Math.round(parseInt(this.markBox.$dragBox.css('height')) / 1.5)
+                    'font-size': Math.round(parseInt(this.markBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
                 });
                 this.markBox.$dragBox.find('.J-mark-txt').css({
                     'display': 'block'
@@ -218,7 +219,7 @@ class Dialog {
             },
             onDragPoint: (boxData) => {
                 this.$markAllPanel.find('.J-mark-txt').css({
-                    'font-size': Math.round(parseInt(this.markAllBox.$dragBox.css('height')) / 1.5)
+                    'font-size': Math.round(parseInt(this.markAllBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
                 });
                 this.markAllBox.$dragBox.find('.J-mark-txt').css({
                     'display': 'block'
@@ -229,10 +230,13 @@ class Dialog {
 
         this._refresh();
 
-        ThinSelect.use(this.$el.find('.J-markTxt'));
+        this.markSelects = ThinSelect.use(this.$el.find('.J-markTxt'));
 
         this._setMarkPosition();
         this._setMarkPosition('all');
+
+        this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
+        this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
 
         this._bind();
     }
@@ -244,15 +248,15 @@ class Dialog {
                 let $thumbnail = $(e.target).parent();
                 $thumbnail.addClass('active').siblings().removeClass('active');
                 let activeIndex = $thumbnail.index();
-    
+
                 let newSrc = $thumbnail.find('img').attr('src');
                 this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', newSrc);
-    
+
                 loadImage(newSrc, (img) => {
                     this._updateActiveImg(img, activeIndex);
                     this._goHome();
                     this._initData();
-                })    
+                })
             })
 
 
@@ -277,43 +281,47 @@ class Dialog {
         })
 
         // 菜单切换
-        this.$el.find('.J-menu-btn').on('click', function(e) {
-            let $item = $(this).parent();
-            let index = $item.index();
-            let oldActiveIndex = $item.parent().find('.active:first').index();
+        this.$el.find('.J-menu-btn').on('click', function (e) {
+            that._confirm(() => {
+                let $item = $(this).parent();
+                let index = $item.index();
+                let oldActiveIndex = $item.parent().find('.active:first').index();
 
-            that.showModel('0');
-            that.showMenu(index);
+                that.showModel('0');
+                that.showMenu(index);
 
-            // 若有编辑操作，离开旋转，裁剪，缩放面板进行保存
-            if (that.isChange) {
-                switch (oldActiveIndex) {
-                    case 0:
-                    that._saveRotate();
-                        break;
-                    case 1:
-                    that._saveCrop();
-                        break;
-                    case 2:
-                    that._saveScale();
-                        break;
-                    default:
-                        break;
+                // 若有编辑操作，离开旋转，裁剪，缩放面板进行保存
+                if (that.isChange) {
+                    switch (oldActiveIndex) {
+                        case 0:
+                            that._saveRotate();
+                            break;
+                        case 1:
+                            that._saveCrop();
+                            break;
+                        case 2:
+                            that._saveScale();
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
 
-            // 进入裁剪
-            if (index === 1) {
-                that._initCrop();
-            }
-            // 进入缩放
-            if (index === 2) {
-                that._initScale();
-            }
-            // 进入水印
-            if (index === 3) {
-                that._initMark();
-            }
+                // 进入裁剪
+                if (index === 1) {
+                    that._initCrop();
+                }
+                // 进入缩放
+                if (index === 2) {
+                    that._initScale();
+                }
+                // 进入水印
+                if (index === 3) {
+                    that._initMark();
+                }
+                that._updateIsChange(false);
+            })
+
         })
         // 切换水印
         this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark', (e) => {
@@ -426,6 +434,10 @@ class Dialog {
             this._updateMark();
         })
         this.$selectMarkTxt.on('change', () => {
+            this.markBox.$dragBox.find('.J-mark-txt').css({
+                'display': 'inline-block'
+            });
+
             this._updateMark();
         })
         this.$radioMarkPosition.on('change', () => {
@@ -443,6 +455,9 @@ class Dialog {
             this._updateMark('all');
         })
         this.$selectMarkAllTxt.on('change', () => {
+            this.markAllBox.$dragBox.find('.J-mark-txt').css({
+                'display': 'inline-block'
+            });
             this._updateMark('all');
         })
         this.$radioMarkAllPosition.on('change', () => {
@@ -470,11 +485,14 @@ class Dialog {
         })
         // 重置
         this.$btnReset.on('click', () => {
-            this._reset();
+            if (this.isChange) {
+                this._reset();
+            }
         })
         // 保存
         this.$btnSave.on('click', (e) => {
             if (this.isChange) {
+                this._showProgress();
                 let panelIndex = $(e.target).parents('.J-panel').index();
                 switch (panelIndex) {
                     case 0:
@@ -662,11 +680,13 @@ class Dialog {
             scaleRatio: this.scaleRatio,
         };
         this.onSaveScale(options, (img) => {
+
+
             this.scaleRatio = 1;
             this.activeImg = img;
             this._refresh();
-
-            this._updateIsChange(true);
+            this._initScale();
+            this._updateIsChange(false);
         })
 
     }
@@ -677,6 +697,8 @@ class Dialog {
 
         let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
         let $dragBox = type === 'all' ? this.markAllBox.$dragBox : this.markBox.$dragBox;
+        let $markTxt = $dragBox.find('.J-mark-txt');
+
 
         let markX = parseInt($dragBox.css('left')) * this.activeData.ratio;
         let markY = parseInt($dragBox.css('top')) * this.activeData.ratio;
@@ -685,8 +707,8 @@ class Dialog {
 
         let dragBoxWrapperWidth = this.activeData.w1;
         let dragBoxWrapperHeight = this.activeData.h1;
-        let dragBoxWidth = $dragBox.find('.J-mark-txt').outerWidth();
-        let dragBoxHeight = $dragBox.find('.J-mark-txt').outerHeight();
+        let dragBoxWidth = $markTxt.outerWidth();
+        let dragBoxHeight = $markTxt.outerHeight();
 
         switch (POSITION[positionVal]) {
             case 'center':
@@ -714,10 +736,10 @@ class Dialog {
         }
 
         $dragBox.css({
-            'left': markX / this.activeData.ratio,
-            'top': markY / this.activeData.ratio,
-            'width': dragBoxWidth,
-            'height': dragBoxHeight
+            'left': Math.floor(markX / this.activeData.ratio),
+            'top': Math.floor(markY / this.activeData.ratio),
+            'width': Math.ceil(dragBoxWidth),
+            'height': Math.ceil(dragBoxHeight)
         })
     }
     _setMarkStyle(type) {
@@ -739,6 +761,27 @@ class Dialog {
         });
 
     }
+    _adjustMark(type) {
+        let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
+        let $dragBox = type === 'all' ? this.markAllBox.$dragBox : this.markBox.$dragBox;
+        let $markTxt = $panel.find('.J-mark-txt');
+        if ($markTxt.width() > this.activeData.w1) {
+            this.markBox.width = this.activeData.w1;
+            this.markBox.height = this.markBox.width / this.markBox.boxData.ratio;
+            this.markBox.update()
+            $panel.find('.J-mark-txt').css({
+                'font-size': Math.round(parseInt($dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
+            });
+            $dragBox.find('.J-mark-txt').css({
+                'display': 'block'
+            });
+
+            this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
+            this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
+        } else {
+
+        }
+    }
     _initMark(type) {
         let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
         $panel.find('.J-color:last').prop('checked', true);
@@ -746,11 +789,28 @@ class Dialog {
         $panel.find('.J-opacity:first').val($panel.find('.J-opacity:first').attr('defaultValue'));
         $panel.find('.J-markTxt option:first').prop('selected', true);
 
+        $panel.find('.J-mark-txt').css({
+            'font-size': this.markFontSize0 + 'px'
+        });
+
+        if (type === 'all') {
+            this.markSelects[1].select(0);
+            this.markAllBox.$dragBox.find('.J-mark-txt').css({
+                'display': 'inline-block'
+            });
+
+        } else {
+            this.markSelects[0].select(0);
+            this.markBox.$dragBox.find('.J-mark-txt').css({
+                'display': 'inline-block'
+            });
+        }
+
         this._setMarkStyle();
         this._setMarkPosition();
-
     }
     _updateMark(type) {
+
         this._setMarkStyle(type);
         this._setMarkPosition(type);
 
@@ -762,8 +822,7 @@ class Dialog {
         let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
         let $dragBox = type === 'all' ? this.markAllBox.$dragBox : this.markBox.$dragBox;
         let $markTxt = $panel.find('.J-mark-txt');
-        let markFont = Math.round(parseInt($markTxt.css('font-size')) * this.activeData.ratio) + 'px microsoft yahei';
-
+        let markFont = Math.ceil(parseInt($markTxt.css('font-size')) * this.activeData.ratio) + 'px / ' + Math.ceil(parseInt($markTxt.css('line-height')) * this.activeData.ratio) + 'px ' + $markTxt.css('font-family');
         let $opacity = $panel.find('.J-opacity');
         let opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));
         let colorVal = $panel.find('.J-color:checked').val();
@@ -776,8 +835,8 @@ class Dialog {
         let txtVal = $panel.find('.J-markTxt').val();
         let text = this.markTextList[txtVal];
 
-        let markX = Math.round(parseInt($dragBox.css('left')) * this.activeData.ratio);
-        let markY = Math.round(parseInt($dragBox.css('top')) * this.activeData.ratio);
+        let markX = Math.floor(parseInt($dragBox.css('left')) * this.activeData.ratio);
+        let markY = Math.floor(parseInt($dragBox.css('top')) * this.activeData.ratio);
 
         return {
             markX: markX,
@@ -803,12 +862,13 @@ class Dialog {
         this._goHome();
     }
     _saveMarkAll() {
+        this._showProgress();
         let options = this._getMarkParams('all');
         this.onSaveMarkAll(options, (data) => {
 
             this.destory();
             this._updateIsChange(false);
-
+            this._hideProgress();
         })
     }
     // 水印相关操作end++++++++++++++++++++++++++++++++++++++++
@@ -944,7 +1004,7 @@ class Dialog {
 
     }
     _reset() {
-        this.onReset((img) => {   
+        this.onReset((img) => {
             this.activeImg = img;
             this._refresh();
             this._goHome();
@@ -953,6 +1013,7 @@ class Dialog {
         });
     }
     _save() {
+
         this.onSave((data) => {
             let newSrc = data.url.replace("&amp;", "&");
             let $activeThumb = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
@@ -964,9 +1025,19 @@ class Dialog {
             this._updateIsChange(false);
             this.imgList = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail img');
 
+            this._hideProgress();
+
+            this._goHome();
         });
     }
-
+    _showProgress() {
+        this.$pipeWrapper.css('z-index', 0);
+        this.$el.find('.J-pipeImg-progress').addClass('active');
+    }
+    _hideProgress() {
+        this.$pipeWrapper.css('z-index', 2);
+        this.$el.find('.J-pipeImg-progress').removeClass('active');
+    }
     _initData() {
         this.rotateNum = 0;
         this.scaleRatio = 1;
