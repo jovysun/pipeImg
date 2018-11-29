@@ -1,4 +1,5 @@
-// 依赖jquery.js，template.js
+import $ from 'jquery';
+
 import {
     loadImages
 } from './util';
@@ -24,7 +25,7 @@ class PipeImg {
             // 保存图片最大体积
             maxSize: 500,
             // 文案
-            markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
+            markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product SourcingFocus Service Co - Product Sourcing'],
             closeBtnTxt: '关闭',
             saveBtnTxt: '保存',
             resetBtnTxt: '重置',
@@ -234,9 +235,12 @@ class PipeImg {
         let sendData = this.sendDataType === 'blob' ? compressData.blob : compressData.formdata;
         
         // 模拟返回
-        // let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":"image?tid=40&amp;id=gCfpAUFcYRlB&amp;cache=0&amp;lan_code=0"}];
-        // let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":compressData.base64}];
-        // this._saveSuccess(response[0], index, cb);
+        // setTimeout(() => {
+        //     // let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":"image?tid=40&amp;id=gCfpAUFcYRlB&amp;cache=0&amp;lan_code=0"}];
+        //     let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":compressData.base64}];
+        //     this._saveSuccess(response[0], index, cb);
+        // }, 1000);
+
         
         $.ajax({
             url: this.uploadUrl,

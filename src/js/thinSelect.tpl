@@ -1,4 +1,4 @@
-<div class="select">
+<div class="thin-select">
 	<div class="select-title J-select-title">
 		<div class="select-selected">
 			<span class="J-text">{{=txt}}</span>

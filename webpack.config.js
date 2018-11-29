@@ -60,6 +60,20 @@ module.exports = {
             }
         ]
     },
+    externals : {
+        "jquery": {
+            commonjs: "jQuery",//如果我们的库运行在Node.js环境中，import _ from 'lodash'等价于const _ = require('lodash')
+            commonjs2: "jQuery",//同上
+            amd: "jQuery",//如果我们的库使用require.js等加载,等价于 define(["lodash"], factory);
+            root: "jQuery"//如果我们的库在浏览器中使用，需要提供一个全局的变量‘_’，等价于 var _ = (window._) or (_);
+        },
+        "template": {
+            commonjs: "template",
+            commonjs2: "template",
+            amd: "template",
+            root: "template"
+        }
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: __dirname + "/src/test.html"

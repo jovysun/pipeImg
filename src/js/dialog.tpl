@@ -105,7 +105,7 @@
                     <input class="opacity-range J-opacity" name="opacity" type="range" min="10" max="100" step="1" defaultValue="80" value="80">
                 </div>
 
-                <select class="J-markTxt" name="markTxt">
+                <select class="J-select-mark" name="markTxt">
                     <option value="0" selected="selected">{{=showRoomTxt}}</option>
                     <option value="1">{{=companyNameTxt}}</option>
                 </select>
@@ -156,7 +156,7 @@
                     <input class="opacity-range J-opacity" name="opacityAll" type="range" min="10" max="100" step="1" defaultValue="80" value="80">
                 </div>
 
-                <select class="J-markTxt" name="markTxtAll">
+                <select class="J-select-mark" name="markTxtAll">
                     <option value="0" selected="selected">{{=showRoomTxt}}</option>
                     <option value="1">{{=companyNameTxt}}</option>
                 </select>

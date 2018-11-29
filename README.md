@@ -35,11 +35,12 @@ npm run build
 </script>
 ```
 ## 整体概述
-1, css用gulp构建，js用webpack打包；
+1, 依赖jquery.js，template.js
+2, css用gulp构建，js用webpack打包；
 
-2, 入口文件为pipeImg.js，视窗dialog.js，裁剪水印拖拽编辑框dragBox.js，自定义select组件thinSelect.js，图片处理imgHandler.js，工具函数util.js；
+3, 入口文件为pipeImg.js，视窗dialog.js，裁剪水印拖拽编辑框dragBox.js，自定义select组件thinSelect.js，图片处理imgHandler.js，工具函数util.js；
 
-3, 参数介绍：
+4, 参数介绍：
 ```
 // 默认配置参数
 let defaults = {

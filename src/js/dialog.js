@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import template from 'template';
+
 import {
     drag,
     loadImage
@@ -154,13 +157,13 @@ class Dialog {
         this.$radioMarkColor = this.$markPanel.find('.J-color');
         this.$radioMarkPosition = this.$markPanel.find('.J-position');
         this.$rangeMarkOpacity = this.$markPanel.find('.J-opacity');
-        this.$selectMarkTxt = this.$markPanel.find('.J-markTxt');
+        this.$selectMarkTxt = this.$markPanel.find('.J-select-mark');
         // 批量添加水印
         this.$markAllPanel = this.$el.find('.J-mark-all-panel');
         this.$radioMarkAllColor = this.$markAllPanel.find('.J-color');
         this.$radioMarkAllPosition = this.$markAllPanel.find('.J-position');
         this.$rangeMarkAllOpacity = this.$markAllPanel.find('.J-opacity');
-        this.$selectMarkAllTxt = this.$markAllPanel.find('.J-markTxt');
+        this.$selectMarkAllTxt = this.$markAllPanel.find('.J-select-mark');
 
         this.$buttons = this.$el.find('.J-button-save, .J-button-reset, .J-button-confirm, .J-button-cancel, .J-button-confirm-all, .J-button-cancel-all');
 
@@ -230,7 +233,7 @@ class Dialog {
 
         this._refresh();
 
-        this.markSelects = ThinSelect.use(this.$el.find('.J-markTxt'));
+        this.markSelects = ThinSelect.use(this.$el.find('.J-select-mark'));
 
         this._setMarkPosition();
         this._setMarkPosition('all');
@@ -435,7 +438,8 @@ class Dialog {
         })
         this.$selectMarkTxt.on('change', () => {
             this.markBox.$dragBox.find('.J-mark-txt').css({
-                'display': 'inline-block'
+                'display': 'inline-block',
+                'font-size': this.markFontSize0
             });
 
             this._updateMark();
@@ -456,7 +460,8 @@ class Dialog {
         })
         this.$selectMarkAllTxt.on('change', () => {
             this.markAllBox.$dragBox.find('.J-mark-txt').css({
-                'display': 'inline-block'
+                'display': 'inline-block',
+                'font-size': this.markFontSize0
             });
             this._updateMark('all');
         })
@@ -716,29 +721,29 @@ class Dialog {
                 markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
                 break;
             case 'upLeft':
-                markX = 0;
-                markY = 0;
+                markX = (0 + 15) * this.activeData.ratio;
+                markY = (0 + 20) * this.activeData.ratio;
                 break;
             case 'upRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth) * this.activeData.ratio;
-                markY = 0;
+                markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
+                markY = (0 + 20) * this.activeData.ratio;
                 break;
             case 'downLeft':
-                markX = 0;
-                markY = (dragBoxWrapperHeight - dragBoxHeight) * this.activeData.ratio;
+                markX = (0 + 15) * this.activeData.ratio;
+                markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
                 break;
             case 'downRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth) * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight) * this.activeData.ratio;
+                markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
+                markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
                 break;
             default:
                 break;
         }
 
         $dragBox.css({
-            'left': Math.floor(markX / this.activeData.ratio),
+            'left': Math.max(Math.floor(markX / this.activeData.ratio), 0),
             'top': Math.floor(markY / this.activeData.ratio),
-            'width': Math.ceil(dragBoxWidth),
+            'width': Math.min(Math.ceil(dragBoxWidth), this.activeData.w1),
             'height': Math.ceil(dragBoxHeight)
         })
     }
@@ -748,7 +753,7 @@ class Dialog {
         let $markTxt = $panel.find('.J-mark-txt');
         let colorVal = $panel.find('.J-color:checked').val();
         let opacityVal = parseInt($panel.find('.J-opacity').val()) / parseInt($panel.find('.J-opacity').attr('max'));
-        let txtVal = $panel.find('.J-markTxt').val();
+        let txtVal = $panel.find('.J-select-mark').val();
 
         let color = `rgba(255, 255, 255, ${opacityVal})`;
         if (colorVal === '1') {
@@ -761,33 +766,13 @@ class Dialog {
         });
 
     }
-    _adjustMark(type) {
-        let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
-        let $dragBox = type === 'all' ? this.markAllBox.$dragBox : this.markBox.$dragBox;
-        let $markTxt = $panel.find('.J-mark-txt');
-        if ($markTxt.width() > this.activeData.w1) {
-            this.markBox.width = this.activeData.w1;
-            this.markBox.height = this.markBox.width / this.markBox.boxData.ratio;
-            this.markBox.update()
-            $panel.find('.J-mark-txt').css({
-                'font-size': Math.round(parseInt($dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
-            });
-            $dragBox.find('.J-mark-txt').css({
-                'display': 'block'
-            });
 
-            this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
-            this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
-        } else {
-
-        }
-    }
     _initMark(type) {
         let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
         $panel.find('.J-color:last').prop('checked', true);
         $panel.find('.J-position:first').prop('checked', true);
         $panel.find('.J-opacity:first').val($panel.find('.J-opacity:first').attr('defaultValue'));
-        $panel.find('.J-markTxt option:first').prop('selected', true);
+        $panel.find('.J-select-mark option:first').prop('selected', true);
 
         $panel.find('.J-mark-txt').css({
             'font-size': this.markFontSize0 + 'px'
@@ -832,7 +817,7 @@ class Dialog {
             color = `rgba(0, 0, 0, ${opacityVal})`;
         }
 
-        let txtVal = $panel.find('.J-markTxt').val();
+        let txtVal = $panel.find('.J-select-mark').val();
         let text = this.markTextList[txtVal];
 
         let markX = Math.floor(parseInt($dragBox.css('left')) * this.activeData.ratio);

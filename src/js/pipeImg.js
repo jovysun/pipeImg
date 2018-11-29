@@ -1,4 +1,5 @@
-// 依赖jquery.js，template.js
+import $ from 'jquery';
+
 import {
     loadImages
 } from './util';

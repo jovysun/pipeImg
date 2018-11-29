@@ -1,7 +1,9 @@
+import $ from 'jquery';
+
 import {
-    drag,
-    _$
+    drag
 } from './util';
+
 class DragBox {
     constructor(options) {
         // 默认配置参数

@@ -1,4 +1,8 @@
+import $ from 'jquery';
+import template from 'template';
+
 import tpl from './thinSelect.tpl';
+
 class ThinSelect{
     constructor(options) {
         let defaults = {
