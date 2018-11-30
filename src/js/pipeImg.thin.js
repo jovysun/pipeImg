@@ -269,8 +269,8 @@ class PipeImg {
         let img = new Image();
         img.src = data.url;
         this.resultList = [img];
-        cb(data);
-
+        this.sourceImgList[index] = img;
+        
         let o = {
             "id": data.tempPhotoId,
             "url": data.url,
@@ -288,6 +288,7 @@ class PipeImg {
             this.onComplete(this.returnJson);
         }
 
+        cb(data);
     }
 
     _saveMarkAll(options, cb) {

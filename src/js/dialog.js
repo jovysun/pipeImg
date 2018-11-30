@@ -1002,7 +1002,7 @@ class Dialog {
             this._goHome();
 
             this._initData();
-            this._updateIsChange(false);
+            this._updateIsChange(false)
         });
     }
     _save() {
