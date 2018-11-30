@@ -250,16 +250,14 @@ class Dialog {
             this._confirm(() => {
                 let $thumbnail = $(e.target).parent();
                 $thumbnail.addClass('active').siblings().removeClass('active');
-                let activeIndex = $thumbnail.index();
 
-                let newSrc = $thumbnail.find('img').attr('src');
-                this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', newSrc);
+                let $thumbnailImg = $thumbnail.find('img');
+                this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', $thumbnailImg.attr('src'));
 
-                loadImage(newSrc, (img) => {
-                    this._updateActiveImg(img, activeIndex);
-                    this._goHome();
-                    this._initData();
-                })
+                this._updateActiveImg($thumbnailImg.get(0), $thumbnail.index());
+                this._goHome();
+                this._initData();
+
             })
 
 
@@ -269,26 +267,33 @@ class Dialog {
 
             let $thumbnail = $(e.target).parent();
             $thumbnail.addClass('active').siblings().removeClass('active');
-            let activeIndex = $thumbnail.index();
 
-            let newSrc = $thumbnail.find('img').attr('src');
-            this.$markAllPanel.find('.J-source').attr('src', newSrc);
+            let $thumbnailImg = $thumbnail.find('img');
+            this.$markAllPanel.find('.J-source').attr('src', $thumbnailImg.attr('src'));
 
-            loadImage(newSrc, (img) => {
+            this._updateActiveImg($thumbnailImg.get(0), $thumbnail.index());
+            this._setMarkPosition('all');
+            this._initData();
 
-                this._updateActiveImg(img, activeIndex);
-                this._setMarkPosition('all');
-                this._initData();
-
-            })
         })
 
         // 菜单切换
         this.$el.find('.J-menu-btn').on('click', function (e) {
             that._confirm(() => {
+
+                that.imgBoxHeight = that.$markPanel.find('.J-img-box').height();
+                that.imgBoxWidth = that.$markPanel.find('.J-img-box').width();
+                that.imgBoxRatio = that.imgBoxWidth / that.imgBoxHeight;
+
+
                 let $item = $(this).parent();
                 let index = $item.index();
                 let oldActiveIndex = $item.parent().find('.active:first').index();
+
+
+                let $thumbnail = that.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
+                that._updateActiveImg($thumbnail.find('img').get(0), $thumbnail.index());
+
 
                 that.showModel('0');
                 that.showMenu(index);
@@ -331,14 +336,12 @@ class Dialog {
 
             this._confirm(() => {
                 let $thumbnail = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
-                let activeIndex = $thumbnail.index();
-                let newSrc = $thumbnail.find('img').attr('src');
-                loadImage(newSrc, (img) => {
-                    this._updateActiveImg(img, activeIndex);
-                    this.showModel('0');
-                    this.showMenu(3);
-                    this._initMark();
-                })
+
+                this._updateActiveImg($thumbnail.find('img').get(0), $thumbnail.index());
+                this.showModel('0');
+                this.showMenu(3);
+                this._initMark();
+
             })
 
 
@@ -348,16 +351,20 @@ class Dialog {
         this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark-all', (e) => {
 
             this._confirm(() => {
+
+                this.imgBoxHeight = this.$markAllPanel.find('.J-img-box').height();
+                this.imgBoxWidth = this.$markAllPanel.find('.J-img-box').width();
+                this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
+
                 let $thumbnail = this.$markAllPanel.find('.J-img-thumbnail.active');
-                let activeIndex = $thumbnail.index();
-                let newSrc = $thumbnail.find('img').attr('src');
-                loadImage(newSrc, (img) => {
-                    this._updateActiveImg(img, activeIndex);
-                    this.showModel('1');
-                    this._initData();
-                    this._updateIsChange(true);
-                    this._initMark('all');
-                })
+
+                this._updateActiveImg($thumbnail.find('img').get(0), $thumbnail.index());
+                this.showModel('1');             
+                this._initMark('all');
+
+                this._initData();
+                this._updateIsChange(true);
+
             })
 
 
@@ -743,7 +750,7 @@ class Dialog {
         $dragBox.css({
             'left': Math.max(Math.floor(markX / this.activeData.ratio), 0),
             'top': Math.floor(markY / this.activeData.ratio),
-            'width': Math.min(Math.ceil(dragBoxWidth), this.activeData.w1),
+            'width': Math.min(Math.ceil(dragBoxWidth), Math.floor(this.activeData.w1)),
             'height': Math.ceil(dragBoxHeight)
         })
     }
@@ -791,8 +798,8 @@ class Dialog {
             });
         }
 
-        this._setMarkStyle();
-        this._setMarkPosition();
+        this._setMarkStyle(type);
+        this._setMarkPosition(type);
     }
     _updateMark(type) {
 
@@ -995,6 +1002,7 @@ class Dialog {
             this._goHome();
 
             this._initData();
+            this._updateIsChange(false);
         });
     }
     _save() {
@@ -1026,7 +1034,6 @@ class Dialog {
     _initData() {
         this.rotateNum = 0;
         this.scaleRatio = 1;
-        this._updateIsChange(false);
     }
     _updateActiveImg(img, index) {
         this.activeImg = img;

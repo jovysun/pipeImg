@@ -458,12 +458,9 @@ h1, h2, h3, h4, h5, h6 {
       visibility: hidden; }
       .pipeImg-wrapper .pipeImg-content .pipeImg-panel.active {
         visibility: visible; }
-      .pipeImg-wrapper .pipeImg-content .pipeImg-panel.panel-mark-all img {
-        max-width: 100%;
-        max-height: 100%; }
       .pipeImg-wrapper .pipeImg-content .pipeImg-panel.panel-mark-all .img-box {
         width: 600px;
-        padding-right: 120px; }
+        margin-right: 120px; }
       .pipeImg-wrapper .pipeImg-content .pipeImg-panel.panel-mark-all .imgs-thumbnail {
         position: absolute;
         right: 20px;
@@ -480,6 +477,9 @@ h1, h2, h3, h4, h5, h6 {
           opacity: 0.5; }
           .pipeImg-wrapper .pipeImg-content .pipeImg-panel.panel-mark-all .imgs-thumbnail .img-thumbnail.active {
             opacity: 1; }
+          .pipeImg-wrapper .pipeImg-content .pipeImg-panel.panel-mark-all .imgs-thumbnail .img-thumbnail img {
+            max-width: 100%;
+            max-height: 100%; }
     .pipeImg-wrapper .pipeImg-content .img-box {
       position: relative;
       width: 720px;

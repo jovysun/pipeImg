@@ -233,29 +233,34 @@ class PipeImg {
         index = index === undefined ? this.activeIndex : index;
         let compressData = this.imgHandler.compress();
         let sendData = this.sendDataType === 'blob' ? compressData.blob : compressData.formdata;
-        
-        // 模拟返回
-        // setTimeout(() => {
-        //     // let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":"image?tid=40&amp;id=gCfpAUFcYRlB&amp;cache=0&amp;lan_code=0"}];
-        //     let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":compressData.base64}];
-        //     this._saveSuccess(response[0], index, cb);
-        // }, 1000);
 
-        
-        $.ajax({
-            url: this.uploadUrl,
-            type: "POST",
-            data: sendData,
-            processData: false,
-            contentType: false,
-            success: (response) => {
+        if (this.debug) {
+            // 模拟返回
+            setTimeout(() => {
+                // let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":"image?tid=40&amp;id=gCfpAUFcYRlB&amp;cache=0&amp;lan_code=0"}];
+                let response = [{
+                    "picHeight": 600,
+                    "picWidth": 800,
+                    "tempPhotoId": "573761",
+                    "url": compressData.base64
+                }];
                 this._saveSuccess(response[0], index, cb);
-            },
-            error: () => {
-                console.log('upload failure!');
-            }
-        });            
-        
+            }, 1000);
+        } else {
+            $.ajax({
+                url: this.uploadUrl,
+                type: "POST",
+                data: sendData,
+                processData: false,
+                contentType: false,
+                success: (response) => {
+                    this._saveSuccess(response[0], index, cb);
+                },
+                error: () => {
+                    console.log('upload failure!');
+                }
+            });
+        }
 
     }
 
