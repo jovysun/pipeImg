@@ -124,10 +124,13 @@
             </div>
             <div class="imgs-thumbnail">
                 {{ for(var i=0;i<imgList.length;i++) { }} 
-                <a class="img-thumbnail {{=i === 0 ? 'active' : ''}} J-img-thumbnail" href="javascript:void(0)">
-                    <img src="{{-imgList[i].src}}">
-                    <span class="circle"></span>
-                </a>
+                <div class="img-thumbnail {{=i === 0 ? 'active' : ''}} J-img-thumbnail">
+                    <a href="javascript:void(0)">
+                        <img src="{{-imgList[i].src}}">
+                        <span class="circle"></span>
+                    </a>
+                </div>
+
                 {{ } }}
             </div>
             <div class="content-footer">
@@ -169,10 +172,13 @@
         <div class="imgs-thumbnail">
             {{ for(var i=0;i<imgList.length;i++) { }} 
             <div class="img-thumbnail {{=i === 0 ? 'active' : ''}} J-img-thumbnail">
-                <a href="javascript:void(0)">
-                <img src="{{-imgList[i].src}}">
-                <span class="circle"></span>
-                </a>
+                <div class="img-inner">
+                    <a href="javascript:void(0)">
+                    <img src="{{-imgList[i].src}}">
+                    <span class="circle"></span>
+                    </a>
+                </div>
+
             </div>
 
             {{ } }}

@@ -247,7 +247,7 @@ class Dialog {
         let that = this;
         // 切换编辑图片
         this.$el.find('.J-pipe-footer').on('click', '.J-img-thumbnail', function(e) {
-            that._confirm(() => {
+            let run = () => {
                 let $thumbnail = $(this);
                 $thumbnail.addClass('active').siblings().removeClass('active');
 
@@ -257,37 +257,44 @@ class Dialog {
                 that._updateActiveImg($thumbnail.index());
                 that._goHome();
                 that._initData();
-                that._updateIsChange(false);
-            })
+            };
+            if (that.isChange) {
+                that._confirm(() => {
+                    run();
+                    that._updateIsChange(false);
+                })                
+            } else {
+                run();
+            }
+
 
 
         })
         // 批量水印切换编辑图片
-        this.$markAllPanel.on('click', '.J-img-thumbnail', (e) => {
+        this.$markAllPanel.on('click', '.J-img-thumbnail', function(e) {
 
-            let $thumbnail = $(e.target).parent();
+            let $thumbnail = $(this);
             $thumbnail.addClass('active').siblings().removeClass('active');
 
             let $thumbnailImg = $thumbnail.find('img');
-            this.$markAllPanel.find('.J-source').attr('src', $thumbnailImg.attr('src'));
+            that.$markAllPanel.find('.J-source').attr('src', $thumbnailImg.attr('src'));
 
-            this._updateActiveImg($thumbnail.index());
-            this._setMarkPosition('all');
-            this._initData();
+            that._updateActiveImg($thumbnail.index());
+            that._setMarkPosition('all');
+            that._initData();
 
         })
 
         // 菜单切换
         this.$el.find('.J-menu-btn').on('click', function (e) {
-            that._confirm(() => {
-
+            let run = () => {
                 let $item = $(this).parent();
                 let index = $item.index();
                 let oldActiveIndex = $item.parent().find('.active:first').index();
 
 
-                let $thumbnail = that.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
-                that._updateActiveImg($thumbnail.index());
+                // let $thumbnail = that.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
+                // that._updateActiveImg($thumbnail.index());
 
 
                 that.showModel('0');
@@ -322,14 +329,24 @@ class Dialog {
                 if (index === 3) {
                     that._initMark();
                 }
-                that._updateIsChange(false);
-            })
+                // that._updateIsChange(false);                
+            };
+
+            // 离开批量水印模式提示
+            if (that.$markAllPanel.hasClass('active')) {
+                that._confirm(() => {
+                    run();
+                    that._updateIsChange(false);
+                })                
+            }else{
+                run();
+            }
+            
 
         })
         // 切换水印
         this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark', (e) => {
-
-            this._confirm(() => {
+            let run = () => {
                 let $thumbnail = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
 
                 this._updateActiveImg($thumbnail.index());
@@ -337,16 +354,17 @@ class Dialog {
                 this.showMenu(3);
                 this._initMark();
                 this._updateIsChange(false);
-            })
-
-
+            };
+            if (this.isChange) {
+                this._confirm(run);             
+            } else {
+                run();
+            }
 
         })
         // 切换批量水印
         this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark-all', (e) => {
-
-            this._confirm(() => {
-
+            let run = () => {
                 let $thumbnail = this.$markAllPanel.find('.J-img-thumbnail.active');
 
                 this._updateActiveImg($thumbnail.index());
@@ -354,10 +372,12 @@ class Dialog {
                 this._initMark('all');
 
                 this._initData();
-                // this._updateIsChange(true);
-
-            })
-
+            };
+            if (this.isChange) {
+                this._confirm(run);             
+            } else {
+                run();
+            }
 
         })
 
@@ -580,8 +600,6 @@ class Dialog {
             this.rotateNum = 0;
             this.activeImg = img;
             this._refresh();
-
-            this._updateIsChange(false);
         });
     }
     _initCrop() {
@@ -610,8 +628,6 @@ class Dialog {
 
             this.activeImg = img;
             this._refresh();
-
-            this._updateIsChange(false);
         })
     }
 
@@ -684,13 +700,10 @@ class Dialog {
             scaleRatio: this.scaleRatio,
         };
         this.onSaveScale(options, (img) => {
-
-
             this.scaleRatio = 1;
             this.activeImg = img;
             this._refresh();
             this._initScale();
-            this._updateIsChange(false);
         })
 
     }
@@ -950,10 +963,6 @@ class Dialog {
     }
     // TODO 独立出Tip组件
     _confirm(yesCallback, noCallback) {
-        if (!this.isChange) {
-            yesCallback();
-            return;
-        }
         let $tip = this.$el.find('.J-pipeImg-tip');
         let hideTip = () => {
             this.$pipeWrapper.css('z-index', 2);
