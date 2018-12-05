@@ -246,18 +246,18 @@ class Dialog {
     _bind() {
         let that = this;
         // 切换编辑图片
-        this.$el.find('.J-pipe-footer').on('click', '.J-img-thumbnail', (e) => {
-            this._confirm(() => {
-                let $thumbnail = $(e.target).parent();
+        this.$el.find('.J-pipe-footer').on('click', '.J-img-thumbnail', function(e) {
+            that._confirm(() => {
+                let $thumbnail = $(this);
                 $thumbnail.addClass('active').siblings().removeClass('active');
 
                 let $thumbnailImg = $thumbnail.find('img');
-                this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', $thumbnailImg.attr('src'));
+                that.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', $thumbnailImg.attr('src'));
 
-                this._updateActiveImg($thumbnailImg.get(0), $thumbnail.index());
-                this._goHome();
-                this._initData();
-
+                that._updateActiveImg($thumbnail.index());
+                that._goHome();
+                that._initData();
+                that._updateIsChange(false);
             })
 
 
@@ -271,7 +271,7 @@ class Dialog {
             let $thumbnailImg = $thumbnail.find('img');
             this.$markAllPanel.find('.J-source').attr('src', $thumbnailImg.attr('src'));
 
-            this._updateActiveImg($thumbnailImg.get(0), $thumbnail.index());
+            this._updateActiveImg($thumbnail.index());
             this._setMarkPosition('all');
             this._initData();
 
@@ -281,18 +281,13 @@ class Dialog {
         this.$el.find('.J-menu-btn').on('click', function (e) {
             that._confirm(() => {
 
-                that.imgBoxHeight = that.$markPanel.find('.J-img-box').height();
-                that.imgBoxWidth = that.$markPanel.find('.J-img-box').width();
-                that.imgBoxRatio = that.imgBoxWidth / that.imgBoxHeight;
-
-
                 let $item = $(this).parent();
                 let index = $item.index();
                 let oldActiveIndex = $item.parent().find('.active:first').index();
 
 
                 let $thumbnail = that.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
-                that._updateActiveImg($thumbnail.find('img').get(0), $thumbnail.index());
+                that._updateActiveImg($thumbnail.index());
 
 
                 that.showModel('0');
@@ -337,11 +332,11 @@ class Dialog {
             this._confirm(() => {
                 let $thumbnail = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
 
-                this._updateActiveImg($thumbnail.find('img').get(0), $thumbnail.index());
+                this._updateActiveImg($thumbnail.index());
                 this.showModel('0');
                 this.showMenu(3);
                 this._initMark();
-
+                this._updateIsChange(false);
             })
 
 
@@ -352,18 +347,14 @@ class Dialog {
 
             this._confirm(() => {
 
-                this.imgBoxHeight = this.$markAllPanel.find('.J-img-box').height();
-                this.imgBoxWidth = this.$markAllPanel.find('.J-img-box').width();
-                this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
-
                 let $thumbnail = this.$markAllPanel.find('.J-img-thumbnail.active');
 
-                this._updateActiveImg($thumbnail.find('img').get(0), $thumbnail.index());
+                this._updateActiveImg($thumbnail.index());
                 this.showModel('1');             
                 this._initMark('all');
 
                 this._initData();
-                this._updateIsChange(true);
+                // this._updateIsChange(true);
 
             })
 
@@ -487,6 +478,7 @@ class Dialog {
         })
         // 批量水印确定
         this.$btnSaveAll.on('click', () => {
+            this._showProgress();
             this._saveMarkAll();
         })
         // 批量水印取消
@@ -854,7 +846,6 @@ class Dialog {
         this._goHome();
     }
     _saveMarkAll() {
-        this._showProgress();
         let options = this._getMarkParams('all');
         this.onSaveMarkAll(options, (data) => {
 
@@ -1016,7 +1007,8 @@ class Dialog {
             this.$el.find('.J-mark-all-panel').find('.J-img-thumbnail').eq(index).find('img').attr('src', newSrc);
 
             this._updateIsChange(false);
-            this.imgList = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail img');
+            // this.imgList = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail img');
+            this.imgList[index] = $activeThumb.find('img').get(0);
 
             this._hideProgress();
 
@@ -1035,8 +1027,9 @@ class Dialog {
         this.rotateNum = 0;
         this.scaleRatio = 1;
     }
-    _updateActiveImg(img, index) {
-        this.activeImg = img;
+    _updateActiveImg(index) {
+        // this.activeImg = img;
+        this.activeImg = this.imgList[index];
         this._refresh();
         let options = {
             activeImg: this.activeImg,
@@ -1062,9 +1055,7 @@ class Dialog {
         let newSrc = $thumbnail.find('img').attr('src');
         this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', newSrc);
 
-        loadImage(newSrc, (img) => {
-            this._updateActiveImg(img, index);
-        })
+        this._updateActiveImg(index);
     }
     // 
     showModel(type) {
@@ -1074,6 +1065,12 @@ class Dialog {
             MULTIPLE: "1"
         };
         if (type === TYPE.MULTIPLE) {
+
+            this.imgBoxHeight = this.$markAllPanel.find('.J-img-box').height();
+            this.imgBoxWidth = this.$markAllPanel.find('.J-img-box').width();
+            this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
+            this._updateIsChange(true);
+
             let $itemMark = this.$el.find('.J-item-mark');
             // 切换菜单及面板状态
             $itemMark.addClass('active').siblings().removeClass('active');
@@ -1090,6 +1087,11 @@ class Dialog {
             this.$el.find('.J-pipe-footer').addClass('mark-all');
 
         } else {
+
+            this.imgBoxHeight = this.$markPanel.find('.J-img-box').height();
+            this.imgBoxWidth = this.$markPanel.find('.J-img-box').width();
+            this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
+
             let $itemMark = this.$el.find('.J-item-mark');
             // 切换菜单及面板状态
             this.$el.find('.J-item:first').addClass('active').siblings().removeClass('active');

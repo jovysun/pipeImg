@@ -472,14 +472,12 @@ h1, h2, h3, h4, h5, h6 {
         .pipeImg-wrapper .pipeImg-content .pipeImg-panel.panel-mark-all .imgs-thumbnail .img-thumbnail {
           display: block;
           margin-bottom: 10px;
-          max-width: 86px;
-          height: 62px;
           opacity: 0.5; }
           .pipeImg-wrapper .pipeImg-content .pipeImg-panel.panel-mark-all .imgs-thumbnail .img-thumbnail.active {
             opacity: 1; }
           .pipeImg-wrapper .pipeImg-content .pipeImg-panel.panel-mark-all .imgs-thumbnail .img-thumbnail img {
-            max-width: 100%;
-            max-height: 100%; }
+            max-width: 86px;
+            max-height: 62px; }
     .pipeImg-wrapper .pipeImg-content .img-box {
       position: relative;
       width: 720px;
@@ -582,7 +580,7 @@ h1, h2, h3, h4, h5, h6 {
           border-left: none; }
       .pipeImg-wrapper .pipeImg-content .content-footer .scale-range {
         margin-top: 2px;
-        margin-left: 10;
+        margin-left: 10px;
         width: 120px;
         cursor: pointer; }
       .pipeImg-wrapper .pipeImg-content .content-footer .opacity-range {
@@ -683,12 +681,13 @@ h1, h2, h3, h4, h5, h6 {
     overflow: auto;
     box-sizing: border-box; }
     .pipeImg-wrapper .pipeImg-footer .img-thumbnail {
-      position: relative;
-      display: block;
-      float: left;
+      width: 60px;
+      height: 60px;
       margin-right: 10px;
-      max-width: 60px;
-      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
       opacity: 0.5;
       text-align: center; }
       .pipeImg-wrapper .pipeImg-footer .img-thumbnail.active {
@@ -705,11 +704,13 @@ h1, h2, h3, h4, h5, h6 {
         height: 8px;
         background-color: #48b152;
         border-radius: 50%; }
+      .pipeImg-wrapper .pipeImg-footer .img-thumbnail a {
+        position: relative; }
       .pipeImg-wrapper .pipeImg-footer .img-thumbnail img {
-        max-width: 100%;
-        max-height: 100%; }
+        max-width: 60px;
+        max-height: 60px; }
     .pipeImg-wrapper .pipeImg-footer .imgs-thumbnail {
-      display: block; }
+      display: flex; }
     .pipeImg-wrapper .pipeImg-footer .pipeImg-buttons {
       display: none;
       top: 10px; }

@@ -87,7 +87,7 @@ class ImgHandler {
         if (targetImg.nodeName.toLowerCase() === 'img') {
             sourceW0 = targetImg.naturalWidth;
             sourceH0 = targetImg.naturalHeight;
-            // img装成canvas
+            // img to canvas
             let canvas = getCanvas(sourceW0, sourceH0);
             let ctx = canvas.getContext('2d');
             ctx.drawImage(targetImg, 0, 0);

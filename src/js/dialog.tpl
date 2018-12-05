@@ -167,11 +167,14 @@
     </div>
     <div class="pipeImg-footer J-pipe-footer">
         <div class="imgs-thumbnail">
-            {{ for(var i=0;i<imgList.length;i++) { }} <a class="img-thumbnail {{=i === 0 ? 'active' : ''}} J-img-thumbnail"
-            href="javascript:void(0)">
-            <img src="{{-imgList[i].src}}">
-            <span class="circle"></span>
-            </a>
+            {{ for(var i=0;i<imgList.length;i++) { }} 
+            <div class="img-thumbnail {{=i === 0 ? 'active' : ''}} J-img-thumbnail">
+                <a href="javascript:void(0)">
+                <img src="{{-imgList[i].src}}">
+                <span class="circle"></span>
+                </a>
+            </div>
+
             {{ } }}
         </div>  
 

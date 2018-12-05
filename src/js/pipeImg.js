@@ -116,6 +116,7 @@ class PipeImg {
             return element.url;
         })
 
+        // 解决加载完成及跨域问题
         loadImages(urlList, (images) => {
             this.sourceImgList = images;
 
@@ -258,7 +259,7 @@ class PipeImg {
                     this._saveSuccess(response[0], index, cb);
                 },
                 error: () => {
-                    console.log('upload failure!');
+                    // window.console && console.log('network-error: upload failure!');
                 }
             });
         }
@@ -283,13 +284,15 @@ class PipeImg {
             this.finishedNum++;
             if (this.finishedNum === this.sourceImgList.length) {
                 this.onComplete(this.returnJson);
+                cb(data);
             }
 
         } else {
             this.onComplete(this.returnJson);
+            cb(data);
         }
 
-        cb(data);
+        
     }
 
     _saveMarkAll(options, cb) {
