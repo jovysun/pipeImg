@@ -1069,6 +1069,7 @@ class Dialog {
             this.imgBoxHeight = this.$markAllPanel.find('.J-img-box').height();
             this.imgBoxWidth = this.$markAllPanel.find('.J-img-box').width();
             this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
+            this._refresh();
             this._updateIsChange(true);
 
             let $itemMark = this.$el.find('.J-item-mark');
@@ -1084,13 +1085,14 @@ class Dialog {
             $itemMark.find('.J-menu-btn-mark-all').hide();
             $itemMark.find('.J-menu-btn-mark').show();
             // 切换页脚状态
-            this.$el.find('.J-pipe-footer').addClass('mark-all');
+            this.$el.find('.J-pipe-footer').addClass('mark-all');           
 
         } else {
 
             this.imgBoxHeight = this.$markPanel.find('.J-img-box').height();
             this.imgBoxWidth = this.$markPanel.find('.J-img-box').width();
             this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
+            this._refresh();
 
             let $itemMark = this.$el.find('.J-item-mark');
             // 切换菜单及面板状态
@@ -1107,6 +1109,7 @@ class Dialog {
 
             // 切换页脚状态
             this.$el.find('.J-pipe-footer').removeClass('mark-all');
+            
         }
     }
     destory() {

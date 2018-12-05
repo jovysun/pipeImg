@@ -153,8 +153,9 @@ $color-txt: #999ba7;
                     top: 0;
                     height: 100%;
                     padding: 10px 0;
-                    overflow: auto;
+                    overflow-y: auto;
                     box-sizing: border-box;
+                    z-index: 1;
 
                     .img-thumbnail{
                         display: block;
@@ -428,23 +429,14 @@ $color-txt: #999ba7;
         box-sizing: border-box;
 
         .img-thumbnail{
+            position: relative;
             width: 60px;
             height: 60px;
-            margin-right: 10px;
-            
+            margin-right: 10px;           
             display: flex;
             align-items:center;
-            justify-content:center;
-        
-
-            position: relative;
-            // display: block;
-            // float: left;
-            // margin-right: 10px;
-            // max-width: 60px;
-            // height: 45px;
+            justify-content:center;             
             opacity: 0.5;
-            text-align: center;
             &.active{
                 opacity: 1;
             }
@@ -475,6 +467,8 @@ $color-txt: #999ba7;
 
         .imgs-thumbnail{
             display: flex;
+            overflow-x: auto;
+            width: 720px;
         }
         .pipeImg-buttons{
             display: none;
