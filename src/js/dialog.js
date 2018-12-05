@@ -756,7 +756,7 @@ class Dialog {
             'left': Math.max(Math.floor(markX / this.activeData.ratio), 0),
             'top': Math.floor(markY / this.activeData.ratio),
             'width': Math.min(Math.ceil(dragBoxWidth), Math.floor(this.activeData.w1)),
-            'height': Math.ceil(dragBoxHeight)
+            'height': Math.min(Math.ceil(dragBoxHeight), Math.floor(this.activeData.h1))
         })
     }
     _setMarkStyle(type) {
@@ -819,7 +819,7 @@ class Dialog {
         let $panel = type === 'all' ? this.$markAllPanel : this.$markPanel;
         let $dragBox = type === 'all' ? this.markAllBox.$dragBox : this.markBox.$dragBox;
         let $markTxt = $panel.find('.J-mark-txt');
-        let markFont = Math.ceil(parseInt($markTxt.css('font-size')) * this.activeData.ratio) + 'px / ' + Math.ceil(parseInt($markTxt.css('line-height')) * this.activeData.ratio) + 'px ' + $markTxt.css('font-family');
+        let markFont = Math.floor(parseInt($markTxt.css('font-size')) * this.activeData.ratio) + 'px / ' + Math.floor(parseInt($markTxt.css('line-height')) * this.activeData.ratio) + 'px ' + $markTxt.css('font-family');
         let $opacity = $panel.find('.J-opacity');
         let opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));
         let colorVal = $panel.find('.J-color:checked').val();
