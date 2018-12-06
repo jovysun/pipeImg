@@ -503,9 +503,14 @@ class Dialog {
         })
         // 批量水印取消
         this.$btnCancelAll.on('click', () => {
-            this._confirm(() => {
+            if (this.isChange) {
+                this._confirm(() => {
+                    this.destory();
+                })
+            } else {
                 this.destory();
-            })
+            }
+            
         })
         // 重置
         this.$btnReset.on('click', () => {
@@ -536,9 +541,13 @@ class Dialog {
         })
         // 关闭
         this.$btnClose.on('click', (e) => {
-            this._confirm(() => {
+            if (this.isChange) {
+                this._confirm(() => {
+                    this.destory();
+                })                
+            } else {
                 this.destory();
-            })
+            }
 
         })
         // 禁用鼠标右击菜单
@@ -1079,7 +1088,7 @@ class Dialog {
             this.imgBoxWidth = this.$markAllPanel.find('.J-img-box').width();
             this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
             this._refresh();
-            this._updateIsChange(true);
+            
 
             let $itemMark = this.$el.find('.J-item-mark');
             // 切换菜单及面板状态
