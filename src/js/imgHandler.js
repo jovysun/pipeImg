@@ -15,15 +15,12 @@ class ImgHandler {
             sourceImg: null,
 
             rotateNum: 0,
-
-            // 裁剪后图片最大值KB
-            maxSize: 500,
+          
             cropW: '',
             cropH: '',
 
             // 裁剪后的图片类型
-            mime: 'image/jpeg',
-            minWH: 800,
+            mime: 'image/jpeg',            
 
             // 水印相关参数，若watermarkImg存在则用图片水印，否则用文字水印。
             // 是否添加水印
@@ -38,7 +35,16 @@ class ImgHandler {
             // 水印字x轴位置
             markX: 0,
             // 水印字y轴位置
-            markY: 0
+            markY: 0,
+
+            // 压缩图片最大值KB
+            maxSize: 500,
+            // 压缩图片最小宽高
+            minWH: 800,
+            // 压缩图片缩放比例
+            scaleRatio: 0.9,
+            // 逐步压缩质量幅度，即每次已多大幅度递减压缩质量，直到符合最小体积值
+            qualityStep: 0.1
 
         };
 
@@ -53,6 +59,8 @@ class ImgHandler {
 
         this.mime = options.mime;
         this.minWH = options.minWH;
+        this.scaleRatio = options.scaleRatio;
+        this.qualityStep = options.qualityStep;
 
         this.hasMark = options.hasMark;
         this.textAlign = options.textAlign;
@@ -229,8 +237,8 @@ class ImgHandler {
         let max = this.maxSize * 1024;
         let quality = 1;
         let minWH = this.minWH;
-        let scaleRatio = 0.9;
-        let qualityStep = 0.1;
+        let scaleRatio = this.scaleRatio;
+        let qualityStep = this.qualityStep;
         // 质量压缩只支持'image/jpeg'，'image/webp'(chrome支持)
         let qualityType = 'image/jpeg';
 
@@ -240,6 +248,7 @@ class ImgHandler {
         let data = cvs.toDataURL(qualityType, 1.0);
         let size0 = getBase64Size(data);
         // console.log('start compress: ' + Math.ceil(size0 / 1024));
+        // 简单粗暴
         if (isSimple) {
             while (size0 > max) {
                 quality = Math.floor(max / size0 * 10) / 10;
