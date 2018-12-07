@@ -39,10 +39,6 @@ class ImgHandler {
 
             // 压缩图片最大值KB
             maxSize: 500,
-            // 压缩图片最小宽高
-            minWH: 800,
-            // 压缩图片缩放比例
-            scaleRatio: 0.9,
             // 逐步压缩质量幅度，即每次已多大幅度递减压缩质量，直到符合最小体积值
             qualityStep: 0.1
 
@@ -58,8 +54,6 @@ class ImgHandler {
         this.cropH = options.cropH;
 
         this.mime = options.mime;
-        this.minWH = options.minWH;
-        this.scaleRatio = options.scaleRatio;
         this.qualityStep = options.qualityStep;
 
         this.hasMark = options.hasMark;
@@ -75,8 +69,7 @@ class ImgHandler {
         this.sx = 0;
         this.sy = 0;
 
-        this.scaleRatio = 0.5;
-        this.quality = 0.2;
+        this.scaleRatio = 1;
 
         this.results = [];
 
@@ -201,8 +194,6 @@ class ImgHandler {
     // 裁剪
     crop() {
         let targetImg = this.result;
-        let sourceW0 = targetImg.width;
-        let sourceH0 = targetImg.height;
 
         let canvas = getCanvas(this.cropW, this.cropH);
         let context = canvas.getContext('2d');
@@ -236,15 +227,10 @@ class ImgHandler {
         let cvs = this.result;
         let max = this.maxSize * 1024;
         let quality = 1;
-        let minWH = this.minWH;
-        let scaleRatio = this.scaleRatio;
         let qualityStep = this.qualityStep;
         // 质量压缩只支持'image/jpeg'，'image/webp'(chrome支持)
         let qualityType = 'image/jpeg';
 
-        let width = cvs.width;
-        let height = cvs.height;
-        let cvsRatio = width / height;
         let data = cvs.toDataURL(qualityType, 1.0);
         let size0 = getBase64Size(data);
         // console.log('start compress: ' + Math.ceil(size0 / 1024));
@@ -257,27 +243,6 @@ class ImgHandler {
             }
 
         } else {
-            // 优先缩放
-            while (size0 > max && (width > minWH || height > minWH)) {
-                let newWidth, newHeight;
-                if (cvsRatio > 1) {
-                    newWidth = width * scaleRatio > minWH ? width * scaleRatio : minWH;
-                    newHeight = newWidth / cvsRatio;
-                } else {
-                    newHeight = height * scaleRatio > minWH ? height * scaleRatio : minWH;
-                    newWidth = newHeight * cvsRatio;
-                }
-
-                let canvas = getCanvas(newWidth, newHeight),
-                    ctx = canvas.getContext("2d");
-                ctx.drawImage(cvs, 0, 0, newWidth, newHeight);
-
-                data = canvas.toDataURL(qualityType, 1.0);
-                size0 = getBase64Size(data);
-                width = newWidth;
-                height = newHeight;
-                cvs = canvas;
-            }
             // 降低质量
             while (size0 > max) {
                 quality -= qualityStep;

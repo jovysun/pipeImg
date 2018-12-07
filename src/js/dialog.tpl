@@ -19,7 +19,7 @@
         <!-- 旋转面板 -->
         <div class="pipeImg-panel rotate-panel active J-panel J-rotate-panel">
             <div class="img-box J-img-box">
-                <img class="J-source" src="{{-imgList[0].src}}">
+                <img class="J-source" src="{{-imgList[activeIndex].src}}">
             </div>
             <div class="content-footer">
                 <div class="size">
@@ -37,7 +37,7 @@
         <!-- 裁剪面板 -->
         <div class="pipeImg-panel J-panel J-crop-panel">
             <div class="img-box J-img-box">
-                <img class="J-source" src="{{-imgList[0].src}}">
+                <img class="J-source" src="{{-imgList[activeIndex].src}}">
             </div>
             <div class="content-footer">
                 <input class="num-width J-num-width" type="text">
@@ -57,7 +57,7 @@
         <div class="pipeImg-panel scale-panel J-panel J-scale-panel">
             <div class="img-box J-img-box">
                 <div class="scale-img-wrapper J-scale-img-wrapper">
-                    <img class="J-source" src="{{-imgList[0].src}}">
+                    <img class="J-source" src="{{-imgList[activeIndex].src}}">
                 </div>
             </div>
             <div class="content-footer">
@@ -77,7 +77,7 @@
         <!-- 添加水印面板 -->
         <div class="pipeImg-panel J-panel J-mark-panel">
             <div class="img-box J-img-box">
-                <img class="J-source" src="{{-imgList[0].src}}">
+                <img class="J-source" src="{{-imgList[activeIndex].src}}">
             </div>
             <div class="content-footer">
                 <div class="pipeImg-item">
@@ -120,11 +120,11 @@
         <!-- 批量添加水印 -->
         <div class="pipeImg-panel panel-mark-all J-panel J-mark-all-panel">
             <div class="img-box J-img-box">
-                <img class="J-source" src="{{-imgList[0].src}}">
+                <img class="J-source" src="{{-imgList[activeIndex].src}}">
             </div>
             <div class="imgs-thumbnail">
                 {{ for(var i=0;i<imgList.length;i++) { }} 
-                <div class="img-thumbnail {{=i === 0 ? 'active' : ''}} J-img-thumbnail">
+                <div class="img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail">
                     <a href="javascript:void(0)">
                         <img src="{{-imgList[i].src}}">
                         <span class="circle"></span>
@@ -171,7 +171,7 @@
     <div class="pipeImg-footer J-pipe-footer">
         <div class="imgs-thumbnail">
             {{ for(var i=0;i<imgList.length;i++) { }} 
-            <div class="img-thumbnail {{=i === 0 ? 'active' : ''}} J-img-thumbnail">
+            <div class="img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail">
                 <div class="img-inner">
                     <a href="javascript:void(0)">
                     <img src="{{-imgList[i].src}}">

@@ -14,7 +14,7 @@ class DragBox {
             height: '100%',
             markText: 'producttest.en.made-in-china.com',
             // 是否有明暗效果，主要是裁剪图片效果
-            hasLight: false,
+            isCrop: false,
             fixRatio: false,
             // 拖动触点回调函数
             onDragPoint: (boxData) => {},
@@ -27,7 +27,7 @@ class DragBox {
         this.width = options.width;
         this.height = options.height;
         this.markText = options.markText;
-        this.hasLight = options.hasLight;
+        this.isCrop = options.isCrop;
         this.fixRatio = options.fixRatio;
         this.onDragPoint = options.onDragPoint;
         this.onDragComplete = options.onDragComplete;
@@ -53,7 +53,7 @@ class DragBox {
                                     <div class="mark-txt J-mark-txt">${this.markText}</div>
                                 </div>
                             </div>`;
-        if (this.hasLight) {
+        if (this.isCrop) {
             dragBoxHtml = `<div class="dragbox-wrapper J-dragbox-wrapper">
                                 <img class="J-source img-dark" src="${src}">
                                 <img class="J-source img-light J-img-light" src="${src}">
@@ -72,7 +72,7 @@ class DragBox {
 
         $parent.html(dragBoxHtml);
         this.$dragBox = $parent.find('.J-drag-box');
-        if (!this.hasLight) {
+        if (!this.isCrop) {
             this.$dragBox.css({
                 width: this.$dragBox.find('.J-mark-txt').width(),
                 height: this.$dragBox.find('.J-mark-txt').height()
@@ -96,8 +96,8 @@ class DragBox {
 
         this._bind();
 
-
-        drag(this.boxEl, this.boxEl, this.boxEl.parentNode, (left, top) => {
+        let container = this.isCrop ? this.boxEl.parentNode : null;
+        drag(this.boxEl, this.boxEl, container, (left, top) => {
             this._light();
             this.onDragComplete(left, top);
         });
@@ -183,7 +183,7 @@ class DragBox {
         // 约束比例：根据宽度计算高度
         if (contact.indexOf('left') != -1) {
             let addWidth = left - x;
-            if (addWidth >= 0 && this.boxEl.offsetLeft <= 0) {
+            if (this.isCrop && addWidth >= 0 && this.boxEl.offsetLeft <= 0) {
                 return false;
             }
 
@@ -192,7 +192,7 @@ class DragBox {
         }
         if (contact.indexOf('right') != -1) {
             let addWidth = x - left - oldWidth;
-            if (addWidth >= 0 && (this.containerEl.clientWidth - (this.boxEl.offsetLeft + oldWidth + addWidth)) <= 0) {
+            if (this.isCrop && addWidth >= 0 && (this.containerEl.clientWidth - (this.boxEl.offsetLeft + oldWidth + addWidth)) <= 0) {
                 return false;
             }
 
@@ -210,7 +210,7 @@ class DragBox {
             }
             newTop = this.boxEl.offsetTop - addHeight;
 
-            if (addHeight >= 0 && this.boxEl.offsetTop <= 0) {
+            if (this.isCrop && addHeight >= 0 && this.boxEl.offsetTop <= 0) {
                 return false;
             }
         }
@@ -225,21 +225,27 @@ class DragBox {
                 newHeight = oldHeight + addHeight;
             }
 
-            if (addHeight >= 0 && (this.containerEl.clientHeight - (this.boxEl.offsetTop + oldHeight + addHeight)) <= 0) {
+            if (this.isCrop && addHeight >= 0 && (this.containerEl.clientHeight - (this.boxEl.offsetTop + oldHeight + addHeight)) <= 0) {
                 return false;
             }
 
         }
+        if (this.isCrop) {
+            newWidth = Math.min(newWidth, this.containerEl.offsetWidth);
+            newHeight = Math.min(newHeight, this.containerEl.offsetHeight);
+            newLeft = Math.max(newLeft, 0);
+            newTop = Math.max(newTop, 0);      
+        }
+        
+        this.boxEl.style.width = newWidth + 'px';
+        this.boxEl.style.height = newHeight + 'px';
+        this.boxEl.style.left = newLeft + 'px';
+        this.boxEl.style.top = newTop + 'px';                 
 
-
-        this.boxEl.style.width = Math.min(newWidth, this.containerEl.offsetWidth) + 'px';
-        this.boxEl.style.height = Math.min(newHeight, this.containerEl.offsetHeight) + 'px';
-        this.boxEl.style.left = Math.max(newLeft, 0) + 'px';
-        this.boxEl.style.top = Math.max(newTop, 0) + 'px';
     }
 
     _light() {
-        if (this.hasLight) {
+        if (this.isCrop) {
             this._setChoice();
         }
     }

@@ -165,7 +165,7 @@ $color-txt: #999ba7;
                             margin-top: 0;
                         }
                         opacity: 0.5;
-                        &.active{
+                        &:hover,&.active{
                             opacity: 1;
                         }
                         img{
@@ -439,7 +439,7 @@ $color-txt: #999ba7;
             height: 60px;
             margin-right: 10px;        
             opacity: 0.5;
-            &.active{
+            &.active,&:hover{
                 opacity: 1;
             }
             &.new{

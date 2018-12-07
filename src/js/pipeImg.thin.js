@@ -102,8 +102,6 @@ class PipeImg {
         this.methods = [];
 
         this.activeIndex = 0;
-        this.isSaveAll = false;
-        this.finishedNum = 0;
 
         this._init();
 
@@ -119,66 +117,7 @@ class PipeImg {
         loadImages(urlList, (images) => {
             this.sourceImgList = images;
 
-            this.imgHandler = new ImgHandler({
-                sourceImg: images[0]
-            });
-            this.resultList.push(this.imgHandler.result);
 
-            this.dialog = new Dialog({
-                debug: this.debug,
-                imgList: images,
-                mime: this.mime,
-
-                markTextList: this.markTextList,
-                closeBtnTxt: this.closeBtnTxt,
-                saveBtnTxt: this.saveBtnTxt,
-                resetBtnTxt: this.resetBtnTxt,
-                confirmBtnTxt: this.confirmBtnTxt,
-                cancelBtnTxt: this.cancelBtnTxt,
-                rotateMenuTxt: this.rotateMenuTxt,
-                turnLeftTxt: this.turnLeftTxt,
-                turnRightTxt: this.turnRightTxt,
-                cropMenuTxt: this.cropMenuTxt,
-                scaleMenuTxt: this.scaleMenuTxt,
-                markMenuTxt: this.markMenuTxt,
-                colorTxt: this.colorTxt,
-                positionTxt: this.positionTxt,
-                opacityTxt: this.opacityTxt,
-                showRoomTxt: this.showRoomTxt,
-                companyNameTxt: this.companyNameTxt,
-                markAllMenuTxt: this.markAllMenuTxt,
-                tipTitleTxt: this.tipTitleTxt,
-                tipContentTxt: this.tipContentTxt,
-                tipConfirmBtnTxt: this.tipConfirmBtnTxt,
-
-                onSaveRotate: (options, cb) => {
-                    this._saveRotate(options, cb);
-                },
-                onSaveCrop: (options, cb) => {
-                    this._saveCrop(options, cb);
-                },
-                onSaveScale: (options, cb) => {
-                    this._saveScale(options, cb);
-                },
-                onSaveMark: (options, cb) => {
-                    this._saveMark(options, cb);
-                },
-                onReset: (cb) => {
-                    this._reset(cb);
-                },
-                onSave: (cb) => {
-                    this._save(cb);
-                },
-                onChangeActive: (options, cb) => {
-                    this._changeActive(options, cb);
-                },
-                onSaveMarkAll: (options, cb) => {
-                    this._saveMarkAll(options, cb);
-                },
-                onClose: () => {
-                    this.onClose();
-                }
-            });
 
 
             this.onInited();
@@ -188,6 +127,77 @@ class PipeImg {
             throw new Error('PipeImg: source load failure!');
         })
 
+    }
+    _show(options) {
+        if (options && options.selected) {
+            this.activeIndex = options.selected;             
+        }
+
+        this.imgHandler = new ImgHandler({
+            sourceImg: this.sourceImgList[this.activeIndex]
+        });
+        this.resultList.push(this.imgHandler.result);
+        
+        this.dialog = new Dialog({
+            debug: this.debug,
+            imgList: this.sourceImgList,
+            activeIndex: this.activeIndex,
+            type: this.type,
+            mime: this.mime,
+
+            markTextList: this.markTextList,
+            closeBtnTxt: this.closeBtnTxt,
+            saveBtnTxt: this.saveBtnTxt,
+            resetBtnTxt: this.resetBtnTxt,
+            confirmBtnTxt: this.confirmBtnTxt,
+            cancelBtnTxt: this.cancelBtnTxt,
+            rotateMenuTxt: this.rotateMenuTxt,
+            turnLeftTxt: this.turnLeftTxt,
+            turnRightTxt: this.turnRightTxt,
+            cropMenuTxt: this.cropMenuTxt,
+            scaleMenuTxt: this.scaleMenuTxt,
+            markMenuTxt: this.markMenuTxt,
+            colorTxt: this.colorTxt,
+            positionTxt: this.positionTxt,
+            opacityTxt: this.opacityTxt,
+            showRoomTxt: this.showRoomTxt,
+            companyNameTxt: this.companyNameTxt,
+            markAllMenuTxt: this.markAllMenuTxt,
+            tipTitleTxt: this.tipTitleTxt,
+            tipContentTxt: this.tipContentTxt,
+            tipConfirmBtnTxt: this.tipConfirmBtnTxt,
+
+            onSaveRotate: (options, cb) => {
+                this._saveRotate(options, cb);
+            },
+            onSaveCrop: (options, cb) => {
+                this._saveCrop(options, cb);
+            },
+            onSaveScale: (options, cb) => {
+                this._saveScale(options, cb);
+            },
+            onSaveMark: (options, cb) => {
+                this._saveMark(options, cb);
+            },
+            onReset: (cb) => {
+                this._reset(cb);
+            },
+            onSave: (cb, index) => {
+                this._save(cb, index);
+            },
+            onChangeActive: (options, cb) => {
+                this._changeActive(options, cb);
+            },
+            onSaveMarkAll: (options, cb) => {
+                this._saveMarkAll(options, cb);
+            },
+            onClose: () => {
+                this.onClose();
+            },
+            onComplete: (result) => {
+                this.onComplete(result);
+            }
+        });
     }
     _saveRotate(options, cb) {
         this.imgHandler.rotateNum = options.rotateNum;
@@ -231,7 +241,6 @@ class PipeImg {
         cb(this.resultList[0]);
     }
     _save(cb, index) {
-        index = index === undefined ? this.activeIndex : index;
         let compressData = this.imgHandler.compress();
         let sendData = this.sendDataType === 'blob' ? compressData.blob : compressData.formdata;
 
@@ -245,6 +254,7 @@ class PipeImg {
                     "tempPhotoId": "573761",
                     "url": compressData.base64
                 }];
+                
                 this._saveSuccess(response[0], index, cb);
             }, 1000);
         } else {
@@ -258,7 +268,7 @@ class PipeImg {
                     this._saveSuccess(response[0], index, cb);
                 },
                 error: () => {
-                    // window.console && console.log('network-error: upload failure!');
+                    window.console && console.log('network-error: upload failure!');
                 }
             });
         }
@@ -279,44 +289,7 @@ class PipeImg {
             "picHeight": data.picHeight
         };
         this.returnJson[index] = o;
-        if (this.isSaveAll) {
-            this.finishedNum++;
-            if (this.finishedNum === this.sourceImgList.length) {
-                this.onComplete(this.returnJson);
-                cb(data);
-            }
-
-        } else {
-            this.onComplete(this.returnJson);
-            cb(data);
-        }
-
-        
-    }
-
-    _saveMarkAll(options, cb) {
-        this.isSaveAll = true;
-
-        let xPercent = options.markX / this.resultList[this.resultList.length - 1].width;
-        let yPercent = options.markY / this.resultList[this.resultList.length - 1].height;
-
-        $(this.sourceImgList).each((index, element) => {
-            this.imgHandler = new ImgHandler({
-                sourceImg: element
-            });
-            this.imgHandler.markX = element.width * xPercent;
-            this.imgHandler.markY = element.height * yPercent;
-
-            this.imgHandler.markText = options.markText;
-            this.imgHandler.markFont = options.markFont;
-            this.imgHandler.markStyle = options.markStyle;
-
-            this.imgHandler.mark();
-            this.resultList.push(this.imgHandler.result);
-
-            this._save(cb, index);
-        })
-
+        cb && cb(this.returnJson);      
     }
     _changeActive(options, cb) {
         this.activeIndex = options.activeIndex;
@@ -324,7 +297,7 @@ class PipeImg {
             sourceImg: options.activeImg
         })
         this.resultList = [this.imgHandler.result];
-        cb(this.imgHandler.result);
+        cb && cb(this.imgHandler.result);
     }
 
     show(options) {
@@ -333,17 +306,7 @@ class PipeImg {
             "params": options
         });
     }
-    _show(options) {
 
-        if (this.type === '1') {
-            this.dialog.showModel(this.type);
-        } else {
-            if (options && options.selected) {
-                this.dialog.showSource(options.selected);
-            }
-        }
-
-    }
     _executeMethods() {
         this.methods.forEach(element => {
             this['_' + element.name](element.params);

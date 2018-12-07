@@ -16,10 +16,10 @@
     <script src="/libs/template.js"></script>
     <script>       
         var source = [
-            // {
-            //     "id":"567701",
-            //     "url":"http://image.made-in-china.com/9f7j00FGKlcOmvhayt/Nction-Packing.jpg"
-            // },
+            {
+                "id":"567701",
+                "url":"http://image.made-in-china.com/9f7j00DtfvRZwjogcE/Test2222.jpg"
+            },
             {
                 "id":"567711",
                 "url":"./images/greensock.png"
@@ -31,6 +31,26 @@
             {
                 "id":"567721",
                 "url":"./images/5.jpg"
+            },
+            {
+                "id":"567721",
+                "url":"./images/1.jpg"
+            },
+            {
+                "id":"567721",
+                "url":"./images/2.jpg"
+            },
+            {
+                "id":"567721",
+                "url":"./images/5.jpg"
+            },
+            {
+                "id":"567721",
+                "url":"./images/1.jpg"
+            },
+            {
+                "id":"567721",
+                "url":"./images/2.jpg"
             }
         ];
         $('.J-btn-edit').on('click', function(){
@@ -39,11 +59,8 @@
                 source: source,
                 uploadUrl: '/pic.do?xcase=uploadWs',
                 sendDataType: 'blob',
-                type: '0',
+                type: '1',
                 markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
-                onInited: function() {
-
-                },
                 onComplete: function(data) {
                     // console.log('resultJson: ', JSON.stringify(data));
                     for (var i = 0; i < data.length; i++) {
@@ -53,9 +70,10 @@
                     
                 }
             });
-            pipeImg.show({
-                "selected": 2
-            });
+            pipeImg.show();
+            // pipeImg.show({
+            //     "selected": 2
+            // });
             
         })
     </script>
