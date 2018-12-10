@@ -147,6 +147,9 @@ class Dialog {
 
         // 模块按钮
         // 旋转
+        this.$rotatePanel = this.$el.find('.J-rotate-panel');
+        this.$txtRotateWidth = this.$rotatePanel.find('.J-num-width');
+        this.$txtRotateHeight = this.$rotatePanel.find('.J-num-height');
         this.$btnRotateLeft = this.$el.find('.J-btn-rotate-left');
         this.$btnRotateRight = this.$el.find('.J-btn-rotate-right');
         // 裁剪
@@ -596,6 +599,9 @@ class Dialog {
                 height = Math.min(this.imgBoxWidth, this.activeData.w0);
             }
 
+            this.$txtRotateWidth.text(this.activeData.h0);
+            this.$txtRotateHeight.text(this.activeData.w0);           
+
         } else {
             if (this.activeData.imgRatio < this.imgBoxRatio) {
                 width = 'auto';
@@ -604,6 +610,9 @@ class Dialog {
                 width = Math.min(this.imgBoxWidth, this.activeData.w0);
                 height = 'auto';
             }
+
+            this.$txtRotateWidth.text(this.activeData.w0);
+            this.$txtRotateHeight.text(this.activeData.h0);     
         }
 
         this.$el.find('.J-source').css({
@@ -960,14 +969,14 @@ class Dialog {
             if ($(element).get(0).nodeName.toLowerCase() === 'input') {
                 $numWidth.val(w0);
             } else {
-                $numWidth.html(w0);
+                $numWidth.text(w0);
             }
         })
         $numHeight.each((index, element) => {
             if ($(element).get(0).nodeName.toLowerCase() === 'input') {
                 $numHeight.val(h0);
             } else {
-                $numHeight.html(h0);
+                $numHeight.text(h0);
             }
         })
     }
