@@ -257,69 +257,65 @@ class Dialog {
         this._bind();
     }
     _bind() {
-        let that = this;
         // 切换编辑图片
-        this.$el.find('.J-pipe-footer').on('click', '.J-img-thumbnail', function(e) {
+        this.$el.find('.J-pipe-footer').on('click', '.J-img-thumbnail', (e) => {
             let run = () => {
-                let $thumbnail = $(this);
+                let $thumbnail = $(e.currentTarget);
                 $thumbnail.addClass('active').siblings().removeClass('active');
 
                 let $thumbnailImg = $thumbnail.find('img');
-                that.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', $thumbnailImg.attr('src'));
+                this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', $thumbnailImg.attr('src'));
 
-                that._updateActiveImg($thumbnail.index());
-                that._goHome();
-                that._initData();
+                this._updateActiveImg($thumbnail.index());
+                this._goHome();
+                this._initData();
             };
-            if (that.isChange) {
-                that._confirm(() => {
+            if (this.isChange) {
+                this._confirm(() => {
                     run();
-                    that._updateIsChange(false);
+                    this._updateIsChange(false);
                 })                
             } else {
                 run();
             }
 
-
-
         })
         // 批量水印切换编辑图片
-        this.$markAllPanel.on('click', '.J-img-thumbnail', function(e) {
-
-            let $thumbnail = $(this);
+        this.$markAllPanel.on('click', '.J-img-thumbnail', (e) => {
+            let $thumbnail = $(e.currentTarget);
             $thumbnail.addClass('active').siblings().removeClass('active');
 
             let $thumbnailImg = $thumbnail.find('img');
-            that.$markAllPanel.find('.J-source').attr('src', $thumbnailImg.attr('src'));
+            this.$markAllPanel.find('.J-source').attr('src', $thumbnailImg.attr('src'));
 
-            that._updateActiveImg($thumbnail.index());
-            that._setMarkPosition(that.MARKTYPE.MULTIPLE);
-            that._initData();
+            this._updateActiveImg($thumbnail.index());
+            this._setMarkPosition(this.MARKTYPE.MULTIPLE);
+            this._initData();
 
         })
 
         // 菜单切换
-        this.$el.find('.J-menu-btn').on('click', function (e) {
+        this.$el.find('.J-menu-btn').on('click', (e) => {
             let run = () => { 
-                let $item = $(this).parent();
+                let $item = $(e.currentTarget).parent();
                 let index = $item.index();
                 let oldActiveIndex = $item.parent().find('.active:first').index();
 
 
-                that.showModel(that.MARKTYPE.SINGLE);
-                that.showMenu(index);
+                this.showModel(this.MARKTYPE.SINGLE);
+                this.showMenu(index);
 
                 // 若有编辑操作，离开旋转，裁剪，缩放面板进行保存
-                if (that.isChange) {
+                if (this.isChange) {
                     switch (oldActiveIndex) {
                         case 0:
-                            that._saveRotate();
+                        this._saveRotate();
                             break;
                         case 1:
-                            that._saveCrop();
+                        this._saveCrop();
                             break;
                         case 2:
-                            that._saveScale();
+                        this._saveScale();
                             break;
                         default:
                             break;
@@ -328,30 +324,30 @@ class Dialog {
 
                 // 进入裁剪
                 if (index === 1) {
-                    that._initCrop();
+                    this._initCrop();
                 }
                 // 进入缩放
                 if (index === 2) {
-                    that._initScale();
+                    this._initScale();
                 }
                 // 进入水印
                 if (index === 3) {
-                    that._initMark();
+                    this._initMark();
                 }
              
             };
 
 
             // 离开批量水印模式提示
-            if (that.$markAllPanel.hasClass('active')) {
+            if (this.$markAllPanel.hasClass('active')) {
                 // 切换到单图编辑模式重置活动图片
-                let $thumbnail = that.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
-                that._updateActiveImg($thumbnail.index());
+                let $thumbnail = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
+                this._updateActiveImg($thumbnail.index());
             }
-            if (that.$markAllPanel.hasClass('active') && that.isChange) {
-                that._confirm(() => {
+            if (this.$markAllPanel.hasClass('active') && this.isChange) {
+                this._confirm(() => {
                     run();
-                    that._updateIsChange(false);
+                    this._updateIsChange(false);
                 })                
             }else{
                 run();
