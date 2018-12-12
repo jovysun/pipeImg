@@ -24,6 +24,9 @@ class PipeImg {
             mime: 'image/jpeg',
             // 保存图片最大体积
             maxSize: 500,
+
+            markXPositionMargin: 15,
+            markYPositionMargin: 20,
             // 文案
             markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product SourcingFocus Service Co - Product Sourcing'],
             closeBtnTxt: '关闭',
@@ -69,6 +72,8 @@ class PipeImg {
         this.mime = options.mime;
         this.maxSize = options.maxSize;
 
+        this.markXPositionMargin = options.markXPositionMargin;
+        this.markYPositionMargin = options.markYPositionMargin;
         this.markTextList = options.markTextList;
         this.closeBtnTxt = options.closeBtnTxt;
         this.saveBtnTxt = options.saveBtnTxt;
@@ -145,6 +150,8 @@ class PipeImg {
             type: this.type,
             mime: this.mime,
 
+            markXPositionMargin: this.markXPositionMargin,
+            markYPositionMargin: this.markYPositionMargin,
             markTextList: this.markTextList,
             closeBtnTxt: this.closeBtnTxt,
             saveBtnTxt: this.saveBtnTxt,

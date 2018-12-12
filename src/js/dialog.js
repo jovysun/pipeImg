@@ -23,6 +23,8 @@ class Dialog {
             type: '0',
             template: tpl,
             mime: 'image/jpeg',
+            markXPositionMargin: 15,
+            markYPositionMargin: 20,
             markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
 
             closeBtnTxt: '关闭',
@@ -67,6 +69,8 @@ class Dialog {
         this.type = options.type;
         this.template = options.template;
         this.mime = options.mime;
+        this.markXPositionMargin = options.markXPositionMargin;
+        this.markYPositionMargin = options.markYPositionMargin;
         this.markTextList = options.markTextList;
         this.closeBtnTxt = options.closeBtnTxt;
         this.saveBtnTxt = options.saveBtnTxt;
@@ -644,7 +648,7 @@ class Dialog {
         this._updateIsChange(true);
     }
     _saveCrop() {
-        if (this.cropBox.boxData.left === 0 && this.cropBox.boxData.top === 0 && this.cropBox.boxData.width === this.activeData.w1 && this.cropBox.boxData.height === this.activeData.h1) {
+        if (this.cropBox.boxData.left === 0 && this.cropBox.boxData.top === 0 && this.cropBox.boxData.width === Math.round(this.activeData.w1) && this.cropBox.boxData.height === Math.round(this.activeData.h1)) {
             return false;
         }
         let options = {
@@ -766,20 +770,20 @@ class Dialog {
                 markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
                 break;
             case 'upLeft':
-                markX = (0 + 15) * this.activeData.ratio;
-                markY = (0 + 20) * this.activeData.ratio;
+                markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
+                markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
                 break;
             case 'upRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
-                markY = (0 + 20) * this.activeData.ratio;
+                markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
+                markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
                 break;
             case 'downLeft':
-                markX = (0 + 15) * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
+                markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
+                markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
                 break;
             case 'downRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
+                markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
+                markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
                 break;
             default:
                 break;
