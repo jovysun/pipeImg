@@ -3,8 +3,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     mode: 'production',
     entry: {
-        'pipeImg.bundle': "./src/js/pipeImg.js",
-        'pipeImg.thin': "./src/js/pipeImg.thin.js"
+        'pipeImg.bundle': './src/js/pipeImg.bundle.js',
+        'pipeImg': './src/js/pipeImg.js'
     },
     output: {
         path: path.resolve(__dirname, "dist/js"),
@@ -73,7 +73,7 @@ module.exports = {
         }
     },
     plugins: [
-        new CleanWebpackPlugin(['dist/js'])
+        new CleanWebpackPlugin(['dist/js/*.min.*'])
     ]
 
 }

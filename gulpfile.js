@@ -12,7 +12,7 @@ gulp.task('copy', function () {
 });
 // scss文件编译成css
 gulp.task('sass', function () {
-    return gulp.src('src/css/pipeImg.scss')
+    return gulp.src(['src/css/pipeImg.scss','src/css/common.scss','src/css/pipeImg.bundle.scss'])
         .pipe(sass())
         .pipe(gulp.dest('dist/css'))
         .pipe(reload({
@@ -44,5 +44,5 @@ gulp.task('serve', function () {
 });
 
 gulp.task('dev', ['sass', 'serve']);
-gulp.task('build', ['sass']);
+gulp.task('build', ['copy','sass']);
 gulp.task('default', ['serve']);

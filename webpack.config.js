@@ -1,14 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
+    mode: 'development',
     entry: {
-        pipeImg: __dirname + "/src/js/pipeImg.js"
+        'pipeImg': './src/js/pipeImg.js'
     },
     output: {
         path: __dirname + "/dist/js",
-        filename: "[name].bundle.js",
+        filename: "[name].js",
         libraryTarget: 'umd'
-    },
-    mode: 'development',
+    },  
     devtool: 'cheap-module-eval-source-map',
     devServer: {
         contentBase: './',
