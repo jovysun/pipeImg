@@ -318,13 +318,15 @@ function () {
       this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
 
       this._bind();
+
+      this.$el.find('.J-img-box').addClass('loading');
     }
   }, {
     key: "renderImgList",
     value: function renderImgList(imgList, activeIndex) {
       var _this = this;
 
-      this.$el.find('.J-img-box').addClass('loaded');
+      this.$el.find('.J-img-box').removeClass('loading');
       this.imgList = imgList;
       this.activeIndex = activeIndex;
       var $imgsThumbnail = this.$el.find('.J-imgs-thumbnail');

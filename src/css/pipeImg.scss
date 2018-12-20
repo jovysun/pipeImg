@@ -29,6 +29,10 @@ $color-txt: #999ba7;
         background: rgb(0, 0, 0) none repeat scroll 0% 0%;
         opacity: 0.4;
     }
+    
+    .loading{
+        background: url(../assets/loading.gif) no-repeat center center;
+    }
 }
 .pipeImg-wrapper{
     // width: 740px;
@@ -183,10 +187,6 @@ $color-txt: #999ba7;
             align-items:center;
             justify-content:center;
             overflow: hidden;
-            background: url(../assets/loading.gif) center center no-repeat;
-            &.loaded{
-                background: none;
-            }
             
             .scale-img-wrapper{
                 position: absolute;

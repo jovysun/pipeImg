@@ -143,6 +143,7 @@ class Dialog {
         this.$el = $('.J-pipe-dialog');
         this.$pipeWrapper = this.$el.find('.J-pipe-wrapper');
 
+
         // 通用按钮
         this.$btnClose = this.$el.find('.J-button-close');
         this.$btnSave = this.$el.find('.J-button-save');
@@ -195,9 +196,11 @@ class Dialog {
         this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
 
         this._bind();
+
+        this.$el.find('.J-img-box').addClass('loading');
     }
     renderImgList(imgList, activeIndex) {
-        this.$el.find('.J-img-box').addClass('loaded');
+        this.$el.find('.J-img-box').removeClass('loading');
 
         this.imgList = imgList;
         this.activeIndex = activeIndex;
