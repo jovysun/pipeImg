@@ -9,6 +9,7 @@ import {
     DragBox
 } from './dragBox';
 import tpl from './dialog.tpl';
+import thumbnailTpl from './thumbnail.tpl';
 import ThinSelect from './thinSelect';
 
 class Dialog {
@@ -18,10 +19,11 @@ class Dialog {
         // 默认配置参数
         let defaults = {
             debug: false,
-            imgList: [],
+            imgList: ['data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'],
             activeIndex: 0,
             type: '0',
             template: tpl,
+            thumbnailTpl: thumbnailTpl,
             mime: 'image/jpeg',
             markXPositionMargin: 15,
             markYPositionMargin: 20,
@@ -68,6 +70,7 @@ class Dialog {
         this.activeIndex = options.activeIndex;
         this.type = options.type;
         this.template = options.template;
+        this.thumbnailTpl = options.thumbnailTpl;
         this.mime = options.mime;
         this.markXPositionMargin = options.markXPositionMargin;
         this.markYPositionMargin = options.markYPositionMargin;
@@ -157,10 +160,10 @@ class Dialog {
         this.$btnRotateLeft = this.$el.find('.J-btn-rotate-left');
         this.$btnRotateRight = this.$el.find('.J-btn-rotate-right');
         // 裁剪
-        let $cropPanel = this.$el.find('.J-crop-panel');
-        this.$inputCropWidth = $cropPanel.find('.J-num-width');
-        this.$inputCropHeight = $cropPanel.find('.J-num-height');
-        this.$radioCropFix = $cropPanel.find('.J-fix-ratio');
+        this.$cropPanel = this.$el.find('.J-crop-panel');
+        this.$inputCropWidth = this.$cropPanel.find('.J-num-width');
+        this.$inputCropHeight = this.$cropPanel.find('.J-num-height');
+        this.$radioCropFix = this.$cropPanel.find('.J-fix-ratio');
         // 缩放
         this.$scalePanel = this.$el.find('.J-scale-panel');
         this.$inputScaleWidth = this.$scalePanel.find('.J-num-width');
@@ -191,13 +194,28 @@ class Dialog {
         this.imgBoxWidth = this.$el.find('.J-img-box').width();
         this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
 
+        this._bind();
+    }
+    renderImgList(imgList, activeIndex) {
+        this.$el.find('.J-img-box').addClass('loaded');
+
+        this.imgList = imgList;
+        this.activeIndex = activeIndex;
+
+        let $imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
+        $imgsThumbnail.html(template(this.thumbnailTpl, {
+            imgList: this.imgList,
+            activeIndex: this.activeIndex
+        }))
+
+
         this.activeImg = this.imgList[this.activeIndex];
         this._updateActiveData();
 
 
         // 初始化裁剪框
         this.cropBox = new DragBox({
-            el: $cropPanel.find('.J-source'),
+            el: this.$cropPanel.find('.J-source'),
             isCrop: true,
             onDragPoint: (data) => {
                 this._showSize(data.width * this.activeData.ratio, data.height * this.activeData.ratio);
@@ -258,7 +276,7 @@ class Dialog {
         this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
         this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
 
-        this._bind();
+        
     }
     _bind() {
         // 切换编辑图片
@@ -411,22 +429,38 @@ class Dialog {
         // 裁剪++++++++++++
         this.$inputCropWidth.on('input', (e) => {
             let value = parseInt($(e.target).val());
-            this.cropBox.width = value / this.activeData.ratio;
-            if (this.cropBox.fixRatio) {
-                this.cropBox.height = this.cropBox.width / this.cropBox.boxData.ratio;
+            this.cropW = value;
+            if (this.fixRatio) {
+                this.cropH = Math.round(value / this.activeData.imgRatio);
+                this.$inputCropHeight.val(this.cropH);
             }
+            
+
+            // this.cropBox.width = value / this.activeData.ratio;
+            // if (this.cropBox.fixRatio) {
+            //     this.cropBox.height = this.cropBox.width / this.cropBox.boxData.ratio;
+            //     this.$inputCropHeight.val(value / this.activeData.imgRatio);
+            // }
             this._updateCrop();
         })
         this.$inputCropHeight.on('input', (e) => {
             let value = parseInt($(e.target).val());
-            this.cropBox.height = value / this.activeData.ratio;
-            if (this.cropBox.fixRatio) {
-                this.cropBox.width = this.cropBox.height * this.cropBox.boxData.ratio;
+            this.cropH = value;
+            if (this.fixRatio) {
+                this.cropW = Math.round(value * this.activeData.imgRatio);
+                this.$inputCropWidth.val(this.cropW);
             }
+
+
+            // this.cropBox.height = value / this.activeData.ratio;
+            // if (this.cropBox.fixRatio) {
+            //     this.cropBox.width = this.cropBox.height * this.cropBox.boxData.ratio;
+            // }
             this._updateCrop();
         })
         this.$radioCropFix.on('change', (e) => {
-            this.cropBox.fixRatio = !this.cropBox.fixRatio;
+            this.fixRatio = !this.fixRatio;
+            // this.cropBox.fixRatio = !this.cropBox.fixRatio;
         })
 
         // 缩放++++++++++++++
@@ -592,11 +626,11 @@ class Dialog {
         if (this.rotateNum === 1 || this.rotateNum === 3) {
             // 旋转类90度后
             if (1 / this.activeData.imgRatio < this.imgBoxRatio) {
-                width = Math.min(this.imgBoxHeight, this.activeData.h0);
+                width = Math.min(this.imgBoxHeight, this.activeData.w0);
                 height = 'auto';
             } else {
                 width = 'auto';
-                height = Math.min(this.imgBoxWidth, this.activeData.w0);
+                height = Math.min(this.imgBoxWidth, this.activeData.h0);
             }
 
             this.$txtRotateWidth.text(this.activeData.h0);
@@ -639,11 +673,19 @@ class Dialog {
     _initCrop() {
         this.$radioCropFix.prop('checked', false);
 
-        this.cropBox.isFixed = this.$radioCropFix.prop('checked');
-        this.cropBox.width = this.$inputCropWidth.val() / this.activeData.ratio;
-        this.cropBox.height = this.$inputCropHeight.val() / this.activeData.ratio;
+        this.fixRatio = this.$radioCropFix.prop('checked');
+        this.cropW = this.$inputCropWidth.val();
+        this.cropH = this.$inputCropHeight.val();
+
+        // this.cropBox.fixRatio = this.$radioCropFix.prop('checked');
+        // this.cropBox.width = this.$inputCropWidth.val() / this.activeData.ratio;
+        // this.cropBox.height = this.$inputCropHeight.val() / this.activeData.ratio;
     }
     _updateCrop() {
+        this.cropBox.width = this.cropW / this.activeData.ratio;
+        this.cropBox.height = this.cropH / this.activeData.ratio;
+        this.cropBox.fixRatio = this.fixRatio;
+
         this.cropBox.update();
         this._updateIsChange(true);
     }

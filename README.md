@@ -6,37 +6,22 @@
 ## 命令执行
 效果查看
 ```
-gulp
+npm run start
 ```
-开发改造
+未压缩打包
 ```
 npm run dev
 ```
-打包
+压缩打包
 ```
 npm run build
 ```
 ## 使用示例
-网页直接引入脚本使用(见index.html)，pipeImg.bundle.min.js是包含样式字体的打包，pipeImg.thin.min.js是样式脚本分开的打包文件：
-```
-<script src="./dist/pipeImg.bundle.min.js"></script>
-<script>
-      $('.J-btn-edit').on('click', function(){
-          var pipeImg = new PipeImg({          
-              source: ['./images/Jellyfish.jpg', './images/greensock.png', './images/Lighthouse.jpg'],
-              ajaxUrl: '/pic.do?xcase=uploadWs',
-              debug: true,
-              onComplete: function(data) {
-                  $('#J-preview-container').append($('<img>').attr('src', data.src));
-              }
-          });
-          
-      })
-</script>
-```
+网页直接引入脚本和样式文件（pipeImg.css和pipeImg.js，示例见index.html)：
+
 ## 整体概述
-1, 依赖jquery.js，template.js
-2, css用gulp构建，js用webpack打包；
+1, 依赖jquery.js，template.js；
+2, common.css用gulp构建，其他用webpack构建；
 
 3, 入口文件为pipeImg.js，视窗dialog.js，裁剪水印拖拽编辑框dragBox.js，自定义select组件thinSelect.js，图片处理imgHandler.js，工具函数util.js；
 
@@ -44,16 +29,23 @@ npm run build
 ```
 // 默认配置参数
 let defaults = {
-    // 必填，图片src字符串数组
+    debug: false,
+    // 必填，[{"id":"567701","url":"./images/Jellyfish.jpg"}]
     source: [],
     // 上传图片地址
-    ajaxUrl: '',
-    debug: false,
+    uploadUrl: '',
+    // 发送文件类型，可以使二进制流'blob'可以是表单数据'formdata'，默认二进制流
+    sendDataType: 'formdata',
+    // 图片编辑界面类型: '0'单图编辑, '1'批量水印
+    type: '0',
     mime: 'image/jpeg',
     // 保存图片最大体积
-    maxSize: 500,    
+    maxSize: 500,
+    // 直接选择水印文字位置水平垂直距离边框位置
+    markXPositionMargin: 15,
+    markYPositionMargin: 20,
     // 文案
-    markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
+    markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product SourcingFocus Service Co - Product Sourcing'],
     closeBtnTxt: '关闭',
     saveBtnTxt: '保存',
     resetBtnTxt: '重置',
@@ -71,9 +63,13 @@ let defaults = {
     showRoomTxt: '展示厅',
     companyNameTxt: '公司名称',
     markAllMenuTxt: '批量添加水印',
-    // 初始化完成回调
+    tipTitleTxt: '提示',
+    tipContentTxt: '尚未保存，是否确定离开？',
+    tipConfirmBtnTxt: '确定',
+    // 初始化完成
     onInited: () => {},
-    // 上传保存完成回调
-    onComplete: (response) => {}
+    // 上传保存完成
+    onComplete: (response) => {},
+    onClose: () => {}
 };
 ```

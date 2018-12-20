@@ -263,6 +263,9 @@ class DragBox {
             width: this.width,
             height: this.height
         });
+        if (this.isCrop) {
+            this._setChoice();
+        }
     }
 }
 

@@ -23,7 +23,7 @@
             </div>
             <div class="content-footer">
                 <div class="size">
-                    <span class="J-num-width"></span>*<span class="J-num-height"></span>px
+                    <span class="J-num-width">1</span>*<span class="J-num-height">1</span>px
                 </div>
                 <a class="pipeImg-btn btn-rotate J-btn-rotate-left" href="javascript:void(0)"><i class="ob-icon icon-rotate-l"></i>{{=turnLeftTxt}}</a>
                 <a class="pipeImg-btn btn-rotate J-btn-rotate-right" href="javascript:void(0)"><i class="ob-icon icon-rotate-r"></i>{{=turnRightTxt}}</a>
@@ -122,7 +122,7 @@
             <div class="img-box J-img-box">
                 <img class="J-source" src="{{-imgList[activeIndex].src}}">
             </div>
-            <div class="imgs-thumbnail">
+            <div class="imgs-thumbnail J-imgs-thumbnail">
                 {{ for(var i=0;i<imgList.length;i++) { }} 
                 <div class="img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail">
                     <a href="javascript:void(0)">
@@ -169,7 +169,7 @@
         </div>
     </div>
     <div class="pipeImg-footer J-pipe-footer">
-        <div class="imgs-thumbnail">
+        <div class="imgs-thumbnail J-imgs-thumbnail">
             {{ for(var i=0;i<imgList.length;i++) { }} 
             <div class="img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail">
                 <div class="img-inner">

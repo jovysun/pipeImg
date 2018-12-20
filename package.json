@@ -1,17 +1,21 @@
 {
   "name": "pipe-img",
   "version": "1.0.0",
-  "description": "",
+  "description": "HTML5 图片编辑：旋转、裁剪、缩放、水印、压缩、上传",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack & gulp build",
-    "dev": "webpack-dev-server --open",
-    "build-js": "webpack --config prod.config.js",
-    "build": "webpack --config prod.config.js & gulp build"
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "server": "webpack-dev-server --open  --mode development --config webpack.server.js",
+    "start": "npm run server"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["canvas","roate","crop","scale","watermark","compress"],
+  "author": "sun",
   "license": "ISC",
+  "repository":{
+    "type": "git",
+    "url": ""
+  },
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@babel/plugin-transform-object-assign": "^7.0.0",
@@ -20,6 +24,7 @@
     "browser-sync": "^2.26.3",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.4.0",
     "gulp-sass": "^4.0.2",

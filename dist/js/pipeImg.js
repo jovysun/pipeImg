@@ -96,6 +96,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/css/pipeImg.scss":
+/*!******************************!*\
+  !*** ./src/css/pipeImg.scss ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./src/js/dialog.js":
 /*!**************************!*\
   !*** ./src/js/dialog.js ***!
@@ -104,7 +115,1413 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! template */ \"template\");\n/* harmony import */ var template__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(template__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util */ \"./src/js/util.js\");\n/* harmony import */ var _dragBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dragBox */ \"./src/js/dragBox.js\");\n/* harmony import */ var _dialog_tpl__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dialog.tpl */ \"./src/js/dialog.tpl\");\n/* harmony import */ var _dialog_tpl__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_dialog_tpl__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var _thinSelect__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./thinSelect */ \"./src/js/thinSelect.js\");\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n\n\n\n\n\n\n\nvar Dialog =\n/*#__PURE__*/\nfunction () {\n  function Dialog(options) {\n    _classCallCheck(this, Dialog);\n\n    // 默认配置参数\n    var defaults = {\n      debug: false,\n      imgList: [],\n      activeIndex: 0,\n      type: '0',\n      template: _dialog_tpl__WEBPACK_IMPORTED_MODULE_4___default.a,\n      mime: 'image/jpeg',\n      markXPositionMargin: 15,\n      markYPositionMargin: 20,\n      markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],\n      closeBtnTxt: '关闭',\n      saveBtnTxt: '保存',\n      resetBtnTxt: '重置',\n      confirmBtnTxt: '确定',\n      cancelBtnTxt: '取消',\n      rotateMenuTxt: '旋转',\n      turnLeftTxt: '逆时针旋转',\n      turnRightTxt: '顺时针旋转',\n      cropMenuTxt: '裁剪',\n      scaleMenuTxt: '缩放',\n      markMenuTxt: '添加水印',\n      colorTxt: '颜色',\n      positionTxt: '位置',\n      opacityTxt: '透明度',\n      showRoomTxt: '展示厅',\n      companyNameTxt: '公司名称',\n      markAllMenuTxt: '批量添加水印',\n      tipTitleTxt: '提示',\n      tipContentTxt: '尚未保存，是否确定离开？',\n      tipConfirmBtnTxt: '确定',\n      onSaveRotate: function onSaveRotate(args, cb) {},\n      onSaveCrop: function onSaveCrop(args, cb) {},\n      onSaveScale: function onSaveScale(args, cb) {},\n      onSaveMark: function onSaveMark(args, cb) {},\n      onReset: function onReset(cb) {},\n      onSave: function onSave(cb) {},\n      onChangeActive: function onChangeActive(options, cb) {},\n      onSaveMarkAll: function onSaveMarkAll(cb) {},\n      onComplete: function onComplete(result) {}\n    };\n    options = _extends({}, defaults, options);\n    this.debug = options.debug;\n    this.imgList = options.imgList;\n    this.activeIndex = options.activeIndex;\n    this.type = options.type;\n    this.template = options.template;\n    this.mime = options.mime;\n    this.markXPositionMargin = options.markXPositionMargin;\n    this.markYPositionMargin = options.markYPositionMargin;\n    this.markTextList = options.markTextList;\n    this.closeBtnTxt = options.closeBtnTxt;\n    this.saveBtnTxt = options.saveBtnTxt;\n    this.resetBtnTxt = options.resetBtnTxt;\n    this.confirmBtnTxt = options.confirmBtnTxt;\n    this.cancelBtnTxt = options.cancelBtnTxt;\n    this.rotateMenuTxt = options.rotateMenuTxt;\n    this.turnLeftTxt = options.turnLeftTxt;\n    this.turnRightTxt = options.turnRightTxt;\n    this.cropMenuTxt = options.cropMenuTxt;\n    this.scaleMenuTxt = options.scaleMenuTxt;\n    this.markMenuTxt = options.markMenuTxt;\n    this.colorTxt = options.colorTxt;\n    this.positionTxt = options.positionTxt;\n    this.opacityTxt = options.opacityTxt;\n    this.showRoomTxt = options.showRoomTxt;\n    this.companyNameTxt = options.companyNameTxt;\n    this.markAllMenuTxt = options.markAllMenuTxt;\n    this.tipTitleTxt = options.tipTitleTxt;\n    this.tipContentTxt = options.tipContentTxt;\n    this.tipConfirmBtnTxt = options.tipConfirmBtnTxt;\n    this.onSaveRotate = options.onSaveRotate;\n    this.onSaveCrop = options.onSaveCrop;\n    this.onSaveScale = options.onSaveScale;\n    this.onSaveMark = options.onSaveMark;\n    this.onReset = options.onReset;\n    this.onSave = options.onSave;\n    this.onChangeActive = options.onChangeActive;\n    this.onSaveMarkAll = options.onSaveMarkAll;\n    this.onComplete = options.onComplete;\n\n    this._init();\n  }\n\n  _createClass(Dialog, [{\n    key: \"_init\",\n    value: function _init() {\n      var _this = this;\n\n      var templateHtml = template__WEBPACK_IMPORTED_MODULE_1___default()(this.template, {\n        imgList: this.imgList,\n        activeIndex: this.activeIndex,\n        type: this.type,\n        closeBtnTxt: this.closeBtnTxt,\n        saveBtnTxt: this.saveBtnTxt,\n        resetBtnTxt: this.resetBtnTxt,\n        confirmBtnTxt: this.confirmBtnTxt,\n        cancelBtnTxt: this.cancelBtnTxt,\n        rotateMenuTxt: this.rotateMenuTxt,\n        turnLeftTxt: this.turnLeftTxt,\n        turnRightTxt: this.turnRightTxt,\n        cropMenuTxt: this.cropMenuTxt,\n        scaleMenuTxt: this.scaleMenuTxt,\n        markMenuTxt: this.markMenuTxt,\n        colorTxt: this.colorTxt,\n        positionTxt: this.positionTxt,\n        opacityTxt: this.opacityTxt,\n        showRoomTxt: this.showRoomTxt,\n        companyNameTxt: this.companyNameTxt,\n        markAllMenuTxt: this.markAllMenuTxt,\n        tipTitleTxt: this.tipTitleTxt,\n        tipContentTxt: this.tipContentTxt,\n        tipConfirmBtnTxt: this.tipConfirmBtnTxt\n      });\n      var html = '<div class=\"pipeImg-dialog J-pipe-dialog\" onselectstart=\"return false\" ondragstart=\"return false\"><div class=\"pipe-mask J-pipe-mask\"></div>' + templateHtml + '</div>';\n      jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').append(html);\n      this.$el = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.J-pipe-dialog');\n      this.$pipeWrapper = this.$el.find('.J-pipe-wrapper'); // 通用按钮\n\n      this.$btnClose = this.$el.find('.J-button-close');\n      this.$btnSave = this.$el.find('.J-button-save');\n      this.$btnReset = this.$el.find('.J-button-reset');\n      this.$btnConfirm = this.$el.find('.J-button-confirm');\n      this.$btnCancel = this.$el.find('.J-button-cancel');\n      this.$btnSaveAll = this.$el.find('.J-button-confirm-all');\n      this.$btnCancelAll = this.$el.find('.J-button-cancel-all'); // 模块按钮\n      // 旋转\n\n      this.$rotatePanel = this.$el.find('.J-rotate-panel');\n      this.$txtRotateWidth = this.$rotatePanel.find('.J-num-width');\n      this.$txtRotateHeight = this.$rotatePanel.find('.J-num-height');\n      this.$btnRotateLeft = this.$el.find('.J-btn-rotate-left');\n      this.$btnRotateRight = this.$el.find('.J-btn-rotate-right'); // 裁剪\n\n      var $cropPanel = this.$el.find('.J-crop-panel');\n      this.$inputCropWidth = $cropPanel.find('.J-num-width');\n      this.$inputCropHeight = $cropPanel.find('.J-num-height');\n      this.$radioCropFix = $cropPanel.find('.J-fix-ratio'); // 缩放\n\n      this.$scalePanel = this.$el.find('.J-scale-panel');\n      this.$inputScaleWidth = this.$scalePanel.find('.J-num-width');\n      this.$inputScaleHeight = this.$scalePanel.find('.J-num-height');\n      this.$rangeScaleRatio = this.$scalePanel.find('.J-scale-range'); // 添加水印\n\n      this.$markPanel = this.$el.find('.J-mark-panel');\n      this.$radioMarkColor = this.$markPanel.find('.J-color');\n      this.$radioMarkPosition = this.$markPanel.find('.J-position');\n      this.$rangeMarkOpacity = this.$markPanel.find('.J-opacity');\n      this.$selectMarkTxt = this.$markPanel.find('.J-select-mark'); // 批量添加水印\n\n      this.$markAllPanel = this.$el.find('.J-mark-all-panel');\n      this.$radioMarkAllColor = this.$markAllPanel.find('.J-color');\n      this.$radioMarkAllPosition = this.$markAllPanel.find('.J-position');\n      this.$rangeMarkAllOpacity = this.$markAllPanel.find('.J-opacity');\n      this.$selectMarkAllTxt = this.$markAllPanel.find('.J-select-mark');\n      this.$buttons = this.$el.find('.J-button-save, .J-button-reset, .J-button-confirm, .J-button-cancel, .J-button-confirm-all, .J-button-cancel-all'); // 全局变量\n\n      this.MARKTYPE = {\n        'SINGLE': '0',\n        'MULTIPLE': '1'\n      };\n      this.isChange = false;\n      this.rotateNum = 0;\n      this.scaleRatio = 1;\n      this.imgBoxHeight = this.$el.find('.J-img-box').height();\n      this.imgBoxWidth = this.$el.find('.J-img-box').width();\n      this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;\n      this.activeImg = this.imgList[this.activeIndex];\n\n      this._updateActiveData(); // 初始化裁剪框\n\n\n      this.cropBox = new _dragBox__WEBPACK_IMPORTED_MODULE_3__[\"DragBox\"]({\n        el: $cropPanel.find('.J-source'),\n        isCrop: true,\n        onDragPoint: function onDragPoint(data) {\n          _this._showSize(data.width * _this.activeData.ratio, data.height * _this.activeData.ratio);\n\n          _this._updateIsChange(true);\n        }\n      }); // 初始化缩放\n\n      var $scaleImgWrapper = this.$scalePanel.find('.J-scale-img-wrapper');\n      var imgEl = this.$scalePanel.find('.J-source').get(0);\n      Object(_util__WEBPACK_IMPORTED_MODULE_2__[\"drag\"])(imgEl, imgEl, $scaleImgWrapper.get(0)); // 初始化水印框\n\n      this.markBox = new _dragBox__WEBPACK_IMPORTED_MODULE_3__[\"DragBox\"]({\n        el: this.$markPanel.find('.J-source'),\n        fixRatio: true,\n        markText: this.markTextList[0],\n        onDragComplete: function onDragComplete(left, top) {\n          _this.$markPanel.find('.J-position').prop('checked', false);\n\n          _this._updateIsChange(true);\n        },\n        onDragPoint: function onDragPoint(boxData) {\n          _this.$markPanel.find('.J-mark-txt').css({\n            'font-size': Math.round(parseInt(_this.markBox.$dragBox.css('height')) / _this.markLineHeight0 * _this.markFontSize0)\n          });\n\n          _this.markBox.$dragBox.find('.J-mark-txt').css({\n            'display': 'block'\n          });\n        }\n      }); // 初始化批量水印框\n\n      this.markAllBox = new _dragBox__WEBPACK_IMPORTED_MODULE_3__[\"DragBox\"]({\n        el: this.$markAllPanel.find('.J-source'),\n        fixRatio: true,\n        markText: this.markTextList[0],\n        onDragComplete: function onDragComplete(left, top) {\n          _this.$markAllPanel.find('.J-position').prop('checked', false);\n\n          _this._updateIsChange(true);\n        },\n        onDragPoint: function onDragPoint(boxData) {\n          _this.$markAllPanel.find('.J-mark-txt').css({\n            'font-size': Math.round(parseInt(_this.markAllBox.$dragBox.css('height')) / _this.markLineHeight0 * _this.markFontSize0)\n          });\n\n          _this.markAllBox.$dragBox.find('.J-mark-txt').css({\n            'display': 'block'\n          });\n        }\n      });\n      this.type === this.MARKTYPE.MULTIPLE && this.showModel(this.type);\n\n      this._refresh();\n\n      this.markSelects = _thinSelect__WEBPACK_IMPORTED_MODULE_5__[\"default\"].use(this.$el.find('.J-select-mark'));\n\n      this._setMarkPosition();\n\n      this._setMarkPosition(this.MARKTYPE.MULTIPLE);\n\n      this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));\n      this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));\n\n      this._bind();\n    }\n  }, {\n    key: \"_bind\",\n    value: function _bind() {\n      var _this2 = this;\n\n      // 切换编辑图片\n      this.$el.find('.J-pipe-footer').on('click', '.J-img-thumbnail', function (e) {\n        var run = function run() {\n          var $thumbnail = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);\n          $thumbnail.addClass('active').siblings().removeClass('active');\n          var $thumbnailImg = $thumbnail.find('img');\n\n          _this2.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', $thumbnailImg.attr('src'));\n\n          _this2._updateActiveImg($thumbnail.index());\n\n          _this2._goHome();\n\n          _this2._initData();\n        };\n\n        if (_this2.isChange) {\n          _this2._confirm(function () {\n            run();\n\n            _this2._updateIsChange(false);\n          });\n        } else {\n          run();\n        }\n      }); // 批量水印切换编辑图片\n\n      this.$markAllPanel.on('click', '.J-img-thumbnail', function (e) {\n        var $thumbnail = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);\n        $thumbnail.addClass('active').siblings().removeClass('active');\n        var $thumbnailImg = $thumbnail.find('img');\n\n        _this2.$markAllPanel.find('.J-source').attr('src', $thumbnailImg.attr('src'));\n\n        _this2._updateActiveImg($thumbnail.index());\n\n        _this2._setMarkPosition(_this2.MARKTYPE.MULTIPLE);\n\n        _this2._initData();\n      }); // 菜单切换\n\n      this.$el.find('.J-menu-btn').on('click', function (e) {\n        var run = function run() {\n          var $item = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget).parent();\n          var index = $item.index();\n          var oldActiveIndex = $item.parent().find('.active:first').index();\n\n          _this2.showModel(_this2.MARKTYPE.SINGLE);\n\n          _this2.showMenu(index); // 若有编辑操作，离开旋转，裁剪，缩放面板进行保存\n\n\n          if (_this2.isChange) {\n            switch (oldActiveIndex) {\n              case 0:\n                _this2._saveRotate();\n\n                break;\n\n              case 1:\n                _this2._saveCrop();\n\n                break;\n\n              case 2:\n                _this2._saveScale();\n\n                break;\n\n              default:\n                break;\n            }\n          } // 进入裁剪\n\n\n          if (index === 1) {\n            _this2._initCrop();\n          } // 进入缩放\n\n\n          if (index === 2) {\n            _this2._initScale();\n          } // 进入水印\n\n\n          if (index === 3) {\n            _this2._initMark();\n          }\n        }; // 离开批量水印模式提示\n\n\n        if (_this2.$markAllPanel.hasClass('active')) {\n          // 切换到单图编辑模式重置活动图片\n          var $thumbnail = _this2.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');\n\n          _this2._updateActiveImg($thumbnail.index());\n        }\n\n        if (_this2.$markAllPanel.hasClass('active') && _this2.isChange) {\n          _this2._confirm(function () {\n            run();\n\n            _this2._updateIsChange(false);\n          });\n        } else {\n          run();\n        }\n      }); // 切换水印\n\n      this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark', function (e) {\n        var run = function run() {\n          var $thumbnail = _this2.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');\n\n          _this2._updateActiveImg($thumbnail.index());\n\n          _this2.showModel(_this2.MARKTYPE.SINGLE);\n\n          _this2.showMenu(3);\n\n          _this2._initMark();\n\n          _this2._updateIsChange(false);\n        };\n\n        if (_this2.isChange) {\n          _this2._confirm(run);\n        } else {\n          run();\n        }\n      }); // 切换批量水印\n\n      this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark-all', function (e) {\n        var run = function run() {\n          var $thumbnail = _this2.$markAllPanel.find('.J-img-thumbnail.active');\n\n          _this2._updateActiveImg($thumbnail.index());\n\n          _this2.showModel(_this2.MARKTYPE.MULTIPLE);\n\n          _this2._initMark(_this2.MARKTYPE.MULTIPLE);\n\n          _this2._updateIsChange(false);\n\n          _this2._initData();\n        };\n\n        if (_this2.isChange) {\n          _this2._confirm(run);\n        } else {\n          run();\n        }\n      }); // 旋转++++++++++++++++\n      // 逆时针旋转\n\n      this.$btnRotateLeft.on('click', function () {\n        _this2._getRotateNum(-1);\n\n        _this2._updateRotate();\n      }); // 顺时针旋转\n\n      this.$btnRotateRight.on('click', function () {\n        _this2._getRotateNum(1);\n\n        _this2._updateRotate();\n      }); // 裁剪++++++++++++\n\n      this.$inputCropWidth.on('input', function (e) {\n        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());\n        _this2.cropBox.width = value / _this2.activeData.ratio;\n\n        if (_this2.cropBox.fixRatio) {\n          _this2.cropBox.height = _this2.cropBox.width / _this2.cropBox.boxData.ratio;\n        }\n\n        _this2._updateCrop();\n      });\n      this.$inputCropHeight.on('input', function (e) {\n        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());\n        _this2.cropBox.height = value / _this2.activeData.ratio;\n\n        if (_this2.cropBox.fixRatio) {\n          _this2.cropBox.width = _this2.cropBox.height * _this2.cropBox.boxData.ratio;\n        }\n\n        _this2._updateCrop();\n      });\n      this.$radioCropFix.on('change', function (e) {\n        _this2.cropBox.fixRatio = !_this2.cropBox.fixRatio;\n      }); // 缩放++++++++++++++\n\n      this.$inputScaleWidth.on('input', function (e) {\n        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());\n        value = value >= 0 ? value : 0;\n        _this2.scaleRatio = value / _this2.activeData.w0;\n\n        _this2._updateScale();\n      });\n      this.$inputScaleHeight.on('input', function (e) {\n        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());\n        value = value >= 0 ? value : 0;\n        _this2.scaleRatio = value / _this2.activeData.h0;\n\n        _this2._updateScale();\n      }); // IE11下change事件连续触发\n\n      this.$rangeScaleRatio.on('change', function (e) {\n        var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);\n        var max = parseInt($this.attr('max'));\n        var value = parseInt($this.val());\n        _this2.scaleRatio = value / max;\n\n        _this2._updateScale();\n      }); // chrome下input事件连续触发，change只有停止拖动时触发\n\n      this.$rangeScaleRatio.on('input', function (e) {\n        var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);\n        var max = parseInt($this.attr('max'));\n        var value = parseInt($this.val());\n        _this2.scaleRatio = value / max;\n\n        _this2._updateScale();\n      }); // 水印++++++++++++++\n\n      this.$radioMarkColor.on('change', function () {\n        _this2._updateMark();\n      });\n      this.$rangeMarkOpacity.on('input', function () {\n        _this2._updateMark();\n      });\n      this.$rangeMarkOpacity.on('change', function () {\n        _this2._updateMark();\n      });\n      this.$selectMarkTxt.on('change', function () {\n        _this2.markBox.$dragBox.find('.J-mark-txt').css({\n          'display': 'inline-block',\n          'font-size': _this2.markFontSize0\n        });\n\n        _this2._updateMark();\n      });\n      this.$radioMarkPosition.on('change', function () {\n        _this2._updateMark();\n      }); // 批量水印++++++++++++++\n\n      this.$radioMarkAllColor.on('change', function () {\n        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);\n      });\n      this.$rangeMarkAllOpacity.on('input', function () {\n        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);\n      });\n      this.$rangeMarkAllOpacity.on('change', function () {\n        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);\n      });\n      this.$selectMarkAllTxt.on('change', function () {\n        _this2.markAllBox.$dragBox.find('.J-mark-txt').css({\n          'display': 'inline-block',\n          'font-size': _this2.markFontSize0\n        });\n\n        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);\n      });\n      this.$radioMarkAllPosition.on('change', function () {\n        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);\n      }); // 水印确定\n\n      this.$btnConfirm.on('click', function () {\n        _this2._saveMark();\n      }); // 水印取消\n\n      this.$btnCancel.on('click', function () {\n        _this2._cancelMark();\n      }); // 批量水印确定\n\n      this.$btnSaveAll.on('click', function () {\n        _this2._showProgress();\n\n        _this2._saveMarkAll();\n      }); // 批量水印取消\n\n      this.$btnCancelAll.on('click', function () {\n        if (_this2.isChange) {\n          _this2._confirm(function () {\n            _this2.destory();\n          });\n        } else {\n          _this2.destory();\n        }\n      }); // 重置\n\n      this.$btnReset.on('click', function () {\n        if (_this2.isChange) {\n          _this2._reset();\n        }\n      }); // 保存\n\n      this.$btnSave.on('click', function (e) {\n        if (_this2.isChange) {\n          _this2._showProgress();\n\n          var panelIndex = _this2.$el.find('.J-panel.active').index();\n\n          switch (panelIndex) {\n            case 0:\n              _this2._saveRotate();\n\n              break;\n\n            case 1:\n              _this2._saveCrop();\n\n              break;\n\n            case 2:\n              _this2._saveScale();\n\n            default:\n              break;\n          }\n\n          _this2._save();\n        }\n      }); // 关闭\n\n      this.$btnClose.on('click', function (e) {\n        if (_this2.isChange) {\n          _this2._confirm(function () {\n            _this2.destory();\n          });\n        } else {\n          _this2.destory();\n        }\n      }); // 禁用鼠标右击菜单\n\n      this.$el.on('contextmenu', function (e) {\n        return _this2.debug;\n      });\n    }\n  }, {\n    key: \"_goHome\",\n    value: function _goHome() {\n      this.$el.find('.J-menu-btn').parent(':first').addClass('active').siblings().removeClass('active');\n      this.$el.find('.J-panel:first').addClass('active').siblings().removeClass('active');\n      this.$el.find('.J-item-mark').find('.J-menu-btn').show();\n      this.$el.find('.J-item-mark').find('.J-menu-txt').hide();\n    }\n  }, {\n    key: \"_initRotate\",\n    value: function _initRotate() {\n      this.rotateNum = 0;\n    }\n  }, {\n    key: \"_updateRotate\",\n    value: function _updateRotate() {\n      this.$el.find('.J-source').css({\n        'transform': \"rotate(\".concat(this.rotateNum * 90, \"deg)\")\n      });\n      var width, height;\n\n      if (this.rotateNum === 1 || this.rotateNum === 3) {\n        // 旋转类90度后\n        if (1 / this.activeData.imgRatio < this.imgBoxRatio) {\n          width = Math.min(this.imgBoxHeight, this.activeData.h0);\n          height = 'auto';\n        } else {\n          width = 'auto';\n          height = Math.min(this.imgBoxWidth, this.activeData.w0);\n        }\n\n        this.$txtRotateWidth.text(this.activeData.h0);\n        this.$txtRotateHeight.text(this.activeData.w0);\n      } else {\n        if (this.activeData.imgRatio < this.imgBoxRatio) {\n          width = 'auto';\n          height = Math.min(this.imgBoxHeight, this.activeData.h0);\n        } else {\n          width = Math.min(this.imgBoxWidth, this.activeData.w0);\n          height = 'auto';\n        }\n\n        this.$txtRotateWidth.text(this.activeData.w0);\n        this.$txtRotateHeight.text(this.activeData.h0);\n      }\n\n      this.$el.find('.J-source').css({\n        'width': width,\n        'height': height\n      });\n\n      this._updateIsChange(true);\n    }\n  }, {\n    key: \"_saveRotate\",\n    value: function _saveRotate() {\n      var _this3 = this;\n\n      if (this.rotateNum === 0) {\n        return false;\n      }\n\n      var options = {\n        rotateNum: this.rotateNum\n      };\n      this.onSaveRotate(options, function (img) {\n        _this3.rotateNum = 0;\n        _this3.activeImg = img;\n\n        _this3._updateActiveData();\n\n        _this3._refresh();\n      });\n    }\n  }, {\n    key: \"_initCrop\",\n    value: function _initCrop() {\n      this.$radioCropFix.prop('checked', false);\n      this.cropBox.isFixed = this.$radioCropFix.prop('checked');\n      this.cropBox.width = this.$inputCropWidth.val() / this.activeData.ratio;\n      this.cropBox.height = this.$inputCropHeight.val() / this.activeData.ratio;\n    }\n  }, {\n    key: \"_updateCrop\",\n    value: function _updateCrop() {\n      this.cropBox.update();\n\n      this._updateIsChange(true);\n    }\n  }, {\n    key: \"_saveCrop\",\n    value: function _saveCrop() {\n      var _this4 = this;\n\n      if (this.cropBox.boxData.left === 0 && this.cropBox.boxData.top === 0 && this.cropBox.boxData.width === Math.round(this.activeData.w1) && this.cropBox.boxData.height === Math.round(this.activeData.h1)) {\n        return false;\n      }\n\n      var options = {\n        sx: Math.max(this.cropBox.boxData.left * this.activeData.ratio, 0),\n        sy: Math.max(this.cropBox.boxData.top * this.activeData.ratio, 0),\n        cropW: Math.min(this.cropBox.boxData.width * this.activeData.ratio, this.activeData.w0),\n        cropH: Math.min(this.cropBox.boxData.height * this.activeData.ratio, this.activeData.h0)\n      };\n      this.onSaveCrop(options, function (img) {\n        _this4.activeImg = img;\n\n        _this4._updateActiveData();\n\n        _this4._refresh();\n      });\n    }\n  }, {\n    key: \"_initScale\",\n    value: function _initScale() {\n      var $scaleImgBox = this.$scalePanel.find('.J-img-box');\n      var $scaleRange = this.$scalePanel.find('.J-scale-range');\n      var $scaleImgWrapper = this.$scalePanel.find('.J-scale-img-wrapper');\n      var $img = $scaleImgBox.find('.J-source');\n      var width, height;\n\n      if (this.activeData.w0 < this.imgBoxWidth) {\n        width = this.imgBoxWidth;\n      } else {\n        width = this.activeData.w0 + (this.activeData.w0 - this.imgBoxWidth);\n      }\n\n      if (this.activeData.h0 < this.imgBoxHeight) {\n        height = this.imgBoxHeight;\n      } else {\n        height = this.activeData.h0 + (this.activeData.h0 - this.imgBoxHeight);\n      }\n\n      $scaleImgWrapper.css({\n        'width': width,\n        'height': height,\n        'margin-left': -width / 2,\n        'margin-top': -height / 2\n      }); // 去除预览图的缩放显示\n\n      $img.css({\n        'position': 'absolute',\n        'left': (width - this.activeData.w0) / 2,\n        'top': (height - this.activeData.h0) / 2,\n        'width': this.activeData.w0,\n        'height': this.activeData.h0,\n        'max-width': 'none',\n        'max-height': 'none',\n        'cursor': 'move'\n      }); // 初始化滑块值\n\n      $scaleRange.val($scaleRange.attr('defaultValue'));\n      this.scaleRatio = 1;\n    }\n  }, {\n    key: \"_updateScale\",\n    value: function _updateScale() {\n      var scaleRatio = this.scaleRatio;\n      var $scaleRange = this.$rangeScaleRatio;\n      var $scaleNumWidth = this.$inputScaleWidth;\n      var $scaleNumHeight = this.$inputScaleHeight;\n      var max = parseInt($scaleRange.attr('max'));\n\n      if ($scaleNumWidth.val() != this.activeData.w0 * scaleRatio) {\n        $scaleNumWidth.val(this.activeData.w0 * scaleRatio);\n      }\n\n      if ($scaleNumHeight.val() != this.activeData.h0 * scaleRatio) {\n        $scaleNumHeight.val(this.activeData.h0 * scaleRatio);\n      }\n\n      if ($scaleRange.val() != max * scaleRatio) {\n        $scaleRange.val(max * scaleRatio);\n      }\n\n      this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').css({\n        'transform': \"scale(\".concat(this.scaleRatio, \")\")\n      });\n\n      this._updateIsChange(true);\n    }\n  }, {\n    key: \"_saveScale\",\n    value: function _saveScale() {\n      var _this5 = this;\n\n      if (this.scaleRatio === 1) {\n        return false;\n      }\n\n      var options = {\n        scaleRatio: this.scaleRatio\n      };\n      this.onSaveScale(options, function (img) {\n        _this5.scaleRatio = 1;\n        _this5.activeImg = img;\n\n        _this5._updateActiveData();\n\n        _this5._refresh();\n\n        _this5._initScale();\n      });\n    } // 水印相关操作start++++++++++++++++++++++++++++++++++++++++\n\n  }, {\n    key: \"_setMarkPosition\",\n    value: function _setMarkPosition(type) {\n      var POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];\n      var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;\n      var $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;\n      var $markTxt = $dragBox.find('.J-mark-txt');\n      var markX = parseInt($dragBox.css('left')) * this.activeData.ratio;\n      var markY = parseInt($dragBox.css('top')) * this.activeData.ratio;\n      var positionVal = $panel.find('.J-position:checked').val();\n      var dragBoxWrapperWidth = this.activeData.w1;\n      var dragBoxWrapperHeight = this.activeData.h1;\n      var dragBoxWidth = $markTxt.outerWidth();\n      var dragBoxHeight = $markTxt.outerHeight();\n\n      switch (POSITION[positionVal]) {\n        case 'center':\n          markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;\n          markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;\n          break;\n\n        case 'upLeft':\n          markX = (0 + this.markXPositionMargin) * this.activeData.ratio;\n          markY = (0 + this.markYPositionMargin) * this.activeData.ratio;\n          break;\n\n        case 'upRight':\n          markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;\n          markY = (0 + this.markYPositionMargin) * this.activeData.ratio;\n          break;\n\n        case 'downLeft':\n          markX = (0 + this.markXPositionMargin) * this.activeData.ratio;\n          markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;\n          break;\n\n        case 'downRight':\n          markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;\n          markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;\n          break;\n\n        default:\n          break;\n      }\n\n      $dragBox.css({\n        'left': Math.floor(markX / this.activeData.ratio),\n        'top': Math.floor(markY / this.activeData.ratio),\n        'width': Math.ceil(dragBoxWidth),\n        'height': Math.ceil(dragBoxHeight)\n      });\n    }\n  }, {\n    key: \"_setMarkStyle\",\n    value: function _setMarkStyle(type) {\n      var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;\n      var $markTxt = $panel.find('.J-mark-txt');\n      var colorVal = $panel.find('.J-color:checked').val();\n      var opacityVal = parseInt($panel.find('.J-opacity').val()) / parseInt($panel.find('.J-opacity').attr('max'));\n      var txtVal = $panel.find('.J-select-mark').val();\n      var color = \"rgba(255, 255, 255, \".concat(opacityVal, \")\");\n\n      if (colorVal === '1') {\n        color = \"rgba(0, 0, 0, \".concat(opacityVal, \")\");\n      }\n\n      var text = this.markTextList[txtVal];\n      $markTxt.text(text).css({\n        'color': color\n      });\n    }\n  }, {\n    key: \"_initMark\",\n    value: function _initMark(type) {\n      var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;\n      $panel.find('.J-color:last').prop('checked', true);\n      $panel.find('.J-position:first').prop('checked', true);\n      $panel.find('.J-opacity:first').val($panel.find('.J-opacity:first').attr('defaultValue'));\n      $panel.find('.J-select-mark option:first').prop('selected', true);\n      $panel.find('.J-mark-txt').css({\n        'font-size': this.markFontSize0 + 'px'\n      });\n\n      if (type === this.MARKTYPE.MULTIPLE) {\n        this.markSelects[1].select(0);\n        this.markAllBox.$dragBox.find('.J-mark-txt').css({\n          'display': 'inline-block'\n        });\n      } else {\n        this.markSelects[0].select(0);\n        this.markBox.$dragBox.find('.J-mark-txt').css({\n          'display': 'inline-block'\n        });\n      }\n\n      this._setMarkStyle(type);\n\n      this._setMarkPosition(type);\n    }\n  }, {\n    key: \"_updateMark\",\n    value: function _updateMark(type) {\n      this._setMarkStyle(type);\n\n      this._setMarkPosition(type);\n\n      this._updateIsChange(true);\n    }\n  }, {\n    key: \"_saveMark\",\n    value: function _saveMark() {\n      var _this6 = this;\n\n      var options = this._getMarkParams();\n\n      this.onSaveMark(options, function (img) {\n        _this6.activeImg = img;\n\n        _this6._updateActiveData();\n\n        _this6._refresh();\n\n        _this6._goHome();\n\n        _this6._updateIsChange(true);\n      });\n    }\n  }, {\n    key: \"_cancelMark\",\n    value: function _cancelMark() {\n      this._goHome();\n    }\n  }, {\n    key: \"_getMarkParams\",\n    value: function _getMarkParams(type) {\n      var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;\n      var $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;\n      var $markTxt = $panel.find('.J-mark-txt');\n      var markFont = Math.floor(parseInt($markTxt.css('font-size')) * this.activeData.ratio) + 'px / ' + Math.floor(parseInt($markTxt.css('line-height')) * this.activeData.ratio) + 'px ' + $markTxt.css('font-family');\n      var $opacity = $panel.find('.J-opacity');\n      var opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));\n      var colorVal = $panel.find('.J-color:checked').val();\n      var color = \"rgba(255, 255, 255, \".concat(opacityVal, \")\");\n\n      if (colorVal === '1') {\n        color = \"rgba(0, 0, 0, \".concat(opacityVal, \")\");\n      }\n\n      var txtVal = $panel.find('.J-select-mark').val();\n      var text = this.markTextList[txtVal];\n      var markX = Math.floor(parseInt($dragBox.css('left')) * this.activeData.ratio);\n      var markY = Math.floor(parseInt($dragBox.css('top')) * this.activeData.ratio);\n      var POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];\n      var positionVal = $panel.find('.J-position:checked').val();\n      var dragBoxWrapperWidth = this.activeData.w1;\n      var dragBoxWrapperHeight = this.activeData.h1;\n      var dragBoxWidth = $markTxt.outerWidth();\n      var dragBoxHeight = $markTxt.outerHeight();\n\n      switch (POSITION[positionVal]) {\n        case 'center':\n          markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;\n          markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;\n          break;\n\n        case 'upLeft':\n          markX = (0 + 15) * this.activeData.ratio;\n          markY = (0 + 20) * this.activeData.ratio;\n          break;\n\n        case 'upRight':\n          markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;\n          markY = (0 + 20) * this.activeData.ratio;\n          break;\n\n        case 'downLeft':\n          markX = (0 + 15) * this.activeData.ratio;\n          markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;\n          break;\n\n        case 'downRight':\n          markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;\n          markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;\n          break;\n\n        default:\n          break;\n      }\n\n      return {\n        markX: markX,\n        markY: markY,\n        markText: text,\n        markFont: markFont,\n        markStyle: color\n      };\n    }\n  }, {\n    key: \"_saveMarkAll\",\n    value: function _saveMarkAll() {\n      var _this7 = this;\n\n      var num = 0;\n      this.imgList.forEach(function (element, index) {\n        _this7.onChangeActive({\n          activeImg: element,\n          activeIndex: index\n        });\n\n        _this7.activeImg = element;\n\n        _this7._updateActiveData();\n\n        var options = _this7._getMarkParams(_this7.MARKTYPE.MULTIPLE);\n\n        _this7.onSaveMark(options, function (img) {});\n\n        _this7.onSave(function (data) {\n          // console.log(num+1);\n          if (++num === _this7.imgList.length) {\n            _this7._hideProgress();\n\n            _this7.destory();\n\n            _this7._updateIsChange(false);\n\n            num = 0;\n\n            _this7.onComplete(data);\n          }\n        }, index);\n      });\n    } // 水印相关操作end++++++++++++++++++++++++++++++++++++++++\n\n  }, {\n    key: \"_showSize\",\n    value: function _showSize(w0, h0) {\n      w0 = Math.round(w0);\n      h0 = Math.round(h0); // 显示活动图片原始宽高\n\n      var $numWidth = this.$el.find('.J-num-width');\n      var $numHeight = this.$el.find('.J-num-height');\n      $numWidth.each(function (index, element) {\n        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).get(0).nodeName.toLowerCase() === 'input') {\n          $numWidth.val(w0);\n        } else {\n          $numWidth.text(w0);\n        }\n      });\n      $numHeight.each(function (index, element) {\n        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).get(0).nodeName.toLowerCase() === 'input') {\n          $numHeight.val(h0);\n        } else {\n          $numHeight.text(h0);\n        }\n      });\n    }\n  }, {\n    key: \"_refresh\",\n    value: function _refresh() {\n      var src = '';\n\n      if (this.activeData.img.nodeName.toLowerCase() === 'img') {\n        src = this.activeData.img.src;\n      } else {\n        src = this.activeData.img.toDataURL(this.mime, 1.0);\n      }\n\n      if (this.$el.find('.J-img-box').find('.J-source').length > 0) {\n        this.$el.find('.J-img-box').find('.J-source').attr('src', src);\n      } else {\n        this.$el.find('.J-img-box').append(\"<img class=\\\"J-source\\\" src=\\\"\".concat(src, \"\\\">\"));\n      }\n\n      this.$el.find('.J-source').removeAttr('style');\n      this.cropBox && this.cropBox.boxEl.removeAttribute('style');\n      this.$el.find('.J-img-box').find('.J-source').css({\n        width: this.activeData.w1,\n        height: this.activeData.h1\n      });\n\n      this._showSize(this.activeData.w0, this.activeData.h0);\n    } // 更新正在编辑图片的数据\n\n  }, {\n    key: \"_updateActiveData\",\n    value: function _updateActiveData() {\n      var targetImg = this.activeImg;\n      var w0 = targetImg.width;\n      var h0 = targetImg.height;\n\n      if (targetImg.nodeName.toLowerCase() === 'img') {\n        w0 = targetImg.naturalWidth;\n        h0 = targetImg.naturalHeight;\n      }\n\n      var imgRatio = w0 / h0;\n      var h1 = h0;\n      var w1 = w0;\n      var ratio = 1;\n\n      if (imgRatio < this.imgBoxRatio) {\n        if (h0 > this.imgBoxHeight) {\n          h1 = this.imgBoxHeight;\n          w1 = h1 * imgRatio;\n          ratio = h0 / h1;\n        }\n      } else {\n        if (w0 > this.imgBoxWidth) {\n          w1 = this.imgBoxWidth;\n          h1 = w1 / imgRatio;\n          ratio = w0 / w1;\n        }\n      }\n\n      this.activeData = {\n        w0: w0,\n        h0: h0,\n        w1: w1,\n        h1: h1,\n        ratio: ratio,\n        imgRatio: imgRatio,\n        img: targetImg\n      };\n    }\n  }, {\n    key: \"_getRotateNum\",\n    value: function _getRotateNum(direction) {\n      this.rotateNum += direction;\n\n      if (this.rotateNum > 3) {\n        this.rotateNum = 0;\n      }\n\n      if (this.rotateNum < 0) {\n        this.rotateNum = 3;\n      }\n    } // TODO 独立出Tip组件\n\n  }, {\n    key: \"_confirm\",\n    value: function _confirm(yesCallback, noCallback) {\n      var _this8 = this;\n\n      var $tip = this.$el.find('.J-pipeImg-tip');\n\n      var hideTip = function hideTip() {\n        _this8.$pipeWrapper.css('z-index', 2);\n\n        $tip.hide();\n        $tip.off('click');\n      };\n\n      var showTip = function showTip() {\n        $tip.show();\n\n        _this8.$pipeWrapper.css('z-index', 0);\n      };\n\n      showTip();\n      $tip.on('click', '.J-tip-confirm', function (e) {\n        yesCallback();\n        hideTip();\n      });\n      $tip.on('click', '.J-tip-cancel', function (e) {\n        noCallback && noCallback();\n        hideTip();\n      });\n    }\n  }, {\n    key: \"_updateIsChange\",\n    value: function _updateIsChange(isChange) {\n      this.isChange = isChange;\n\n      if (isChange) {\n        this.$buttons.addClass('active');\n      } else {\n        this.$buttons.removeClass('active');\n      }\n    }\n  }, {\n    key: \"_reset\",\n    value: function _reset() {\n      var _this9 = this;\n\n      this.onReset(function (img) {\n        _this9.activeImg = img;\n\n        _this9._updateActiveData();\n\n        _this9._refresh();\n\n        _this9._goHome();\n\n        _this9._initData();\n\n        _this9._updateIsChange(false);\n      });\n    }\n  }, {\n    key: \"_save\",\n    value: function _save() {\n      var _this10 = this;\n\n      var $activeThumb = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');\n      var index = $activeThumb.index();\n      this.onSave(function (data) {\n        if (!(data && data[index] && data[index].url)) {\n          window.console && console.log('save: data error!');\n          return false;\n        }\n\n        var newSrc = data[index].url.replace(\"&amp;\", \"&\"); // 更新单图和批量模式缩略图\n\n        $activeThumb.addClass('new').find('img').attr('src', newSrc);\n\n        _this10.$markAllPanel.find('.J-img-thumbnail').eq(index).find('img').attr('src', newSrc); // 更新imgList\n\n\n        _this10.imgList[index] = $activeThumb.find('img').get(0);\n\n        _this10._hideProgress();\n\n        _this10._goHome();\n\n        _this10.onComplete(data);\n\n        _this10._updateIsChange(false);\n      }, index);\n    }\n  }, {\n    key: \"_showProgress\",\n    value: function _showProgress() {\n      this.$pipeWrapper.css('z-index', 0);\n      this.$el.find('.J-pipeImg-progress').addClass('active');\n    }\n  }, {\n    key: \"_hideProgress\",\n    value: function _hideProgress() {\n      this.$pipeWrapper.css('z-index', 2);\n      this.$el.find('.J-pipeImg-progress').removeClass('active');\n    }\n  }, {\n    key: \"_initData\",\n    value: function _initData() {\n      this.rotateNum = 0;\n      this.scaleRatio = 1;\n    }\n  }, {\n    key: \"_updateActiveImg\",\n    value: function _updateActiveImg(index) {\n      this.activeImg = this.imgList[index];\n\n      this._updateActiveData();\n\n      this._refresh();\n\n      var options = {\n        activeImg: this.activeImg,\n        activeIndex: index\n      };\n      this.onChangeActive(options, function (img) {});\n    }\n  }, {\n    key: \"showMenu\",\n    value: function showMenu(index) {\n      this.$el.find('.J-item').eq(index).addClass('active').siblings().removeClass('active');\n      this.$el.find('.J-panel').eq(index).addClass('active').siblings().removeClass('active'); // 若是水印，设置鼠标指针状态\n\n      if (index === 3) {\n        // 切换水印按钮状态\n        var $itemMark = this.$el.find('.J-item-mark');\n        $itemMark.find('.J-menu-btn').hide();\n        $itemMark.find('.J-menu-txt').show();\n      }\n    }\n  }, {\n    key: \"showModel\",\n    value: function showModel(type) {\n      // 编辑界面类型\n      if (type === this.MARKTYPE.MULTIPLE) {\n        this.imgBoxHeight = this.$markAllPanel.find('.J-img-box').height();\n        this.imgBoxWidth = this.$markAllPanel.find('.J-img-box').width();\n        this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;\n\n        this._updateActiveData();\n\n        this._refresh();\n\n        var $itemMark = this.$el.find('.J-item-mark'); // 切换菜单及面板状态\n\n        $itemMark.addClass('active').siblings().removeClass('active');\n        this.$markAllPanel.addClass('active').siblings().removeClass('active'); // 切换水印按钮状态\n\n        $itemMark.find('.J-menu-btn').hide();\n        $itemMark.find('.J-menu-txt').show();\n        var txt = $itemMark.find('.J-menu-btn-mark-all').html();\n        $itemMark.find('.J-menu-txt').html(txt);\n        $itemMark.find('.J-menu-btn-mark-all').hide();\n        $itemMark.find('.J-menu-btn-mark').show(); // 切换页脚状态\n\n        this.$el.find('.J-pipe-footer').addClass('mark-all');\n      } else {\n        this.imgBoxHeight = this.$markPanel.find('.J-img-box').height();\n        this.imgBoxWidth = this.$markPanel.find('.J-img-box').width();\n        this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;\n\n        this._updateActiveData();\n\n        this._refresh();\n\n        var _$itemMark = this.$el.find('.J-item-mark'); // 切换菜单及面板状态\n\n\n        this.$el.find('.J-item:first').addClass('active').siblings().removeClass('active');\n        this.$el.find('.J-panel:first').addClass('active').siblings().removeClass('active'); // 切换水印按钮状态\n\n        _$itemMark.find('.J-menu-btn').show();\n\n        _$itemMark.find('.J-menu-txt').hide();\n\n        var _txt = _$itemMark.find('.J-menu-btn-mark').html();\n\n        _$itemMark.find('.J-menu-txt').html(_txt);\n\n        _$itemMark.find('.J-menu-btn-mark-all').show();\n\n        _$itemMark.find('.J-menu-btn-mark').hide(); // 切换页脚状态\n\n\n        this.$el.find('.J-pipe-footer').removeClass('mark-all');\n      }\n    }\n  }, {\n    key: \"destory\",\n    value: function destory() {\n      this.$el.remove();\n    }\n  }, {\n    key: \"showDialog\",\n    value: function showDialog() {\n      this.$pipeWrapper.fadeIn(100);\n    }\n  }, {\n    key: \"hideDialog\",\n    value: function hideDialog() {\n      this.$pipeWrapper.fadeOut(100);\n    }\n  }]);\n\n  return Dialog;\n}();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Dialog);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvanMvZGlhbG9nLmpzLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vc3JjL2pzL2RpYWxvZy5qcz8yMGQ4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAkIGZyb20gJ2pxdWVyeSc7XG5pbXBvcnQgdGVtcGxhdGUgZnJvbSAndGVtcGxhdGUnO1xuXG5pbXBvcnQge1xuICAgIGRyYWcsXG4gICAgbG9hZEltYWdlXG59IGZyb20gJy4vdXRpbCc7XG5pbXBvcnQge1xuICAgIERyYWdCb3hcbn0gZnJvbSAnLi9kcmFnQm94JztcbmltcG9ydCB0cGwgZnJvbSAnLi9kaWFsb2cudHBsJztcbmltcG9ydCBUaGluU2VsZWN0IGZyb20gJy4vdGhpblNlbGVjdCc7XG5cbmNsYXNzIERpYWxvZyB7XG5cbiAgICBjb25zdHJ1Y3RvcihvcHRpb25zKSB7XG5cbiAgICAgICAgLy8g6buY6K6k6YWN572u5Y+C5pWwXG4gICAgICAgIGxldCBkZWZhdWx0cyA9IHtcbiAgICAgICAgICAgIGRlYnVnOiBmYWxzZSxcbiAgICAgICAgICAgIGltZ0xpc3Q6IFtdLFxuICAgICAgICAgICAgYWN0aXZlSW5kZXg6IDAsXG4gICAgICAgICAgICB0eXBlOiAnMCcsXG4gICAgICAgICAgICB0ZW1wbGF0ZTogdHBsLFxuICAgICAgICAgICAgbWltZTogJ2ltYWdlL2pwZWcnLFxuICAgICAgICAgICAgbWFya1hQb3NpdGlvbk1hcmdpbjogMTUsXG4gICAgICAgICAgICBtYXJrWVBvc2l0aW9uTWFyZ2luOiAyMCxcbiAgICAgICAgICAgIG1hcmtUZXh0TGlzdDogWydwcm9kdWN0dGVzdC5lbi5tYWRlLWluLWNoaW5hLmNvbScsICdGb2N1cyBTZXJ2aWNlIENvIC0gUHJvZHVjdCBTb3VyY2luZyddLFxuXG4gICAgICAgICAgICBjbG9zZUJ0blR4dDogJ+WFs+mXrScsXG4gICAgICAgICAgICBzYXZlQnRuVHh0OiAn5L+d5a2YJyxcbiAgICAgICAgICAgIHJlc2V0QnRuVHh0OiAn6YeN572uJyxcbiAgICAgICAgICAgIGNvbmZpcm1CdG5UeHQ6ICfnoa7lrponLFxuICAgICAgICAgICAgY2FuY2VsQnRuVHh0OiAn5Y+W5raIJyxcbiAgICAgICAgICAgIHJvdGF0ZU1lbnVUeHQ6ICfml4vovawnLFxuICAgICAgICAgICAgdHVybkxlZnRUeHQ6ICfpgIbml7bpkojml4vovawnLFxuICAgICAgICAgICAgdHVyblJpZ2h0VHh0OiAn6aG65pe26ZKI5peL6L2sJyxcbiAgICAgICAgICAgIGNyb3BNZW51VHh0OiAn6KOB5YmqJyxcbiAgICAgICAgICAgIHNjYWxlTWVudVR4dDogJ+e8qeaUvicsXG4gICAgICAgICAgICBtYXJrTWVudVR4dDogJ+a3u+WKoOawtOWNsCcsXG4gICAgICAgICAgICBjb2xvclR4dDogJ+minOiJsicsXG4gICAgICAgICAgICBwb3NpdGlvblR4dDogJ+S9jee9ricsXG4gICAgICAgICAgICBvcGFjaXR5VHh0OiAn6YCP5piO5bqmJyxcbiAgICAgICAgICAgIHNob3dSb29tVHh0OiAn5bGV56S65Y6FJyxcbiAgICAgICAgICAgIGNvbXBhbnlOYW1lVHh0OiAn5YWs5Y+45ZCN56ewJyxcbiAgICAgICAgICAgIG1hcmtBbGxNZW51VHh0OiAn5om56YeP5re75Yqg5rC05Y2wJyxcbiAgICAgICAgICAgIHRpcFRpdGxlVHh0OiAn5o+Q56S6JyxcbiAgICAgICAgICAgIHRpcENvbnRlbnRUeHQ6ICflsJrmnKrkv53lrZjvvIzmmK/lkKbnoa7lrprnprvlvIDvvJ8nLFxuICAgICAgICAgICAgdGlwQ29uZmlybUJ0blR4dDogJ+ehruWumicsXG5cbiAgICAgICAgICAgIG9uU2F2ZVJvdGF0ZTogKGFyZ3MsIGNiKSA9PiB7fSxcbiAgICAgICAgICAgIG9uU2F2ZUNyb3A6IChhcmdzLCBjYikgPT4ge30sXG4gICAgICAgICAgICBvblNhdmVTY2FsZTogKGFyZ3MsIGNiKSA9PiB7fSxcbiAgICAgICAgICAgIG9uU2F2ZU1hcms6IChhcmdzLCBjYikgPT4ge30sXG4gICAgICAgICAgICBvblJlc2V0OiAoY2IpID0+IHt9LFxuICAgICAgICAgICAgb25TYXZlOiAoY2IpID0+IHt9LFxuICAgICAgICAgICAgb25DaGFuZ2VBY3RpdmU6IChvcHRpb25zLCBjYikgPT4ge30sXG4gICAgICAgICAgICBvblNhdmVNYXJrQWxsOiAoY2IpID0+IHt9LFxuICAgICAgICAgICAgb25Db21wbGV0ZTogKHJlc3VsdCkgPT4ge31cblxuICAgICAgICB9O1xuXG5cbiAgICAgICAgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oe30sIGRlZmF1bHRzLCBvcHRpb25zKTtcblxuICAgICAgICB0aGlzLmRlYnVnID0gb3B0aW9ucy5kZWJ1ZztcbiAgICAgICAgdGhpcy5pbWdMaXN0ID0gb3B0aW9ucy5pbWdMaXN0O1xuICAgICAgICB0aGlzLmFjdGl2ZUluZGV4ID0gb3B0aW9ucy5hY3RpdmVJbmRleDtcbiAgICAgICAgdGhpcy50eXBlID0gb3B0aW9ucy50eXBlO1xuICAgICAgICB0aGlzLnRlbXBsYXRlID0gb3B0aW9ucy50ZW1wbGF0ZTtcbiAgICAgICAgdGhpcy5taW1lID0gb3B0aW9ucy5taW1lO1xuICAgICAgICB0aGlzLm1hcmtYUG9zaXRpb25NYXJnaW4gPSBvcHRpb25zLm1hcmtYUG9zaXRpb25NYXJnaW47XG4gICAgICAgIHRoaXMubWFya1lQb3NpdGlvbk1hcmdpbiA9IG9wdGlvbnMubWFya1lQb3NpdGlvbk1hcmdpbjtcbiAgICAgICAgdGhpcy5tYXJrVGV4dExpc3QgPSBvcHRpb25zLm1hcmtUZXh0TGlzdDtcbiAgICAgICAgdGhpcy5jbG9zZUJ0blR4dCA9IG9wdGlvbnMuY2xvc2VCdG5UeHQ7XG4gICAgICAgIHRoaXMuc2F2ZUJ0blR4dCA9IG9wdGlvbnMuc2F2ZUJ0blR4dDtcbiAgICAgICAgdGhpcy5yZXNldEJ0blR4dCA9IG9wdGlvbnMucmVzZXRCdG5UeHQ7XG4gICAgICAgIHRoaXMuY29uZmlybUJ0blR4dCA9IG9wdGlvbnMuY29uZmlybUJ0blR4dDtcbiAgICAgICAgdGhpcy5jYW5jZWxCdG5UeHQgPSBvcHRpb25zLmNhbmNlbEJ0blR4dDtcbiAgICAgICAgdGhpcy5yb3RhdGVNZW51VHh0ID0gb3B0aW9ucy5yb3RhdGVNZW51VHh0O1xuICAgICAgICB0aGlzLnR1cm5MZWZ0VHh0ID0gb3B0aW9ucy50dXJuTGVmdFR4dDtcbiAgICAgICAgdGhpcy50dXJuUmlnaHRUeHQgPSBvcHRpb25zLnR1cm5SaWdodFR4dDtcbiAgICAgICAgdGhpcy5jcm9wTWVudVR4dCA9IG9wdGlvbnMuY3JvcE1lbnVUeHQ7XG4gICAgICAgIHRoaXMuc2NhbGVNZW51VHh0ID0gb3B0aW9ucy5zY2FsZU1lbnVUeHQ7XG4gICAgICAgIHRoaXMubWFya01lbnVUeHQgPSBvcHRpb25zLm1hcmtNZW51VHh0O1xuICAgICAgICB0aGlzLmNvbG9yVHh0ID0gb3B0aW9ucy5jb2xvclR4dDtcbiAgICAgICAgdGhpcy5wb3NpdGlvblR4dCA9IG9wdGlvbnMucG9zaXRpb25UeHQ7XG4gICAgICAgIHRoaXMub3BhY2l0eVR4dCA9IG9wdGlvbnMub3BhY2l0eVR4dDtcbiAgICAgICAgdGhpcy5zaG93Um9vbVR4dCA9IG9wdGlvbnMuc2hvd1Jvb21UeHQ7XG4gICAgICAgIHRoaXMuY29tcGFueU5hbWVUeHQgPSBvcHRpb25zLmNvbXBhbnlOYW1lVHh0O1xuICAgICAgICB0aGlzLm1hcmtBbGxNZW51VHh0ID0gb3B0aW9ucy5tYXJrQWxsTWVudVR4dDtcbiAgICAgICAgdGhpcy50aXBUaXRsZVR4dCA9IG9wdGlvbnMudGlwVGl0bGVUeHQ7XG4gICAgICAgIHRoaXMudGlwQ29udGVudFR4dCA9IG9wdGlvbnMudGlwQ29udGVudFR4dDtcbiAgICAgICAgdGhpcy50aXBDb25maXJtQnRuVHh0ID0gb3B0aW9ucy50aXBDb25maXJtQnRuVHh0O1xuXG4gICAgICAgIHRoaXMub25TYXZlUm90YXRlID0gb3B0aW9ucy5vblNhdmVSb3RhdGU7XG4gICAgICAgIHRoaXMub25TYXZlQ3JvcCA9IG9wdGlvbnMub25TYXZlQ3JvcDtcbiAgICAgICAgdGhpcy5vblNhdmVTY2FsZSA9IG9wdGlvbnMub25TYXZlU2NhbGU7XG4gICAgICAgIHRoaXMub25TYXZlTWFyayA9IG9wdGlvbnMub25TYXZlTWFyaztcbiAgICAgICAgdGhpcy5vblJlc2V0ID0gb3B0aW9ucy5vblJlc2V0O1xuICAgICAgICB0aGlzLm9uU2F2ZSA9IG9wdGlvbnMub25TYXZlO1xuICAgICAgICB0aGlzLm9uQ2hhbmdlQWN0aXZlID0gb3B0aW9ucy5vbkNoYW5nZUFjdGl2ZTtcbiAgICAgICAgdGhpcy5vblNhdmVNYXJrQWxsID0gb3B0aW9ucy5vblNhdmVNYXJrQWxsO1xuICAgICAgICB0aGlzLm9uQ29tcGxldGUgPSBvcHRpb25zLm9uQ29tcGxldGU7XG5cbiAgICAgICAgdGhpcy5faW5pdCgpO1xuXG4gICAgfVxuXG4gICAgX2luaXQoKSB7XG4gICAgICAgIGxldCB0ZW1wbGF0ZUh0bWwgPSB0ZW1wbGF0ZSh0aGlzLnRlbXBsYXRlLCB7XG4gICAgICAgICAgICBpbWdMaXN0OiB0aGlzLmltZ0xpc3QsXG4gICAgICAgICAgICBhY3RpdmVJbmRleDogdGhpcy5hY3RpdmVJbmRleCxcbiAgICAgICAgICAgIHR5cGU6IHRoaXMudHlwZSxcbiAgICAgICAgICAgIGNsb3NlQnRuVHh0OiB0aGlzLmNsb3NlQnRuVHh0LFxuICAgICAgICAgICAgc2F2ZUJ0blR4dDogdGhpcy5zYXZlQnRuVHh0LFxuICAgICAgICAgICAgcmVzZXRCdG5UeHQ6IHRoaXMucmVzZXRCdG5UeHQsXG4gICAgICAgICAgICBjb25maXJtQnRuVHh0OiB0aGlzLmNvbmZpcm1CdG5UeHQsXG4gICAgICAgICAgICBjYW5jZWxCdG5UeHQ6IHRoaXMuY2FuY2VsQnRuVHh0LFxuICAgICAgICAgICAgcm90YXRlTWVudVR4dDogdGhpcy5yb3RhdGVNZW51VHh0LFxuICAgICAgICAgICAgdHVybkxlZnRUeHQ6IHRoaXMudHVybkxlZnRUeHQsXG4gICAgICAgICAgICB0dXJuUmlnaHRUeHQ6IHRoaXMudHVyblJpZ2h0VHh0LFxuICAgICAgICAgICAgY3JvcE1lbnVUeHQ6IHRoaXMuY3JvcE1lbnVUeHQsXG4gICAgICAgICAgICBzY2FsZU1lbnVUeHQ6IHRoaXMuc2NhbGVNZW51VHh0LFxuICAgICAgICAgICAgbWFya01lbnVUeHQ6IHRoaXMubWFya01lbnVUeHQsXG4gICAgICAgICAgICBjb2xvclR4dDogdGhpcy5jb2xvclR4dCxcbiAgICAgICAgICAgIHBvc2l0aW9uVHh0OiB0aGlzLnBvc2l0aW9uVHh0LFxuICAgICAgICAgICAgb3BhY2l0eVR4dDogdGhpcy5vcGFjaXR5VHh0LFxuICAgICAgICAgICAgc2hvd1Jvb21UeHQ6IHRoaXMuc2hvd1Jvb21UeHQsXG4gICAgICAgICAgICBjb21wYW55TmFtZVR4dDogdGhpcy5jb21wYW55TmFtZVR4dCxcbiAgICAgICAgICAgIG1hcmtBbGxNZW51VHh0OiB0aGlzLm1hcmtBbGxNZW51VHh0LFxuICAgICAgICAgICAgdGlwVGl0bGVUeHQ6IHRoaXMudGlwVGl0bGVUeHQsXG4gICAgICAgICAgICB0aXBDb250ZW50VHh0OiB0aGlzLnRpcENvbnRlbnRUeHQsXG4gICAgICAgICAgICB0aXBDb25maXJtQnRuVHh0OiB0aGlzLnRpcENvbmZpcm1CdG5UeHRcbiAgICAgICAgfSk7XG5cbiAgICAgICAgbGV0IGh0bWwgPSAnPGRpdiBjbGFzcz1cInBpcGVJbWctZGlhbG9nIEotcGlwZS1kaWFsb2dcIiBvbnNlbGVjdHN0YXJ0PVwicmV0dXJuIGZhbHNlXCIgb25kcmFnc3RhcnQ9XCJyZXR1cm4gZmFsc2VcIj48ZGl2IGNsYXNzPVwicGlwZS1tYXNrIEotcGlwZS1tYXNrXCI+PC9kaXY+JyArIHRlbXBsYXRlSHRtbCArICc8L2Rpdj4nO1xuICAgICAgICAkKCdib2R5JykuYXBwZW5kKGh0bWwpO1xuXG4gICAgICAgIHRoaXMuJGVsID0gJCgnLkotcGlwZS1kaWFsb2cnKTtcbiAgICAgICAgdGhpcy4kcGlwZVdyYXBwZXIgPSB0aGlzLiRlbC5maW5kKCcuSi1waXBlLXdyYXBwZXInKTtcblxuICAgICAgICAvLyDpgJrnlKjmjInpkq5cbiAgICAgICAgdGhpcy4kYnRuQ2xvc2UgPSB0aGlzLiRlbC5maW5kKCcuSi1idXR0b24tY2xvc2UnKTtcbiAgICAgICAgdGhpcy4kYnRuU2F2ZSA9IHRoaXMuJGVsLmZpbmQoJy5KLWJ1dHRvbi1zYXZlJyk7XG4gICAgICAgIHRoaXMuJGJ0blJlc2V0ID0gdGhpcy4kZWwuZmluZCgnLkotYnV0dG9uLXJlc2V0Jyk7XG4gICAgICAgIHRoaXMuJGJ0bkNvbmZpcm0gPSB0aGlzLiRlbC5maW5kKCcuSi1idXR0b24tY29uZmlybScpO1xuICAgICAgICB0aGlzLiRidG5DYW5jZWwgPSB0aGlzLiRlbC5maW5kKCcuSi1idXR0b24tY2FuY2VsJyk7XG4gICAgICAgIHRoaXMuJGJ0blNhdmVBbGwgPSB0aGlzLiRlbC5maW5kKCcuSi1idXR0b24tY29uZmlybS1hbGwnKTtcbiAgICAgICAgdGhpcy4kYnRuQ2FuY2VsQWxsID0gdGhpcy4kZWwuZmluZCgnLkotYnV0dG9uLWNhbmNlbC1hbGwnKTtcblxuICAgICAgICAvLyDmqKHlnZfmjInpkq5cbiAgICAgICAgLy8g5peL6L2sXG4gICAgICAgIHRoaXMuJHJvdGF0ZVBhbmVsID0gdGhpcy4kZWwuZmluZCgnLkotcm90YXRlLXBhbmVsJyk7XG4gICAgICAgIHRoaXMuJHR4dFJvdGF0ZVdpZHRoID0gdGhpcy4kcm90YXRlUGFuZWwuZmluZCgnLkotbnVtLXdpZHRoJyk7XG4gICAgICAgIHRoaXMuJHR4dFJvdGF0ZUhlaWdodCA9IHRoaXMuJHJvdGF0ZVBhbmVsLmZpbmQoJy5KLW51bS1oZWlnaHQnKTtcbiAgICAgICAgdGhpcy4kYnRuUm90YXRlTGVmdCA9IHRoaXMuJGVsLmZpbmQoJy5KLWJ0bi1yb3RhdGUtbGVmdCcpO1xuICAgICAgICB0aGlzLiRidG5Sb3RhdGVSaWdodCA9IHRoaXMuJGVsLmZpbmQoJy5KLWJ0bi1yb3RhdGUtcmlnaHQnKTtcbiAgICAgICAgLy8g6KOB5YmqXG4gICAgICAgIGxldCAkY3JvcFBhbmVsID0gdGhpcy4kZWwuZmluZCgnLkotY3JvcC1wYW5lbCcpO1xuICAgICAgICB0aGlzLiRpbnB1dENyb3BXaWR0aCA9ICRjcm9wUGFuZWwuZmluZCgnLkotbnVtLXdpZHRoJyk7XG4gICAgICAgIHRoaXMuJGlucHV0Q3JvcEhlaWdodCA9ICRjcm9wUGFuZWwuZmluZCgnLkotbnVtLWhlaWdodCcpO1xuICAgICAgICB0aGlzLiRyYWRpb0Nyb3BGaXggPSAkY3JvcFBhbmVsLmZpbmQoJy5KLWZpeC1yYXRpbycpO1xuICAgICAgICAvLyDnvKnmlL5cbiAgICAgICAgdGhpcy4kc2NhbGVQYW5lbCA9IHRoaXMuJGVsLmZpbmQoJy5KLXNjYWxlLXBhbmVsJyk7XG4gICAgICAgIHRoaXMuJGlucHV0U2NhbGVXaWR0aCA9IHRoaXMuJHNjYWxlUGFuZWwuZmluZCgnLkotbnVtLXdpZHRoJyk7XG4gICAgICAgIHRoaXMuJGlucHV0U2NhbGVIZWlnaHQgPSB0aGlzLiRzY2FsZVBhbmVsLmZpbmQoJy5KLW51bS1oZWlnaHQnKTtcbiAgICAgICAgdGhpcy4kcmFuZ2VTY2FsZVJhdGlvID0gdGhpcy4kc2NhbGVQYW5lbC5maW5kKCcuSi1zY2FsZS1yYW5nZScpO1xuICAgICAgICAvLyDmt7vliqDmsLTljbBcbiAgICAgICAgdGhpcy4kbWFya1BhbmVsID0gdGhpcy4kZWwuZmluZCgnLkotbWFyay1wYW5lbCcpO1xuICAgICAgICB0aGlzLiRyYWRpb01hcmtDb2xvciA9IHRoaXMuJG1hcmtQYW5lbC5maW5kKCcuSi1jb2xvcicpO1xuICAgICAgICB0aGlzLiRyYWRpb01hcmtQb3NpdGlvbiA9IHRoaXMuJG1hcmtQYW5lbC5maW5kKCcuSi1wb3NpdGlvbicpO1xuICAgICAgICB0aGlzLiRyYW5nZU1hcmtPcGFjaXR5ID0gdGhpcy4kbWFya1BhbmVsLmZpbmQoJy5KLW9wYWNpdHknKTtcbiAgICAgICAgdGhpcy4kc2VsZWN0TWFya1R4dCA9IHRoaXMuJG1hcmtQYW5lbC5maW5kKCcuSi1zZWxlY3QtbWFyaycpO1xuICAgICAgICAvLyDmibnph4/mt7vliqDmsLTljbBcbiAgICAgICAgdGhpcy4kbWFya0FsbFBhbmVsID0gdGhpcy4kZWwuZmluZCgnLkotbWFyay1hbGwtcGFuZWwnKTtcbiAgICAgICAgdGhpcy4kcmFkaW9NYXJrQWxsQ29sb3IgPSB0aGlzLiRtYXJrQWxsUGFuZWwuZmluZCgnLkotY29sb3InKTtcbiAgICAgICAgdGhpcy4kcmFkaW9NYXJrQWxsUG9zaXRpb24gPSB0aGlzLiRtYXJrQWxsUGFuZWwuZmluZCgnLkotcG9zaXRpb24nKTtcbiAgICAgICAgdGhpcy4kcmFuZ2VNYXJrQWxsT3BhY2l0eSA9IHRoaXMuJG1hcmtBbGxQYW5lbC5maW5kKCcuSi1vcGFjaXR5Jyk7XG4gICAgICAgIHRoaXMuJHNlbGVjdE1hcmtBbGxUeHQgPSB0aGlzLiRtYXJrQWxsUGFuZWwuZmluZCgnLkotc2VsZWN0LW1hcmsnKTtcblxuICAgICAgICB0aGlzLiRidXR0b25zID0gdGhpcy4kZWwuZmluZCgnLkotYnV0dG9uLXNhdmUsIC5KLWJ1dHRvbi1yZXNldCwgLkotYnV0dG9uLWNvbmZpcm0sIC5KLWJ1dHRvbi1jYW5jZWwsIC5KLWJ1dHRvbi1jb25maXJtLWFsbCwgLkotYnV0dG9uLWNhbmNlbC1hbGwnKTtcblxuICAgICAgICAvLyDlhajlsYDlj5jph49cbiAgICAgICAgdGhpcy5NQVJLVFlQRSA9IHsnU0lOR0xFJzogJzAnLCAnTVVMVElQTEUnOiAnMSd9O1xuICAgICAgICB0aGlzLmlzQ2hhbmdlID0gZmFsc2U7XG4gICAgICAgIHRoaXMucm90YXRlTnVtID0gMDtcbiAgICAgICAgdGhpcy5zY2FsZVJhdGlvID0gMTtcblxuICAgICAgICB0aGlzLmltZ0JveEhlaWdodCA9IHRoaXMuJGVsLmZpbmQoJy5KLWltZy1ib3gnKS5oZWlnaHQoKTtcbiAgICAgICAgdGhpcy5pbWdCb3hXaWR0aCA9IHRoaXMuJGVsLmZpbmQoJy5KLWltZy1ib3gnKS53aWR0aCgpO1xuICAgICAgICB0aGlzLmltZ0JveFJhdGlvID0gdGhpcy5pbWdCb3hXaWR0aCAvIHRoaXMuaW1nQm94SGVpZ2h0O1xuXG4gICAgICAgIHRoaXMuYWN0aXZlSW1nID0gdGhpcy5pbWdMaXN0W3RoaXMuYWN0aXZlSW5kZXhdO1xuICAgICAgICB0aGlzLl91cGRhdGVBY3RpdmVEYXRhKCk7XG5cblxuICAgICAgICAvLyDliJ3lp4vljJboo4HliarmoYZcbiAgICAgICAgdGhpcy5jcm9wQm94ID0gbmV3IERyYWdCb3goe1xuICAgICAgICAgICAgZWw6ICRjcm9wUGFuZWwuZmluZCgnLkotc291cmNlJyksXG4gICAgICAgICAgICBpc0Nyb3A6IHRydWUsXG4gICAgICAgICAgICBvbkRyYWdQb2ludDogKGRhdGEpID0+IHtcbiAgICAgICAgICAgICAgICB0aGlzLl9zaG93U2l6ZShkYXRhLndpZHRoICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvLCBkYXRhLmhlaWdodCAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbyk7XG4gICAgICAgICAgICAgICAgdGhpcy5fdXBkYXRlSXNDaGFuZ2UodHJ1ZSk7XG4gICAgICAgICAgICB9XG4gICAgICAgIH0pO1xuICAgICAgICAvLyDliJ3lp4vljJbnvKnmlL5cbiAgICAgICAgbGV0ICRzY2FsZUltZ1dyYXBwZXIgPSB0aGlzLiRzY2FsZVBhbmVsLmZpbmQoJy5KLXNjYWxlLWltZy13cmFwcGVyJyk7XG4gICAgICAgIGxldCBpbWdFbCA9IHRoaXMuJHNjYWxlUGFuZWwuZmluZCgnLkotc291cmNlJykuZ2V0KDApO1xuICAgICAgICBkcmFnKGltZ0VsLCBpbWdFbCwgJHNjYWxlSW1nV3JhcHBlci5nZXQoMCkpO1xuICAgICAgICAvLyDliJ3lp4vljJbmsLTljbDmoYZcbiAgICAgICAgdGhpcy5tYXJrQm94ID0gbmV3IERyYWdCb3goe1xuICAgICAgICAgICAgZWw6IHRoaXMuJG1hcmtQYW5lbC5maW5kKCcuSi1zb3VyY2UnKSxcbiAgICAgICAgICAgIGZpeFJhdGlvOiB0cnVlLFxuICAgICAgICAgICAgbWFya1RleHQ6IHRoaXMubWFya1RleHRMaXN0WzBdLFxuICAgICAgICAgICAgb25EcmFnQ29tcGxldGU6IChsZWZ0LCB0b3ApID0+IHtcbiAgICAgICAgICAgICAgICB0aGlzLiRtYXJrUGFuZWwuZmluZCgnLkotcG9zaXRpb24nKS5wcm9wKCdjaGVja2VkJywgZmFsc2UpO1xuICAgICAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUlzQ2hhbmdlKHRydWUpO1xuICAgICAgICAgICAgfSxcbiAgICAgICAgICAgIG9uRHJhZ1BvaW50OiAoYm94RGF0YSkgPT4ge1xuICAgICAgICAgICAgICAgIHRoaXMuJG1hcmtQYW5lbC5maW5kKCcuSi1tYXJrLXR4dCcpLmNzcyh7XG4gICAgICAgICAgICAgICAgICAgICdmb250LXNpemUnOiBNYXRoLnJvdW5kKHBhcnNlSW50KHRoaXMubWFya0JveC4kZHJhZ0JveC5jc3MoJ2hlaWdodCcpKSAvIHRoaXMubWFya0xpbmVIZWlnaHQwICogdGhpcy5tYXJrRm9udFNpemUwKVxuICAgICAgICAgICAgICAgIH0pO1xuICAgICAgICAgICAgICAgIHRoaXMubWFya0JveC4kZHJhZ0JveC5maW5kKCcuSi1tYXJrLXR4dCcpLmNzcyh7XG4gICAgICAgICAgICAgICAgICAgICdkaXNwbGF5JzogJ2Jsb2NrJ1xuICAgICAgICAgICAgICAgIH0pO1xuICAgICAgICAgICAgfVxuICAgICAgICB9KTtcbiAgICAgICAgLy8g5Yid5aeL5YyW5om56YeP5rC05Y2w5qGGXG4gICAgICAgIHRoaXMubWFya0FsbEJveCA9IG5ldyBEcmFnQm94KHtcbiAgICAgICAgICAgIGVsOiB0aGlzLiRtYXJrQWxsUGFuZWwuZmluZCgnLkotc291cmNlJyksXG4gICAgICAgICAgICBmaXhSYXRpbzogdHJ1ZSxcbiAgICAgICAgICAgIG1hcmtUZXh0OiB0aGlzLm1hcmtUZXh0TGlzdFswXSxcbiAgICAgICAgICAgIG9uRHJhZ0NvbXBsZXRlOiAobGVmdCwgdG9wKSA9PiB7XG4gICAgICAgICAgICAgICAgdGhpcy4kbWFya0FsbFBhbmVsLmZpbmQoJy5KLXBvc2l0aW9uJykucHJvcCgnY2hlY2tlZCcsIGZhbHNlKTtcbiAgICAgICAgICAgICAgICB0aGlzLl91cGRhdGVJc0NoYW5nZSh0cnVlKTtcbiAgICAgICAgICAgIH0sXG4gICAgICAgICAgICBvbkRyYWdQb2ludDogKGJveERhdGEpID0+IHtcbiAgICAgICAgICAgICAgICB0aGlzLiRtYXJrQWxsUGFuZWwuZmluZCgnLkotbWFyay10eHQnKS5jc3Moe1xuICAgICAgICAgICAgICAgICAgICAnZm9udC1zaXplJzogTWF0aC5yb3VuZChwYXJzZUludCh0aGlzLm1hcmtBbGxCb3guJGRyYWdCb3guY3NzKCdoZWlnaHQnKSkgLyB0aGlzLm1hcmtMaW5lSGVpZ2h0MCAqIHRoaXMubWFya0ZvbnRTaXplMClcbiAgICAgICAgICAgICAgICB9KTtcbiAgICAgICAgICAgICAgICB0aGlzLm1hcmtBbGxCb3guJGRyYWdCb3guZmluZCgnLkotbWFyay10eHQnKS5jc3Moe1xuICAgICAgICAgICAgICAgICAgICAnZGlzcGxheSc6ICdibG9jaydcbiAgICAgICAgICAgICAgICB9KTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgfSk7XG5cblxuICAgICAgICB0aGlzLnR5cGUgPT09IHRoaXMuTUFSS1RZUEUuTVVMVElQTEUgJiYgdGhpcy5zaG93TW9kZWwodGhpcy50eXBlKTtcbiAgICAgICAgdGhpcy5fcmVmcmVzaCgpO1xuXG5cbiAgICAgICAgdGhpcy5tYXJrU2VsZWN0cyA9IFRoaW5TZWxlY3QudXNlKHRoaXMuJGVsLmZpbmQoJy5KLXNlbGVjdC1tYXJrJykpO1xuXG4gICAgICAgIHRoaXMuX3NldE1hcmtQb3NpdGlvbigpO1xuICAgICAgICB0aGlzLl9zZXRNYXJrUG9zaXRpb24odGhpcy5NQVJLVFlQRS5NVUxUSVBMRSk7XG5cbiAgICAgICAgdGhpcy5tYXJrRm9udFNpemUwID0gcGFyc2VJbnQodGhpcy4kZWwuZmluZCgnLkotbWFyay10eHQnKS5jc3MoJ2ZvbnQtc2l6ZScpKTtcbiAgICAgICAgdGhpcy5tYXJrTGluZUhlaWdodDAgPSBwYXJzZUludCh0aGlzLiRlbC5maW5kKCcuSi1tYXJrLXR4dCcpLmNzcygnbGluZS1oZWlnaHQnKSk7XG5cbiAgICAgICAgdGhpcy5fYmluZCgpO1xuICAgIH1cbiAgICBfYmluZCgpIHtcbiAgICAgICAgLy8g5YiH5o2i57yW6L6R5Zu+54mHXG4gICAgICAgIHRoaXMuJGVsLmZpbmQoJy5KLXBpcGUtZm9vdGVyJykub24oJ2NsaWNrJywgJy5KLWltZy10aHVtYm5haWwnLCAoZSkgPT4ge1xuICAgICAgICAgICAgbGV0IHJ1biA9ICgpID0+IHtcbiAgICAgICAgICAgICAgICBsZXQgJHRodW1ibmFpbCA9ICQoZS5jdXJyZW50VGFyZ2V0KTtcbiAgICAgICAgICAgICAgICAkdGh1bWJuYWlsLmFkZENsYXNzKCdhY3RpdmUnKS5zaWJsaW5ncygpLnJlbW92ZUNsYXNzKCdhY3RpdmUnKTtcblxuICAgICAgICAgICAgICAgIGxldCAkdGh1bWJuYWlsSW1nID0gJHRodW1ibmFpbC5maW5kKCdpbWcnKTtcbiAgICAgICAgICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1wYW5lbCcpLm5vdCgnLkotbWFyay1hbGwtcGFuZWwnKS5maW5kKCcuSi1zb3VyY2UnKS5hdHRyKCdzcmMnLCAkdGh1bWJuYWlsSW1nLmF0dHIoJ3NyYycpKTtcblxuICAgICAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUFjdGl2ZUltZygkdGh1bWJuYWlsLmluZGV4KCkpO1xuICAgICAgICAgICAgICAgIHRoaXMuX2dvSG9tZSgpO1xuICAgICAgICAgICAgICAgIHRoaXMuX2luaXREYXRhKCk7XG4gICAgICAgICAgICB9O1xuICAgICAgICAgICAgaWYgKHRoaXMuaXNDaGFuZ2UpIHtcbiAgICAgICAgICAgICAgICB0aGlzLl9jb25maXJtKCgpID0+IHtcbiAgICAgICAgICAgICAgICAgICAgcnVuKCk7XG4gICAgICAgICAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUlzQ2hhbmdlKGZhbHNlKTtcbiAgICAgICAgICAgICAgICB9KSAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICAgICAgcnVuKCk7XG4gICAgICAgICAgICB9XG5cbiAgICAgICAgfSlcbiAgICAgICAgLy8g5om56YeP5rC05Y2w5YiH5o2i57yW6L6R5Zu+54mHXG4gICAgICAgIHRoaXMuJG1hcmtBbGxQYW5lbC5vbignY2xpY2snLCAnLkotaW1nLXRodW1ibmFpbCcsIChlKSA9PiB7XG4gICAgICAgICAgICBsZXQgJHRodW1ibmFpbCA9ICQoZS5jdXJyZW50VGFyZ2V0KTtcbiAgICAgICAgICAgICR0aHVtYm5haWwuYWRkQ2xhc3MoJ2FjdGl2ZScpLnNpYmxpbmdzKCkucmVtb3ZlQ2xhc3MoJ2FjdGl2ZScpO1xuXG4gICAgICAgICAgICBsZXQgJHRodW1ibmFpbEltZyA9ICR0aHVtYm5haWwuZmluZCgnaW1nJyk7XG4gICAgICAgICAgICB0aGlzLiRtYXJrQWxsUGFuZWwuZmluZCgnLkotc291cmNlJykuYXR0cignc3JjJywgJHRodW1ibmFpbEltZy5hdHRyKCdzcmMnKSk7XG5cbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUFjdGl2ZUltZygkdGh1bWJuYWlsLmluZGV4KCkpO1xuICAgICAgICAgICAgdGhpcy5fc2V0TWFya1Bvc2l0aW9uKHRoaXMuTUFSS1RZUEUuTVVMVElQTEUpO1xuICAgICAgICAgICAgdGhpcy5faW5pdERhdGEoKTtcblxuICAgICAgICB9KVxuXG4gICAgICAgIC8vIOiPnOWNleWIh+aNolxuICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1tZW51LWJ0bicpLm9uKCdjbGljaycsIChlKSA9PiB7XG4gICAgICAgICAgICBsZXQgcnVuID0gKCkgPT4geyBcbiAgICAgICAgICAgICAgICBsZXQgJGl0ZW0gPSAkKGUuY3VycmVudFRhcmdldCkucGFyZW50KCk7XG4gICAgICAgICAgICAgICAgbGV0IGluZGV4ID0gJGl0ZW0uaW5kZXgoKTtcbiAgICAgICAgICAgICAgICBsZXQgb2xkQWN0aXZlSW5kZXggPSAkaXRlbS5wYXJlbnQoKS5maW5kKCcuYWN0aXZlOmZpcnN0JykuaW5kZXgoKTtcblxuXG4gICAgICAgICAgICAgICAgdGhpcy5zaG93TW9kZWwodGhpcy5NQVJLVFlQRS5TSU5HTEUpO1xuICAgICAgICAgICAgICAgIHRoaXMuc2hvd01lbnUoaW5kZXgpO1xuXG4gICAgICAgICAgICAgICAgLy8g6Iul5pyJ57yW6L6R5pON5L2c77yM56a75byA5peL6L2s77yM6KOB5Ymq77yM57yp5pS+6Z2i5p2/6L+b6KGM5L+d5a2YXG4gICAgICAgICAgICAgICAgaWYgKHRoaXMuaXNDaGFuZ2UpIHtcbiAgICAgICAgICAgICAgICAgICAgc3dpdGNoIChvbGRBY3RpdmVJbmRleCkge1xuICAgICAgICAgICAgICAgICAgICAgICAgY2FzZSAwOlxuICAgICAgICAgICAgICAgICAgICAgICAgdGhpcy5fc2F2ZVJvdGF0ZSgpO1xuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJyZWFrO1xuICAgICAgICAgICAgICAgICAgICAgICAgY2FzZSAxOlxuICAgICAgICAgICAgICAgICAgICAgICAgdGhpcy5fc2F2ZUNyb3AoKTtcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgICAgICAgICAgICAgIGNhc2UgMjpcbiAgICAgICAgICAgICAgICAgICAgICAgIHRoaXMuX3NhdmVTY2FsZSgpO1xuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJyZWFrO1xuICAgICAgICAgICAgICAgICAgICAgICAgZGVmYXVsdDpcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgICAgIH1cblxuICAgICAgICAgICAgICAgIC8vIOi/m+WFpeijgeWJqlxuICAgICAgICAgICAgICAgIGlmIChpbmRleCA9PT0gMSkge1xuICAgICAgICAgICAgICAgICAgICB0aGlzLl9pbml0Q3JvcCgpO1xuICAgICAgICAgICAgICAgIH1cbiAgICAgICAgICAgICAgICAvLyDov5vlhaXnvKnmlL5cbiAgICAgICAgICAgICAgICBpZiAoaW5kZXggPT09IDIpIHtcbiAgICAgICAgICAgICAgICAgICAgdGhpcy5faW5pdFNjYWxlKCk7XG4gICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgICAgIC8vIOi/m+WFpeawtOWNsFxuICAgICAgICAgICAgICAgIGlmIChpbmRleCA9PT0gMykge1xuICAgICAgICAgICAgICAgICAgICB0aGlzLl9pbml0TWFyaygpO1xuICAgICAgICAgICAgICAgIH1cbiAgICAgICAgICAgICBcbiAgICAgICAgICAgIH07XG5cblxuICAgICAgICAgICAgLy8g56a75byA5om56YeP5rC05Y2w5qih5byP5o+Q56S6XG4gICAgICAgICAgICBpZiAodGhpcy4kbWFya0FsbFBhbmVsLmhhc0NsYXNzKCdhY3RpdmUnKSkge1xuICAgICAgICAgICAgICAgIC8vIOWIh+aNouWIsOWNleWbvue8lui+keaooeW8j+mHjee9rua0u+WKqOWbvueJh1xuICAgICAgICAgICAgICAgIGxldCAkdGh1bWJuYWlsID0gdGhpcy4kZWwuZmluZCgnLkotcGlwZS1mb290ZXInKS5maW5kKCcuSi1pbWctdGh1bWJuYWlsLmFjdGl2ZScpO1xuICAgICAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUFjdGl2ZUltZygkdGh1bWJuYWlsLmluZGV4KCkpO1xuICAgICAgICAgICAgfVxuICAgICAgICAgICAgaWYgKHRoaXMuJG1hcmtBbGxQYW5lbC5oYXNDbGFzcygnYWN0aXZlJykgJiYgdGhpcy5pc0NoYW5nZSkge1xuICAgICAgICAgICAgICAgIHRoaXMuX2NvbmZpcm0oKCkgPT4ge1xuICAgICAgICAgICAgICAgICAgICBydW4oKTtcbiAgICAgICAgICAgICAgICAgICAgdGhpcy5fdXBkYXRlSXNDaGFuZ2UoZmFsc2UpO1xuICAgICAgICAgICAgICAgIH0pICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgfWVsc2V7XG4gICAgICAgICAgICAgICAgcnVuKCk7XG4gICAgICAgICAgICB9XG4gICAgICAgICAgICBcblxuICAgICAgICB9KVxuICAgICAgICAvLyDliIfmjaLmsLTljbBcbiAgICAgICAgdGhpcy4kZWwuZmluZCgnLkotaXRlbS1tYXJrJykub24oJ2NsaWNrJywgJy5KLW1lbnUtYnRuLW1hcmsnLCAoZSkgPT4ge1xuICAgICAgICAgICAgbGV0IHJ1biA9ICgpID0+IHtcbiAgICAgICAgICAgICAgICBsZXQgJHRodW1ibmFpbCA9IHRoaXMuJGVsLmZpbmQoJy5KLXBpcGUtZm9vdGVyJykuZmluZCgnLkotaW1nLXRodW1ibmFpbC5hY3RpdmUnKTtcblxuICAgICAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUFjdGl2ZUltZygkdGh1bWJuYWlsLmluZGV4KCkpO1xuICAgICAgICAgICAgICAgIHRoaXMuc2hvd01vZGVsKHRoaXMuTUFSS1RZUEUuU0lOR0xFKTtcbiAgICAgICAgICAgICAgICB0aGlzLnNob3dNZW51KDMpO1xuICAgICAgICAgICAgICAgIHRoaXMuX2luaXRNYXJrKCk7XG4gICAgICAgICAgICAgICAgdGhpcy5fdXBkYXRlSXNDaGFuZ2UoZmFsc2UpO1xuICAgICAgICAgICAgfTtcbiAgICAgICAgICAgIGlmICh0aGlzLmlzQ2hhbmdlKSB7XG4gICAgICAgICAgICAgICAgdGhpcy5fY29uZmlybShydW4pOyAgICAgICAgICAgICBcbiAgICAgICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICAgICAgcnVuKCk7XG4gICAgICAgICAgICB9XG5cbiAgICAgICAgfSlcbiAgICAgICAgLy8g5YiH5o2i5om56YeP5rC05Y2wXG4gICAgICAgIHRoaXMuJGVsLmZpbmQoJy5KLWl0ZW0tbWFyaycpLm9uKCdjbGljaycsICcuSi1tZW51LWJ0bi1tYXJrLWFsbCcsIChlKSA9PiB7XG4gICAgICAgICAgICBsZXQgcnVuID0gKCkgPT4ge1xuICAgICAgICAgICAgICAgIGxldCAkdGh1bWJuYWlsID0gdGhpcy4kbWFya0FsbFBhbmVsLmZpbmQoJy5KLWltZy10aHVtYm5haWwuYWN0aXZlJyk7XG5cbiAgICAgICAgICAgICAgICB0aGlzLl91cGRhdGVBY3RpdmVJbWcoJHRodW1ibmFpbC5pbmRleCgpKTtcbiAgICAgICAgICAgICAgICB0aGlzLnNob3dNb2RlbCh0aGlzLk1BUktUWVBFLk1VTFRJUExFKTsgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgdGhpcy5faW5pdE1hcmsodGhpcy5NQVJLVFlQRS5NVUxUSVBMRSk7XG4gICAgICAgICAgICAgICAgdGhpcy5fdXBkYXRlSXNDaGFuZ2UoZmFsc2UpO1xuICAgICAgICAgICAgICAgIHRoaXMuX2luaXREYXRhKCk7XG4gICAgICAgICAgICB9O1xuICAgICAgICAgICAgaWYgKHRoaXMuaXNDaGFuZ2UpIHtcbiAgICAgICAgICAgICAgICB0aGlzLl9jb25maXJtKHJ1bik7ICAgICAgICAgICAgIFxuICAgICAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAgICAgICBydW4oKTtcbiAgICAgICAgICAgIH1cblxuICAgICAgICB9KVxuXG5cbiAgICAgICAgLy8g5peL6L2sKysrKysrKysrKysrKysrK1xuICAgICAgICAvLyDpgIbml7bpkojml4vovaxcbiAgICAgICAgdGhpcy4kYnRuUm90YXRlTGVmdC5vbignY2xpY2snLCAoKSA9PiB7XG4gICAgICAgICAgICB0aGlzLl9nZXRSb3RhdGVOdW0oLTEpO1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlUm90YXRlKCk7XG4gICAgICAgIH0pXG4gICAgICAgIC8vIOmhuuaXtumSiOaXi+i9rFxuICAgICAgICB0aGlzLiRidG5Sb3RhdGVSaWdodC5vbignY2xpY2snLCAoKSA9PiB7XG4gICAgICAgICAgICB0aGlzLl9nZXRSb3RhdGVOdW0oMSk7XG4gICAgICAgICAgICB0aGlzLl91cGRhdGVSb3RhdGUoKTtcbiAgICAgICAgfSlcbiAgICAgICAgLy8g6KOB5YmqKysrKysrKysrKysrXG4gICAgICAgIHRoaXMuJGlucHV0Q3JvcFdpZHRoLm9uKCdpbnB1dCcsIChlKSA9PiB7XG4gICAgICAgICAgICBsZXQgdmFsdWUgPSBwYXJzZUludCgkKGUudGFyZ2V0KS52YWwoKSk7XG4gICAgICAgICAgICB0aGlzLmNyb3BCb3gud2lkdGggPSB2YWx1ZSAvIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICAgICAgICAgIGlmICh0aGlzLmNyb3BCb3guZml4UmF0aW8pIHtcbiAgICAgICAgICAgICAgICB0aGlzLmNyb3BCb3guaGVpZ2h0ID0gdGhpcy5jcm9wQm94LndpZHRoIC8gdGhpcy5jcm9wQm94LmJveERhdGEucmF0aW87XG4gICAgICAgICAgICB9XG4gICAgICAgICAgICB0aGlzLl91cGRhdGVDcm9wKCk7XG4gICAgICAgIH0pXG4gICAgICAgIHRoaXMuJGlucHV0Q3JvcEhlaWdodC5vbignaW5wdXQnLCAoZSkgPT4ge1xuICAgICAgICAgICAgbGV0IHZhbHVlID0gcGFyc2VJbnQoJChlLnRhcmdldCkudmFsKCkpO1xuICAgICAgICAgICAgdGhpcy5jcm9wQm94LmhlaWdodCA9IHZhbHVlIC8gdGhpcy5hY3RpdmVEYXRhLnJhdGlvO1xuICAgICAgICAgICAgaWYgKHRoaXMuY3JvcEJveC5maXhSYXRpbykge1xuICAgICAgICAgICAgICAgIHRoaXMuY3JvcEJveC53aWR0aCA9IHRoaXMuY3JvcEJveC5oZWlnaHQgKiB0aGlzLmNyb3BCb3guYm94RGF0YS5yYXRpbztcbiAgICAgICAgICAgIH1cbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUNyb3AoKTtcbiAgICAgICAgfSlcbiAgICAgICAgdGhpcy4kcmFkaW9Dcm9wRml4Lm9uKCdjaGFuZ2UnLCAoZSkgPT4ge1xuICAgICAgICAgICAgdGhpcy5jcm9wQm94LmZpeFJhdGlvID0gIXRoaXMuY3JvcEJveC5maXhSYXRpbztcbiAgICAgICAgfSlcblxuICAgICAgICAvLyDnvKnmlL4rKysrKysrKysrKysrK1xuICAgICAgICB0aGlzLiRpbnB1dFNjYWxlV2lkdGgub24oJ2lucHV0JywgKGUpID0+IHtcbiAgICAgICAgICAgIGxldCB2YWx1ZSA9IHBhcnNlSW50KCQoZS50YXJnZXQpLnZhbCgpKTtcbiAgICAgICAgICAgIHZhbHVlID0gdmFsdWUgPj0gMCA/IHZhbHVlIDogMDtcbiAgICAgICAgICAgIHRoaXMuc2NhbGVSYXRpbyA9IHZhbHVlIC8gdGhpcy5hY3RpdmVEYXRhLncwO1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlU2NhbGUoKTtcbiAgICAgICAgfSlcbiAgICAgICAgdGhpcy4kaW5wdXRTY2FsZUhlaWdodC5vbignaW5wdXQnLCAoZSkgPT4ge1xuICAgICAgICAgICAgbGV0IHZhbHVlID0gcGFyc2VJbnQoJChlLnRhcmdldCkudmFsKCkpO1xuICAgICAgICAgICAgdmFsdWUgPSB2YWx1ZSA+PSAwID8gdmFsdWUgOiAwO1xuICAgICAgICAgICAgdGhpcy5zY2FsZVJhdGlvID0gdmFsdWUgLyB0aGlzLmFjdGl2ZURhdGEuaDA7XG5cbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZVNjYWxlKCk7XG4gICAgICAgIH0pXG4gICAgICAgIC8vIElFMTHkuItjaGFuZ2Xkuovku7bov57nu63op6blj5FcbiAgICAgICAgdGhpcy4kcmFuZ2VTY2FsZVJhdGlvLm9uKCdjaGFuZ2UnLCAoZSkgPT4ge1xuICAgICAgICAgICAgbGV0ICR0aGlzID0gJChlLnRhcmdldCk7XG4gICAgICAgICAgICBsZXQgbWF4ID0gcGFyc2VJbnQoJHRoaXMuYXR0cignbWF4JykpO1xuICAgICAgICAgICAgbGV0IHZhbHVlID0gcGFyc2VJbnQoJHRoaXMudmFsKCkpO1xuICAgICAgICAgICAgdGhpcy5zY2FsZVJhdGlvID0gdmFsdWUgLyBtYXg7XG4gICAgICAgICAgICB0aGlzLl91cGRhdGVTY2FsZSgpO1xuICAgICAgICB9KVxuICAgICAgICAvLyBjaHJvbWXkuItpbnB1dOS6i+S7tui/nue7reinpuWPke+8jGNoYW5nZeWPquacieWBnOatouaLluWKqOaXtuinpuWPkVxuICAgICAgICB0aGlzLiRyYW5nZVNjYWxlUmF0aW8ub24oJ2lucHV0JywgKGUpID0+IHtcbiAgICAgICAgICAgIGxldCAkdGhpcyA9ICQoZS50YXJnZXQpO1xuICAgICAgICAgICAgbGV0IG1heCA9IHBhcnNlSW50KCR0aGlzLmF0dHIoJ21heCcpKTtcbiAgICAgICAgICAgIGxldCB2YWx1ZSA9IHBhcnNlSW50KCR0aGlzLnZhbCgpKTtcbiAgICAgICAgICAgIHRoaXMuc2NhbGVSYXRpbyA9IHZhbHVlIC8gbWF4O1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlU2NhbGUoKTtcbiAgICAgICAgfSlcbiAgICAgICAgLy8g5rC05Y2wKysrKysrKysrKysrKytcbiAgICAgICAgdGhpcy4kcmFkaW9NYXJrQ29sb3Iub24oJ2NoYW5nZScsICgpID0+IHtcbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZU1hcmsoKTtcbiAgICAgICAgfSlcbiAgICAgICAgdGhpcy4kcmFuZ2VNYXJrT3BhY2l0eS5vbignaW5wdXQnLCAoKSA9PiB7XG4gICAgICAgICAgICB0aGlzLl91cGRhdGVNYXJrKCk7XG4gICAgICAgIH0pXG4gICAgICAgIHRoaXMuJHJhbmdlTWFya09wYWNpdHkub24oJ2NoYW5nZScsICgpID0+IHtcbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZU1hcmsoKTtcbiAgICAgICAgfSlcbiAgICAgICAgdGhpcy4kc2VsZWN0TWFya1R4dC5vbignY2hhbmdlJywgKCkgPT4ge1xuICAgICAgICAgICAgdGhpcy5tYXJrQm94LiRkcmFnQm94LmZpbmQoJy5KLW1hcmstdHh0JykuY3NzKHtcbiAgICAgICAgICAgICAgICAnZGlzcGxheSc6ICdpbmxpbmUtYmxvY2snLFxuICAgICAgICAgICAgICAgICdmb250LXNpemUnOiB0aGlzLm1hcmtGb250U2l6ZTBcbiAgICAgICAgICAgIH0pO1xuXG4gICAgICAgICAgICB0aGlzLl91cGRhdGVNYXJrKCk7XG4gICAgICAgIH0pXG4gICAgICAgIHRoaXMuJHJhZGlvTWFya1Bvc2l0aW9uLm9uKCdjaGFuZ2UnLCAoKSA9PiB7XG4gICAgICAgICAgICB0aGlzLl91cGRhdGVNYXJrKCk7XG4gICAgICAgIH0pXG5cbiAgICAgICAgLy8g5om56YeP5rC05Y2wKysrKysrKysrKysrKytcbiAgICAgICAgdGhpcy4kcmFkaW9NYXJrQWxsQ29sb3Iub24oJ2NoYW5nZScsICgpID0+IHtcbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZU1hcmsodGhpcy5NQVJLVFlQRS5NVUxUSVBMRSk7XG4gICAgICAgIH0pXG4gICAgICAgIHRoaXMuJHJhbmdlTWFya0FsbE9wYWNpdHkub24oJ2lucHV0JywgKCkgPT4ge1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlTWFyayh0aGlzLk1BUktUWVBFLk1VTFRJUExFKTtcbiAgICAgICAgfSlcbiAgICAgICAgdGhpcy4kcmFuZ2VNYXJrQWxsT3BhY2l0eS5vbignY2hhbmdlJywgKCkgPT4ge1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlTWFyayh0aGlzLk1BUktUWVBFLk1VTFRJUExFKTtcbiAgICAgICAgfSlcbiAgICAgICAgdGhpcy4kc2VsZWN0TWFya0FsbFR4dC5vbignY2hhbmdlJywgKCkgPT4ge1xuICAgICAgICAgICAgdGhpcy5tYXJrQWxsQm94LiRkcmFnQm94LmZpbmQoJy5KLW1hcmstdHh0JykuY3NzKHtcbiAgICAgICAgICAgICAgICAnZGlzcGxheSc6ICdpbmxpbmUtYmxvY2snLFxuICAgICAgICAgICAgICAgICdmb250LXNpemUnOiB0aGlzLm1hcmtGb250U2l6ZTBcbiAgICAgICAgICAgIH0pO1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlTWFyayh0aGlzLk1BUktUWVBFLk1VTFRJUExFKTtcbiAgICAgICAgfSlcbiAgICAgICAgdGhpcy4kcmFkaW9NYXJrQWxsUG9zaXRpb24ub24oJ2NoYW5nZScsICgpID0+IHtcbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZU1hcmsodGhpcy5NQVJLVFlQRS5NVUxUSVBMRSk7XG4gICAgICAgIH0pXG5cblxuICAgICAgICAvLyDmsLTljbDnoa7lrppcbiAgICAgICAgdGhpcy4kYnRuQ29uZmlybS5vbignY2xpY2snLCAoKSA9PiB7XG4gICAgICAgICAgICB0aGlzLl9zYXZlTWFyaygpO1xuICAgICAgICB9KVxuICAgICAgICAvLyDmsLTljbDlj5bmtohcbiAgICAgICAgdGhpcy4kYnRuQ2FuY2VsLm9uKCdjbGljaycsICgpID0+IHtcbiAgICAgICAgICAgIHRoaXMuX2NhbmNlbE1hcmsoKTtcbiAgICAgICAgfSlcbiAgICAgICAgLy8g5om56YeP5rC05Y2w56Gu5a6aXG4gICAgICAgIHRoaXMuJGJ0blNhdmVBbGwub24oJ2NsaWNrJywgKCkgPT4ge1xuICAgICAgICAgICAgdGhpcy5fc2hvd1Byb2dyZXNzKCk7XG4gICAgICAgICAgICB0aGlzLl9zYXZlTWFya0FsbCgpO1xuICAgICAgICB9KVxuICAgICAgICAvLyDmibnph4/msLTljbDlj5bmtohcbiAgICAgICAgdGhpcy4kYnRuQ2FuY2VsQWxsLm9uKCdjbGljaycsICgpID0+IHtcbiAgICAgICAgICAgIGlmICh0aGlzLmlzQ2hhbmdlKSB7XG4gICAgICAgICAgICAgICAgdGhpcy5fY29uZmlybSgoKSA9PiB7XG4gICAgICAgICAgICAgICAgICAgIHRoaXMuZGVzdG9yeSgpO1xuICAgICAgICAgICAgICAgIH0pXG4gICAgICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgICAgIHRoaXMuZGVzdG9yeSgpO1xuICAgICAgICAgICAgfVxuICAgICAgICAgICAgXG4gICAgICAgIH0pXG4gICAgICAgIC8vIOmHjee9rlxuICAgICAgICB0aGlzLiRidG5SZXNldC5vbignY2xpY2snLCAoKSA9PiB7XG4gICAgICAgICAgICBpZiAodGhpcy5pc0NoYW5nZSkge1xuICAgICAgICAgICAgICAgIHRoaXMuX3Jlc2V0KCk7XG4gICAgICAgICAgICB9XG4gICAgICAgIH0pXG4gICAgICAgIC8vIOS/neWtmFxuICAgICAgICB0aGlzLiRidG5TYXZlLm9uKCdjbGljaycsIChlKSA9PiB7XG4gICAgICAgICAgICBpZiAodGhpcy5pc0NoYW5nZSkge1xuICAgICAgICAgICAgICAgIHRoaXMuX3Nob3dQcm9ncmVzcygpO1xuICAgICAgICAgICAgICAgIGxldCBwYW5lbEluZGV4ID0gdGhpcy4kZWwuZmluZCgnLkotcGFuZWwuYWN0aXZlJykuaW5kZXgoKTtcbiAgICAgICAgICAgICAgICBzd2l0Y2ggKHBhbmVsSW5kZXgpIHtcbiAgICAgICAgICAgICAgICAgICAgY2FzZSAwOlxuICAgICAgICAgICAgICAgICAgICAgICAgdGhpcy5fc2F2ZVJvdGF0ZSgpO1xuICAgICAgICAgICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgICAgICAgICAgICAgIGNhc2UgMTpcbiAgICAgICAgICAgICAgICAgICAgICAgIHRoaXMuX3NhdmVDcm9wKCk7XG4gICAgICAgICAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgICAgICAgICAgY2FzZSAyOlxuICAgICAgICAgICAgICAgICAgICAgICAgdGhpcy5fc2F2ZVNjYWxlKCk7XG4gICAgICAgICAgICAgICAgICAgIGRlZmF1bHQ6XG4gICAgICAgICAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICAgICAgdGhpcy5fc2F2ZSgpO1xuICAgICAgICAgICAgfVxuXG4gICAgICAgIH0pXG4gICAgICAgIC8vIOWFs+mXrVxuICAgICAgICB0aGlzLiRidG5DbG9zZS5vbignY2xpY2snLCAoZSkgPT4ge1xuICAgICAgICAgICAgaWYgKHRoaXMuaXNDaGFuZ2UpIHtcbiAgICAgICAgICAgICAgICB0aGlzLl9jb25maXJtKCgpID0+IHtcbiAgICAgICAgICAgICAgICAgICAgdGhpcy5kZXN0b3J5KCk7XG4gICAgICAgICAgICAgICAgfSkgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgICAgIHRoaXMuZGVzdG9yeSgpO1xuICAgICAgICAgICAgfVxuXG4gICAgICAgIH0pXG4gICAgICAgIC8vIOemgeeUqOm8oOagh+WPs+WHu+iPnOWNlVxuICAgICAgICB0aGlzLiRlbC5vbignY29udGV4dG1lbnUnLCAoZSkgPT4ge1xuICAgICAgICAgICAgcmV0dXJuIHRoaXMuZGVidWc7XG4gICAgICAgIH0pXG5cbiAgICB9XG5cbiAgICBfZ29Ib21lKCkge1xuICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1tZW51LWJ0bicpLnBhcmVudCgnOmZpcnN0JykuYWRkQ2xhc3MoJ2FjdGl2ZScpLnNpYmxpbmdzKCkucmVtb3ZlQ2xhc3MoJ2FjdGl2ZScpO1xuICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1wYW5lbDpmaXJzdCcpLmFkZENsYXNzKCdhY3RpdmUnKS5zaWJsaW5ncygpLnJlbW92ZUNsYXNzKCdhY3RpdmUnKTtcblxuICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1pdGVtLW1hcmsnKS5maW5kKCcuSi1tZW51LWJ0bicpLnNob3coKTtcbiAgICAgICAgdGhpcy4kZWwuZmluZCgnLkotaXRlbS1tYXJrJykuZmluZCgnLkotbWVudS10eHQnKS5oaWRlKCk7XG4gICAgfVxuXG4gICAgX2luaXRSb3RhdGUoKSB7XG4gICAgICAgIHRoaXMucm90YXRlTnVtID0gMDtcbiAgICB9XG4gICAgX3VwZGF0ZVJvdGF0ZSgpIHtcbiAgICAgICAgdGhpcy4kZWwuZmluZCgnLkotc291cmNlJykuY3NzKHtcbiAgICAgICAgICAgICd0cmFuc2Zvcm0nOiBgcm90YXRlKCR7dGhpcy5yb3RhdGVOdW0gKiA5MH1kZWcpYFxuICAgICAgICB9KTtcblxuICAgICAgICBsZXQgd2lkdGgsIGhlaWdodDtcbiAgICAgICAgaWYgKHRoaXMucm90YXRlTnVtID09PSAxIHx8IHRoaXMucm90YXRlTnVtID09PSAzKSB7XG4gICAgICAgICAgICAvLyDml4vovaznsbs5MOW6puWQjlxuICAgICAgICAgICAgaWYgKDEgLyB0aGlzLmFjdGl2ZURhdGEuaW1nUmF0aW8gPCB0aGlzLmltZ0JveFJhdGlvKSB7XG4gICAgICAgICAgICAgICAgd2lkdGggPSBNYXRoLm1pbih0aGlzLmltZ0JveEhlaWdodCwgdGhpcy5hY3RpdmVEYXRhLmgwKTtcbiAgICAgICAgICAgICAgICBoZWlnaHQgPSAnYXV0byc7XG4gICAgICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgICAgIHdpZHRoID0gJ2F1dG8nO1xuICAgICAgICAgICAgICAgIGhlaWdodCA9IE1hdGgubWluKHRoaXMuaW1nQm94V2lkdGgsIHRoaXMuYWN0aXZlRGF0YS53MCk7XG4gICAgICAgICAgICB9XG5cbiAgICAgICAgICAgIHRoaXMuJHR4dFJvdGF0ZVdpZHRoLnRleHQodGhpcy5hY3RpdmVEYXRhLmgwKTtcbiAgICAgICAgICAgIHRoaXMuJHR4dFJvdGF0ZUhlaWdodC50ZXh0KHRoaXMuYWN0aXZlRGF0YS53MCk7ICAgICAgICAgICBcblxuICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgaWYgKHRoaXMuYWN0aXZlRGF0YS5pbWdSYXRpbyA8IHRoaXMuaW1nQm94UmF0aW8pIHtcbiAgICAgICAgICAgICAgICB3aWR0aCA9ICdhdXRvJztcbiAgICAgICAgICAgICAgICBoZWlnaHQgPSBNYXRoLm1pbih0aGlzLmltZ0JveEhlaWdodCwgdGhpcy5hY3RpdmVEYXRhLmgwKTtcbiAgICAgICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICAgICAgd2lkdGggPSBNYXRoLm1pbih0aGlzLmltZ0JveFdpZHRoLCB0aGlzLmFjdGl2ZURhdGEudzApO1xuICAgICAgICAgICAgICAgIGhlaWdodCA9ICdhdXRvJztcbiAgICAgICAgICAgIH1cblxuICAgICAgICAgICAgdGhpcy4kdHh0Um90YXRlV2lkdGgudGV4dCh0aGlzLmFjdGl2ZURhdGEudzApO1xuICAgICAgICAgICAgdGhpcy4kdHh0Um90YXRlSGVpZ2h0LnRleHQodGhpcy5hY3RpdmVEYXRhLmgwKTsgICAgIFxuICAgICAgICB9XG5cbiAgICAgICAgdGhpcy4kZWwuZmluZCgnLkotc291cmNlJykuY3NzKHtcbiAgICAgICAgICAgICd3aWR0aCc6IHdpZHRoLFxuICAgICAgICAgICAgJ2hlaWdodCc6IGhlaWdodFxuICAgICAgICB9KTtcblxuICAgICAgICB0aGlzLl91cGRhdGVJc0NoYW5nZSh0cnVlKTtcbiAgICB9XG4gICAgX3NhdmVSb3RhdGUoKSB7XG4gICAgICAgIGlmICh0aGlzLnJvdGF0ZU51bSA9PT0gMCkge1xuICAgICAgICAgICAgcmV0dXJuIGZhbHNlO1xuICAgICAgICB9XG4gICAgICAgIGxldCBvcHRpb25zID0ge1xuICAgICAgICAgICAgcm90YXRlTnVtOiB0aGlzLnJvdGF0ZU51bVxuICAgICAgICB9O1xuICAgICAgICB0aGlzLm9uU2F2ZVJvdGF0ZShvcHRpb25zLCAoaW1nKSA9PiB7XG4gICAgICAgICAgICB0aGlzLnJvdGF0ZU51bSA9IDA7XG4gICAgICAgICAgICB0aGlzLmFjdGl2ZUltZyA9IGltZztcbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUFjdGl2ZURhdGEoKTtcbiAgICAgICAgICAgIHRoaXMuX3JlZnJlc2goKTtcbiAgICAgICAgfSk7ICAgXG4gICAgfVxuICAgIF9pbml0Q3JvcCgpIHtcbiAgICAgICAgdGhpcy4kcmFkaW9Dcm9wRml4LnByb3AoJ2NoZWNrZWQnLCBmYWxzZSk7XG5cbiAgICAgICAgdGhpcy5jcm9wQm94LmlzRml4ZWQgPSB0aGlzLiRyYWRpb0Nyb3BGaXgucHJvcCgnY2hlY2tlZCcpO1xuICAgICAgICB0aGlzLmNyb3BCb3gud2lkdGggPSB0aGlzLiRpbnB1dENyb3BXaWR0aC52YWwoKSAvIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICAgICAgdGhpcy5jcm9wQm94LmhlaWdodCA9IHRoaXMuJGlucHV0Q3JvcEhlaWdodC52YWwoKSAvIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICB9XG4gICAgX3VwZGF0ZUNyb3AoKSB7XG4gICAgICAgIHRoaXMuY3JvcEJveC51cGRhdGUoKTtcbiAgICAgICAgdGhpcy5fdXBkYXRlSXNDaGFuZ2UodHJ1ZSk7XG4gICAgfVxuICAgIF9zYXZlQ3JvcCgpIHtcbiAgICAgICAgaWYgKHRoaXMuY3JvcEJveC5ib3hEYXRhLmxlZnQgPT09IDAgJiYgdGhpcy5jcm9wQm94LmJveERhdGEudG9wID09PSAwICYmIHRoaXMuY3JvcEJveC5ib3hEYXRhLndpZHRoID09PSBNYXRoLnJvdW5kKHRoaXMuYWN0aXZlRGF0YS53MSkgJiYgdGhpcy5jcm9wQm94LmJveERhdGEuaGVpZ2h0ID09PSBNYXRoLnJvdW5kKHRoaXMuYWN0aXZlRGF0YS5oMSkpIHtcbiAgICAgICAgICAgIHJldHVybiBmYWxzZTtcbiAgICAgICAgfVxuICAgICAgICBsZXQgb3B0aW9ucyA9IHtcbiAgICAgICAgICAgIHN4OiBNYXRoLm1heCh0aGlzLmNyb3BCb3guYm94RGF0YS5sZWZ0ICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvLCAwKSxcbiAgICAgICAgICAgIHN5OiBNYXRoLm1heCh0aGlzLmNyb3BCb3guYm94RGF0YS50b3AgKiB0aGlzLmFjdGl2ZURhdGEucmF0aW8sIDApLFxuICAgICAgICAgICAgY3JvcFc6IE1hdGgubWluKHRoaXMuY3JvcEJveC5ib3hEYXRhLndpZHRoICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvLCB0aGlzLmFjdGl2ZURhdGEudzApLFxuICAgICAgICAgICAgY3JvcEg6IE1hdGgubWluKHRoaXMuY3JvcEJveC5ib3hEYXRhLmhlaWdodCAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbywgdGhpcy5hY3RpdmVEYXRhLmgwKVxuICAgICAgICB9O1xuICAgICAgICB0aGlzLm9uU2F2ZUNyb3Aob3B0aW9ucywgKGltZykgPT4ge1xuICAgICAgICAgICAgdGhpcy5hY3RpdmVJbWcgPSBpbWc7XG4gICAgICAgICAgICB0aGlzLl91cGRhdGVBY3RpdmVEYXRhKCk7XG4gICAgICAgICAgICB0aGlzLl9yZWZyZXNoKCk7XG4gICAgICAgIH0pXG4gICAgfVxuXG4gICAgX2luaXRTY2FsZSgpIHtcbiAgICAgICAgbGV0ICRzY2FsZUltZ0JveCA9IHRoaXMuJHNjYWxlUGFuZWwuZmluZCgnLkotaW1nLWJveCcpO1xuICAgICAgICBsZXQgJHNjYWxlUmFuZ2UgPSB0aGlzLiRzY2FsZVBhbmVsLmZpbmQoJy5KLXNjYWxlLXJhbmdlJyk7XG4gICAgICAgIGxldCAkc2NhbGVJbWdXcmFwcGVyID0gdGhpcy4kc2NhbGVQYW5lbC5maW5kKCcuSi1zY2FsZS1pbWctd3JhcHBlcicpO1xuXG4gICAgICAgIGxldCAkaW1nID0gJHNjYWxlSW1nQm94LmZpbmQoJy5KLXNvdXJjZScpO1xuXG4gICAgICAgIGxldCB3aWR0aCwgaGVpZ2h0O1xuICAgICAgICBpZiAodGhpcy5hY3RpdmVEYXRhLncwIDwgdGhpcy5pbWdCb3hXaWR0aCkge1xuICAgICAgICAgICAgd2lkdGggPSB0aGlzLmltZ0JveFdpZHRoO1xuICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgd2lkdGggPSB0aGlzLmFjdGl2ZURhdGEudzAgKyAodGhpcy5hY3RpdmVEYXRhLncwIC0gdGhpcy5pbWdCb3hXaWR0aCk7XG4gICAgICAgIH1cbiAgICAgICAgaWYgKHRoaXMuYWN0aXZlRGF0YS5oMCA8IHRoaXMuaW1nQm94SGVpZ2h0KSB7XG4gICAgICAgICAgICBoZWlnaHQgPSB0aGlzLmltZ0JveEhlaWdodDtcbiAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAgIGhlaWdodCA9IHRoaXMuYWN0aXZlRGF0YS5oMCArICh0aGlzLmFjdGl2ZURhdGEuaDAgLSB0aGlzLmltZ0JveEhlaWdodCk7XG4gICAgICAgIH1cbiAgICAgICAgJHNjYWxlSW1nV3JhcHBlci5jc3Moe1xuICAgICAgICAgICAgJ3dpZHRoJzogd2lkdGgsXG4gICAgICAgICAgICAnaGVpZ2h0JzogaGVpZ2h0LFxuICAgICAgICAgICAgJ21hcmdpbi1sZWZ0JzogLXdpZHRoIC8gMixcbiAgICAgICAgICAgICdtYXJnaW4tdG9wJzogLWhlaWdodCAvIDJcbiAgICAgICAgfSk7XG4gICAgICAgIC8vIOWOu+mZpOmihOiniOWbvueahOe8qeaUvuaYvuekulxuICAgICAgICAkaW1nLmNzcyh7XG4gICAgICAgICAgICAncG9zaXRpb24nOiAnYWJzb2x1dGUnLFxuICAgICAgICAgICAgJ2xlZnQnOiAod2lkdGggLSB0aGlzLmFjdGl2ZURhdGEudzApIC8gMixcbiAgICAgICAgICAgICd0b3AnOiAoaGVpZ2h0IC0gdGhpcy5hY3RpdmVEYXRhLmgwKSAvIDIsXG4gICAgICAgICAgICAnd2lkdGgnOiB0aGlzLmFjdGl2ZURhdGEudzAsXG4gICAgICAgICAgICAnaGVpZ2h0JzogdGhpcy5hY3RpdmVEYXRhLmgwLFxuICAgICAgICAgICAgJ21heC13aWR0aCc6ICdub25lJyxcbiAgICAgICAgICAgICdtYXgtaGVpZ2h0JzogJ25vbmUnLFxuICAgICAgICAgICAgJ2N1cnNvcic6ICdtb3ZlJ1xuICAgICAgICB9KVxuICAgICAgICAvLyDliJ3lp4vljJbmu5HlnZflgLxcbiAgICAgICAgJHNjYWxlUmFuZ2UudmFsKCRzY2FsZVJhbmdlLmF0dHIoJ2RlZmF1bHRWYWx1ZScpKTtcblxuICAgICAgICB0aGlzLnNjYWxlUmF0aW8gPSAxO1xuICAgIH1cbiAgICBfdXBkYXRlU2NhbGUoKSB7XG4gICAgICAgIGxldCBzY2FsZVJhdGlvID0gdGhpcy5zY2FsZVJhdGlvO1xuXG4gICAgICAgIGxldCAkc2NhbGVSYW5nZSA9IHRoaXMuJHJhbmdlU2NhbGVSYXRpbztcbiAgICAgICAgbGV0ICRzY2FsZU51bVdpZHRoID0gdGhpcy4kaW5wdXRTY2FsZVdpZHRoO1xuICAgICAgICBsZXQgJHNjYWxlTnVtSGVpZ2h0ID0gdGhpcy4kaW5wdXRTY2FsZUhlaWdodDtcbiAgICAgICAgbGV0IG1heCA9IHBhcnNlSW50KCRzY2FsZVJhbmdlLmF0dHIoJ21heCcpKTtcblxuICAgICAgICBpZiAoJHNjYWxlTnVtV2lkdGgudmFsKCkgIT0gdGhpcy5hY3RpdmVEYXRhLncwICogc2NhbGVSYXRpbykge1xuICAgICAgICAgICAgJHNjYWxlTnVtV2lkdGgudmFsKHRoaXMuYWN0aXZlRGF0YS53MCAqIHNjYWxlUmF0aW8pO1xuICAgICAgICB9XG4gICAgICAgIGlmICgkc2NhbGVOdW1IZWlnaHQudmFsKCkgIT0gdGhpcy5hY3RpdmVEYXRhLmgwICogc2NhbGVSYXRpbykge1xuICAgICAgICAgICAgJHNjYWxlTnVtSGVpZ2h0LnZhbCh0aGlzLmFjdGl2ZURhdGEuaDAgKiBzY2FsZVJhdGlvKTtcbiAgICAgICAgfVxuICAgICAgICBpZiAoJHNjYWxlUmFuZ2UudmFsKCkgIT0gbWF4ICogc2NhbGVSYXRpbykge1xuICAgICAgICAgICAgJHNjYWxlUmFuZ2UudmFsKG1heCAqIHNjYWxlUmF0aW8pO1xuICAgICAgICB9XG5cbiAgICAgICAgdGhpcy4kZWwuZmluZCgnLkotcGFuZWwnKS5ub3QoJy5KLW1hcmstYWxsLXBhbmVsJykuZmluZCgnLkotc291cmNlJykuY3NzKHtcbiAgICAgICAgICAgICd0cmFuc2Zvcm0nOiBgc2NhbGUoJHt0aGlzLnNjYWxlUmF0aW99KWBcbiAgICAgICAgfSk7XG5cbiAgICAgICAgdGhpcy5fdXBkYXRlSXNDaGFuZ2UodHJ1ZSk7XG4gICAgfVxuICAgIF9zYXZlU2NhbGUoKSB7XG4gICAgICAgIGlmICh0aGlzLnNjYWxlUmF0aW8gPT09IDEpIHtcbiAgICAgICAgICAgIHJldHVybiBmYWxzZTtcbiAgICAgICAgfVxuICAgICAgICBsZXQgb3B0aW9ucyA9IHtcbiAgICAgICAgICAgIHNjYWxlUmF0aW86IHRoaXMuc2NhbGVSYXRpbyxcbiAgICAgICAgfTtcbiAgICAgICAgdGhpcy5vblNhdmVTY2FsZShvcHRpb25zLCAoaW1nKSA9PiB7XG4gICAgICAgICAgICB0aGlzLnNjYWxlUmF0aW8gPSAxO1xuICAgICAgICAgICAgdGhpcy5hY3RpdmVJbWcgPSBpbWc7XG4gICAgICAgICAgICB0aGlzLl91cGRhdGVBY3RpdmVEYXRhKCk7XG4gICAgICAgICAgICB0aGlzLl9yZWZyZXNoKCk7XG4gICAgICAgICAgICB0aGlzLl9pbml0U2NhbGUoKTtcbiAgICAgICAgfSlcblxuICAgIH1cblxuICAgIC8vIOawtOWNsOebuOWFs+aTjeS9nHN0YXJ0KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK1xuICAgIF9zZXRNYXJrUG9zaXRpb24odHlwZSkge1xuICAgICAgICBjb25zdCBQT1NJVElPTiA9IFsnY2VudGVyJywgJ3VwTGVmdCcsICd1cFJpZ2h0JywgJ2Rvd25MZWZ0JywgJ2Rvd25SaWdodCddO1xuXG4gICAgICAgIGxldCAkcGFuZWwgPSB0eXBlID09PSB0aGlzLk1BUktUWVBFLk1VTFRJUExFID8gdGhpcy4kbWFya0FsbFBhbmVsIDogdGhpcy4kbWFya1BhbmVsO1xuICAgICAgICBsZXQgJGRyYWdCb3ggPSB0eXBlID09PSB0aGlzLk1BUktUWVBFLk1VTFRJUExFID8gdGhpcy5tYXJrQWxsQm94LiRkcmFnQm94IDogdGhpcy5tYXJrQm94LiRkcmFnQm94O1xuICAgICAgICBsZXQgJG1hcmtUeHQgPSAkZHJhZ0JveC5maW5kKCcuSi1tYXJrLXR4dCcpO1xuXG5cbiAgICAgICAgbGV0IG1hcmtYID0gcGFyc2VJbnQoJGRyYWdCb3guY3NzKCdsZWZ0JykpICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvO1xuICAgICAgICBsZXQgbWFya1kgPSBwYXJzZUludCgkZHJhZ0JveC5jc3MoJ3RvcCcpKSAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcblxuICAgICAgICBsZXQgcG9zaXRpb25WYWwgPSAkcGFuZWwuZmluZCgnLkotcG9zaXRpb246Y2hlY2tlZCcpLnZhbCgpO1xuXG4gICAgICAgIGxldCBkcmFnQm94V3JhcHBlcldpZHRoID0gdGhpcy5hY3RpdmVEYXRhLncxO1xuICAgICAgICBsZXQgZHJhZ0JveFdyYXBwZXJIZWlnaHQgPSB0aGlzLmFjdGl2ZURhdGEuaDE7XG4gICAgICAgIGxldCBkcmFnQm94V2lkdGggPSAkbWFya1R4dC5vdXRlcldpZHRoKCk7XG4gICAgICAgIGxldCBkcmFnQm94SGVpZ2h0ID0gJG1hcmtUeHQub3V0ZXJIZWlnaHQoKTtcblxuICAgICAgICBzd2l0Y2ggKFBPU0lUSU9OW3Bvc2l0aW9uVmFsXSkge1xuICAgICAgICAgICAgY2FzZSAnY2VudGVyJzpcbiAgICAgICAgICAgICAgICBtYXJrWCA9IChkcmFnQm94V3JhcHBlcldpZHRoIC0gZHJhZ0JveFdpZHRoKSAvIDIgKiB0aGlzLmFjdGl2ZURhdGEucmF0aW87XG4gICAgICAgICAgICAgICAgbWFya1kgPSAoZHJhZ0JveFdyYXBwZXJIZWlnaHQgLSBkcmFnQm94SGVpZ2h0KSAvIDIgKiB0aGlzLmFjdGl2ZURhdGEucmF0aW87XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgICAgICBjYXNlICd1cExlZnQnOlxuICAgICAgICAgICAgICAgIG1hcmtYID0gKDAgKyB0aGlzLm1hcmtYUG9zaXRpb25NYXJnaW4pICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvO1xuICAgICAgICAgICAgICAgIG1hcmtZID0gKDAgKyB0aGlzLm1hcmtZUG9zaXRpb25NYXJnaW4pICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvO1xuICAgICAgICAgICAgICAgIGJyZWFrO1xuICAgICAgICAgICAgY2FzZSAndXBSaWdodCc6XG4gICAgICAgICAgICAgICAgbWFya1ggPSAoZHJhZ0JveFdyYXBwZXJXaWR0aCAtIGRyYWdCb3hXaWR0aCAtIHRoaXMubWFya1hQb3NpdGlvbk1hcmdpbikgKiB0aGlzLmFjdGl2ZURhdGEucmF0aW87XG4gICAgICAgICAgICAgICAgbWFya1kgPSAoMCArIHRoaXMubWFya1lQb3NpdGlvbk1hcmdpbikgKiB0aGlzLmFjdGl2ZURhdGEucmF0aW87XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgICAgICBjYXNlICdkb3duTGVmdCc6XG4gICAgICAgICAgICAgICAgbWFya1ggPSAoMCArIHRoaXMubWFya1hQb3NpdGlvbk1hcmdpbikgKiB0aGlzLmFjdGl2ZURhdGEucmF0aW87XG4gICAgICAgICAgICAgICAgbWFya1kgPSAoZHJhZ0JveFdyYXBwZXJIZWlnaHQgLSBkcmFnQm94SGVpZ2h0IC0gdGhpcy5tYXJrWVBvc2l0aW9uTWFyZ2luKSAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIGNhc2UgJ2Rvd25SaWdodCc6XG4gICAgICAgICAgICAgICAgbWFya1ggPSAoZHJhZ0JveFdyYXBwZXJXaWR0aCAtIGRyYWdCb3hXaWR0aCAtIHRoaXMubWFya1hQb3NpdGlvbk1hcmdpbikgKiB0aGlzLmFjdGl2ZURhdGEucmF0aW87XG4gICAgICAgICAgICAgICAgbWFya1kgPSAoZHJhZ0JveFdyYXBwZXJIZWlnaHQgLSBkcmFnQm94SGVpZ2h0IC0gdGhpcy5tYXJrWVBvc2l0aW9uTWFyZ2luKSAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIGRlZmF1bHQ6XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgIH1cblxuICAgICAgICAkZHJhZ0JveC5jc3Moe1xuICAgICAgICAgICAgJ2xlZnQnOiBNYXRoLmZsb29yKG1hcmtYIC8gdGhpcy5hY3RpdmVEYXRhLnJhdGlvKSxcbiAgICAgICAgICAgICd0b3AnOiBNYXRoLmZsb29yKG1hcmtZIC8gdGhpcy5hY3RpdmVEYXRhLnJhdGlvKSxcbiAgICAgICAgICAgICd3aWR0aCc6IE1hdGguY2VpbChkcmFnQm94V2lkdGgpLFxuICAgICAgICAgICAgJ2hlaWdodCc6IE1hdGguY2VpbChkcmFnQm94SGVpZ2h0KVxuICAgICAgICB9KVxuICAgIH1cbiAgICBfc2V0TWFya1N0eWxlKHR5cGUpIHtcbiAgICAgICAgbGV0ICRwYW5lbCA9IHR5cGUgPT09IHRoaXMuTUFSS1RZUEUuTVVMVElQTEUgPyB0aGlzLiRtYXJrQWxsUGFuZWwgOiB0aGlzLiRtYXJrUGFuZWw7XG5cbiAgICAgICAgbGV0ICRtYXJrVHh0ID0gJHBhbmVsLmZpbmQoJy5KLW1hcmstdHh0Jyk7XG4gICAgICAgIGxldCBjb2xvclZhbCA9ICRwYW5lbC5maW5kKCcuSi1jb2xvcjpjaGVja2VkJykudmFsKCk7XG4gICAgICAgIGxldCBvcGFjaXR5VmFsID0gcGFyc2VJbnQoJHBhbmVsLmZpbmQoJy5KLW9wYWNpdHknKS52YWwoKSkgLyBwYXJzZUludCgkcGFuZWwuZmluZCgnLkotb3BhY2l0eScpLmF0dHIoJ21heCcpKTtcbiAgICAgICAgbGV0IHR4dFZhbCA9ICRwYW5lbC5maW5kKCcuSi1zZWxlY3QtbWFyaycpLnZhbCgpO1xuXG4gICAgICAgIGxldCBjb2xvciA9IGByZ2JhKDI1NSwgMjU1LCAyNTUsICR7b3BhY2l0eVZhbH0pYDtcbiAgICAgICAgaWYgKGNvbG9yVmFsID09PSAnMScpIHtcbiAgICAgICAgICAgIGNvbG9yID0gYHJnYmEoMCwgMCwgMCwgJHtvcGFjaXR5VmFsfSlgO1xuICAgICAgICB9XG4gICAgICAgIGxldCB0ZXh0ID0gdGhpcy5tYXJrVGV4dExpc3RbdHh0VmFsXTtcblxuICAgICAgICAkbWFya1R4dC50ZXh0KHRleHQpLmNzcyh7XG4gICAgICAgICAgICAnY29sb3InOiBjb2xvclxuICAgICAgICB9KTtcblxuICAgIH1cblxuICAgIF9pbml0TWFyayh0eXBlKSB7XG4gICAgICAgIGxldCAkcGFuZWwgPSB0eXBlID09PSB0aGlzLk1BUktUWVBFLk1VTFRJUExFID8gdGhpcy4kbWFya0FsbFBhbmVsIDogdGhpcy4kbWFya1BhbmVsO1xuICAgICAgICAkcGFuZWwuZmluZCgnLkotY29sb3I6bGFzdCcpLnByb3AoJ2NoZWNrZWQnLCB0cnVlKTtcbiAgICAgICAgJHBhbmVsLmZpbmQoJy5KLXBvc2l0aW9uOmZpcnN0JykucHJvcCgnY2hlY2tlZCcsIHRydWUpO1xuICAgICAgICAkcGFuZWwuZmluZCgnLkotb3BhY2l0eTpmaXJzdCcpLnZhbCgkcGFuZWwuZmluZCgnLkotb3BhY2l0eTpmaXJzdCcpLmF0dHIoJ2RlZmF1bHRWYWx1ZScpKTtcbiAgICAgICAgJHBhbmVsLmZpbmQoJy5KLXNlbGVjdC1tYXJrIG9wdGlvbjpmaXJzdCcpLnByb3AoJ3NlbGVjdGVkJywgdHJ1ZSk7XG5cbiAgICAgICAgJHBhbmVsLmZpbmQoJy5KLW1hcmstdHh0JykuY3NzKHtcbiAgICAgICAgICAgICdmb250LXNpemUnOiB0aGlzLm1hcmtGb250U2l6ZTAgKyAncHgnXG4gICAgICAgIH0pO1xuXG4gICAgICAgIGlmICh0eXBlID09PSB0aGlzLk1BUktUWVBFLk1VTFRJUExFKSB7XG4gICAgICAgICAgICB0aGlzLm1hcmtTZWxlY3RzWzFdLnNlbGVjdCgwKTtcbiAgICAgICAgICAgIHRoaXMubWFya0FsbEJveC4kZHJhZ0JveC5maW5kKCcuSi1tYXJrLXR4dCcpLmNzcyh7XG4gICAgICAgICAgICAgICAgJ2Rpc3BsYXknOiAnaW5saW5lLWJsb2NrJ1xuICAgICAgICAgICAgfSk7XG5cbiAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAgIHRoaXMubWFya1NlbGVjdHNbMF0uc2VsZWN0KDApO1xuICAgICAgICAgICAgdGhpcy5tYXJrQm94LiRkcmFnQm94LmZpbmQoJy5KLW1hcmstdHh0JykuY3NzKHtcbiAgICAgICAgICAgICAgICAnZGlzcGxheSc6ICdpbmxpbmUtYmxvY2snXG4gICAgICAgICAgICB9KTtcbiAgICAgICAgfVxuXG4gICAgICAgIHRoaXMuX3NldE1hcmtTdHlsZSh0eXBlKTtcbiAgICAgICAgdGhpcy5fc2V0TWFya1Bvc2l0aW9uKHR5cGUpO1xuICAgIH1cbiAgICBfdXBkYXRlTWFyayh0eXBlKSB7XG5cbiAgICAgICAgdGhpcy5fc2V0TWFya1N0eWxlKHR5cGUpO1xuICAgICAgICB0aGlzLl9zZXRNYXJrUG9zaXRpb24odHlwZSk7XG5cbiAgICAgICAgdGhpcy5fdXBkYXRlSXNDaGFuZ2UodHJ1ZSk7XG4gICAgfVxuICAgIF9zYXZlTWFyaygpIHtcbiAgICAgICAgbGV0IG9wdGlvbnMgPSB0aGlzLl9nZXRNYXJrUGFyYW1zKCk7XG5cbiAgICAgICAgdGhpcy5vblNhdmVNYXJrKG9wdGlvbnMsIChpbWcpID0+IHtcbiAgICAgICAgICAgIHRoaXMuYWN0aXZlSW1nID0gaW1nO1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlQWN0aXZlRGF0YSgpO1xuICAgICAgICAgICAgdGhpcy5fcmVmcmVzaCgpO1xuICAgICAgICAgICAgdGhpcy5fZ29Ib21lKCk7XG5cbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUlzQ2hhbmdlKHRydWUpO1xuICAgICAgICB9KVxuICAgIH1cbiAgICBfY2FuY2VsTWFyaygpIHtcbiAgICAgICAgdGhpcy5fZ29Ib21lKCk7XG4gICAgfVxuICAgIF9nZXRNYXJrUGFyYW1zKHR5cGUpIHtcblxuICAgICAgICBsZXQgJHBhbmVsID0gdHlwZSA9PT0gdGhpcy5NQVJLVFlQRS5NVUxUSVBMRSA/IHRoaXMuJG1hcmtBbGxQYW5lbCA6IHRoaXMuJG1hcmtQYW5lbDtcbiAgICAgICAgbGV0ICRkcmFnQm94ID0gdHlwZSA9PT0gdGhpcy5NQVJLVFlQRS5NVUxUSVBMRSA/IHRoaXMubWFya0FsbEJveC4kZHJhZ0JveCA6IHRoaXMubWFya0JveC4kZHJhZ0JveDtcbiAgICAgICAgbGV0ICRtYXJrVHh0ID0gJHBhbmVsLmZpbmQoJy5KLW1hcmstdHh0Jyk7XG4gICAgICAgIGxldCBtYXJrRm9udCA9IE1hdGguZmxvb3IocGFyc2VJbnQoJG1hcmtUeHQuY3NzKCdmb250LXNpemUnKSkgKiB0aGlzLmFjdGl2ZURhdGEucmF0aW8pICsgJ3B4IC8gJyArIE1hdGguZmxvb3IocGFyc2VJbnQoJG1hcmtUeHQuY3NzKCdsaW5lLWhlaWdodCcpKSAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbykgKyAncHggJyArICRtYXJrVHh0LmNzcygnZm9udC1mYW1pbHknKTtcbiAgICAgICAgbGV0ICRvcGFjaXR5ID0gJHBhbmVsLmZpbmQoJy5KLW9wYWNpdHknKTtcbiAgICAgICAgbGV0IG9wYWNpdHlWYWwgPSBwYXJzZUludCgkb3BhY2l0eS52YWwoKSkgLyBwYXJzZUludCgkb3BhY2l0eS5hdHRyKCdtYXgnKSk7XG4gICAgICAgIGxldCBjb2xvclZhbCA9ICRwYW5lbC5maW5kKCcuSi1jb2xvcjpjaGVja2VkJykudmFsKCk7XG5cbiAgICAgICAgbGV0IGNvbG9yID0gYHJnYmEoMjU1LCAyNTUsIDI1NSwgJHtvcGFjaXR5VmFsfSlgO1xuICAgICAgICBpZiAoY29sb3JWYWwgPT09ICcxJykge1xuICAgICAgICAgICAgY29sb3IgPSBgcmdiYSgwLCAwLCAwLCAke29wYWNpdHlWYWx9KWA7XG4gICAgICAgIH1cblxuICAgICAgICBsZXQgdHh0VmFsID0gJHBhbmVsLmZpbmQoJy5KLXNlbGVjdC1tYXJrJykudmFsKCk7XG4gICAgICAgIGxldCB0ZXh0ID0gdGhpcy5tYXJrVGV4dExpc3RbdHh0VmFsXTtcblxuXG4gICAgICAgIGxldCBtYXJrWCA9IE1hdGguZmxvb3IocGFyc2VJbnQoJGRyYWdCb3guY3NzKCdsZWZ0JykpICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvKTtcbiAgICAgICAgbGV0IG1hcmtZID0gTWF0aC5mbG9vcihwYXJzZUludCgkZHJhZ0JveC5jc3MoJ3RvcCcpKSAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbyk7XG5cblxuICAgICAgICBjb25zdCBQT1NJVElPTiA9IFsnY2VudGVyJywgJ3VwTGVmdCcsICd1cFJpZ2h0JywgJ2Rvd25MZWZ0JywgJ2Rvd25SaWdodCddO1xuXG4gICAgICAgIGxldCBwb3NpdGlvblZhbCA9ICRwYW5lbC5maW5kKCcuSi1wb3NpdGlvbjpjaGVja2VkJykudmFsKCk7XG5cbiAgICAgICAgbGV0IGRyYWdCb3hXcmFwcGVyV2lkdGggPSB0aGlzLmFjdGl2ZURhdGEudzE7XG4gICAgICAgIGxldCBkcmFnQm94V3JhcHBlckhlaWdodCA9IHRoaXMuYWN0aXZlRGF0YS5oMTtcbiAgICAgICAgbGV0IGRyYWdCb3hXaWR0aCA9ICRtYXJrVHh0Lm91dGVyV2lkdGgoKTtcbiAgICAgICAgbGV0IGRyYWdCb3hIZWlnaHQgPSAkbWFya1R4dC5vdXRlckhlaWdodCgpO1xuXG4gICAgICAgIHN3aXRjaCAoUE9TSVRJT05bcG9zaXRpb25WYWxdKSB7XG4gICAgICAgICAgICBjYXNlICdjZW50ZXInOlxuICAgICAgICAgICAgICAgIG1hcmtYID0gKGRyYWdCb3hXcmFwcGVyV2lkdGggLSBkcmFnQm94V2lkdGgpIC8gMiAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICAgICAgICAgICAgICBtYXJrWSA9IChkcmFnQm94V3JhcHBlckhlaWdodCAtIGRyYWdCb3hIZWlnaHQpIC8gMiAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIGNhc2UgJ3VwTGVmdCc6XG4gICAgICAgICAgICAgICAgbWFya1ggPSAoMCArIDE1KSAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICAgICAgICAgICAgICBtYXJrWSA9ICgwICsgMjApICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvO1xuICAgICAgICAgICAgICAgIGJyZWFrO1xuICAgICAgICAgICAgY2FzZSAndXBSaWdodCc6XG4gICAgICAgICAgICAgICAgbWFya1ggPSAoZHJhZ0JveFdyYXBwZXJXaWR0aCAtIGRyYWdCb3hXaWR0aCAtIDE1KSAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICAgICAgICAgICAgICBtYXJrWSA9ICgwICsgMjApICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvO1xuICAgICAgICAgICAgICAgIGJyZWFrO1xuICAgICAgICAgICAgY2FzZSAnZG93bkxlZnQnOlxuICAgICAgICAgICAgICAgIG1hcmtYID0gKDAgKyAxNSkgKiB0aGlzLmFjdGl2ZURhdGEucmF0aW87XG4gICAgICAgICAgICAgICAgbWFya1kgPSAoZHJhZ0JveFdyYXBwZXJIZWlnaHQgLSBkcmFnQm94SGVpZ2h0IC0gMjApICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvO1xuICAgICAgICAgICAgICAgIGJyZWFrO1xuICAgICAgICAgICAgY2FzZSAnZG93blJpZ2h0JzpcbiAgICAgICAgICAgICAgICBtYXJrWCA9IChkcmFnQm94V3JhcHBlcldpZHRoIC0gZHJhZ0JveFdpZHRoIC0gMTUpICogdGhpcy5hY3RpdmVEYXRhLnJhdGlvO1xuICAgICAgICAgICAgICAgIG1hcmtZID0gKGRyYWdCb3hXcmFwcGVySGVpZ2h0IC0gZHJhZ0JveEhlaWdodCAtIDIwKSAqIHRoaXMuYWN0aXZlRGF0YS5yYXRpbztcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIGRlZmF1bHQ6XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgIH1cblxuICAgICAgICByZXR1cm4ge1xuICAgICAgICAgICAgbWFya1g6IG1hcmtYLFxuICAgICAgICAgICAgbWFya1k6IG1hcmtZLFxuICAgICAgICAgICAgbWFya1RleHQ6IHRleHQsXG4gICAgICAgICAgICBtYXJrRm9udDogbWFya0ZvbnQsXG4gICAgICAgICAgICBtYXJrU3R5bGU6IGNvbG9yXG4gICAgICAgIH0gICAgICAgIFxuICAgIH1cbiAgICBfc2F2ZU1hcmtBbGwoKSB7XG4gICAgICAgIGxldCBudW0gPSAwO1xuICAgICAgICB0aGlzLmltZ0xpc3QuZm9yRWFjaCgoZWxlbWVudCxpbmRleCkgPT4ge1xuXG4gICAgICAgICAgICB0aGlzLm9uQ2hhbmdlQWN0aXZlKHtcbiAgICAgICAgICAgICAgICBhY3RpdmVJbWc6IGVsZW1lbnQsXG4gICAgICAgICAgICAgICAgYWN0aXZlSW5kZXg6IGluZGV4XG4gICAgICAgICAgICB9KTtcbiAgICAgICAgICAgIHRoaXMuYWN0aXZlSW1nID0gZWxlbWVudDtcbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUFjdGl2ZURhdGEoKTtcbiAgICAgICAgICAgIGxldCBvcHRpb25zID0gdGhpcy5fZ2V0TWFya1BhcmFtcyh0aGlzLk1BUktUWVBFLk1VTFRJUExFKTtcbiAgICAgICAgICAgIHRoaXMub25TYXZlTWFyayhvcHRpb25zLCAoaW1nKSA9PiB7fSk7XG4gICAgICAgICAgICB0aGlzLm9uU2F2ZSgoZGF0YSkgPT4ge1xuICAgICAgICAgICAgICAgIC8vIGNvbnNvbGUubG9nKG51bSsxKTtcbiAgICAgICAgICAgICAgICBpZiAoKytudW0gPT09IHRoaXMuaW1nTGlzdC5sZW5ndGgpIHtcbiAgICAgICAgICAgICAgICAgICAgdGhpcy5faGlkZVByb2dyZXNzKCk7XG4gICAgICAgICAgICAgICAgICAgIHRoaXMuZGVzdG9yeSgpO1xuICAgICAgICAgICAgICAgICAgICB0aGlzLl91cGRhdGVJc0NoYW5nZShmYWxzZSk7XG4gICAgICAgICAgICAgICAgICAgIG51bSA9IDA7XG4gICAgICAgICAgICAgICAgICAgIHRoaXMub25Db21wbGV0ZShkYXRhKTtcbiAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICAgICAgXG4gICAgICAgICAgICB9LCBpbmRleCk7XG4gICAgICAgIH0pO1xuXG4gICAgfVxuICAgIC8vIOawtOWNsOebuOWFs+aTjeS9nGVuZCsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKytcblxuXG4gICAgX3Nob3dTaXplKHcwLCBoMCkge1xuICAgICAgICB3MCA9IE1hdGgucm91bmQodzApO1xuICAgICAgICBoMCA9IE1hdGgucm91bmQoaDApO1xuICAgICAgICAvLyDmmL7npLrmtLvliqjlm77niYfljp/lp4vlrr3pq5hcbiAgICAgICAgbGV0ICRudW1XaWR0aCA9IHRoaXMuJGVsLmZpbmQoJy5KLW51bS13aWR0aCcpO1xuICAgICAgICBsZXQgJG51bUhlaWdodCA9IHRoaXMuJGVsLmZpbmQoJy5KLW51bS1oZWlnaHQnKTtcbiAgICAgICAgJG51bVdpZHRoLmVhY2goKGluZGV4LCBlbGVtZW50KSA9PiB7XG4gICAgICAgICAgICBpZiAoJChlbGVtZW50KS5nZXQoMCkubm9kZU5hbWUudG9Mb3dlckNhc2UoKSA9PT0gJ2lucHV0Jykge1xuICAgICAgICAgICAgICAgICRudW1XaWR0aC52YWwodzApO1xuICAgICAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAgICAgICAkbnVtV2lkdGgudGV4dCh3MCk7XG4gICAgICAgICAgICB9XG4gICAgICAgIH0pXG4gICAgICAgICRudW1IZWlnaHQuZWFjaCgoaW5kZXgsIGVsZW1lbnQpID0+IHtcbiAgICAgICAgICAgIGlmICgkKGVsZW1lbnQpLmdldCgwKS5ub2RlTmFtZS50b0xvd2VyQ2FzZSgpID09PSAnaW5wdXQnKSB7XG4gICAgICAgICAgICAgICAgJG51bUhlaWdodC52YWwoaDApO1xuICAgICAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAgICAgICAkbnVtSGVpZ2h0LnRleHQoaDApO1xuICAgICAgICAgICAgfVxuICAgICAgICB9KVxuICAgIH1cbiAgICBfcmVmcmVzaCgpIHtcbiAgICAgICAgbGV0IHNyYyA9ICcnO1xuICAgICAgICBpZiAodGhpcy5hY3RpdmVEYXRhLmltZy5ub2RlTmFtZS50b0xvd2VyQ2FzZSgpID09PSAnaW1nJykge1xuICAgICAgICAgICAgc3JjID0gdGhpcy5hY3RpdmVEYXRhLmltZy5zcmM7XG4gICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICBzcmMgPSB0aGlzLmFjdGl2ZURhdGEuaW1nLnRvRGF0YVVSTCh0aGlzLm1pbWUsIDEuMCk7XG4gICAgICAgIH1cblxuICAgICAgICBpZiAodGhpcy4kZWwuZmluZCgnLkotaW1nLWJveCcpLmZpbmQoJy5KLXNvdXJjZScpLmxlbmd0aCA+IDApIHtcbiAgICAgICAgICAgIHRoaXMuJGVsLmZpbmQoJy5KLWltZy1ib3gnKS5maW5kKCcuSi1zb3VyY2UnKS5hdHRyKCdzcmMnLCBzcmMpO1xuICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgdGhpcy4kZWwuZmluZCgnLkotaW1nLWJveCcpLmFwcGVuZChgPGltZyBjbGFzcz1cIkotc291cmNlXCIgc3JjPVwiJHtzcmN9XCI+YCk7XG4gICAgICAgIH1cblxuICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1zb3VyY2UnKS5yZW1vdmVBdHRyKCdzdHlsZScpO1xuICAgICAgICB0aGlzLmNyb3BCb3ggJiYgdGhpcy5jcm9wQm94LmJveEVsLnJlbW92ZUF0dHJpYnV0ZSgnc3R5bGUnKTtcblxuICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1pbWctYm94JykuZmluZCgnLkotc291cmNlJykuY3NzKHtcbiAgICAgICAgICAgIHdpZHRoOiB0aGlzLmFjdGl2ZURhdGEudzEsXG4gICAgICAgICAgICBoZWlnaHQ6IHRoaXMuYWN0aXZlRGF0YS5oMVxuICAgICAgICB9KVxuXG4gICAgICAgIHRoaXMuX3Nob3dTaXplKHRoaXMuYWN0aXZlRGF0YS53MCwgdGhpcy5hY3RpdmVEYXRhLmgwKTtcblxuICAgIH1cbiAgICAvLyDmm7TmlrDmraPlnKjnvJbovpHlm77niYfnmoTmlbDmja5cbiAgICBfdXBkYXRlQWN0aXZlRGF0YSgpIHtcbiAgICAgICAgbGV0IHRhcmdldEltZyA9IHRoaXMuYWN0aXZlSW1nO1xuICAgICAgICBsZXQgdzAgPSB0YXJnZXRJbWcud2lkdGg7XG4gICAgICAgIGxldCBoMCA9IHRhcmdldEltZy5oZWlnaHQ7XG4gICAgICAgIGlmICh0YXJnZXRJbWcubm9kZU5hbWUudG9Mb3dlckNhc2UoKSA9PT0gJ2ltZycpIHtcbiAgICAgICAgICAgIHcwID0gdGFyZ2V0SW1nLm5hdHVyYWxXaWR0aDtcbiAgICAgICAgICAgIGgwID0gdGFyZ2V0SW1nLm5hdHVyYWxIZWlnaHQ7XG4gICAgICAgIH1cblxuICAgICAgICBsZXQgaW1nUmF0aW8gPSB3MCAvIGgwO1xuICAgICAgICBsZXQgaDEgPSBoMDtcbiAgICAgICAgbGV0IHcxID0gdzA7XG4gICAgICAgIGxldCByYXRpbyA9IDE7XG4gICAgICAgIGlmIChpbWdSYXRpbyA8IHRoaXMuaW1nQm94UmF0aW8pIHtcbiAgICAgICAgICAgIGlmIChoMCA+IHRoaXMuaW1nQm94SGVpZ2h0KSB7XG4gICAgICAgICAgICAgICAgaDEgPSB0aGlzLmltZ0JveEhlaWdodDtcbiAgICAgICAgICAgICAgICB3MSA9IGgxICogaW1nUmF0aW87XG4gICAgICAgICAgICAgICAgcmF0aW8gPSBoMCAvIGgxO1xuICAgICAgICAgICAgfVxuXG4gICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICBpZiAodzAgPiB0aGlzLmltZ0JveFdpZHRoKSB7XG4gICAgICAgICAgICAgICAgdzEgPSB0aGlzLmltZ0JveFdpZHRoO1xuICAgICAgICAgICAgICAgIGgxID0gdzEgLyBpbWdSYXRpbztcbiAgICAgICAgICAgICAgICByYXRpbyA9IHcwIC8gdzE7ICAgICAgICAgICAgICAgIFxuICAgICAgICAgICAgfVxuXG4gICAgICAgIH1cblxuICAgICAgICB0aGlzLmFjdGl2ZURhdGEgPSB7XG4gICAgICAgICAgICB3MDogdzAsXG4gICAgICAgICAgICBoMDogaDAsXG4gICAgICAgICAgICB3MTogdzEsXG4gICAgICAgICAgICBoMTogaDEsXG4gICAgICAgICAgICByYXRpbzogcmF0aW8sXG4gICAgICAgICAgICBpbWdSYXRpbzogaW1nUmF0aW8sXG4gICAgICAgICAgICBpbWc6IHRhcmdldEltZ1xuICAgICAgICB9XG4gICAgfVxuICAgIF9nZXRSb3RhdGVOdW0oZGlyZWN0aW9uKSB7XG4gICAgICAgIHRoaXMucm90YXRlTnVtICs9IGRpcmVjdGlvbjtcbiAgICAgICAgaWYgKHRoaXMucm90YXRlTnVtID4gMykge1xuICAgICAgICAgICAgdGhpcy5yb3RhdGVOdW0gPSAwO1xuICAgICAgICB9XG4gICAgICAgIGlmICh0aGlzLnJvdGF0ZU51bSA8IDApIHtcbiAgICAgICAgICAgIHRoaXMucm90YXRlTnVtID0gMztcbiAgICAgICAgfVxuICAgIH1cbiAgICAvLyBUT0RPIOeLrOeri+WHulRpcOe7hOS7tlxuICAgIF9jb25maXJtKHllc0NhbGxiYWNrLCBub0NhbGxiYWNrKSB7XG4gICAgICAgIGxldCAkdGlwID0gdGhpcy4kZWwuZmluZCgnLkotcGlwZUltZy10aXAnKTtcbiAgICAgICAgbGV0IGhpZGVUaXAgPSAoKSA9PiB7XG4gICAgICAgICAgICB0aGlzLiRwaXBlV3JhcHBlci5jc3MoJ3otaW5kZXgnLCAyKTtcbiAgICAgICAgICAgICR0aXAuaGlkZSgpO1xuICAgICAgICAgICAgJHRpcC5vZmYoJ2NsaWNrJyk7XG4gICAgICAgIH07XG4gICAgICAgIGxldCBzaG93VGlwID0gKCkgPT4ge1xuICAgICAgICAgICAgJHRpcC5zaG93KCk7XG4gICAgICAgICAgICB0aGlzLiRwaXBlV3JhcHBlci5jc3MoJ3otaW5kZXgnLCAwKTtcbiAgICAgICAgfTtcblxuICAgICAgICBzaG93VGlwKCk7XG5cbiAgICAgICAgJHRpcC5vbignY2xpY2snLCAnLkotdGlwLWNvbmZpcm0nLCAoZSkgPT4ge1xuICAgICAgICAgICAgeWVzQ2FsbGJhY2soKTtcbiAgICAgICAgICAgIGhpZGVUaXAoKTtcbiAgICAgICAgfSlcbiAgICAgICAgJHRpcC5vbignY2xpY2snLCAnLkotdGlwLWNhbmNlbCcsIChlKSA9PiB7XG4gICAgICAgICAgICBub0NhbGxiYWNrICYmIG5vQ2FsbGJhY2soKTtcbiAgICAgICAgICAgIGhpZGVUaXAoKTtcbiAgICAgICAgfSlcbiAgICB9XG5cbiAgICBfdXBkYXRlSXNDaGFuZ2UoaXNDaGFuZ2UpIHtcbiAgICAgICAgdGhpcy5pc0NoYW5nZSA9IGlzQ2hhbmdlO1xuICAgICAgICBpZiAoaXNDaGFuZ2UpIHtcbiAgICAgICAgICAgIHRoaXMuJGJ1dHRvbnMuYWRkQ2xhc3MoJ2FjdGl2ZScpO1xuICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgdGhpcy4kYnV0dG9ucy5yZW1vdmVDbGFzcygnYWN0aXZlJyk7XG4gICAgICAgIH1cblxuICAgIH1cbiAgICBfcmVzZXQoKSB7XG4gICAgICAgIHRoaXMub25SZXNldCgoaW1nKSA9PiB7XG4gICAgICAgICAgICB0aGlzLmFjdGl2ZUltZyA9IGltZztcbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUFjdGl2ZURhdGEoKTtcbiAgICAgICAgICAgIHRoaXMuX3JlZnJlc2goKTtcbiAgICAgICAgICAgIHRoaXMuX2dvSG9tZSgpO1xuXG4gICAgICAgICAgICB0aGlzLl9pbml0RGF0YSgpO1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlSXNDaGFuZ2UoZmFsc2UpXG4gICAgICAgIH0pO1xuICAgIH1cbiAgICBfc2F2ZSgpIHtcbiAgICAgICAgbGV0ICRhY3RpdmVUaHVtYiA9IHRoaXMuJGVsLmZpbmQoJy5KLXBpcGUtZm9vdGVyJykuZmluZCgnLkotaW1nLXRodW1ibmFpbC5hY3RpdmUnKTtcbiAgICAgICAgbGV0IGluZGV4ID0gJGFjdGl2ZVRodW1iLmluZGV4KCk7XG4gICAgICAgIHRoaXMub25TYXZlKChkYXRhKSA9PiB7ICBcbiAgICAgICAgICAgIGlmICghKGRhdGEgJiYgZGF0YVtpbmRleF0gJiYgZGF0YVtpbmRleF0udXJsKSkge1xuICAgICAgICAgICAgICAgIHdpbmRvdy5jb25zb2xlICYmIGNvbnNvbGUubG9nKCdzYXZlOiBkYXRhIGVycm9yIScpO1xuICAgICAgICAgICAgICAgIHJldHVybiBmYWxzZTtcbiAgICAgICAgICAgIH1cbiAgICAgICAgICAgIGxldCBuZXdTcmMgPSBkYXRhW2luZGV4XS51cmwucmVwbGFjZShcIiZhbXA7XCIsIFwiJlwiKTtcbiAgICAgICAgICAgIC8vIOabtOaWsOWNleWbvuWSjOaJuemHj+aooeW8j+e8qeeVpeWbvlxuICAgICAgICAgICAgJGFjdGl2ZVRodW1iLmFkZENsYXNzKCduZXcnKS5maW5kKCdpbWcnKS5hdHRyKCdzcmMnLCBuZXdTcmMpOyAgICAgICAgICAgIFxuICAgICAgICAgICAgdGhpcy4kbWFya0FsbFBhbmVsLmZpbmQoJy5KLWltZy10aHVtYm5haWwnKS5lcShpbmRleCkuZmluZCgnaW1nJykuYXR0cignc3JjJywgbmV3U3JjKTtcbiAgICAgICAgICAgIC8vIOabtOaWsGltZ0xpc3RcbiAgICAgICAgICAgIHRoaXMuaW1nTGlzdFtpbmRleF0gPSAkYWN0aXZlVGh1bWIuZmluZCgnaW1nJykuZ2V0KDApO1xuXG4gICAgICAgICAgICB0aGlzLl9oaWRlUHJvZ3Jlc3MoKTtcbiAgICAgICAgICAgIHRoaXMuX2dvSG9tZSgpO1xuICAgICAgICAgICAgdGhpcy5vbkNvbXBsZXRlKGRhdGEpO1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlSXNDaGFuZ2UoZmFsc2UpO1xuICAgICAgICB9LCBpbmRleCk7XG4gICAgfVxuICAgIF9zaG93UHJvZ3Jlc3MoKSB7XG4gICAgICAgIHRoaXMuJHBpcGVXcmFwcGVyLmNzcygnei1pbmRleCcsIDApO1xuICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1waXBlSW1nLXByb2dyZXNzJykuYWRkQ2xhc3MoJ2FjdGl2ZScpO1xuICAgIH1cbiAgICBfaGlkZVByb2dyZXNzKCkge1xuICAgICAgICB0aGlzLiRwaXBlV3JhcHBlci5jc3MoJ3otaW5kZXgnLCAyKTtcbiAgICAgICAgdGhpcy4kZWwuZmluZCgnLkotcGlwZUltZy1wcm9ncmVzcycpLnJlbW92ZUNsYXNzKCdhY3RpdmUnKTtcbiAgICB9XG4gICAgX2luaXREYXRhKCkge1xuICAgICAgICB0aGlzLnJvdGF0ZU51bSA9IDA7XG4gICAgICAgIHRoaXMuc2NhbGVSYXRpbyA9IDE7XG4gICAgfVxuICAgIF91cGRhdGVBY3RpdmVJbWcoaW5kZXgpIHtcbiAgICAgICAgdGhpcy5hY3RpdmVJbWcgPSB0aGlzLmltZ0xpc3RbaW5kZXhdO1xuICAgICAgICB0aGlzLl91cGRhdGVBY3RpdmVEYXRhKCk7XG4gICAgICAgIHRoaXMuX3JlZnJlc2goKTtcbiAgICAgICAgbGV0IG9wdGlvbnMgPSB7XG4gICAgICAgICAgICBhY3RpdmVJbWc6IHRoaXMuYWN0aXZlSW1nLFxuICAgICAgICAgICAgYWN0aXZlSW5kZXg6IGluZGV4XG4gICAgICAgIH07XG4gICAgICAgIHRoaXMub25DaGFuZ2VBY3RpdmUob3B0aW9ucywgKGltZykgPT4ge30pO1xuICAgIH1cbiAgICBzaG93TWVudShpbmRleCkge1xuICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1pdGVtJykuZXEoaW5kZXgpLmFkZENsYXNzKCdhY3RpdmUnKS5zaWJsaW5ncygpLnJlbW92ZUNsYXNzKCdhY3RpdmUnKTtcbiAgICAgICAgdGhpcy4kZWwuZmluZCgnLkotcGFuZWwnKS5lcShpbmRleCkuYWRkQ2xhc3MoJ2FjdGl2ZScpLnNpYmxpbmdzKCkucmVtb3ZlQ2xhc3MoJ2FjdGl2ZScpO1xuICAgICAgICAvLyDoi6XmmK/msLTljbDvvIzorr7nva7pvKDmoIfmjIfpkojnirbmgIFcbiAgICAgICAgaWYgKGluZGV4ID09PSAzKSB7XG4gICAgICAgICAgICAvLyDliIfmjaLmsLTljbDmjInpkq7nirbmgIFcbiAgICAgICAgICAgIGxldCAkaXRlbU1hcmsgPSB0aGlzLiRlbC5maW5kKCcuSi1pdGVtLW1hcmsnKTtcbiAgICAgICAgICAgICRpdGVtTWFyay5maW5kKCcuSi1tZW51LWJ0bicpLmhpZGUoKTtcbiAgICAgICAgICAgICRpdGVtTWFyay5maW5kKCcuSi1tZW51LXR4dCcpLnNob3coKTtcbiAgICAgICAgfVxuICAgIH1cblxuICAgIHNob3dNb2RlbCh0eXBlKSB7XG4gICAgICAgIC8vIOe8lui+keeVjOmdouexu+Wei1xuICAgICAgICBpZiAodHlwZSA9PT0gdGhpcy5NQVJLVFlQRS5NVUxUSVBMRSkge1xuXG4gICAgICAgICAgICB0aGlzLmltZ0JveEhlaWdodCA9IHRoaXMuJG1hcmtBbGxQYW5lbC5maW5kKCcuSi1pbWctYm94JykuaGVpZ2h0KCk7XG4gICAgICAgICAgICB0aGlzLmltZ0JveFdpZHRoID0gdGhpcy4kbWFya0FsbFBhbmVsLmZpbmQoJy5KLWltZy1ib3gnKS53aWR0aCgpO1xuICAgICAgICAgICAgdGhpcy5pbWdCb3hSYXRpbyA9IHRoaXMuaW1nQm94V2lkdGggLyB0aGlzLmltZ0JveEhlaWdodDtcbiAgICAgICAgICAgIHRoaXMuX3VwZGF0ZUFjdGl2ZURhdGEoKTtcbiAgICAgICAgICAgIHRoaXMuX3JlZnJlc2goKTtcbiAgICAgICAgICAgIFxuXG4gICAgICAgICAgICBsZXQgJGl0ZW1NYXJrID0gdGhpcy4kZWwuZmluZCgnLkotaXRlbS1tYXJrJyk7XG4gICAgICAgICAgICAvLyDliIfmjaLoj5zljZXlj4rpnaLmnb/nirbmgIFcbiAgICAgICAgICAgICRpdGVtTWFyay5hZGRDbGFzcygnYWN0aXZlJykuc2libGluZ3MoKS5yZW1vdmVDbGFzcygnYWN0aXZlJyk7XG4gICAgICAgICAgICB0aGlzLiRtYXJrQWxsUGFuZWwuYWRkQ2xhc3MoJ2FjdGl2ZScpLnNpYmxpbmdzKCkucmVtb3ZlQ2xhc3MoJ2FjdGl2ZScpO1xuICAgICAgICAgICAgLy8g5YiH5o2i5rC05Y2w5oyJ6ZKu54q25oCBXG4gICAgICAgICAgICAkaXRlbU1hcmsuZmluZCgnLkotbWVudS1idG4nKS5oaWRlKCk7XG4gICAgICAgICAgICAkaXRlbU1hcmsuZmluZCgnLkotbWVudS10eHQnKS5zaG93KCk7XG5cbiAgICAgICAgICAgIGxldCB0eHQgPSAkaXRlbU1hcmsuZmluZCgnLkotbWVudS1idG4tbWFyay1hbGwnKS5odG1sKCk7XG4gICAgICAgICAgICAkaXRlbU1hcmsuZmluZCgnLkotbWVudS10eHQnKS5odG1sKHR4dCk7XG4gICAgICAgICAgICAkaXRlbU1hcmsuZmluZCgnLkotbWVudS1idG4tbWFyay1hbGwnKS5oaWRlKCk7XG4gICAgICAgICAgICAkaXRlbU1hcmsuZmluZCgnLkotbWVudS1idG4tbWFyaycpLnNob3coKTtcbiAgICAgICAgICAgIC8vIOWIh+aNoumhteiEmueKtuaAgVxuICAgICAgICAgICAgdGhpcy4kZWwuZmluZCgnLkotcGlwZS1mb290ZXInKS5hZGRDbGFzcygnbWFyay1hbGwnKTsgICAgICAgICAgIFxuXG4gICAgICAgIH0gZWxzZSB7XG5cbiAgICAgICAgICAgIHRoaXMuaW1nQm94SGVpZ2h0ID0gdGhpcy4kbWFya1BhbmVsLmZpbmQoJy5KLWltZy1ib3gnKS5oZWlnaHQoKTtcbiAgICAgICAgICAgIHRoaXMuaW1nQm94V2lkdGggPSB0aGlzLiRtYXJrUGFuZWwuZmluZCgnLkotaW1nLWJveCcpLndpZHRoKCk7XG4gICAgICAgICAgICB0aGlzLmltZ0JveFJhdGlvID0gdGhpcy5pbWdCb3hXaWR0aCAvIHRoaXMuaW1nQm94SGVpZ2h0O1xuICAgICAgICAgICAgdGhpcy5fdXBkYXRlQWN0aXZlRGF0YSgpO1xuICAgICAgICAgICAgdGhpcy5fcmVmcmVzaCgpO1xuXG4gICAgICAgICAgICBsZXQgJGl0ZW1NYXJrID0gdGhpcy4kZWwuZmluZCgnLkotaXRlbS1tYXJrJyk7XG4gICAgICAgICAgICAvLyDliIfmjaLoj5zljZXlj4rpnaLmnb/nirbmgIFcbiAgICAgICAgICAgIHRoaXMuJGVsLmZpbmQoJy5KLWl0ZW06Zmlyc3QnKS5hZGRDbGFzcygnYWN0aXZlJykuc2libGluZ3MoKS5yZW1vdmVDbGFzcygnYWN0aXZlJyk7XG4gICAgICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1wYW5lbDpmaXJzdCcpLmFkZENsYXNzKCdhY3RpdmUnKS5zaWJsaW5ncygpLnJlbW92ZUNsYXNzKCdhY3RpdmUnKTtcbiAgICAgICAgICAgIC8vIOWIh+aNouawtOWNsOaMiemSrueKtuaAgVxuICAgICAgICAgICAgJGl0ZW1NYXJrLmZpbmQoJy5KLW1lbnUtYnRuJykuc2hvdygpO1xuICAgICAgICAgICAgJGl0ZW1NYXJrLmZpbmQoJy5KLW1lbnUtdHh0JykuaGlkZSgpO1xuXG4gICAgICAgICAgICBsZXQgdHh0ID0gJGl0ZW1NYXJrLmZpbmQoJy5KLW1lbnUtYnRuLW1hcmsnKS5odG1sKCk7XG4gICAgICAgICAgICAkaXRlbU1hcmsuZmluZCgnLkotbWVudS10eHQnKS5odG1sKHR4dCk7XG4gICAgICAgICAgICAkaXRlbU1hcmsuZmluZCgnLkotbWVudS1idG4tbWFyay1hbGwnKS5zaG93KCk7XG4gICAgICAgICAgICAkaXRlbU1hcmsuZmluZCgnLkotbWVudS1idG4tbWFyaycpLmhpZGUoKTtcblxuICAgICAgICAgICAgLy8g5YiH5o2i6aG16ISa54q25oCBXG4gICAgICAgICAgICB0aGlzLiRlbC5maW5kKCcuSi1waXBlLWZvb3RlcicpLnJlbW92ZUNsYXNzKCdtYXJrLWFsbCcpO1xuICAgICAgICAgICAgXG4gICAgICAgIH1cbiAgICB9XG4gICAgZGVzdG9yeSgpIHtcbiAgICAgICAgdGhpcy4kZWwucmVtb3ZlKCk7XG4gICAgfVxuICAgIHNob3dEaWFsb2coKSB7XG4gICAgICAgIHRoaXMuJHBpcGVXcmFwcGVyLmZhZGVJbigxMDApO1xuICAgIH1cbiAgICBoaWRlRGlhbG9nKCkge1xuICAgICAgICB0aGlzLiRwaXBlV3JhcHBlci5mYWRlT3V0KDEwMCk7XG4gICAgfVxuXG59XG5cbmV4cG9ydCBkZWZhdWx0IERpYWxvZ1xuIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTtBQUNBO0FBRUE7QUFJQTtBQUdBO0FBQ0E7QUFDQTtBQUNBOzs7QUFFQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQXhDQTtBQTZDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTs7O0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBdkJBO0FBMEJBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUdBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBRUE7QUFBQTtBQUFBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQU5BO0FBQ0E7QUFRQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQURBO0FBQ0E7QUFFQTtBQUNBO0FBREE7QUFHQTtBQWZBO0FBQ0E7QUFpQkE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBREE7QUFDQTtBQUVBO0FBQ0E7QUFEQTtBQUdBO0FBZkE7QUFtQkE7QUFDQTtBQUFBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFFQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBWEE7QUFhQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBR0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBSUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRkE7QUFDQTtBQUlBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRkE7QUFDQTtBQUdBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUdBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBVkE7QUFDQTtBQVdBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTs7O0FBRUE7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBOzs7QUFFQTtBQUNBO0FBQ0E7OztBQUNBO0FBQ0E7QUFDQTtBQURBO0FBSUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRkE7QUFDQTtBQUlBO0FBQ0E7OztBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQURBO0FBR0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBOzs7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7OztBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7OztBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUpBO0FBTUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTs7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUVBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBSkE7QUFDQTtBQU1BO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQVJBO0FBQ0E7QUFVQTtBQUVBO0FBQ0E7OztBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQURBO0FBQ0E7QUFHQTtBQUNBOzs7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFEQTtBQUdBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBRUE7QUFDQTs7O0FBRUE7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUdBO0FBQ0E7QUFFQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQXRCQTtBQUNBO0FBd0JBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFKQTtBQU1BOzs7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUVBO0FBQ0E7QUFEQTtBQUlBOzs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBREE7QUFDQTtBQUdBO0FBQ0E7QUFDQTtBQUNBO0FBREE7QUFJQTtBQUNBO0FBQ0E7QUFDQTtBQURBO0FBR0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBOzs7QUFDQTtBQUVBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTs7O0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7O0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUdBO0FBQ0E7QUFHQTtBQUVBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBdEJBO0FBQ0E7QUF3QkE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBTEE7QUFPQTs7O0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUZBO0FBQ0E7QUFHQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFFQTtBQUNBO0FBRUE7QUFDQTs7O0FBR0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBRkE7QUFDQTtBQUlBO0FBRUE7QUFDQTs7O0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFQQTtBQVNBOzs7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7OztBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFFQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7OztBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7OztBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7OztBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7O0FBQ0E7QUFDQTtBQUNBO0FBQ0E7OztBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBRkE7QUFJQTtBQUNBOzs7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFFQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTs7O0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUNBO0FBQ0E7OztBQUNBO0FBQ0E7QUFDQTs7Ozs7O0FBSUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/js/dialog.js\n");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! template */ "template");
+/* harmony import */ var template__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(template__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util */ "./src/js/util.js");
+/* harmony import */ var _dragBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dragBox */ "./src/js/dragBox.js");
+/* harmony import */ var _dialog_tpl__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dialog.tpl */ "./src/js/dialog.tpl");
+/* harmony import */ var _dialog_tpl__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_dialog_tpl__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _thumbnail_tpl__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./thumbnail.tpl */ "./src/js/thumbnail.tpl");
+/* harmony import */ var _thumbnail_tpl__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_thumbnail_tpl__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _thinSelect__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./thinSelect */ "./src/js/thinSelect.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+
+
+
+var Dialog =
+/*#__PURE__*/
+function () {
+  function Dialog(options) {
+    _classCallCheck(this, Dialog);
+
+    // 默认配置参数
+    var defaults = {
+      debug: false,
+      imgList: ['data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'],
+      activeIndex: 0,
+      type: '0',
+      template: _dialog_tpl__WEBPACK_IMPORTED_MODULE_4___default.a,
+      thumbnailTpl: _thumbnail_tpl__WEBPACK_IMPORTED_MODULE_5___default.a,
+      mime: 'image/jpeg',
+      markXPositionMargin: 15,
+      markYPositionMargin: 20,
+      markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product Sourcing'],
+      closeBtnTxt: '关闭',
+      saveBtnTxt: '保存',
+      resetBtnTxt: '重置',
+      confirmBtnTxt: '确定',
+      cancelBtnTxt: '取消',
+      rotateMenuTxt: '旋转',
+      turnLeftTxt: '逆时针旋转',
+      turnRightTxt: '顺时针旋转',
+      cropMenuTxt: '裁剪',
+      scaleMenuTxt: '缩放',
+      markMenuTxt: '添加水印',
+      colorTxt: '颜色',
+      positionTxt: '位置',
+      opacityTxt: '透明度',
+      showRoomTxt: '展示厅',
+      companyNameTxt: '公司名称',
+      markAllMenuTxt: '批量添加水印',
+      tipTitleTxt: '提示',
+      tipContentTxt: '尚未保存，是否确定离开？',
+      tipConfirmBtnTxt: '确定',
+      onSaveRotate: function onSaveRotate(args, cb) {},
+      onSaveCrop: function onSaveCrop(args, cb) {},
+      onSaveScale: function onSaveScale(args, cb) {},
+      onSaveMark: function onSaveMark(args, cb) {},
+      onReset: function onReset(cb) {},
+      onSave: function onSave(cb) {},
+      onChangeActive: function onChangeActive(options, cb) {},
+      onSaveMarkAll: function onSaveMarkAll(cb) {},
+      onComplete: function onComplete(result) {}
+    };
+    options = _extends({}, defaults, options);
+    this.debug = options.debug;
+    this.imgList = options.imgList;
+    this.activeIndex = options.activeIndex;
+    this.type = options.type;
+    this.template = options.template;
+    this.thumbnailTpl = options.thumbnailTpl;
+    this.mime = options.mime;
+    this.markXPositionMargin = options.markXPositionMargin;
+    this.markYPositionMargin = options.markYPositionMargin;
+    this.markTextList = options.markTextList;
+    this.closeBtnTxt = options.closeBtnTxt;
+    this.saveBtnTxt = options.saveBtnTxt;
+    this.resetBtnTxt = options.resetBtnTxt;
+    this.confirmBtnTxt = options.confirmBtnTxt;
+    this.cancelBtnTxt = options.cancelBtnTxt;
+    this.rotateMenuTxt = options.rotateMenuTxt;
+    this.turnLeftTxt = options.turnLeftTxt;
+    this.turnRightTxt = options.turnRightTxt;
+    this.cropMenuTxt = options.cropMenuTxt;
+    this.scaleMenuTxt = options.scaleMenuTxt;
+    this.markMenuTxt = options.markMenuTxt;
+    this.colorTxt = options.colorTxt;
+    this.positionTxt = options.positionTxt;
+    this.opacityTxt = options.opacityTxt;
+    this.showRoomTxt = options.showRoomTxt;
+    this.companyNameTxt = options.companyNameTxt;
+    this.markAllMenuTxt = options.markAllMenuTxt;
+    this.tipTitleTxt = options.tipTitleTxt;
+    this.tipContentTxt = options.tipContentTxt;
+    this.tipConfirmBtnTxt = options.tipConfirmBtnTxt;
+    this.onSaveRotate = options.onSaveRotate;
+    this.onSaveCrop = options.onSaveCrop;
+    this.onSaveScale = options.onSaveScale;
+    this.onSaveMark = options.onSaveMark;
+    this.onReset = options.onReset;
+    this.onSave = options.onSave;
+    this.onChangeActive = options.onChangeActive;
+    this.onSaveMarkAll = options.onSaveMarkAll;
+    this.onComplete = options.onComplete;
+
+    this._init();
+  }
+
+  _createClass(Dialog, [{
+    key: "_init",
+    value: function _init() {
+      var templateHtml = template__WEBPACK_IMPORTED_MODULE_1___default()(this.template, {
+        imgList: this.imgList,
+        activeIndex: this.activeIndex,
+        type: this.type,
+        closeBtnTxt: this.closeBtnTxt,
+        saveBtnTxt: this.saveBtnTxt,
+        resetBtnTxt: this.resetBtnTxt,
+        confirmBtnTxt: this.confirmBtnTxt,
+        cancelBtnTxt: this.cancelBtnTxt,
+        rotateMenuTxt: this.rotateMenuTxt,
+        turnLeftTxt: this.turnLeftTxt,
+        turnRightTxt: this.turnRightTxt,
+        cropMenuTxt: this.cropMenuTxt,
+        scaleMenuTxt: this.scaleMenuTxt,
+        markMenuTxt: this.markMenuTxt,
+        colorTxt: this.colorTxt,
+        positionTxt: this.positionTxt,
+        opacityTxt: this.opacityTxt,
+        showRoomTxt: this.showRoomTxt,
+        companyNameTxt: this.companyNameTxt,
+        markAllMenuTxt: this.markAllMenuTxt,
+        tipTitleTxt: this.tipTitleTxt,
+        tipContentTxt: this.tipContentTxt,
+        tipConfirmBtnTxt: this.tipConfirmBtnTxt
+      });
+      var html = '<div class="pipeImg-dialog J-pipe-dialog" onselectstart="return false" ondragstart="return false"><div class="pipe-mask J-pipe-mask"></div>' + templateHtml + '</div>';
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').append(html);
+      this.$el = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.J-pipe-dialog');
+      this.$pipeWrapper = this.$el.find('.J-pipe-wrapper'); // 通用按钮
+
+      this.$btnClose = this.$el.find('.J-button-close');
+      this.$btnSave = this.$el.find('.J-button-save');
+      this.$btnReset = this.$el.find('.J-button-reset');
+      this.$btnConfirm = this.$el.find('.J-button-confirm');
+      this.$btnCancel = this.$el.find('.J-button-cancel');
+      this.$btnSaveAll = this.$el.find('.J-button-confirm-all');
+      this.$btnCancelAll = this.$el.find('.J-button-cancel-all'); // 模块按钮
+      // 旋转
+
+      this.$rotatePanel = this.$el.find('.J-rotate-panel');
+      this.$txtRotateWidth = this.$rotatePanel.find('.J-num-width');
+      this.$txtRotateHeight = this.$rotatePanel.find('.J-num-height');
+      this.$btnRotateLeft = this.$el.find('.J-btn-rotate-left');
+      this.$btnRotateRight = this.$el.find('.J-btn-rotate-right'); // 裁剪
+
+      this.$cropPanel = this.$el.find('.J-crop-panel');
+      this.$inputCropWidth = this.$cropPanel.find('.J-num-width');
+      this.$inputCropHeight = this.$cropPanel.find('.J-num-height');
+      this.$radioCropFix = this.$cropPanel.find('.J-fix-ratio'); // 缩放
+
+      this.$scalePanel = this.$el.find('.J-scale-panel');
+      this.$inputScaleWidth = this.$scalePanel.find('.J-num-width');
+      this.$inputScaleHeight = this.$scalePanel.find('.J-num-height');
+      this.$rangeScaleRatio = this.$scalePanel.find('.J-scale-range'); // 添加水印
+
+      this.$markPanel = this.$el.find('.J-mark-panel');
+      this.$radioMarkColor = this.$markPanel.find('.J-color');
+      this.$radioMarkPosition = this.$markPanel.find('.J-position');
+      this.$rangeMarkOpacity = this.$markPanel.find('.J-opacity');
+      this.$selectMarkTxt = this.$markPanel.find('.J-select-mark'); // 批量添加水印
+
+      this.$markAllPanel = this.$el.find('.J-mark-all-panel');
+      this.$radioMarkAllColor = this.$markAllPanel.find('.J-color');
+      this.$radioMarkAllPosition = this.$markAllPanel.find('.J-position');
+      this.$rangeMarkAllOpacity = this.$markAllPanel.find('.J-opacity');
+      this.$selectMarkAllTxt = this.$markAllPanel.find('.J-select-mark');
+      this.$buttons = this.$el.find('.J-button-save, .J-button-reset, .J-button-confirm, .J-button-cancel, .J-button-confirm-all, .J-button-cancel-all'); // 全局变量
+
+      this.MARKTYPE = {
+        'SINGLE': '0',
+        'MULTIPLE': '1'
+      };
+      this.isChange = false;
+      this.rotateNum = 0;
+      this.scaleRatio = 1;
+      this.imgBoxHeight = this.$el.find('.J-img-box').height();
+      this.imgBoxWidth = this.$el.find('.J-img-box').width();
+      this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
+
+      this._bind();
+    }
+  }, {
+    key: "renderImgList",
+    value: function renderImgList(imgList, activeIndex) {
+      var _this = this;
+
+      this.$el.find('.J-img-box').addClass('loaded');
+      this.imgList = imgList;
+      this.activeIndex = activeIndex;
+      var $imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
+      $imgsThumbnail.html(template__WEBPACK_IMPORTED_MODULE_1___default()(this.thumbnailTpl, {
+        imgList: this.imgList,
+        activeIndex: this.activeIndex
+      }));
+      this.activeImg = this.imgList[this.activeIndex];
+
+      this._updateActiveData(); // 初始化裁剪框
+
+
+      this.cropBox = new _dragBox__WEBPACK_IMPORTED_MODULE_3__["DragBox"]({
+        el: this.$cropPanel.find('.J-source'),
+        isCrop: true,
+        onDragPoint: function onDragPoint(data) {
+          _this._showSize(data.width * _this.activeData.ratio, data.height * _this.activeData.ratio);
+
+          _this._updateIsChange(true);
+        }
+      }); // 初始化缩放
+
+      var $scaleImgWrapper = this.$scalePanel.find('.J-scale-img-wrapper');
+      var imgEl = this.$scalePanel.find('.J-source').get(0);
+      Object(_util__WEBPACK_IMPORTED_MODULE_2__["drag"])(imgEl, imgEl, $scaleImgWrapper.get(0)); // 初始化水印框
+
+      this.markBox = new _dragBox__WEBPACK_IMPORTED_MODULE_3__["DragBox"]({
+        el: this.$markPanel.find('.J-source'),
+        fixRatio: true,
+        markText: this.markTextList[0],
+        onDragComplete: function onDragComplete(left, top) {
+          _this.$markPanel.find('.J-position').prop('checked', false);
+
+          _this._updateIsChange(true);
+        },
+        onDragPoint: function onDragPoint(boxData) {
+          _this.$markPanel.find('.J-mark-txt').css({
+            'font-size': Math.round(parseInt(_this.markBox.$dragBox.css('height')) / _this.markLineHeight0 * _this.markFontSize0)
+          });
+
+          _this.markBox.$dragBox.find('.J-mark-txt').css({
+            'display': 'block'
+          });
+        }
+      }); // 初始化批量水印框
+
+      this.markAllBox = new _dragBox__WEBPACK_IMPORTED_MODULE_3__["DragBox"]({
+        el: this.$markAllPanel.find('.J-source'),
+        fixRatio: true,
+        markText: this.markTextList[0],
+        onDragComplete: function onDragComplete(left, top) {
+          _this.$markAllPanel.find('.J-position').prop('checked', false);
+
+          _this._updateIsChange(true);
+        },
+        onDragPoint: function onDragPoint(boxData) {
+          _this.$markAllPanel.find('.J-mark-txt').css({
+            'font-size': Math.round(parseInt(_this.markAllBox.$dragBox.css('height')) / _this.markLineHeight0 * _this.markFontSize0)
+          });
+
+          _this.markAllBox.$dragBox.find('.J-mark-txt').css({
+            'display': 'block'
+          });
+        }
+      });
+      this.type === this.MARKTYPE.MULTIPLE && this.showModel(this.type);
+
+      this._refresh();
+
+      this.markSelects = _thinSelect__WEBPACK_IMPORTED_MODULE_6__["default"].use(this.$el.find('.J-select-mark'));
+
+      this._setMarkPosition();
+
+      this._setMarkPosition(this.MARKTYPE.MULTIPLE);
+
+      this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
+      this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
+    }
+  }, {
+    key: "_bind",
+    value: function _bind() {
+      var _this2 = this;
+
+      // 切换编辑图片
+      this.$el.find('.J-pipe-footer').on('click', '.J-img-thumbnail', function (e) {
+        var run = function run() {
+          var $thumbnail = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
+          $thumbnail.addClass('active').siblings().removeClass('active');
+          var $thumbnailImg = $thumbnail.find('img');
+
+          _this2.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').attr('src', $thumbnailImg.attr('src'));
+
+          _this2._updateActiveImg($thumbnail.index());
+
+          _this2._goHome();
+
+          _this2._initData();
+        };
+
+        if (_this2.isChange) {
+          _this2._confirm(function () {
+            run();
+
+            _this2._updateIsChange(false);
+          });
+        } else {
+          run();
+        }
+      }); // 批量水印切换编辑图片
+
+      this.$markAllPanel.on('click', '.J-img-thumbnail', function (e) {
+        var $thumbnail = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
+        $thumbnail.addClass('active').siblings().removeClass('active');
+        var $thumbnailImg = $thumbnail.find('img');
+
+        _this2.$markAllPanel.find('.J-source').attr('src', $thumbnailImg.attr('src'));
+
+        _this2._updateActiveImg($thumbnail.index());
+
+        _this2._setMarkPosition(_this2.MARKTYPE.MULTIPLE);
+
+        _this2._initData();
+      }); // 菜单切换
+
+      this.$el.find('.J-menu-btn').on('click', function (e) {
+        var run = function run() {
+          var $item = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget).parent();
+          var index = $item.index();
+          var oldActiveIndex = $item.parent().find('.active:first').index();
+
+          _this2.showModel(_this2.MARKTYPE.SINGLE);
+
+          _this2.showMenu(index); // 若有编辑操作，离开旋转，裁剪，缩放面板进行保存
+
+
+          if (_this2.isChange) {
+            switch (oldActiveIndex) {
+              case 0:
+                _this2._saveRotate();
+
+                break;
+
+              case 1:
+                _this2._saveCrop();
+
+                break;
+
+              case 2:
+                _this2._saveScale();
+
+                break;
+
+              default:
+                break;
+            }
+          } // 进入裁剪
+
+
+          if (index === 1) {
+            _this2._initCrop();
+          } // 进入缩放
+
+
+          if (index === 2) {
+            _this2._initScale();
+          } // 进入水印
+
+
+          if (index === 3) {
+            _this2._initMark();
+          }
+        }; // 离开批量水印模式提示
+
+
+        if (_this2.$markAllPanel.hasClass('active')) {
+          // 切换到单图编辑模式重置活动图片
+          var $thumbnail = _this2.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
+
+          _this2._updateActiveImg($thumbnail.index());
+        }
+
+        if (_this2.$markAllPanel.hasClass('active') && _this2.isChange) {
+          _this2._confirm(function () {
+            run();
+
+            _this2._updateIsChange(false);
+          });
+        } else {
+          run();
+        }
+      }); // 切换水印
+
+      this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark', function (e) {
+        var run = function run() {
+          var $thumbnail = _this2.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
+
+          _this2._updateActiveImg($thumbnail.index());
+
+          _this2.showModel(_this2.MARKTYPE.SINGLE);
+
+          _this2.showMenu(3);
+
+          _this2._initMark();
+
+          _this2._updateIsChange(false);
+        };
+
+        if (_this2.isChange) {
+          _this2._confirm(run);
+        } else {
+          run();
+        }
+      }); // 切换批量水印
+
+      this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark-all', function (e) {
+        var run = function run() {
+          var $thumbnail = _this2.$markAllPanel.find('.J-img-thumbnail.active');
+
+          _this2._updateActiveImg($thumbnail.index());
+
+          _this2.showModel(_this2.MARKTYPE.MULTIPLE);
+
+          _this2._initMark(_this2.MARKTYPE.MULTIPLE);
+
+          _this2._updateIsChange(false);
+
+          _this2._initData();
+        };
+
+        if (_this2.isChange) {
+          _this2._confirm(run);
+        } else {
+          run();
+        }
+      }); // 旋转++++++++++++++++
+      // 逆时针旋转
+
+      this.$btnRotateLeft.on('click', function () {
+        _this2._getRotateNum(-1);
+
+        _this2._updateRotate();
+      }); // 顺时针旋转
+
+      this.$btnRotateRight.on('click', function () {
+        _this2._getRotateNum(1);
+
+        _this2._updateRotate();
+      }); // 裁剪++++++++++++
+
+      this.$inputCropWidth.on('input', function (e) {
+        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());
+        _this2.cropW = value;
+
+        if (_this2.fixRatio) {
+          _this2.cropH = Math.round(value / _this2.activeData.imgRatio);
+
+          _this2.$inputCropHeight.val(_this2.cropH);
+        } // this.cropBox.width = value / this.activeData.ratio;
+        // if (this.cropBox.fixRatio) {
+        //     this.cropBox.height = this.cropBox.width / this.cropBox.boxData.ratio;
+        //     this.$inputCropHeight.val(value / this.activeData.imgRatio);
+        // }
+
+
+        _this2._updateCrop();
+      });
+      this.$inputCropHeight.on('input', function (e) {
+        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());
+        _this2.cropH = value;
+
+        if (_this2.fixRatio) {
+          _this2.cropW = Math.round(value * _this2.activeData.imgRatio);
+
+          _this2.$inputCropWidth.val(_this2.cropW);
+        } // this.cropBox.height = value / this.activeData.ratio;
+        // if (this.cropBox.fixRatio) {
+        //     this.cropBox.width = this.cropBox.height * this.cropBox.boxData.ratio;
+        // }
+
+
+        _this2._updateCrop();
+      });
+      this.$radioCropFix.on('change', function (e) {
+        _this2.fixRatio = !_this2.fixRatio; // this.cropBox.fixRatio = !this.cropBox.fixRatio;
+      }); // 缩放++++++++++++++
+
+      this.$inputScaleWidth.on('input', function (e) {
+        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());
+        value = value >= 0 ? value : 0;
+        _this2.scaleRatio = value / _this2.activeData.w0;
+
+        _this2._updateScale();
+      });
+      this.$inputScaleHeight.on('input', function (e) {
+        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());
+        value = value >= 0 ? value : 0;
+        _this2.scaleRatio = value / _this2.activeData.h0;
+
+        _this2._updateScale();
+      }); // IE11下change事件连续触发
+
+      this.$rangeScaleRatio.on('change', function (e) {
+        var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
+        var max = parseInt($this.attr('max'));
+        var value = parseInt($this.val());
+        _this2.scaleRatio = value / max;
+
+        _this2._updateScale();
+      }); // chrome下input事件连续触发，change只有停止拖动时触发
+
+      this.$rangeScaleRatio.on('input', function (e) {
+        var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
+        var max = parseInt($this.attr('max'));
+        var value = parseInt($this.val());
+        _this2.scaleRatio = value / max;
+
+        _this2._updateScale();
+      }); // 水印++++++++++++++
+
+      this.$radioMarkColor.on('change', function () {
+        _this2._updateMark();
+      });
+      this.$rangeMarkOpacity.on('input', function () {
+        _this2._updateMark();
+      });
+      this.$rangeMarkOpacity.on('change', function () {
+        _this2._updateMark();
+      });
+      this.$selectMarkTxt.on('change', function () {
+        _this2.markBox.$dragBox.find('.J-mark-txt').css({
+          'display': 'inline-block',
+          'font-size': _this2.markFontSize0
+        });
+
+        _this2._updateMark();
+      });
+      this.$radioMarkPosition.on('change', function () {
+        _this2._updateMark();
+      }); // 批量水印++++++++++++++
+
+      this.$radioMarkAllColor.on('change', function () {
+        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);
+      });
+      this.$rangeMarkAllOpacity.on('input', function () {
+        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);
+      });
+      this.$rangeMarkAllOpacity.on('change', function () {
+        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);
+      });
+      this.$selectMarkAllTxt.on('change', function () {
+        _this2.markAllBox.$dragBox.find('.J-mark-txt').css({
+          'display': 'inline-block',
+          'font-size': _this2.markFontSize0
+        });
+
+        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);
+      });
+      this.$radioMarkAllPosition.on('change', function () {
+        _this2._updateMark(_this2.MARKTYPE.MULTIPLE);
+      }); // 水印确定
+
+      this.$btnConfirm.on('click', function () {
+        _this2._saveMark();
+      }); // 水印取消
+
+      this.$btnCancel.on('click', function () {
+        _this2._cancelMark();
+      }); // 批量水印确定
+
+      this.$btnSaveAll.on('click', function () {
+        _this2._showProgress();
+
+        _this2._saveMarkAll();
+      }); // 批量水印取消
+
+      this.$btnCancelAll.on('click', function () {
+        if (_this2.isChange) {
+          _this2._confirm(function () {
+            _this2.destory();
+          });
+        } else {
+          _this2.destory();
+        }
+      }); // 重置
+
+      this.$btnReset.on('click', function () {
+        if (_this2.isChange) {
+          _this2._reset();
+        }
+      }); // 保存
+
+      this.$btnSave.on('click', function (e) {
+        if (_this2.isChange) {
+          _this2._showProgress();
+
+          var panelIndex = _this2.$el.find('.J-panel.active').index();
+
+          switch (panelIndex) {
+            case 0:
+              _this2._saveRotate();
+
+              break;
+
+            case 1:
+              _this2._saveCrop();
+
+              break;
+
+            case 2:
+              _this2._saveScale();
+
+            default:
+              break;
+          }
+
+          _this2._save();
+        }
+      }); // 关闭
+
+      this.$btnClose.on('click', function (e) {
+        if (_this2.isChange) {
+          _this2._confirm(function () {
+            _this2.destory();
+          });
+        } else {
+          _this2.destory();
+        }
+      }); // 禁用鼠标右击菜单
+
+      this.$el.on('contextmenu', function (e) {
+        return _this2.debug;
+      });
+    }
+  }, {
+    key: "_goHome",
+    value: function _goHome() {
+      this.$el.find('.J-menu-btn').parent(':first').addClass('active').siblings().removeClass('active');
+      this.$el.find('.J-panel:first').addClass('active').siblings().removeClass('active');
+      this.$el.find('.J-item-mark').find('.J-menu-btn').show();
+      this.$el.find('.J-item-mark').find('.J-menu-txt').hide();
+    }
+  }, {
+    key: "_initRotate",
+    value: function _initRotate() {
+      this.rotateNum = 0;
+    }
+  }, {
+    key: "_updateRotate",
+    value: function _updateRotate() {
+      this.$el.find('.J-source').css({
+        'transform': "rotate(".concat(this.rotateNum * 90, "deg)")
+      });
+      var width, height;
+
+      if (this.rotateNum === 1 || this.rotateNum === 3) {
+        // 旋转类90度后
+        if (1 / this.activeData.imgRatio < this.imgBoxRatio) {
+          width = Math.min(this.imgBoxHeight, this.activeData.w0);
+          height = 'auto';
+        } else {
+          width = 'auto';
+          height = Math.min(this.imgBoxWidth, this.activeData.h0);
+        }
+
+        this.$txtRotateWidth.text(this.activeData.h0);
+        this.$txtRotateHeight.text(this.activeData.w0);
+      } else {
+        if (this.activeData.imgRatio < this.imgBoxRatio) {
+          width = 'auto';
+          height = Math.min(this.imgBoxHeight, this.activeData.h0);
+        } else {
+          width = Math.min(this.imgBoxWidth, this.activeData.w0);
+          height = 'auto';
+        }
+
+        this.$txtRotateWidth.text(this.activeData.w0);
+        this.$txtRotateHeight.text(this.activeData.h0);
+      }
+
+      this.$el.find('.J-source').css({
+        'width': width,
+        'height': height
+      });
+
+      this._updateIsChange(true);
+    }
+  }, {
+    key: "_saveRotate",
+    value: function _saveRotate() {
+      var _this3 = this;
+
+      if (this.rotateNum === 0) {
+        return false;
+      }
+
+      var options = {
+        rotateNum: this.rotateNum
+      };
+      this.onSaveRotate(options, function (img) {
+        _this3.rotateNum = 0;
+        _this3.activeImg = img;
+
+        _this3._updateActiveData();
+
+        _this3._refresh();
+      });
+    }
+  }, {
+    key: "_initCrop",
+    value: function _initCrop() {
+      this.$radioCropFix.prop('checked', false);
+      this.fixRatio = this.$radioCropFix.prop('checked');
+      this.cropW = this.$inputCropWidth.val();
+      this.cropH = this.$inputCropHeight.val(); // this.cropBox.fixRatio = this.$radioCropFix.prop('checked');
+      // this.cropBox.width = this.$inputCropWidth.val() / this.activeData.ratio;
+      // this.cropBox.height = this.$inputCropHeight.val() / this.activeData.ratio;
+    }
+  }, {
+    key: "_updateCrop",
+    value: function _updateCrop() {
+      this.cropBox.width = this.cropW / this.activeData.ratio;
+      this.cropBox.height = this.cropH / this.activeData.ratio;
+      this.cropBox.fixRatio = this.fixRatio;
+      this.cropBox.update();
+
+      this._updateIsChange(true);
+    }
+  }, {
+    key: "_saveCrop",
+    value: function _saveCrop() {
+      var _this4 = this;
+
+      if (this.cropBox.boxData.left === 0 && this.cropBox.boxData.top === 0 && this.cropBox.boxData.width === Math.round(this.activeData.w1) && this.cropBox.boxData.height === Math.round(this.activeData.h1)) {
+        return false;
+      }
+
+      var options = {
+        sx: Math.max(this.cropBox.boxData.left * this.activeData.ratio, 0),
+        sy: Math.max(this.cropBox.boxData.top * this.activeData.ratio, 0),
+        cropW: Math.min(this.cropBox.boxData.width * this.activeData.ratio, this.activeData.w0),
+        cropH: Math.min(this.cropBox.boxData.height * this.activeData.ratio, this.activeData.h0)
+      };
+      this.onSaveCrop(options, function (img) {
+        _this4.activeImg = img;
+
+        _this4._updateActiveData();
+
+        _this4._refresh();
+      });
+    }
+  }, {
+    key: "_initScale",
+    value: function _initScale() {
+      var $scaleImgBox = this.$scalePanel.find('.J-img-box');
+      var $scaleRange = this.$scalePanel.find('.J-scale-range');
+      var $scaleImgWrapper = this.$scalePanel.find('.J-scale-img-wrapper');
+      var $img = $scaleImgBox.find('.J-source');
+      var width, height;
+
+      if (this.activeData.w0 < this.imgBoxWidth) {
+        width = this.imgBoxWidth;
+      } else {
+        width = this.activeData.w0 + (this.activeData.w0 - this.imgBoxWidth);
+      }
+
+      if (this.activeData.h0 < this.imgBoxHeight) {
+        height = this.imgBoxHeight;
+      } else {
+        height = this.activeData.h0 + (this.activeData.h0 - this.imgBoxHeight);
+      }
+
+      $scaleImgWrapper.css({
+        'width': width,
+        'height': height,
+        'margin-left': -width / 2,
+        'margin-top': -height / 2
+      }); // 去除预览图的缩放显示
+
+      $img.css({
+        'position': 'absolute',
+        'left': (width - this.activeData.w0) / 2,
+        'top': (height - this.activeData.h0) / 2,
+        'width': this.activeData.w0,
+        'height': this.activeData.h0,
+        'max-width': 'none',
+        'max-height': 'none',
+        'cursor': 'move'
+      }); // 初始化滑块值
+
+      $scaleRange.val($scaleRange.attr('defaultValue'));
+      this.scaleRatio = 1;
+    }
+  }, {
+    key: "_updateScale",
+    value: function _updateScale() {
+      var scaleRatio = this.scaleRatio;
+      var $scaleRange = this.$rangeScaleRatio;
+      var $scaleNumWidth = this.$inputScaleWidth;
+      var $scaleNumHeight = this.$inputScaleHeight;
+      var max = parseInt($scaleRange.attr('max'));
+
+      if ($scaleNumWidth.val() != this.activeData.w0 * scaleRatio) {
+        $scaleNumWidth.val(this.activeData.w0 * scaleRatio);
+      }
+
+      if ($scaleNumHeight.val() != this.activeData.h0 * scaleRatio) {
+        $scaleNumHeight.val(this.activeData.h0 * scaleRatio);
+      }
+
+      if ($scaleRange.val() != max * scaleRatio) {
+        $scaleRange.val(max * scaleRatio);
+      }
+
+      this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').css({
+        'transform': "scale(".concat(this.scaleRatio, ")")
+      });
+
+      this._updateIsChange(true);
+    }
+  }, {
+    key: "_saveScale",
+    value: function _saveScale() {
+      var _this5 = this;
+
+      if (this.scaleRatio === 1) {
+        return false;
+      }
+
+      var options = {
+        scaleRatio: this.scaleRatio
+      };
+      this.onSaveScale(options, function (img) {
+        _this5.scaleRatio = 1;
+        _this5.activeImg = img;
+
+        _this5._updateActiveData();
+
+        _this5._refresh();
+
+        _this5._initScale();
+      });
+    } // 水印相关操作start++++++++++++++++++++++++++++++++++++++++
+
+  }, {
+    key: "_setMarkPosition",
+    value: function _setMarkPosition(type) {
+      var POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
+      var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
+      var $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;
+      var $markTxt = $dragBox.find('.J-mark-txt');
+      var markX = parseInt($dragBox.css('left')) * this.activeData.ratio;
+      var markY = parseInt($dragBox.css('top')) * this.activeData.ratio;
+      var positionVal = $panel.find('.J-position:checked').val();
+      var dragBoxWrapperWidth = this.activeData.w1;
+      var dragBoxWrapperHeight = this.activeData.h1;
+      var dragBoxWidth = $markTxt.outerWidth();
+      var dragBoxHeight = $markTxt.outerHeight();
+
+      switch (POSITION[positionVal]) {
+        case 'center':
+          markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
+          markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
+          break;
+
+        case 'upLeft':
+          markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
+          markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
+          break;
+
+        case 'upRight':
+          markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
+          markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
+          break;
+
+        case 'downLeft':
+          markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
+          markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
+          break;
+
+        case 'downRight':
+          markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
+          markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
+          break;
+
+        default:
+          break;
+      }
+
+      $dragBox.css({
+        'left': Math.floor(markX / this.activeData.ratio),
+        'top': Math.floor(markY / this.activeData.ratio),
+        'width': Math.ceil(dragBoxWidth),
+        'height': Math.ceil(dragBoxHeight)
+      });
+    }
+  }, {
+    key: "_setMarkStyle",
+    value: function _setMarkStyle(type) {
+      var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
+      var $markTxt = $panel.find('.J-mark-txt');
+      var colorVal = $panel.find('.J-color:checked').val();
+      var opacityVal = parseInt($panel.find('.J-opacity').val()) / parseInt($panel.find('.J-opacity').attr('max'));
+      var txtVal = $panel.find('.J-select-mark').val();
+      var color = "rgba(255, 255, 255, ".concat(opacityVal, ")");
+
+      if (colorVal === '1') {
+        color = "rgba(0, 0, 0, ".concat(opacityVal, ")");
+      }
+
+      var text = this.markTextList[txtVal];
+      $markTxt.text(text).css({
+        'color': color
+      });
+    }
+  }, {
+    key: "_initMark",
+    value: function _initMark(type) {
+      var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
+      $panel.find('.J-color:last').prop('checked', true);
+      $panel.find('.J-position:first').prop('checked', true);
+      $panel.find('.J-opacity:first').val($panel.find('.J-opacity:first').attr('defaultValue'));
+      $panel.find('.J-select-mark option:first').prop('selected', true);
+      $panel.find('.J-mark-txt').css({
+        'font-size': this.markFontSize0 + 'px'
+      });
+
+      if (type === this.MARKTYPE.MULTIPLE) {
+        this.markSelects[1].select(0);
+        this.markAllBox.$dragBox.find('.J-mark-txt').css({
+          'display': 'inline-block'
+        });
+      } else {
+        this.markSelects[0].select(0);
+        this.markBox.$dragBox.find('.J-mark-txt').css({
+          'display': 'inline-block'
+        });
+      }
+
+      this._setMarkStyle(type);
+
+      this._setMarkPosition(type);
+    }
+  }, {
+    key: "_updateMark",
+    value: function _updateMark(type) {
+      this._setMarkStyle(type);
+
+      this._setMarkPosition(type);
+
+      this._updateIsChange(true);
+    }
+  }, {
+    key: "_saveMark",
+    value: function _saveMark() {
+      var _this6 = this;
+
+      var options = this._getMarkParams();
+
+      this.onSaveMark(options, function (img) {
+        _this6.activeImg = img;
+
+        _this6._updateActiveData();
+
+        _this6._refresh();
+
+        _this6._goHome();
+
+        _this6._updateIsChange(true);
+      });
+    }
+  }, {
+    key: "_cancelMark",
+    value: function _cancelMark() {
+      this._goHome();
+    }
+  }, {
+    key: "_getMarkParams",
+    value: function _getMarkParams(type) {
+      var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
+      var $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;
+      var $markTxt = $panel.find('.J-mark-txt');
+      var markFont = Math.floor(parseInt($markTxt.css('font-size')) * this.activeData.ratio) + 'px / ' + Math.floor(parseInt($markTxt.css('line-height')) * this.activeData.ratio) + 'px ' + $markTxt.css('font-family');
+      var $opacity = $panel.find('.J-opacity');
+      var opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));
+      var colorVal = $panel.find('.J-color:checked').val();
+      var color = "rgba(255, 255, 255, ".concat(opacityVal, ")");
+
+      if (colorVal === '1') {
+        color = "rgba(0, 0, 0, ".concat(opacityVal, ")");
+      }
+
+      var txtVal = $panel.find('.J-select-mark').val();
+      var text = this.markTextList[txtVal];
+      var markX = Math.floor(parseInt($dragBox.css('left')) * this.activeData.ratio);
+      var markY = Math.floor(parseInt($dragBox.css('top')) * this.activeData.ratio);
+      var POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
+      var positionVal = $panel.find('.J-position:checked').val();
+      var dragBoxWrapperWidth = this.activeData.w1;
+      var dragBoxWrapperHeight = this.activeData.h1;
+      var dragBoxWidth = $markTxt.outerWidth();
+      var dragBoxHeight = $markTxt.outerHeight();
+
+      switch (POSITION[positionVal]) {
+        case 'center':
+          markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
+          markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
+          break;
+
+        case 'upLeft':
+          markX = (0 + 15) * this.activeData.ratio;
+          markY = (0 + 20) * this.activeData.ratio;
+          break;
+
+        case 'upRight':
+          markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
+          markY = (0 + 20) * this.activeData.ratio;
+          break;
+
+        case 'downLeft':
+          markX = (0 + 15) * this.activeData.ratio;
+          markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
+          break;
+
+        case 'downRight':
+          markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
+          markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
+          break;
+
+        default:
+          break;
+      }
+
+      return {
+        markX: markX,
+        markY: markY,
+        markText: text,
+        markFont: markFont,
+        markStyle: color
+      };
+    }
+  }, {
+    key: "_saveMarkAll",
+    value: function _saveMarkAll() {
+      var _this7 = this;
+
+      var num = 0;
+      this.imgList.forEach(function (element, index) {
+        _this7.onChangeActive({
+          activeImg: element,
+          activeIndex: index
+        });
+
+        _this7.activeImg = element;
+
+        _this7._updateActiveData();
+
+        var options = _this7._getMarkParams(_this7.MARKTYPE.MULTIPLE);
+
+        _this7.onSaveMark(options, function (img) {});
+
+        _this7.onSave(function (data) {
+          // console.log(num+1);
+          if (++num === _this7.imgList.length) {
+            _this7._hideProgress();
+
+            _this7.destory();
+
+            _this7._updateIsChange(false);
+
+            num = 0;
+
+            _this7.onComplete(data);
+          }
+        }, index);
+      });
+    } // 水印相关操作end++++++++++++++++++++++++++++++++++++++++
+
+  }, {
+    key: "_showSize",
+    value: function _showSize(w0, h0) {
+      w0 = Math.round(w0);
+      h0 = Math.round(h0); // 显示活动图片原始宽高
+
+      var $numWidth = this.$el.find('.J-num-width');
+      var $numHeight = this.$el.find('.J-num-height');
+      $numWidth.each(function (index, element) {
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).get(0).nodeName.toLowerCase() === 'input') {
+          $numWidth.val(w0);
+        } else {
+          $numWidth.text(w0);
+        }
+      });
+      $numHeight.each(function (index, element) {
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).get(0).nodeName.toLowerCase() === 'input') {
+          $numHeight.val(h0);
+        } else {
+          $numHeight.text(h0);
+        }
+      });
+    }
+  }, {
+    key: "_refresh",
+    value: function _refresh() {
+      var src = '';
+
+      if (this.activeData.img.nodeName.toLowerCase() === 'img') {
+        src = this.activeData.img.src;
+      } else {
+        src = this.activeData.img.toDataURL(this.mime, 1.0);
+      }
+
+      if (this.$el.find('.J-img-box').find('.J-source').length > 0) {
+        this.$el.find('.J-img-box').find('.J-source').attr('src', src);
+      } else {
+        this.$el.find('.J-img-box').append("<img class=\"J-source\" src=\"".concat(src, "\">"));
+      }
+
+      this.$el.find('.J-source').removeAttr('style');
+      this.cropBox && this.cropBox.boxEl.removeAttribute('style');
+      this.$el.find('.J-img-box').find('.J-source').css({
+        width: this.activeData.w1,
+        height: this.activeData.h1
+      });
+
+      this._showSize(this.activeData.w0, this.activeData.h0);
+    } // 更新正在编辑图片的数据
+
+  }, {
+    key: "_updateActiveData",
+    value: function _updateActiveData() {
+      var targetImg = this.activeImg;
+      var w0 = targetImg.width;
+      var h0 = targetImg.height;
+
+      if (targetImg.nodeName.toLowerCase() === 'img') {
+        w0 = targetImg.naturalWidth;
+        h0 = targetImg.naturalHeight;
+      }
+
+      var imgRatio = w0 / h0;
+      var h1 = h0;
+      var w1 = w0;
+      var ratio = 1;
+
+      if (imgRatio < this.imgBoxRatio) {
+        if (h0 > this.imgBoxHeight) {
+          h1 = this.imgBoxHeight;
+          w1 = h1 * imgRatio;
+          ratio = h0 / h1;
+        }
+      } else {
+        if (w0 > this.imgBoxWidth) {
+          w1 = this.imgBoxWidth;
+          h1 = w1 / imgRatio;
+          ratio = w0 / w1;
+        }
+      }
+
+      this.activeData = {
+        w0: w0,
+        h0: h0,
+        w1: w1,
+        h1: h1,
+        ratio: ratio,
+        imgRatio: imgRatio,
+        img: targetImg
+      };
+    }
+  }, {
+    key: "_getRotateNum",
+    value: function _getRotateNum(direction) {
+      this.rotateNum += direction;
+
+      if (this.rotateNum > 3) {
+        this.rotateNum = 0;
+      }
+
+      if (this.rotateNum < 0) {
+        this.rotateNum = 3;
+      }
+    } // TODO 独立出Tip组件
+
+  }, {
+    key: "_confirm",
+    value: function _confirm(yesCallback, noCallback) {
+      var _this8 = this;
+
+      var $tip = this.$el.find('.J-pipeImg-tip');
+
+      var hideTip = function hideTip() {
+        _this8.$pipeWrapper.css('z-index', 2);
+
+        $tip.hide();
+        $tip.off('click');
+      };
+
+      var showTip = function showTip() {
+        $tip.show();
+
+        _this8.$pipeWrapper.css('z-index', 0);
+      };
+
+      showTip();
+      $tip.on('click', '.J-tip-confirm', function (e) {
+        yesCallback();
+        hideTip();
+      });
+      $tip.on('click', '.J-tip-cancel', function (e) {
+        noCallback && noCallback();
+        hideTip();
+      });
+    }
+  }, {
+    key: "_updateIsChange",
+    value: function _updateIsChange(isChange) {
+      this.isChange = isChange;
+
+      if (isChange) {
+        this.$buttons.addClass('active');
+      } else {
+        this.$buttons.removeClass('active');
+      }
+    }
+  }, {
+    key: "_reset",
+    value: function _reset() {
+      var _this9 = this;
+
+      this.onReset(function (img) {
+        _this9.activeImg = img;
+
+        _this9._updateActiveData();
+
+        _this9._refresh();
+
+        _this9._goHome();
+
+        _this9._initData();
+
+        _this9._updateIsChange(false);
+      });
+    }
+  }, {
+    key: "_save",
+    value: function _save() {
+      var _this10 = this;
+
+      var $activeThumb = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
+      var index = $activeThumb.index();
+      this.onSave(function (data) {
+        if (!(data && data[index] && data[index].url)) {
+          window.console && console.log('save: data error!');
+          return false;
+        }
+
+        var newSrc = data[index].url.replace("&amp;", "&"); // 更新单图和批量模式缩略图
+
+        $activeThumb.addClass('new').find('img').attr('src', newSrc);
+
+        _this10.$markAllPanel.find('.J-img-thumbnail').eq(index).find('img').attr('src', newSrc); // 更新imgList
+
+
+        _this10.imgList[index] = $activeThumb.find('img').get(0);
+
+        _this10._hideProgress();
+
+        _this10._goHome();
+
+        _this10.onComplete(data);
+
+        _this10._updateIsChange(false);
+      }, index);
+    }
+  }, {
+    key: "_showProgress",
+    value: function _showProgress() {
+      this.$pipeWrapper.css('z-index', 0);
+      this.$el.find('.J-pipeImg-progress').addClass('active');
+    }
+  }, {
+    key: "_hideProgress",
+    value: function _hideProgress() {
+      this.$pipeWrapper.css('z-index', 2);
+      this.$el.find('.J-pipeImg-progress').removeClass('active');
+    }
+  }, {
+    key: "_initData",
+    value: function _initData() {
+      this.rotateNum = 0;
+      this.scaleRatio = 1;
+    }
+  }, {
+    key: "_updateActiveImg",
+    value: function _updateActiveImg(index) {
+      this.activeImg = this.imgList[index];
+
+      this._updateActiveData();
+
+      this._refresh();
+
+      var options = {
+        activeImg: this.activeImg,
+        activeIndex: index
+      };
+      this.onChangeActive(options, function (img) {});
+    }
+  }, {
+    key: "showMenu",
+    value: function showMenu(index) {
+      this.$el.find('.J-item').eq(index).addClass('active').siblings().removeClass('active');
+      this.$el.find('.J-panel').eq(index).addClass('active').siblings().removeClass('active'); // 若是水印，设置鼠标指针状态
+
+      if (index === 3) {
+        // 切换水印按钮状态
+        var $itemMark = this.$el.find('.J-item-mark');
+        $itemMark.find('.J-menu-btn').hide();
+        $itemMark.find('.J-menu-txt').show();
+      }
+    }
+  }, {
+    key: "showModel",
+    value: function showModel(type) {
+      // 编辑界面类型
+      if (type === this.MARKTYPE.MULTIPLE) {
+        this.imgBoxHeight = this.$markAllPanel.find('.J-img-box').height();
+        this.imgBoxWidth = this.$markAllPanel.find('.J-img-box').width();
+        this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
+
+        this._updateActiveData();
+
+        this._refresh();
+
+        var $itemMark = this.$el.find('.J-item-mark'); // 切换菜单及面板状态
+
+        $itemMark.addClass('active').siblings().removeClass('active');
+        this.$markAllPanel.addClass('active').siblings().removeClass('active'); // 切换水印按钮状态
+
+        $itemMark.find('.J-menu-btn').hide();
+        $itemMark.find('.J-menu-txt').show();
+        var txt = $itemMark.find('.J-menu-btn-mark-all').html();
+        $itemMark.find('.J-menu-txt').html(txt);
+        $itemMark.find('.J-menu-btn-mark-all').hide();
+        $itemMark.find('.J-menu-btn-mark').show(); // 切换页脚状态
+
+        this.$el.find('.J-pipe-footer').addClass('mark-all');
+      } else {
+        this.imgBoxHeight = this.$markPanel.find('.J-img-box').height();
+        this.imgBoxWidth = this.$markPanel.find('.J-img-box').width();
+        this.imgBoxRatio = this.imgBoxWidth / this.imgBoxHeight;
+
+        this._updateActiveData();
+
+        this._refresh();
+
+        var _$itemMark = this.$el.find('.J-item-mark'); // 切换菜单及面板状态
+
+
+        this.$el.find('.J-item:first').addClass('active').siblings().removeClass('active');
+        this.$el.find('.J-panel:first').addClass('active').siblings().removeClass('active'); // 切换水印按钮状态
+
+        _$itemMark.find('.J-menu-btn').show();
+
+        _$itemMark.find('.J-menu-txt').hide();
+
+        var _txt = _$itemMark.find('.J-menu-btn-mark').html();
+
+        _$itemMark.find('.J-menu-txt').html(_txt);
+
+        _$itemMark.find('.J-menu-btn-mark-all').show();
+
+        _$itemMark.find('.J-menu-btn-mark').hide(); // 切换页脚状态
+
+
+        this.$el.find('.J-pipe-footer').removeClass('mark-all');
+      }
+    }
+  }, {
+    key: "destory",
+    value: function destory() {
+      this.$el.remove();
+    }
+  }, {
+    key: "showDialog",
+    value: function showDialog() {
+      this.$pipeWrapper.fadeIn(100);
+    }
+  }, {
+    key: "hideDialog",
+    value: function hideDialog() {
+      this.$pipeWrapper.fadeOut(100);
+    }
+  }]);
+
+  return Dialog;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Dialog);
 
 /***/ }),
 
@@ -115,7 +1532,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jque
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<div class=\\\"pipeImg-wrapper J-pipe-wrapper\\\">\\r\\n    <div class=\\\"pipeImg-header\\\">\\r\\n        <ul class=\\\"pipeImg-menu\\\">\\r\\n            <li class=\\\"pipeImg-item J-item active\\\"><a class=\\\"pipeImg-btn J-menu-btn\\\" href=\\\"javascript:void(0)\\\"><i class=\\\"ob-icon icon-refresh\\\"></i>{{=rotateMenuTxt}}</a></li>\\r\\n            <li class=\\\"pipeImg-item J-item\\\"><a class=\\\"pipeImg-btn J-menu-btn\\\" href=\\\"javascript:void(0)\\\"><i class=\\\"ob-icon icon-crop\\\"></i>{{=cropMenuTxt}}</a></li>\\r\\n            <li class=\\\"pipeImg-item J-item\\\"><a class=\\\"pipeImg-btn J-menu-btn\\\" href=\\\"javascript:void(0)\\\"><i class=\\\"ob-icon icon-scaling\\\"></i>{{=scaleMenuTxt}}</a></li>\\r\\n            <li class=\\\"pipeImg-item J-item J-item-mark\\\">\\r\\n                <a class=\\\"pipeImg-btn J-menu-btn\\\" href=\\\"javascript:void(0)\\\"><i class=\\\"ob-icon icon-add-l\\\"></i>{{=markMenuTxt}}</a>\\r\\n                <div class=\\\"pipeImg-btn J-menu-txt\\\" style=\\\"display:none;\\\"><i class=\\\"ob-icon icon-add-l\\\"></i>{{=markMenuTxt}}</div>\\r\\n                <div class=\\\"pipeImg-item item-sub\\\">\\r\\n                    <a class=\\\"pipeImg-btn J-menu-btn-mark-all\\\" href=\\\"javascript:void(0)\\\"><i class=\\\"ob-icon icon-batch\\\"></i>{{=markAllMenuTxt}}</a>\\r\\n                    <a class=\\\"pipeImg-btn J-menu-btn-mark\\\" href=\\\"javascript:void(0)\\\" style=\\\"display:none;\\\"><i class=\\\"ob-icon icon-add-l\\\"></i>{{=markMenuTxt}}</a>\\r\\n                </div>\\r\\n            </li>\\r\\n        </ul>\\r\\n        <a class=\\\"pipeImg-btn btn-close J-button-close\\\" href=\\\"javascript:void(0)\\\"><i class=\\\"ob-icon icon-delete\\\"></i>{{=closeBtnTxt}}</a>\\r\\n    </div>\\r\\n    <div class=\\\"pipeImg-content\\\">\\r\\n        <!-- 旋转面板 -->\\r\\n        <div class=\\\"pipeImg-panel rotate-panel active J-panel J-rotate-panel\\\">\\r\\n            <div class=\\\"img-box J-img-box\\\">\\r\\n                <img class=\\\"J-source\\\" src=\\\"{{-imgList[activeIndex].src}}\\\">\\r\\n            </div>\\r\\n            <div class=\\\"content-footer\\\">\\r\\n                <div class=\\\"size\\\">\\r\\n                    <span class=\\\"J-num-width\\\"></span>*<span class=\\\"J-num-height\\\"></span>px\\r\\n                </div>\\r\\n                <a class=\\\"pipeImg-btn btn-rotate J-btn-rotate-left\\\" href=\\\"javascript:void(0)\\\"><i class=\\\"ob-icon icon-rotate-l\\\"></i>{{=turnLeftTxt}}</a>\\r\\n                <a class=\\\"pipeImg-btn btn-rotate J-btn-rotate-right\\\" href=\\\"javascript:void(0)\\\"><i class=\\\"ob-icon icon-rotate-r\\\"></i>{{=turnRightTxt}}</a>\\r\\n\\r\\n                <div class=\\\"pipeImg-buttons\\\">\\r\\n                    <a class=\\\"pipeImg-button button-main J-button-save\\\" href=\\\"javascript:void(0)\\\">{{=saveBtnTxt}}</a>\\r\\n                    <a class=\\\"pipeImg-button button-reset J-button-reset\\\" href=\\\"javascript:void(0)\\\">{{=resetBtnTxt}}</a>\\r\\n                </div>\\r\\n            </div>\\r\\n        </div>\\r\\n        <!-- 裁剪面板 -->\\r\\n        <div class=\\\"pipeImg-panel J-panel J-crop-panel\\\">\\r\\n            <div class=\\\"img-box J-img-box\\\">\\r\\n                <img class=\\\"J-source\\\" src=\\\"{{-imgList[activeIndex].src}}\\\">\\r\\n            </div>\\r\\n            <div class=\\\"content-footer\\\">\\r\\n                <input class=\\\"num-width J-num-width\\\" type=\\\"text\\\">\\r\\n                <input class=\\\"J-fix-ratio\\\" id=\\\"fixRatio\\\" type=\\\"checkbox\\\" name=\\\"fixRatio\\\" hidden>\\r\\n                <label class=\\\"fix\\\" for=\\\"fixRatio\\\"><i class=\\\"ob-icon icon-lock\\\"></i></label>\\r\\n                <input class=\\\"num-height J-num-height\\\" type=\\\"text\\\">\\r\\n                <span class=\\\"txt\\\">px</span>\\r\\n\\r\\n                <div class=\\\"pipeImg-buttons\\\">\\r\\n                    <a class=\\\"pipeImg-button button-main J-button-save\\\" href=\\\"javascript:void(0)\\\">{{=saveBtnTxt}}</a>\\r\\n                    <a class=\\\"pipeImg-button button-reset J-button-reset\\\" href=\\\"javascript:void(0)\\\">{{=resetBtnTxt}}</a>\\r\\n                </div>\\r\\n            </div>\\r\\n\\r\\n        </div>\\r\\n        <!-- 缩放面板 -->\\r\\n        <div class=\\\"pipeImg-panel scale-panel J-panel J-scale-panel\\\">\\r\\n            <div class=\\\"img-box J-img-box\\\">\\r\\n                <div class=\\\"scale-img-wrapper J-scale-img-wrapper\\\">\\r\\n                    <img class=\\\"J-source\\\" src=\\\"{{-imgList[activeIndex].src}}\\\">\\r\\n                </div>\\r\\n            </div>\\r\\n            <div class=\\\"content-footer\\\">\\r\\n                <input class=\\\"num-width J-num-width\\\" type=\\\"text\\\">\\r\\n                <span class=\\\"txt\\\">X</span>\\r\\n                <input class=\\\"num-height J-num-height\\\" type=\\\"text\\\">\\r\\n                <span class=\\\"txt\\\">px</span>\\r\\n                <input class=\\\"scale-range J-scale-range\\\" type=\\\"range\\\" name=\\\"scaleRatio\\\" min=\\\"5\\\" max=\\\"100\\\" step=\\\"1\\\" defaultValue=\\\"100\\\" value=\\\"100\\\">\\r\\n\\r\\n                <div class=\\\"pipeImg-buttons\\\">\\r\\n                    <a class=\\\"pipeImg-button button-main J-button-save\\\" href=\\\"javascript:void(0)\\\">{{=saveBtnTxt}}</a>\\r\\n                    <a class=\\\"pipeImg-button button-reset J-button-reset\\\" href=\\\"javascript:void(0)\\\">{{=resetBtnTxt}}</a>\\r\\n                </div>\\r\\n            </div>\\r\\n\\r\\n        </div>\\r\\n        <!-- 添加水印面板 -->\\r\\n        <div class=\\\"pipeImg-panel J-panel J-mark-panel\\\">\\r\\n            <div class=\\\"img-box J-img-box\\\">\\r\\n                <img class=\\\"J-source\\\" src=\\\"{{-imgList[activeIndex].src}}\\\">\\r\\n            </div>\\r\\n            <div class=\\\"content-footer\\\">\\r\\n                <div class=\\\"pipeImg-item\\\">\\r\\n                    <div class=\\\"txt-label\\\">{{=colorTxt}}:</div> \\r\\n                    <input class=\\\"J-color\\\" id=\\\"colorWhite\\\" type=\\\"radio\\\" name=\\\"color\\\" value=\\\"0\\\" autocomplete=\\\"off\\\" hidden>        \\r\\n                    <label class=\\\"color\\\" for=\\\"colorWhite\\\"></label>\\r\\n                    <input class=\\\"J-color\\\" id=\\\"colorBlack\\\" type=\\\"radio\\\" name=\\\"color\\\" value=\\\"1\\\" checked autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"color color-black\\\" for=\\\"colorBlack\\\"></label>\\r\\n                </div>\\r\\n                <div class=\\\"pipeImg-item\\\">\\r\\n                    <div class=\\\"txt-label\\\">{{=positionTxt}}:</div>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionCenter\\\" type=\\\"radio\\\" name=\\\"position\\\" value=\\\"0\\\" autocomplete=\\\"off\\\" checked hidden>\\r\\n                    <label class=\\\"position center\\\" for=\\\"positionCenter\\\"><span class=\\\"line\\\"></span></label>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionLeftTop\\\" type=\\\"radio\\\" name=\\\"position\\\" value=\\\"1\\\" autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"position left-top\\\" for=\\\"positionLeftTop\\\"><span class=\\\"line\\\"></span></label>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionRightTop\\\" type=\\\"radio\\\" name=\\\"position\\\" value=\\\"2\\\" autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"position right-top\\\" for=\\\"positionRightTop\\\"><span class=\\\"line\\\"></span></label>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionLeftBottom\\\" type=\\\"radio\\\" name=\\\"position\\\" value=\\\"3\\\" autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"position left-bottom\\\" for=\\\"positionLeftBottom\\\"><span class=\\\"line\\\"></span></label>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionRightBottom\\\" type=\\\"radio\\\" name=\\\"position\\\" value=\\\"4\\\" autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"position right-bottom\\\" for=\\\"positionRightBottom\\\"><span class=\\\"line\\\"></span></label>\\r\\n                </div>\\r\\n                <div class=\\\"pipeImg-item\\\">\\r\\n                    <div class=\\\"txt-label\\\">{{=opacityTxt}}:</div>\\r\\n                    <input class=\\\"opacity-range J-opacity\\\" name=\\\"opacity\\\" type=\\\"range\\\" min=\\\"10\\\" max=\\\"100\\\" step=\\\"1\\\" defaultValue=\\\"80\\\" value=\\\"80\\\">\\r\\n                </div>\\r\\n\\r\\n                <select class=\\\"J-select-mark\\\" name=\\\"markTxt\\\">\\r\\n                    <option value=\\\"0\\\" selected=\\\"selected\\\">{{=showRoomTxt}}</option>\\r\\n                    <option value=\\\"1\\\">{{=companyNameTxt}}</option>\\r\\n                </select>\\r\\n\\r\\n                <div class=\\\"pipeImg-buttons\\\">\\r\\n                    <a class=\\\"pipeImg-button button-confirm J-button-confirm\\\" href=\\\"javascript:void(0)\\\">{{=confirmBtnTxt}}</a>\\r\\n                    <a class=\\\"pipeImg-button button-cancel J-button-cancel\\\" href=\\\"javascript:void(0)\\\">{{=cancelBtnTxt}}</a>\\r\\n                </div>\\r\\n            </div>\\r\\n\\r\\n        </div>\\r\\n        <!-- 批量添加水印 -->\\r\\n        <div class=\\\"pipeImg-panel panel-mark-all J-panel J-mark-all-panel\\\">\\r\\n            <div class=\\\"img-box J-img-box\\\">\\r\\n                <img class=\\\"J-source\\\" src=\\\"{{-imgList[activeIndex].src}}\\\">\\r\\n            </div>\\r\\n            <div class=\\\"imgs-thumbnail\\\">\\r\\n                {{ for(var i=0;i<imgList.length;i++) { }} \\r\\n                <div class=\\\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\\\">\\r\\n                    <a href=\\\"javascript:void(0)\\\">\\r\\n                        <img src=\\\"{{-imgList[i].src}}\\\">\\r\\n                        <span class=\\\"circle\\\"></span>\\r\\n                    </a>\\r\\n                </div>\\r\\n\\r\\n                {{ } }}\\r\\n            </div>\\r\\n            <div class=\\\"content-footer\\\">\\r\\n                <div class=\\\"pipeImg-item\\\">\\r\\n                    <div class=\\\"txt-label\\\">{{=colorTxt}}:</div> \\r\\n                    <input class=\\\"J-color\\\" id=\\\"colorWhiteAll\\\" type=\\\"radio\\\" name=\\\"colorAll\\\" value=\\\"0\\\" autocomplete=\\\"off\\\" hidden>        \\r\\n                    <label class=\\\"color\\\" for=\\\"colorWhiteAll\\\"></label>\\r\\n                    <input class=\\\"J-color\\\" id=\\\"colorBlackAll\\\" type=\\\"radio\\\" name=\\\"colorAll\\\" value=\\\"1\\\" checked autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"color color-black\\\" for=\\\"colorBlackAll\\\"></label>\\r\\n                </div>\\r\\n                <div class=\\\"pipeImg-item\\\">\\r\\n                    <div class=\\\"txt-label\\\">{{=positionTxt}}:</div>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionCenterAll\\\" type=\\\"radio\\\" name=\\\"positionAll\\\" value=\\\"0\\\" autocomplete=\\\"off\\\" checked hidden>\\r\\n                    <label class=\\\"position center\\\" for=\\\"positionCenterAll\\\"><span class=\\\"line\\\"></span></label>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionLeftTopAll\\\" type=\\\"radio\\\" name=\\\"positionAll\\\" value=\\\"1\\\" autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"position left-top\\\" for=\\\"positionLeftTopAll\\\"><span class=\\\"line\\\"></span></label>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionRightTopAll\\\" type=\\\"radio\\\" name=\\\"positionAll\\\" value=\\\"2\\\" autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"position right-top\\\" for=\\\"positionRightTopAll\\\"><span class=\\\"line\\\"></span></label>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionLeftBottomAll\\\" type=\\\"radio\\\" name=\\\"positionAll\\\" value=\\\"3\\\" autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"position left-bottom\\\" for=\\\"positionLeftBottomAll\\\"><span class=\\\"line\\\"></span></label>\\r\\n                    <input class=\\\"J-position\\\" id=\\\"positionRightBottomAll\\\" type=\\\"radio\\\" name=\\\"positionAll\\\" value=\\\"4\\\" autocomplete=\\\"off\\\" hidden>\\r\\n                    <label class=\\\"position right-bottom\\\" for=\\\"positionRightBottomAll\\\"><span class=\\\"line\\\"></span></label>\\r\\n                </div>\\r\\n                <div class=\\\"pipeImg-item\\\">\\r\\n                    <div class=\\\"txt-label\\\">{{=opacityTxt}}:</div>\\r\\n                    <input class=\\\"opacity-range J-opacity\\\" name=\\\"opacityAll\\\" type=\\\"range\\\" min=\\\"10\\\" max=\\\"100\\\" step=\\\"1\\\" defaultValue=\\\"80\\\" value=\\\"80\\\">\\r\\n                </div>\\r\\n\\r\\n                <select class=\\\"J-select-mark\\\" name=\\\"markTxtAll\\\">\\r\\n                    <option value=\\\"0\\\" selected=\\\"selected\\\">{{=showRoomTxt}}</option>\\r\\n                    <option value=\\\"1\\\">{{=companyNameTxt}}</option>\\r\\n                </select>\\r\\n                \\r\\n            </div>\\r\\n\\r\\n        </div>\\r\\n    </div>\\r\\n    <div class=\\\"pipeImg-footer J-pipe-footer\\\">\\r\\n        <div class=\\\"imgs-thumbnail\\\">\\r\\n            {{ for(var i=0;i<imgList.length;i++) { }} \\r\\n            <div class=\\\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\\\">\\r\\n                <div class=\\\"img-inner\\\">\\r\\n                    <a href=\\\"javascript:void(0)\\\">\\r\\n                    <img src=\\\"{{-imgList[i].src}}\\\">\\r\\n                    <span class=\\\"circle\\\"></span>\\r\\n                    </a>\\r\\n                </div>\\r\\n\\r\\n            </div>\\r\\n\\r\\n            {{ } }}\\r\\n        </div>  \\r\\n\\r\\n        <div class=\\\"pipeImg-buttons\\\">\\r\\n            <a class=\\\"pipeImg-button button-confirm J-button-confirm-all\\\" href=\\\"javascript:void(0)\\\">{{=saveBtnTxt}}</a>\\r\\n            <a class=\\\"pipeImg-button button-cancel J-button-cancel-all\\\" href=\\\"javascript:void(0)\\\">{{=cancelBtnTxt}}</a>\\r\\n        </div>            \\r\\n    </div>\\r\\n\\r\\n</div>\\r\\n\\r\\n<div class=\\\"pipeImg-tip J-pipeImg-tip\\\">\\r\\n    <div class=\\\"pipeImg-tip-header\\\">{{=tipTitleTxt}}</div>\\r\\n    <div class=\\\"pipeImg-tip-main\\\">\\r\\n        <div class=\\\"pipeImg-tip-content\\\">{{=tipContentTxt}}</div>\\r\\n        <a class=\\\"pipeImg-button button-confirm J-tip-confirm\\\" href=\\\"javascript:void(0)\\\">{{=tipConfirmBtnTxt}}</a>\\r\\n        <a class=\\\"pipeImg-button button-cancel J-tip-cancel\\\" href=\\\"javascript:void(0)\\\">{{=cancelBtnTxt}}</a>        \\r\\n    </div>\\r\\n</div>\\r\\n\\r\\n<div class=\\\"pipeImg-progress-bar J-pipeImg-progress\\\">\\r\\n    <div class=\\\"pipeImg-progress-val\\\"></div>\\r\\n</div>\"//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvanMvZGlhbG9nLnRwbC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy9kaWFsb2cudHBsP2Q1NTYiXSwic291cmNlc0NvbnRlbnQiOlsibW9kdWxlLmV4cG9ydHMgPSBcIjxkaXYgY2xhc3M9XFxcInBpcGVJbWctd3JhcHBlciBKLXBpcGUtd3JhcHBlclxcXCI+XFxyXFxuICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctaGVhZGVyXFxcIj5cXHJcXG4gICAgICAgIDx1bCBjbGFzcz1cXFwicGlwZUltZy1tZW51XFxcIj5cXHJcXG4gICAgICAgICAgICA8bGkgY2xhc3M9XFxcInBpcGVJbWctaXRlbSBKLWl0ZW0gYWN0aXZlXFxcIj48YSBjbGFzcz1cXFwicGlwZUltZy1idG4gSi1tZW51LWJ0blxcXCIgaHJlZj1cXFwiamF2YXNjcmlwdDp2b2lkKDApXFxcIj48aSBjbGFzcz1cXFwib2ItaWNvbiBpY29uLXJlZnJlc2hcXFwiPjwvaT57ez1yb3RhdGVNZW51VHh0fX08L2E+PC9saT5cXHJcXG4gICAgICAgICAgICA8bGkgY2xhc3M9XFxcInBpcGVJbWctaXRlbSBKLWl0ZW1cXFwiPjxhIGNsYXNzPVxcXCJwaXBlSW1nLWJ0biBKLW1lbnUtYnRuXFxcIiBocmVmPVxcXCJqYXZhc2NyaXB0OnZvaWQoMClcXFwiPjxpIGNsYXNzPVxcXCJvYi1pY29uIGljb24tY3JvcFxcXCI+PC9pPnt7PWNyb3BNZW51VHh0fX08L2E+PC9saT5cXHJcXG4gICAgICAgICAgICA8bGkgY2xhc3M9XFxcInBpcGVJbWctaXRlbSBKLWl0ZW1cXFwiPjxhIGNsYXNzPVxcXCJwaXBlSW1nLWJ0biBKLW1lbnUtYnRuXFxcIiBocmVmPVxcXCJqYXZhc2NyaXB0OnZvaWQoMClcXFwiPjxpIGNsYXNzPVxcXCJvYi1pY29uIGljb24tc2NhbGluZ1xcXCI+PC9pPnt7PXNjYWxlTWVudVR4dH19PC9hPjwvbGk+XFxyXFxuICAgICAgICAgICAgPGxpIGNsYXNzPVxcXCJwaXBlSW1nLWl0ZW0gSi1pdGVtIEotaXRlbS1tYXJrXFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnRuIEotbWVudS1idG5cXFwiIGhyZWY9XFxcImphdmFzY3JpcHQ6dm9pZCgwKVxcXCI+PGkgY2xhc3M9XFxcIm9iLWljb24gaWNvbi1hZGQtbFxcXCI+PC9pPnt7PW1hcmtNZW51VHh0fX08L2E+XFxyXFxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctYnRuIEotbWVudS10eHRcXFwiIHN0eWxlPVxcXCJkaXNwbGF5Om5vbmU7XFxcIj48aSBjbGFzcz1cXFwib2ItaWNvbiBpY29uLWFkZC1sXFxcIj48L2k+e3s9bWFya01lbnVUeHR9fTwvZGl2PlxcclxcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLWl0ZW0gaXRlbS1zdWJcXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnRuIEotbWVudS1idG4tbWFyay1hbGxcXFwiIGhyZWY9XFxcImphdmFzY3JpcHQ6dm9pZCgwKVxcXCI+PGkgY2xhc3M9XFxcIm9iLWljb24gaWNvbi1iYXRjaFxcXCI+PC9pPnt7PW1hcmtBbGxNZW51VHh0fX08L2E+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8YSBjbGFzcz1cXFwicGlwZUltZy1idG4gSi1tZW51LWJ0bi1tYXJrXFxcIiBocmVmPVxcXCJqYXZhc2NyaXB0OnZvaWQoMClcXFwiIHN0eWxlPVxcXCJkaXNwbGF5Om5vbmU7XFxcIj48aSBjbGFzcz1cXFwib2ItaWNvbiBpY29uLWFkZC1sXFxcIj48L2k+e3s9bWFya01lbnVUeHR9fTwvYT5cXHJcXG4gICAgICAgICAgICAgICAgPC9kaXY+XFxyXFxuICAgICAgICAgICAgPC9saT5cXHJcXG4gICAgICAgIDwvdWw+XFxyXFxuICAgICAgICA8YSBjbGFzcz1cXFwicGlwZUltZy1idG4gYnRuLWNsb3NlIEotYnV0dG9uLWNsb3NlXFxcIiBocmVmPVxcXCJqYXZhc2NyaXB0OnZvaWQoMClcXFwiPjxpIGNsYXNzPVxcXCJvYi1pY29uIGljb24tZGVsZXRlXFxcIj48L2k+e3s9Y2xvc2VCdG5UeHR9fTwvYT5cXHJcXG4gICAgPC9kaXY+XFxyXFxuICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctY29udGVudFxcXCI+XFxyXFxuICAgICAgICA8IS0tIOaXi+i9rOmdouadvyAtLT5cXHJcXG4gICAgICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctcGFuZWwgcm90YXRlLXBhbmVsIGFjdGl2ZSBKLXBhbmVsIEotcm90YXRlLXBhbmVsXFxcIj5cXHJcXG4gICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJpbWctYm94IEotaW1nLWJveFxcXCI+XFxyXFxuICAgICAgICAgICAgICAgIDxpbWcgY2xhc3M9XFxcIkotc291cmNlXFxcIiBzcmM9XFxcInt7LWltZ0xpc3RbYWN0aXZlSW5kZXhdLnNyY319XFxcIj5cXHJcXG4gICAgICAgICAgICA8L2Rpdj5cXHJcXG4gICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJjb250ZW50LWZvb3RlclxcXCI+XFxyXFxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcInNpemVcXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3M9XFxcIkotbnVtLXdpZHRoXFxcIj48L3NwYW4+KjxzcGFuIGNsYXNzPVxcXCJKLW51bS1oZWlnaHRcXFwiPjwvc3Bhbj5weFxcclxcbiAgICAgICAgICAgICAgICA8L2Rpdj5cXHJcXG4gICAgICAgICAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnRuIGJ0bi1yb3RhdGUgSi1idG4tcm90YXRlLWxlZnRcXFwiIGhyZWY9XFxcImphdmFzY3JpcHQ6dm9pZCgwKVxcXCI+PGkgY2xhc3M9XFxcIm9iLWljb24gaWNvbi1yb3RhdGUtbFxcXCI+PC9pPnt7PXR1cm5MZWZ0VHh0fX08L2E+XFxyXFxuICAgICAgICAgICAgICAgIDxhIGNsYXNzPVxcXCJwaXBlSW1nLWJ0biBidG4tcm90YXRlIEotYnRuLXJvdGF0ZS1yaWdodFxcXCIgaHJlZj1cXFwiamF2YXNjcmlwdDp2b2lkKDApXFxcIj48aSBjbGFzcz1cXFwib2ItaWNvbiBpY29uLXJvdGF0ZS1yXFxcIj48L2k+e3s9dHVyblJpZ2h0VHh0fX08L2E+XFxyXFxuXFxyXFxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctYnV0dG9uc1xcXCI+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8YSBjbGFzcz1cXFwicGlwZUltZy1idXR0b24gYnV0dG9uLW1haW4gSi1idXR0b24tc2F2ZVxcXCIgaHJlZj1cXFwiamF2YXNjcmlwdDp2b2lkKDApXFxcIj57ez1zYXZlQnRuVHh0fX08L2E+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8YSBjbGFzcz1cXFwicGlwZUltZy1idXR0b24gYnV0dG9uLXJlc2V0IEotYnV0dG9uLXJlc2V0XFxcIiBocmVmPVxcXCJqYXZhc2NyaXB0OnZvaWQoMClcXFwiPnt7PXJlc2V0QnRuVHh0fX08L2E+XFxyXFxuICAgICAgICAgICAgICAgIDwvZGl2PlxcclxcbiAgICAgICAgICAgIDwvZGl2PlxcclxcbiAgICAgICAgPC9kaXY+XFxyXFxuICAgICAgICA8IS0tIOijgeWJqumdouadvyAtLT5cXHJcXG4gICAgICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctcGFuZWwgSi1wYW5lbCBKLWNyb3AtcGFuZWxcXFwiPlxcclxcbiAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcImltZy1ib3ggSi1pbWctYm94XFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgPGltZyBjbGFzcz1cXFwiSi1zb3VyY2VcXFwiIHNyYz1cXFwie3staW1nTGlzdFthY3RpdmVJbmRleF0uc3JjfX1cXFwiPlxcclxcbiAgICAgICAgICAgIDwvZGl2PlxcclxcbiAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcImNvbnRlbnQtZm9vdGVyXFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJudW0td2lkdGggSi1udW0td2lkdGhcXFwiIHR5cGU9XFxcInRleHRcXFwiPlxcclxcbiAgICAgICAgICAgICAgICA8aW5wdXQgY2xhc3M9XFxcIkotZml4LXJhdGlvXFxcIiBpZD1cXFwiZml4UmF0aW9cXFwiIHR5cGU9XFxcImNoZWNrYm94XFxcIiBuYW1lPVxcXCJmaXhSYXRpb1xcXCIgaGlkZGVuPlxcclxcbiAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3M9XFxcImZpeFxcXCIgZm9yPVxcXCJmaXhSYXRpb1xcXCI+PGkgY2xhc3M9XFxcIm9iLWljb24gaWNvbi1sb2NrXFxcIj48L2k+PC9sYWJlbD5cXHJcXG4gICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJudW0taGVpZ2h0IEotbnVtLWhlaWdodFxcXCIgdHlwZT1cXFwidGV4dFxcXCI+XFxyXFxuICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzPVxcXCJ0eHRcXFwiPnB4PC9zcGFuPlxcclxcblxcclxcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLWJ1dHRvbnNcXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnV0dG9uIGJ1dHRvbi1tYWluIEotYnV0dG9uLXNhdmVcXFwiIGhyZWY9XFxcImphdmFzY3JpcHQ6dm9pZCgwKVxcXCI+e3s9c2F2ZUJ0blR4dH19PC9hPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnV0dG9uIGJ1dHRvbi1yZXNldCBKLWJ1dHRvbi1yZXNldFxcXCIgaHJlZj1cXFwiamF2YXNjcmlwdDp2b2lkKDApXFxcIj57ez1yZXNldEJ0blR4dH19PC9hPlxcclxcbiAgICAgICAgICAgICAgICA8L2Rpdj5cXHJcXG4gICAgICAgICAgICA8L2Rpdj5cXHJcXG5cXHJcXG4gICAgICAgIDwvZGl2PlxcclxcbiAgICAgICAgPCEtLSDnvKnmlL7pnaLmnb8gLS0+XFxyXFxuICAgICAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLXBhbmVsIHNjYWxlLXBhbmVsIEotcGFuZWwgSi1zY2FsZS1wYW5lbFxcXCI+XFxyXFxuICAgICAgICAgICAgPGRpdiBjbGFzcz1cXFwiaW1nLWJveCBKLWltZy1ib3hcXFwiPlxcclxcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJzY2FsZS1pbWctd3JhcHBlciBKLXNjYWxlLWltZy13cmFwcGVyXFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxpbWcgY2xhc3M9XFxcIkotc291cmNlXFxcIiBzcmM9XFxcInt7LWltZ0xpc3RbYWN0aXZlSW5kZXhdLnNyY319XFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgPC9kaXY+XFxyXFxuICAgICAgICAgICAgPC9kaXY+XFxyXFxuICAgICAgICAgICAgPGRpdiBjbGFzcz1cXFwiY29udGVudC1mb290ZXJcXFwiPlxcclxcbiAgICAgICAgICAgICAgICA8aW5wdXQgY2xhc3M9XFxcIm51bS13aWR0aCBKLW51bS13aWR0aFxcXCIgdHlwZT1cXFwidGV4dFxcXCI+XFxyXFxuICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzPVxcXCJ0eHRcXFwiPlg8L3NwYW4+XFxyXFxuICAgICAgICAgICAgICAgIDxpbnB1dCBjbGFzcz1cXFwibnVtLWhlaWdodCBKLW51bS1oZWlnaHRcXFwiIHR5cGU9XFxcInRleHRcXFwiPlxcclxcbiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzcz1cXFwidHh0XFxcIj5weDwvc3Bhbj5cXHJcXG4gICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJzY2FsZS1yYW5nZSBKLXNjYWxlLXJhbmdlXFxcIiB0eXBlPVxcXCJyYW5nZVxcXCIgbmFtZT1cXFwic2NhbGVSYXRpb1xcXCIgbWluPVxcXCI1XFxcIiBtYXg9XFxcIjEwMFxcXCIgc3RlcD1cXFwiMVxcXCIgZGVmYXVsdFZhbHVlPVxcXCIxMDBcXFwiIHZhbHVlPVxcXCIxMDBcXFwiPlxcclxcblxcclxcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLWJ1dHRvbnNcXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnV0dG9uIGJ1dHRvbi1tYWluIEotYnV0dG9uLXNhdmVcXFwiIGhyZWY9XFxcImphdmFzY3JpcHQ6dm9pZCgwKVxcXCI+e3s9c2F2ZUJ0blR4dH19PC9hPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnV0dG9uIGJ1dHRvbi1yZXNldCBKLWJ1dHRvbi1yZXNldFxcXCIgaHJlZj1cXFwiamF2YXNjcmlwdDp2b2lkKDApXFxcIj57ez1yZXNldEJ0blR4dH19PC9hPlxcclxcbiAgICAgICAgICAgICAgICA8L2Rpdj5cXHJcXG4gICAgICAgICAgICA8L2Rpdj5cXHJcXG5cXHJcXG4gICAgICAgIDwvZGl2PlxcclxcbiAgICAgICAgPCEtLSDmt7vliqDmsLTljbDpnaLmnb8gLS0+XFxyXFxuICAgICAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLXBhbmVsIEotcGFuZWwgSi1tYXJrLXBhbmVsXFxcIj5cXHJcXG4gICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJpbWctYm94IEotaW1nLWJveFxcXCI+XFxyXFxuICAgICAgICAgICAgICAgIDxpbWcgY2xhc3M9XFxcIkotc291cmNlXFxcIiBzcmM9XFxcInt7LWltZ0xpc3RbYWN0aXZlSW5kZXhdLnNyY319XFxcIj5cXHJcXG4gICAgICAgICAgICA8L2Rpdj5cXHJcXG4gICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJjb250ZW50LWZvb3RlclxcXCI+XFxyXFxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctaXRlbVxcXCI+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJ0eHQtbGFiZWxcXFwiPnt7PWNvbG9yVHh0fX06PC9kaXY+IFxcclxcbiAgICAgICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJKLWNvbG9yXFxcIiBpZD1cXFwiY29sb3JXaGl0ZVxcXCIgdHlwZT1cXFwicmFkaW9cXFwiIG5hbWU9XFxcImNvbG9yXFxcIiB2YWx1ZT1cXFwiMFxcXCIgYXV0b2NvbXBsZXRlPVxcXCJvZmZcXFwiIGhpZGRlbj4gICAgICAgIFxcclxcbiAgICAgICAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzPVxcXCJjb2xvclxcXCIgZm9yPVxcXCJjb2xvcldoaXRlXFxcIj48L2xhYmVsPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJKLWNvbG9yXFxcIiBpZD1cXFwiY29sb3JCbGFja1xcXCIgdHlwZT1cXFwicmFkaW9cXFwiIG5hbWU9XFxcImNvbG9yXFxcIiB2YWx1ZT1cXFwiMVxcXCIgY2hlY2tlZCBhdXRvY29tcGxldGU9XFxcIm9mZlxcXCIgaGlkZGVuPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzPVxcXCJjb2xvciBjb2xvci1ibGFja1xcXCIgZm9yPVxcXCJjb2xvckJsYWNrXFxcIj48L2xhYmVsPlxcclxcbiAgICAgICAgICAgICAgICA8L2Rpdj5cXHJcXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cXFwicGlwZUltZy1pdGVtXFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcInR4dC1sYWJlbFxcXCI+e3s9cG9zaXRpb25UeHR9fTo8L2Rpdj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxpbnB1dCBjbGFzcz1cXFwiSi1wb3NpdGlvblxcXCIgaWQ9XFxcInBvc2l0aW9uQ2VudGVyXFxcIiB0eXBlPVxcXCJyYWRpb1xcXCIgbmFtZT1cXFwicG9zaXRpb25cXFwiIHZhbHVlPVxcXCIwXFxcIiBhdXRvY29tcGxldGU9XFxcIm9mZlxcXCIgY2hlY2tlZCBoaWRkZW4+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3M9XFxcInBvc2l0aW9uIGNlbnRlclxcXCIgZm9yPVxcXCJwb3NpdGlvbkNlbnRlclxcXCI+PHNwYW4gY2xhc3M9XFxcImxpbmVcXFwiPjwvc3Bhbj48L2xhYmVsPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJKLXBvc2l0aW9uXFxcIiBpZD1cXFwicG9zaXRpb25MZWZ0VG9wXFxcIiB0eXBlPVxcXCJyYWRpb1xcXCIgbmFtZT1cXFwicG9zaXRpb25cXFwiIHZhbHVlPVxcXCIxXFxcIiBhdXRvY29tcGxldGU9XFxcIm9mZlxcXCIgaGlkZGVuPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzPVxcXCJwb3NpdGlvbiBsZWZ0LXRvcFxcXCIgZm9yPVxcXCJwb3NpdGlvbkxlZnRUb3BcXFwiPjxzcGFuIGNsYXNzPVxcXCJsaW5lXFxcIj48L3NwYW4+PC9sYWJlbD5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxpbnB1dCBjbGFzcz1cXFwiSi1wb3NpdGlvblxcXCIgaWQ9XFxcInBvc2l0aW9uUmlnaHRUb3BcXFwiIHR5cGU9XFxcInJhZGlvXFxcIiBuYW1lPVxcXCJwb3NpdGlvblxcXCIgdmFsdWU9XFxcIjJcXFwiIGF1dG9jb21wbGV0ZT1cXFwib2ZmXFxcIiBoaWRkZW4+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3M9XFxcInBvc2l0aW9uIHJpZ2h0LXRvcFxcXCIgZm9yPVxcXCJwb3NpdGlvblJpZ2h0VG9wXFxcIj48c3BhbiBjbGFzcz1cXFwibGluZVxcXCI+PC9zcGFuPjwvbGFiZWw+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8aW5wdXQgY2xhc3M9XFxcIkotcG9zaXRpb25cXFwiIGlkPVxcXCJwb3NpdGlvbkxlZnRCb3R0b21cXFwiIHR5cGU9XFxcInJhZGlvXFxcIiBuYW1lPVxcXCJwb3NpdGlvblxcXCIgdmFsdWU9XFxcIjNcXFwiIGF1dG9jb21wbGV0ZT1cXFwib2ZmXFxcIiBoaWRkZW4+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3M9XFxcInBvc2l0aW9uIGxlZnQtYm90dG9tXFxcIiBmb3I9XFxcInBvc2l0aW9uTGVmdEJvdHRvbVxcXCI+PHNwYW4gY2xhc3M9XFxcImxpbmVcXFwiPjwvc3Bhbj48L2xhYmVsPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJKLXBvc2l0aW9uXFxcIiBpZD1cXFwicG9zaXRpb25SaWdodEJvdHRvbVxcXCIgdHlwZT1cXFwicmFkaW9cXFwiIG5hbWU9XFxcInBvc2l0aW9uXFxcIiB2YWx1ZT1cXFwiNFxcXCIgYXV0b2NvbXBsZXRlPVxcXCJvZmZcXFwiIGhpZGRlbj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzcz1cXFwicG9zaXRpb24gcmlnaHQtYm90dG9tXFxcIiBmb3I9XFxcInBvc2l0aW9uUmlnaHRCb3R0b21cXFwiPjxzcGFuIGNsYXNzPVxcXCJsaW5lXFxcIj48L3NwYW4+PC9sYWJlbD5cXHJcXG4gICAgICAgICAgICAgICAgPC9kaXY+XFxyXFxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctaXRlbVxcXCI+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJ0eHQtbGFiZWxcXFwiPnt7PW9wYWNpdHlUeHR9fTo8L2Rpdj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxpbnB1dCBjbGFzcz1cXFwib3BhY2l0eS1yYW5nZSBKLW9wYWNpdHlcXFwiIG5hbWU9XFxcIm9wYWNpdHlcXFwiIHR5cGU9XFxcInJhbmdlXFxcIiBtaW49XFxcIjEwXFxcIiBtYXg9XFxcIjEwMFxcXCIgc3RlcD1cXFwiMVxcXCIgZGVmYXVsdFZhbHVlPVxcXCI4MFxcXCIgdmFsdWU9XFxcIjgwXFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgPC9kaXY+XFxyXFxuXFxyXFxuICAgICAgICAgICAgICAgIDxzZWxlY3QgY2xhc3M9XFxcIkotc2VsZWN0LW1hcmtcXFwiIG5hbWU9XFxcIm1hcmtUeHRcXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT1cXFwiMFxcXCIgc2VsZWN0ZWQ9XFxcInNlbGVjdGVkXFxcIj57ez1zaG93Um9vbVR4dH19PC9vcHRpb24+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPVxcXCIxXFxcIj57ez1jb21wYW55TmFtZVR4dH19PC9vcHRpb24+XFxyXFxuICAgICAgICAgICAgICAgIDwvc2VsZWN0PlxcclxcblxcclxcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLWJ1dHRvbnNcXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnV0dG9uIGJ1dHRvbi1jb25maXJtIEotYnV0dG9uLWNvbmZpcm1cXFwiIGhyZWY9XFxcImphdmFzY3JpcHQ6dm9pZCgwKVxcXCI+e3s9Y29uZmlybUJ0blR4dH19PC9hPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnV0dG9uIGJ1dHRvbi1jYW5jZWwgSi1idXR0b24tY2FuY2VsXFxcIiBocmVmPVxcXCJqYXZhc2NyaXB0OnZvaWQoMClcXFwiPnt7PWNhbmNlbEJ0blR4dH19PC9hPlxcclxcbiAgICAgICAgICAgICAgICA8L2Rpdj5cXHJcXG4gICAgICAgICAgICA8L2Rpdj5cXHJcXG5cXHJcXG4gICAgICAgIDwvZGl2PlxcclxcbiAgICAgICAgPCEtLSDmibnph4/mt7vliqDmsLTljbAgLS0+XFxyXFxuICAgICAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLXBhbmVsIHBhbmVsLW1hcmstYWxsIEotcGFuZWwgSi1tYXJrLWFsbC1wYW5lbFxcXCI+XFxyXFxuICAgICAgICAgICAgPGRpdiBjbGFzcz1cXFwiaW1nLWJveCBKLWltZy1ib3hcXFwiPlxcclxcbiAgICAgICAgICAgICAgICA8aW1nIGNsYXNzPVxcXCJKLXNvdXJjZVxcXCIgc3JjPVxcXCJ7ey1pbWdMaXN0W2FjdGl2ZUluZGV4XS5zcmN9fVxcXCI+XFxyXFxuICAgICAgICAgICAgPC9kaXY+XFxyXFxuICAgICAgICAgICAgPGRpdiBjbGFzcz1cXFwiaW1ncy10aHVtYm5haWxcXFwiPlxcclxcbiAgICAgICAgICAgICAgICB7eyBmb3IodmFyIGk9MDtpPGltZ0xpc3QubGVuZ3RoO2krKykgeyB9fSBcXHJcXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cXFwiaW1nLXRodW1ibmFpbCB7ez1pID09PSBhY3RpdmVJbmRleCA/ICdhY3RpdmUnIDogJyd9fSBKLWltZy10aHVtYm5haWxcXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGEgaHJlZj1cXFwiamF2YXNjcmlwdDp2b2lkKDApXFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgICAgICAgICA8aW1nIHNyYz1cXFwie3staW1nTGlzdFtpXS5zcmN9fVxcXCI+XFxyXFxuICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3M9XFxcImNpcmNsZVxcXCI+PC9zcGFuPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPC9hPlxcclxcbiAgICAgICAgICAgICAgICA8L2Rpdj5cXHJcXG5cXHJcXG4gICAgICAgICAgICAgICAge3sgfSB9fVxcclxcbiAgICAgICAgICAgIDwvZGl2PlxcclxcbiAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcImNvbnRlbnQtZm9vdGVyXFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cXFwicGlwZUltZy1pdGVtXFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcInR4dC1sYWJlbFxcXCI+e3s9Y29sb3JUeHR9fTo8L2Rpdj4gXFxyXFxuICAgICAgICAgICAgICAgICAgICA8aW5wdXQgY2xhc3M9XFxcIkotY29sb3JcXFwiIGlkPVxcXCJjb2xvcldoaXRlQWxsXFxcIiB0eXBlPVxcXCJyYWRpb1xcXCIgbmFtZT1cXFwiY29sb3JBbGxcXFwiIHZhbHVlPVxcXCIwXFxcIiBhdXRvY29tcGxldGU9XFxcIm9mZlxcXCIgaGlkZGVuPiAgICAgICAgXFxyXFxuICAgICAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3M9XFxcImNvbG9yXFxcIiBmb3I9XFxcImNvbG9yV2hpdGVBbGxcXFwiPjwvbGFiZWw+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8aW5wdXQgY2xhc3M9XFxcIkotY29sb3JcXFwiIGlkPVxcXCJjb2xvckJsYWNrQWxsXFxcIiB0eXBlPVxcXCJyYWRpb1xcXCIgbmFtZT1cXFwiY29sb3JBbGxcXFwiIHZhbHVlPVxcXCIxXFxcIiBjaGVja2VkIGF1dG9jb21wbGV0ZT1cXFwib2ZmXFxcIiBoaWRkZW4+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3M9XFxcImNvbG9yIGNvbG9yLWJsYWNrXFxcIiBmb3I9XFxcImNvbG9yQmxhY2tBbGxcXFwiPjwvbGFiZWw+XFxyXFxuICAgICAgICAgICAgICAgIDwvZGl2PlxcclxcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLWl0ZW1cXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cXFwidHh0LWxhYmVsXFxcIj57ez1wb3NpdGlvblR4dH19OjwvZGl2PlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJKLXBvc2l0aW9uXFxcIiBpZD1cXFwicG9zaXRpb25DZW50ZXJBbGxcXFwiIHR5cGU9XFxcInJhZGlvXFxcIiBuYW1lPVxcXCJwb3NpdGlvbkFsbFxcXCIgdmFsdWU9XFxcIjBcXFwiIGF1dG9jb21wbGV0ZT1cXFwib2ZmXFxcIiBjaGVja2VkIGhpZGRlbj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzcz1cXFwicG9zaXRpb24gY2VudGVyXFxcIiBmb3I9XFxcInBvc2l0aW9uQ2VudGVyQWxsXFxcIj48c3BhbiBjbGFzcz1cXFwibGluZVxcXCI+PC9zcGFuPjwvbGFiZWw+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8aW5wdXQgY2xhc3M9XFxcIkotcG9zaXRpb25cXFwiIGlkPVxcXCJwb3NpdGlvbkxlZnRUb3BBbGxcXFwiIHR5cGU9XFxcInJhZGlvXFxcIiBuYW1lPVxcXCJwb3NpdGlvbkFsbFxcXCIgdmFsdWU9XFxcIjFcXFwiIGF1dG9jb21wbGV0ZT1cXFwib2ZmXFxcIiBoaWRkZW4+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3M9XFxcInBvc2l0aW9uIGxlZnQtdG9wXFxcIiBmb3I9XFxcInBvc2l0aW9uTGVmdFRvcEFsbFxcXCI+PHNwYW4gY2xhc3M9XFxcImxpbmVcXFwiPjwvc3Bhbj48L2xhYmVsPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJKLXBvc2l0aW9uXFxcIiBpZD1cXFwicG9zaXRpb25SaWdodFRvcEFsbFxcXCIgdHlwZT1cXFwicmFkaW9cXFwiIG5hbWU9XFxcInBvc2l0aW9uQWxsXFxcIiB2YWx1ZT1cXFwiMlxcXCIgYXV0b2NvbXBsZXRlPVxcXCJvZmZcXFwiIGhpZGRlbj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzcz1cXFwicG9zaXRpb24gcmlnaHQtdG9wXFxcIiBmb3I9XFxcInBvc2l0aW9uUmlnaHRUb3BBbGxcXFwiPjxzcGFuIGNsYXNzPVxcXCJsaW5lXFxcIj48L3NwYW4+PC9sYWJlbD5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxpbnB1dCBjbGFzcz1cXFwiSi1wb3NpdGlvblxcXCIgaWQ9XFxcInBvc2l0aW9uTGVmdEJvdHRvbUFsbFxcXCIgdHlwZT1cXFwicmFkaW9cXFwiIG5hbWU9XFxcInBvc2l0aW9uQWxsXFxcIiB2YWx1ZT1cXFwiM1xcXCIgYXV0b2NvbXBsZXRlPVxcXCJvZmZcXFwiIGhpZGRlbj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzcz1cXFwicG9zaXRpb24gbGVmdC1ib3R0b21cXFwiIGZvcj1cXFwicG9zaXRpb25MZWZ0Qm90dG9tQWxsXFxcIj48c3BhbiBjbGFzcz1cXFwibGluZVxcXCI+PC9zcGFuPjwvbGFiZWw+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8aW5wdXQgY2xhc3M9XFxcIkotcG9zaXRpb25cXFwiIGlkPVxcXCJwb3NpdGlvblJpZ2h0Qm90dG9tQWxsXFxcIiB0eXBlPVxcXCJyYWRpb1xcXCIgbmFtZT1cXFwicG9zaXRpb25BbGxcXFwiIHZhbHVlPVxcXCI0XFxcIiBhdXRvY29tcGxldGU9XFxcIm9mZlxcXCIgaGlkZGVuPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzPVxcXCJwb3NpdGlvbiByaWdodC1ib3R0b21cXFwiIGZvcj1cXFwicG9zaXRpb25SaWdodEJvdHRvbUFsbFxcXCI+PHNwYW4gY2xhc3M9XFxcImxpbmVcXFwiPjwvc3Bhbj48L2xhYmVsPlxcclxcbiAgICAgICAgICAgICAgICA8L2Rpdj5cXHJcXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cXFwicGlwZUltZy1pdGVtXFxcIj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcInR4dC1sYWJlbFxcXCI+e3s9b3BhY2l0eVR4dH19OjwvZGl2PlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGlucHV0IGNsYXNzPVxcXCJvcGFjaXR5LXJhbmdlIEotb3BhY2l0eVxcXCIgbmFtZT1cXFwib3BhY2l0eUFsbFxcXCIgdHlwZT1cXFwicmFuZ2VcXFwiIG1pbj1cXFwiMTBcXFwiIG1heD1cXFwiMTAwXFxcIiBzdGVwPVxcXCIxXFxcIiBkZWZhdWx0VmFsdWU9XFxcIjgwXFxcIiB2YWx1ZT1cXFwiODBcXFwiPlxcclxcbiAgICAgICAgICAgICAgICA8L2Rpdj5cXHJcXG5cXHJcXG4gICAgICAgICAgICAgICAgPHNlbGVjdCBjbGFzcz1cXFwiSi1zZWxlY3QtbWFya1xcXCIgbmFtZT1cXFwibWFya1R4dEFsbFxcXCI+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPVxcXCIwXFxcIiBzZWxlY3RlZD1cXFwic2VsZWN0ZWRcXFwiPnt7PXNob3dSb29tVHh0fX08L29wdGlvbj5cXHJcXG4gICAgICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9XFxcIjFcXFwiPnt7PWNvbXBhbnlOYW1lVHh0fX08L29wdGlvbj5cXHJcXG4gICAgICAgICAgICAgICAgPC9zZWxlY3Q+XFxyXFxuICAgICAgICAgICAgICAgIFxcclxcbiAgICAgICAgICAgIDwvZGl2PlxcclxcblxcclxcbiAgICAgICAgPC9kaXY+XFxyXFxuICAgIDwvZGl2PlxcclxcbiAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLWZvb3RlciBKLXBpcGUtZm9vdGVyXFxcIj5cXHJcXG4gICAgICAgIDxkaXYgY2xhc3M9XFxcImltZ3MtdGh1bWJuYWlsXFxcIj5cXHJcXG4gICAgICAgICAgICB7eyBmb3IodmFyIGk9MDtpPGltZ0xpc3QubGVuZ3RoO2krKykgeyB9fSBcXHJcXG4gICAgICAgICAgICA8ZGl2IGNsYXNzPVxcXCJpbWctdGh1bWJuYWlsIHt7PWkgPT09IGFjdGl2ZUluZGV4ID8gJ2FjdGl2ZScgOiAnJ319IEotaW1nLXRodW1ibmFpbFxcXCI+XFxyXFxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XFxcImltZy1pbm5lclxcXCI+XFxyXFxuICAgICAgICAgICAgICAgICAgICA8YSBocmVmPVxcXCJqYXZhc2NyaXB0OnZvaWQoMClcXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPGltZyBzcmM9XFxcInt7LWltZ0xpc3RbaV0uc3JjfX1cXFwiPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3M9XFxcImNpcmNsZVxcXCI+PC9zcGFuPlxcclxcbiAgICAgICAgICAgICAgICAgICAgPC9hPlxcclxcbiAgICAgICAgICAgICAgICA8L2Rpdj5cXHJcXG5cXHJcXG4gICAgICAgICAgICA8L2Rpdj5cXHJcXG5cXHJcXG4gICAgICAgICAgICB7eyB9IH19XFxyXFxuICAgICAgICA8L2Rpdj4gIFxcclxcblxcclxcbiAgICAgICAgPGRpdiBjbGFzcz1cXFwicGlwZUltZy1idXR0b25zXFxcIj5cXHJcXG4gICAgICAgICAgICA8YSBjbGFzcz1cXFwicGlwZUltZy1idXR0b24gYnV0dG9uLWNvbmZpcm0gSi1idXR0b24tY29uZmlybS1hbGxcXFwiIGhyZWY9XFxcImphdmFzY3JpcHQ6dm9pZCgwKVxcXCI+e3s9c2F2ZUJ0blR4dH19PC9hPlxcclxcbiAgICAgICAgICAgIDxhIGNsYXNzPVxcXCJwaXBlSW1nLWJ1dHRvbiBidXR0b24tY2FuY2VsIEotYnV0dG9uLWNhbmNlbC1hbGxcXFwiIGhyZWY9XFxcImphdmFzY3JpcHQ6dm9pZCgwKVxcXCI+e3s9Y2FuY2VsQnRuVHh0fX08L2E+XFxyXFxuICAgICAgICA8L2Rpdj4gICAgICAgICAgICBcXHJcXG4gICAgPC9kaXY+XFxyXFxuXFxyXFxuPC9kaXY+XFxyXFxuXFxyXFxuPGRpdiBjbGFzcz1cXFwicGlwZUltZy10aXAgSi1waXBlSW1nLXRpcFxcXCI+XFxyXFxuICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctdGlwLWhlYWRlclxcXCI+e3s9dGlwVGl0bGVUeHR9fTwvZGl2PlxcclxcbiAgICA8ZGl2IGNsYXNzPVxcXCJwaXBlSW1nLXRpcC1tYWluXFxcIj5cXHJcXG4gICAgICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctdGlwLWNvbnRlbnRcXFwiPnt7PXRpcENvbnRlbnRUeHR9fTwvZGl2PlxcclxcbiAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnV0dG9uIGJ1dHRvbi1jb25maXJtIEotdGlwLWNvbmZpcm1cXFwiIGhyZWY9XFxcImphdmFzY3JpcHQ6dm9pZCgwKVxcXCI+e3s9dGlwQ29uZmlybUJ0blR4dH19PC9hPlxcclxcbiAgICAgICAgPGEgY2xhc3M9XFxcInBpcGVJbWctYnV0dG9uIGJ1dHRvbi1jYW5jZWwgSi10aXAtY2FuY2VsXFxcIiBocmVmPVxcXCJqYXZhc2NyaXB0OnZvaWQoMClcXFwiPnt7PWNhbmNlbEJ0blR4dH19PC9hPiAgICAgICAgXFxyXFxuICAgIDwvZGl2PlxcclxcbjwvZGl2PlxcclxcblxcclxcbjxkaXYgY2xhc3M9XFxcInBpcGVJbWctcHJvZ3Jlc3MtYmFyIEotcGlwZUltZy1wcm9ncmVzc1xcXCI+XFxyXFxuICAgIDxkaXYgY2xhc3M9XFxcInBpcGVJbWctcHJvZ3Jlc3MtdmFsXFxcIj48L2Rpdj5cXHJcXG48L2Rpdj5cIiJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/js/dialog.tpl\n");
+module.exports = "<div class=\"pipeImg-wrapper J-pipe-wrapper\">\r\n    <div class=\"pipeImg-header\">\r\n        <ul class=\"pipeImg-menu\">\r\n            <li class=\"pipeImg-item J-item active\"><a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-refresh\"></i>{{=rotateMenuTxt}}</a></li>\r\n            <li class=\"pipeImg-item J-item\"><a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-crop\"></i>{{=cropMenuTxt}}</a></li>\r\n            <li class=\"pipeImg-item J-item\"><a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-scaling\"></i>{{=scaleMenuTxt}}</a></li>\r\n            <li class=\"pipeImg-item J-item J-item-mark\">\r\n                <a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-add-l\"></i>{{=markMenuTxt}}</a>\r\n                <div class=\"pipeImg-btn J-menu-txt\" style=\"display:none;\"><i class=\"ob-icon icon-add-l\"></i>{{=markMenuTxt}}</div>\r\n                <div class=\"pipeImg-item item-sub\">\r\n                    <a class=\"pipeImg-btn J-menu-btn-mark-all\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-batch\"></i>{{=markAllMenuTxt}}</a>\r\n                    <a class=\"pipeImg-btn J-menu-btn-mark\" href=\"javascript:void(0)\" style=\"display:none;\"><i class=\"ob-icon icon-add-l\"></i>{{=markMenuTxt}}</a>\r\n                </div>\r\n            </li>\r\n        </ul>\r\n        <a class=\"pipeImg-btn btn-close J-button-close\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-delete\"></i>{{=closeBtnTxt}}</a>\r\n    </div>\r\n    <div class=\"pipeImg-content\">\r\n        <!-- 旋转面板 -->\r\n        <div class=\"pipeImg-panel rotate-panel active J-panel J-rotate-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <div class=\"size\">\r\n                    <span class=\"J-num-width\">1</span>*<span class=\"J-num-height\">1</span>px\r\n                </div>\r\n                <a class=\"pipeImg-btn btn-rotate J-btn-rotate-left\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-rotate-l\"></i>{{=turnLeftTxt}}</a>\r\n                <a class=\"pipeImg-btn btn-rotate J-btn-rotate-right\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-rotate-r\"></i>{{=turnRightTxt}}</a>\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-main J-button-save\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-reset J-button-reset\" href=\"javascript:void(0)\">{{=resetBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <!-- 裁剪面板 -->\r\n        <div class=\"pipeImg-panel J-panel J-crop-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <input class=\"num-width J-num-width\" type=\"text\">\r\n                <input class=\"J-fix-ratio\" id=\"fixRatio\" type=\"checkbox\" name=\"fixRatio\" hidden>\r\n                <label class=\"fix\" for=\"fixRatio\"><i class=\"ob-icon icon-lock\"></i></label>\r\n                <input class=\"num-height J-num-height\" type=\"text\">\r\n                <span class=\"txt\">px</span>\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-main J-button-save\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-reset J-button-reset\" href=\"javascript:void(0)\">{{=resetBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <!-- 缩放面板 -->\r\n        <div class=\"pipeImg-panel scale-panel J-panel J-scale-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <div class=\"scale-img-wrapper J-scale-img-wrapper\">\r\n                    <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n                </div>\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <input class=\"num-width J-num-width\" type=\"text\">\r\n                <span class=\"txt\">X</span>\r\n                <input class=\"num-height J-num-height\" type=\"text\">\r\n                <span class=\"txt\">px</span>\r\n                <input class=\"scale-range J-scale-range\" type=\"range\" name=\"scaleRatio\" min=\"5\" max=\"100\" step=\"1\" defaultValue=\"100\" value=\"100\">\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-main J-button-save\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-reset J-button-reset\" href=\"javascript:void(0)\">{{=resetBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <!-- 添加水印面板 -->\r\n        <div class=\"pipeImg-panel J-panel J-mark-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=colorTxt}}:</div> \r\n                    <input class=\"J-color\" id=\"colorWhite\" type=\"radio\" name=\"color\" value=\"0\" autocomplete=\"off\" hidden>        \r\n                    <label class=\"color\" for=\"colorWhite\"></label>\r\n                    <input class=\"J-color\" id=\"colorBlack\" type=\"radio\" name=\"color\" value=\"1\" checked autocomplete=\"off\" hidden>\r\n                    <label class=\"color color-black\" for=\"colorBlack\"></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=positionTxt}}:</div>\r\n                    <input class=\"J-position\" id=\"positionCenter\" type=\"radio\" name=\"position\" value=\"0\" autocomplete=\"off\" checked hidden>\r\n                    <label class=\"position center\" for=\"positionCenter\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftTop\" type=\"radio\" name=\"position\" value=\"1\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-top\" for=\"positionLeftTop\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightTop\" type=\"radio\" name=\"position\" value=\"2\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-top\" for=\"positionRightTop\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftBottom\" type=\"radio\" name=\"position\" value=\"3\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-bottom\" for=\"positionLeftBottom\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightBottom\" type=\"radio\" name=\"position\" value=\"4\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-bottom\" for=\"positionRightBottom\"><span class=\"line\"></span></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=opacityTxt}}:</div>\r\n                    <input class=\"opacity-range J-opacity\" name=\"opacity\" type=\"range\" min=\"10\" max=\"100\" step=\"1\" defaultValue=\"80\" value=\"80\">\r\n                </div>\r\n\r\n                <select class=\"J-select-mark\" name=\"markTxt\">\r\n                    <option value=\"0\" selected=\"selected\">{{=showRoomTxt}}</option>\r\n                    <option value=\"1\">{{=companyNameTxt}}</option>\r\n                </select>\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-confirm J-button-confirm\" href=\"javascript:void(0)\">{{=confirmBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-cancel J-button-cancel\" href=\"javascript:void(0)\">{{=cancelBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <!-- 批量添加水印 -->\r\n        <div class=\"pipeImg-panel panel-mark-all J-panel J-mark-all-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"imgs-thumbnail J-imgs-thumbnail\">\r\n                {{ for(var i=0;i<imgList.length;i++) { }} \r\n                <div class=\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\">\r\n                    <a href=\"javascript:void(0)\">\r\n                        <img src=\"{{-imgList[i].src}}\">\r\n                        <span class=\"circle\"></span>\r\n                    </a>\r\n                </div>\r\n\r\n                {{ } }}\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=colorTxt}}:</div> \r\n                    <input class=\"J-color\" id=\"colorWhiteAll\" type=\"radio\" name=\"colorAll\" value=\"0\" autocomplete=\"off\" hidden>        \r\n                    <label class=\"color\" for=\"colorWhiteAll\"></label>\r\n                    <input class=\"J-color\" id=\"colorBlackAll\" type=\"radio\" name=\"colorAll\" value=\"1\" checked autocomplete=\"off\" hidden>\r\n                    <label class=\"color color-black\" for=\"colorBlackAll\"></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=positionTxt}}:</div>\r\n                    <input class=\"J-position\" id=\"positionCenterAll\" type=\"radio\" name=\"positionAll\" value=\"0\" autocomplete=\"off\" checked hidden>\r\n                    <label class=\"position center\" for=\"positionCenterAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftTopAll\" type=\"radio\" name=\"positionAll\" value=\"1\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-top\" for=\"positionLeftTopAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightTopAll\" type=\"radio\" name=\"positionAll\" value=\"2\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-top\" for=\"positionRightTopAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftBottomAll\" type=\"radio\" name=\"positionAll\" value=\"3\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-bottom\" for=\"positionLeftBottomAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightBottomAll\" type=\"radio\" name=\"positionAll\" value=\"4\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-bottom\" for=\"positionRightBottomAll\"><span class=\"line\"></span></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=opacityTxt}}:</div>\r\n                    <input class=\"opacity-range J-opacity\" name=\"opacityAll\" type=\"range\" min=\"10\" max=\"100\" step=\"1\" defaultValue=\"80\" value=\"80\">\r\n                </div>\r\n\r\n                <select class=\"J-select-mark\" name=\"markTxtAll\">\r\n                    <option value=\"0\" selected=\"selected\">{{=showRoomTxt}}</option>\r\n                    <option value=\"1\">{{=companyNameTxt}}</option>\r\n                </select>\r\n                \r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n    <div class=\"pipeImg-footer J-pipe-footer\">\r\n        <div class=\"imgs-thumbnail J-imgs-thumbnail\">\r\n            {{ for(var i=0;i<imgList.length;i++) { }} \r\n            <div class=\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\">\r\n                <div class=\"img-inner\">\r\n                    <a href=\"javascript:void(0)\">\r\n                    <img src=\"{{-imgList[i].src}}\">\r\n                    <span class=\"circle\"></span>\r\n                    </a>\r\n                </div>\r\n\r\n            </div>\r\n\r\n            {{ } }}\r\n        </div>  \r\n\r\n        <div class=\"pipeImg-buttons\">\r\n            <a class=\"pipeImg-button button-confirm J-button-confirm-all\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n            <a class=\"pipeImg-button button-cancel J-button-cancel-all\" href=\"javascript:void(0)\">{{=cancelBtnTxt}}</a>\r\n        </div>            \r\n    </div>\r\n\r\n</div>\r\n\r\n<div class=\"pipeImg-tip J-pipeImg-tip\">\r\n    <div class=\"pipeImg-tip-header\">{{=tipTitleTxt}}</div>\r\n    <div class=\"pipeImg-tip-main\">\r\n        <div class=\"pipeImg-tip-content\">{{=tipContentTxt}}</div>\r\n        <a class=\"pipeImg-button button-confirm J-tip-confirm\" href=\"javascript:void(0)\">{{=tipConfirmBtnTxt}}</a>\r\n        <a class=\"pipeImg-button button-cancel J-tip-cancel\" href=\"javascript:void(0)\">{{=cancelBtnTxt}}</a>        \r\n    </div>\r\n</div>\r\n\r\n<div class=\"pipeImg-progress-bar J-pipeImg-progress\">\r\n    <div class=\"pipeImg-progress-val\"></div>\r\n</div>"
 
 /***/ }),
 
@@ -127,7 +1544,288 @@ eval("module.exports = \"<div class=\\\"pipeImg-wrapper J-pipe-wrapper\\\">\\r\\
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"DragBox\", function() { return DragBox; });\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ \"./src/js/util.js\");\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n\n\n\nvar DragBox =\n/*#__PURE__*/\nfunction () {\n  function DragBox(options) {\n    _classCallCheck(this, DragBox);\n\n    // 默认配置参数\n    var defaults = {\n      // 待编辑图片元素\n      el: '',\n      width: '100%',\n      height: '100%',\n      markText: 'producttest.en.made-in-china.com',\n      // 是否有明暗效果，主要是裁剪图片效果\n      isCrop: false,\n      fixRatio: false,\n      // 拖动触点回调函数\n      onDragPoint: function onDragPoint(boxData) {},\n      // 拖动框回调函数\n      onDragComplete: function onDragComplete(left, top) {}\n    };\n    options = _extends({}, defaults, options);\n    this.el = options.el;\n    this.width = options.width;\n    this.height = options.height;\n    this.markText = options.markText;\n    this.isCrop = options.isCrop;\n    this.fixRatio = options.fixRatio;\n    this.onDragPoint = options.onDragPoint;\n    this.onDragComplete = options.onDragComplete;\n    this.init();\n  }\n\n  _createClass(DragBox, [{\n    key: \"init\",\n    value: function init() {\n      var _this = this;\n\n      this.$el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.el);\n      var src = this.$el.attr('src');\n      var $parent = this.$el.parent();\n      var dragBoxHtml = \"<div class=\\\"dragbox-wrapper J-dragbox-wrapper\\\">\\n                                <img class=\\\"J-source\\\" src=\\\"\".concat(src, \"\\\">\\n                                <div class=\\\"drag-box J-drag-box\\\">\\n                                    <div class=\\\"drag-point up-left J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point up J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point up-right J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point right J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point right-down J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point down J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point left-down J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point left J-drag-point\\\"></div>\\n                                    <div class=\\\"mark-txt J-mark-txt\\\">\").concat(this.markText, \"</div>\\n                                </div>\\n                            </div>\");\n\n      if (this.isCrop) {\n        dragBoxHtml = \"<div class=\\\"dragbox-wrapper J-dragbox-wrapper\\\">\\n                                <img class=\\\"J-source img-dark\\\" src=\\\"\".concat(src, \"\\\">\\n                                <img class=\\\"J-source img-light J-img-light\\\" src=\\\"\").concat(src, \"\\\">\\n                                <div class=\\\"drag-box J-drag-box\\\">\\n                                    <div class=\\\"drag-point up-left J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point up J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point up-right J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point right J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point right-down J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point down J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point left-down J-drag-point\\\"></div>\\n                                    <div class=\\\"drag-point left J-drag-point\\\"></div>\\n                                </div>\\n                            </div>\");\n      }\n\n      $parent.html(dragBoxHtml);\n      this.$dragBox = $parent.find('.J-drag-box');\n\n      if (!this.isCrop) {\n        this.$dragBox.css({\n          width: this.$dragBox.find('.J-mark-txt').width(),\n          height: this.$dragBox.find('.J-mark-txt').height()\n        });\n      }\n\n      this.$dragPoint = this.$dragBox.find('.J-drag-point');\n      this.boxEl = this.$dragBox.get(0);\n      this.containerEl = this.boxEl.parentNode;\n      this.imgLight = $parent.find('.J-img-light:first').get(0);\n      this.boxData = {\n        left: this.boxEl.offsetLeft,\n        top: this.boxEl.offsetTop,\n        width: this.boxEl.offsetWidth,\n        height: this.boxEl.offsetHeight,\n        ratio: this.boxEl.offsetWidth / this.boxEl.offsetHeight\n      };\n\n      this._bind();\n\n      var container = this.isCrop ? this.boxEl.parentNode : null;\n      Object(_util__WEBPACK_IMPORTED_MODULE_1__[\"drag\"])(this.boxEl, this.boxEl, container, function (left, top) {\n        _this._light();\n\n        _this.onDragComplete(left, top);\n      });\n    }\n  }, {\n    key: \"_bind\",\n    value: function _bind() {\n      var _this2 = this;\n\n      var isDraging = false;\n      var contact = \"\"; //表示被按下的触点\n\n      var DRAGPOINT = ['up-left', 'up', 'up-right', 'right', 'right-down', 'down', 'left-down', 'left'];\n      var dragBoxRatio = this.boxData.width / this.boxData.height; //鼠标按下时\n\n      this.$dragPoint.on('mousedown', function (e) {\n        e.stopPropagation();\n        isDraging = true;\n        var index = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).index();\n        contact = DRAGPOINT[index];\n        dragBoxRatio = _this2.boxData.width / _this2.boxData.height;\n      });\n      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('mouseup', function (e) {\n        isDraging = false;\n        _this2.boxData = {\n          left: _this2.boxEl.offsetLeft,\n          top: _this2.boxEl.offsetTop,\n          width: _this2.boxEl.offsetWidth,\n          height: _this2.boxEl.offsetHeight,\n          ratio: _this2.boxEl.offsetWidth / _this2.boxEl.offsetHeight\n        };\n      });\n      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('mousemove', function (e) {\n        if (isDraging == true) {\n          _this2._move(e, contact, dragBoxRatio);\n\n          _this2._light();\n\n          _this2.boxData = {\n            left: _this2.boxEl.offsetLeft,\n            top: _this2.boxEl.offsetTop,\n            width: _this2.boxEl.offsetWidth,\n            height: _this2.boxEl.offsetHeight,\n            ratio: _this2.boxEl.offsetWidth / _this2.boxEl.offsetHeight\n          };\n\n          _this2.onDragPoint(_this2.boxData);\n        }\n      });\n    } //获取元素相对于屏幕左边及上边的距离，利用offsetLeft\n\n  }, {\n    key: \"_getPosition\",\n    value: function _getPosition() {\n      var el = this.boxEl;\n      var left = el.offsetLeft;\n      var top = el.offsetTop;\n      var parent = el.offsetParent;\n\n      while (parent != null) {\n        left += parent.offsetLeft;\n        top += parent.offsetTop;\n        parent = parent.offsetParent;\n      }\n\n      return {\n        \"left\": left,\n        \"top\": top\n      };\n    }\n  }, {\n    key: \"_move\",\n    value: function _move(e, contact, dragBoxRatio) {\n      var x = e.clientX,\n          y = e.clientY;\n      var oldWidth = this.boxEl.offsetWidth; //选取框变化前的宽度\n\n      var oldHeight = this.boxEl.offsetHeight; //选取框变化前的高度\n\n      var position = this._getPosition();\n\n      var top = position.top;\n      var left = position.left;\n      var newWidth;\n      var newHeight;\n      var newLeft;\n      var newTop; // 约束比例：根据宽度计算高度\n\n      if (contact.indexOf('left') != -1) {\n        var addWidth = left - x;\n\n        if (this.isCrop && addWidth >= 0 && this.boxEl.offsetLeft <= 0) {\n          return false;\n        }\n\n        newWidth = oldWidth + addWidth;\n        newLeft = this.boxEl.offsetLeft - addWidth;\n      }\n\n      if (contact.indexOf('right') != -1) {\n        var _addWidth = x - left - oldWidth;\n\n        if (this.isCrop && _addWidth >= 0 && this.containerEl.clientWidth - (this.boxEl.offsetLeft + oldWidth + _addWidth) <= 0) {\n          return false;\n        }\n\n        newWidth = oldWidth + _addWidth;\n        newLeft = this.boxEl.offsetLeft;\n      }\n\n      if (contact.indexOf('up') != -1) {\n        var addHeight;\n\n        if (this.fixRatio) {\n          newHeight = Math.round(newWidth / dragBoxRatio);\n          addHeight = newHeight - oldHeight;\n        } else {\n          addHeight = top - y;\n          newHeight = oldHeight + addHeight;\n        }\n\n        newTop = this.boxEl.offsetTop - addHeight;\n\n        if (this.isCrop && addHeight >= 0 && this.boxEl.offsetTop <= 0) {\n          return false;\n        }\n      }\n\n      if (contact.indexOf('down') != -1) {\n        var _addHeight;\n\n        if (this.fixRatio) {\n          newHeight = Math.round(newWidth / dragBoxRatio);\n          _addHeight = newHeight - oldHeight;\n          newTop = this.boxEl.offsetTop;\n        } else {\n          _addHeight = y - top - oldHeight;\n          newHeight = oldHeight + _addHeight;\n        }\n\n        if (this.isCrop && _addHeight >= 0 && this.containerEl.clientHeight - (this.boxEl.offsetTop + oldHeight + _addHeight) <= 0) {\n          return false;\n        }\n      }\n\n      if (this.isCrop) {\n        newWidth = Math.min(newWidth, this.containerEl.offsetWidth);\n        newHeight = Math.min(newHeight, this.containerEl.offsetHeight);\n        newLeft = Math.max(newLeft, 0);\n        newTop = Math.max(newTop, 0);\n      }\n\n      this.boxEl.style.width = newWidth + 'px';\n      this.boxEl.style.height = newHeight + 'px';\n      this.boxEl.style.left = newLeft + 'px';\n      this.boxEl.style.top = newTop + 'px';\n    }\n  }, {\n    key: \"_light\",\n    value: function _light() {\n      if (this.isCrop) {\n        this._setChoice();\n      }\n    } //设置选取框图片区域明亮显示\n\n  }, {\n    key: \"_setChoice\",\n    value: function _setChoice() {\n      var top = this.boxEl.offsetTop;\n      var right = this.boxEl.offsetLeft + this.boxEl.offsetWidth;\n      var bottom = this.boxEl.offsetTop + this.boxEl.offsetHeight;\n      var left = this.boxEl.offsetLeft;\n      this.imgLight.style.clip = \"rect(\" + top + \"px,\" + right + \"px,\" + bottom + \"px,\" + left + \"px)\";\n    }\n  }, {\n    key: \"update\",\n    value: function update() {\n      this.$dragBox.css({\n        width: this.width,\n        height: this.height\n      });\n    }\n  }]);\n\n  return DragBox;\n}();\n\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvanMvZHJhZ0JveC5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy9kcmFnQm94LmpzP2VkMmQiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICQgZnJvbSAnanF1ZXJ5JztcblxuaW1wb3J0IHtcbiAgICBkcmFnXG59IGZyb20gJy4vdXRpbCc7XG5cbmNsYXNzIERyYWdCb3gge1xuICAgIGNvbnN0cnVjdG9yKG9wdGlvbnMpIHtcbiAgICAgICAgLy8g6buY6K6k6YWN572u5Y+C5pWwXG4gICAgICAgIGNvbnN0IGRlZmF1bHRzID0ge1xuICAgICAgICAgICAgLy8g5b6F57yW6L6R5Zu+54mH5YWD57SgXG4gICAgICAgICAgICBlbDogJycsXG4gICAgICAgICAgICB3aWR0aDogJzEwMCUnLFxuICAgICAgICAgICAgaGVpZ2h0OiAnMTAwJScsXG4gICAgICAgICAgICBtYXJrVGV4dDogJ3Byb2R1Y3R0ZXN0LmVuLm1hZGUtaW4tY2hpbmEuY29tJyxcbiAgICAgICAgICAgIC8vIOaYr+WQpuacieaYjuaal+aViOaenO+8jOS4u+imgeaYr+ijgeWJquWbvueJh+aViOaenFxuICAgICAgICAgICAgaXNDcm9wOiBmYWxzZSxcbiAgICAgICAgICAgIGZpeFJhdGlvOiBmYWxzZSxcbiAgICAgICAgICAgIC8vIOaLluWKqOinpueCueWbnuiwg+WHveaVsFxuICAgICAgICAgICAgb25EcmFnUG9pbnQ6IChib3hEYXRhKSA9PiB7fSxcbiAgICAgICAgICAgIC8vIOaLluWKqOahhuWbnuiwg+WHveaVsFxuICAgICAgICAgICAgb25EcmFnQ29tcGxldGU6IChsZWZ0LCB0b3ApID0+IHt9XG4gICAgICAgIH07XG5cbiAgICAgICAgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oe30sIGRlZmF1bHRzLCBvcHRpb25zKTtcbiAgICAgICAgdGhpcy5lbCA9IG9wdGlvbnMuZWw7XG4gICAgICAgIHRoaXMud2lkdGggPSBvcHRpb25zLndpZHRoO1xuICAgICAgICB0aGlzLmhlaWdodCA9IG9wdGlvbnMuaGVpZ2h0O1xuICAgICAgICB0aGlzLm1hcmtUZXh0ID0gb3B0aW9ucy5tYXJrVGV4dDtcbiAgICAgICAgdGhpcy5pc0Nyb3AgPSBvcHRpb25zLmlzQ3JvcDtcbiAgICAgICAgdGhpcy5maXhSYXRpbyA9IG9wdGlvbnMuZml4UmF0aW87XG4gICAgICAgIHRoaXMub25EcmFnUG9pbnQgPSBvcHRpb25zLm9uRHJhZ1BvaW50O1xuICAgICAgICB0aGlzLm9uRHJhZ0NvbXBsZXRlID0gb3B0aW9ucy5vbkRyYWdDb21wbGV0ZTtcblxuICAgICAgICB0aGlzLmluaXQoKTtcbiAgICB9XG4gICAgaW5pdCgpIHtcbiAgICAgICAgdGhpcy4kZWwgPSAkKHRoaXMuZWwpO1xuICAgICAgICBsZXQgc3JjID0gdGhpcy4kZWwuYXR0cignc3JjJyk7XG4gICAgICAgIGxldCAkcGFyZW50ID0gdGhpcy4kZWwucGFyZW50KCk7XG5cbiAgICAgICAgbGV0IGRyYWdCb3hIdG1sID0gYDxkaXYgY2xhc3M9XCJkcmFnYm94LXdyYXBwZXIgSi1kcmFnYm94LXdyYXBwZXJcIj5cbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGltZyBjbGFzcz1cIkotc291cmNlXCIgc3JjPVwiJHtzcmN9XCI+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XCJkcmFnLWJveCBKLWRyYWctYm94XCI+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwiZHJhZy1wb2ludCB1cC1sZWZ0IEotZHJhZy1wb2ludFwiPjwvZGl2PlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cImRyYWctcG9pbnQgdXAgSi1kcmFnLXBvaW50XCI+PC9kaXY+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwiZHJhZy1wb2ludCB1cC1yaWdodCBKLWRyYWctcG9pbnRcIj48L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XCJkcmFnLXBvaW50IHJpZ2h0IEotZHJhZy1wb2ludFwiPjwvZGl2PlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cImRyYWctcG9pbnQgcmlnaHQtZG93biBKLWRyYWctcG9pbnRcIj48L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XCJkcmFnLXBvaW50IGRvd24gSi1kcmFnLXBvaW50XCI+PC9kaXY+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwiZHJhZy1wb2ludCBsZWZ0LWRvd24gSi1kcmFnLXBvaW50XCI+PC9kaXY+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwiZHJhZy1wb2ludCBsZWZ0IEotZHJhZy1wb2ludFwiPjwvZGl2PlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cIm1hcmstdHh0IEotbWFyay10eHRcIj4ke3RoaXMubWFya1RleHR9PC9kaXY+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PmA7XG4gICAgICAgIGlmICh0aGlzLmlzQ3JvcCkge1xuICAgICAgICAgICAgZHJhZ0JveEh0bWwgPSBgPGRpdiBjbGFzcz1cImRyYWdib3gtd3JhcHBlciBKLWRyYWdib3gtd3JhcHBlclwiPlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8aW1nIGNsYXNzPVwiSi1zb3VyY2UgaW1nLWRhcmtcIiBzcmM9XCIke3NyY31cIj5cbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGltZyBjbGFzcz1cIkotc291cmNlIGltZy1saWdodCBKLWltZy1saWdodFwiIHNyYz1cIiR7c3JjfVwiPlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwiZHJhZy1ib3ggSi1kcmFnLWJveFwiPlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cImRyYWctcG9pbnQgdXAtbGVmdCBKLWRyYWctcG9pbnRcIj48L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XCJkcmFnLXBvaW50IHVwIEotZHJhZy1wb2ludFwiPjwvZGl2PlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cImRyYWctcG9pbnQgdXAtcmlnaHQgSi1kcmFnLXBvaW50XCI+PC9kaXY+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwiZHJhZy1wb2ludCByaWdodCBKLWRyYWctcG9pbnRcIj48L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9XCJkcmFnLXBvaW50IHJpZ2h0LWRvd24gSi1kcmFnLXBvaW50XCI+PC9kaXY+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwiZHJhZy1wb2ludCBkb3duIEotZHJhZy1wb2ludFwiPjwvZGl2PlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cImRyYWctcG9pbnQgbGVmdC1kb3duIEotZHJhZy1wb2ludFwiPjwvZGl2PlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cImRyYWctcG9pbnQgbGVmdCBKLWRyYWctcG9pbnRcIj48L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9kaXY+YDtcbiAgICAgICAgfVxuXG4gICAgICAgICRwYXJlbnQuaHRtbChkcmFnQm94SHRtbCk7XG4gICAgICAgIHRoaXMuJGRyYWdCb3ggPSAkcGFyZW50LmZpbmQoJy5KLWRyYWctYm94Jyk7XG4gICAgICAgIGlmICghdGhpcy5pc0Nyb3ApIHtcbiAgICAgICAgICAgIHRoaXMuJGRyYWdCb3guY3NzKHtcbiAgICAgICAgICAgICAgICB3aWR0aDogdGhpcy4kZHJhZ0JveC5maW5kKCcuSi1tYXJrLXR4dCcpLndpZHRoKCksXG4gICAgICAgICAgICAgICAgaGVpZ2h0OiB0aGlzLiRkcmFnQm94LmZpbmQoJy5KLW1hcmstdHh0JykuaGVpZ2h0KClcbiAgICAgICAgICAgIH0pO1xuICAgICAgICB9XG5cbiAgICAgICAgdGhpcy4kZHJhZ1BvaW50ID0gdGhpcy4kZHJhZ0JveC5maW5kKCcuSi1kcmFnLXBvaW50Jyk7XG5cblxuICAgICAgICB0aGlzLmJveEVsID0gdGhpcy4kZHJhZ0JveC5nZXQoMCk7XG4gICAgICAgIHRoaXMuY29udGFpbmVyRWwgPSB0aGlzLmJveEVsLnBhcmVudE5vZGU7XG4gICAgICAgIHRoaXMuaW1nTGlnaHQgPSAkcGFyZW50LmZpbmQoJy5KLWltZy1saWdodDpmaXJzdCcpLmdldCgwKTtcblxuICAgICAgICB0aGlzLmJveERhdGEgPSB7XG4gICAgICAgICAgICBsZWZ0OiB0aGlzLmJveEVsLm9mZnNldExlZnQsXG4gICAgICAgICAgICB0b3A6IHRoaXMuYm94RWwub2Zmc2V0VG9wLFxuICAgICAgICAgICAgd2lkdGg6IHRoaXMuYm94RWwub2Zmc2V0V2lkdGgsXG4gICAgICAgICAgICBoZWlnaHQ6IHRoaXMuYm94RWwub2Zmc2V0SGVpZ2h0LFxuICAgICAgICAgICAgcmF0aW86IHRoaXMuYm94RWwub2Zmc2V0V2lkdGggLyB0aGlzLmJveEVsLm9mZnNldEhlaWdodFxuICAgICAgICB9O1xuXG4gICAgICAgIHRoaXMuX2JpbmQoKTtcblxuICAgICAgICBsZXQgY29udGFpbmVyID0gdGhpcy5pc0Nyb3AgPyB0aGlzLmJveEVsLnBhcmVudE5vZGUgOiBudWxsO1xuICAgICAgICBkcmFnKHRoaXMuYm94RWwsIHRoaXMuYm94RWwsIGNvbnRhaW5lciwgKGxlZnQsIHRvcCkgPT4ge1xuICAgICAgICAgICAgdGhpcy5fbGlnaHQoKTtcbiAgICAgICAgICAgIHRoaXMub25EcmFnQ29tcGxldGUobGVmdCwgdG9wKTtcbiAgICAgICAgfSk7XG5cblxuICAgIH1cbiAgICBfYmluZCgpIHtcbiAgICAgICAgbGV0IGlzRHJhZ2luZyA9IGZhbHNlO1xuICAgICAgICBsZXQgY29udGFjdCA9IFwiXCI7IC8v6KGo56S66KKr5oyJ5LiL55qE6Kem54K5XG4gICAgICAgIGNvbnN0IERSQUdQT0lOVCA9IFsndXAtbGVmdCcsICd1cCcsICd1cC1yaWdodCcsICdyaWdodCcsICdyaWdodC1kb3duJywgJ2Rvd24nLCAnbGVmdC1kb3duJywgJ2xlZnQnXTtcbiAgICAgICAgbGV0IGRyYWdCb3hSYXRpbyA9IHRoaXMuYm94RGF0YS53aWR0aCAvIHRoaXMuYm94RGF0YS5oZWlnaHQ7XG4gICAgICAgIC8v6byg5qCH5oyJ5LiL5pe2XG4gICAgICAgIHRoaXMuJGRyYWdQb2ludC5vbignbW91c2Vkb3duJywgKGUpID0+IHtcbiAgICAgICAgICAgIGUuc3RvcFByb3BhZ2F0aW9uKCk7XG4gICAgICAgICAgICBpc0RyYWdpbmcgPSB0cnVlO1xuICAgICAgICAgICAgbGV0IGluZGV4ID0gJChlLnRhcmdldCkuaW5kZXgoKTtcbiAgICAgICAgICAgIGNvbnRhY3QgPSBEUkFHUE9JTlRbaW5kZXhdO1xuICAgICAgICAgICAgZHJhZ0JveFJhdGlvID0gdGhpcy5ib3hEYXRhLndpZHRoIC8gdGhpcy5ib3hEYXRhLmhlaWdodDtcbiAgICAgICAgfSlcblxuICAgICAgICAkKGRvY3VtZW50KS5vbignbW91c2V1cCcsIChlKSA9PiB7XG4gICAgICAgICAgICBpc0RyYWdpbmcgPSBmYWxzZTtcbiAgICAgICAgICAgIHRoaXMuYm94RGF0YSA9IHtcbiAgICAgICAgICAgICAgICBsZWZ0OiB0aGlzLmJveEVsLm9mZnNldExlZnQsXG4gICAgICAgICAgICAgICAgdG9wOiB0aGlzLmJveEVsLm9mZnNldFRvcCxcbiAgICAgICAgICAgICAgICB3aWR0aDogdGhpcy5ib3hFbC5vZmZzZXRXaWR0aCxcbiAgICAgICAgICAgICAgICBoZWlnaHQ6IHRoaXMuYm94RWwub2Zmc2V0SGVpZ2h0LFxuICAgICAgICAgICAgICAgIHJhdGlvOiB0aGlzLmJveEVsLm9mZnNldFdpZHRoIC8gdGhpcy5ib3hFbC5vZmZzZXRIZWlnaHRcbiAgICAgICAgICAgIH07XG4gICAgICAgIH0pXG4gICAgICAgICQoZG9jdW1lbnQpLm9uKCdtb3VzZW1vdmUnLCAoZSkgPT4ge1xuICAgICAgICAgICAgaWYgKGlzRHJhZ2luZyA9PSB0cnVlKSB7XG4gICAgICAgICAgICAgICAgdGhpcy5fbW92ZShlLCBjb250YWN0LCBkcmFnQm94UmF0aW8pO1xuICAgICAgICAgICAgICAgIHRoaXMuX2xpZ2h0KCk7XG5cbiAgICAgICAgICAgICAgICB0aGlzLmJveERhdGEgPSB7XG4gICAgICAgICAgICAgICAgICAgIGxlZnQ6IHRoaXMuYm94RWwub2Zmc2V0TGVmdCxcbiAgICAgICAgICAgICAgICAgICAgdG9wOiB0aGlzLmJveEVsLm9mZnNldFRvcCxcbiAgICAgICAgICAgICAgICAgICAgd2lkdGg6IHRoaXMuYm94RWwub2Zmc2V0V2lkdGgsXG4gICAgICAgICAgICAgICAgICAgIGhlaWdodDogdGhpcy5ib3hFbC5vZmZzZXRIZWlnaHQsXG4gICAgICAgICAgICAgICAgICAgIHJhdGlvOiB0aGlzLmJveEVsLm9mZnNldFdpZHRoIC8gdGhpcy5ib3hFbC5vZmZzZXRIZWlnaHRcbiAgICAgICAgICAgICAgICB9O1xuXG4gICAgICAgICAgICAgICAgdGhpcy5vbkRyYWdQb2ludCh0aGlzLmJveERhdGEpO1xuICAgICAgICAgICAgfVxuICAgICAgICB9KVxuXG4gICAgfVxuXG4gICAgLy/ojrflj5blhYPntKDnm7jlr7nkuo7lsY/luZXlt6bovrnlj4rkuIrovrnnmoTot53nprvvvIzliKnnlKhvZmZzZXRMZWZ0XG4gICAgX2dldFBvc2l0aW9uKCkge1xuICAgICAgICBsZXQgZWwgPSB0aGlzLmJveEVsO1xuICAgICAgICBsZXQgbGVmdCA9IGVsLm9mZnNldExlZnQ7XG4gICAgICAgIGxldCB0b3AgPSBlbC5vZmZzZXRUb3A7XG4gICAgICAgIGxldCBwYXJlbnQgPSBlbC5vZmZzZXRQYXJlbnQ7XG4gICAgICAgIHdoaWxlIChwYXJlbnQgIT0gbnVsbCkge1xuICAgICAgICAgICAgbGVmdCArPSBwYXJlbnQub2Zmc2V0TGVmdDtcbiAgICAgICAgICAgIHRvcCArPSBwYXJlbnQub2Zmc2V0VG9wO1xuICAgICAgICAgICAgcGFyZW50ID0gcGFyZW50Lm9mZnNldFBhcmVudDtcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4ge1xuICAgICAgICAgICAgXCJsZWZ0XCI6IGxlZnQsXG4gICAgICAgICAgICBcInRvcFwiOiB0b3BcbiAgICAgICAgfTtcbiAgICB9XG5cbiAgICBfbW92ZShlLCBjb250YWN0LCBkcmFnQm94UmF0aW8pIHtcblxuICAgICAgICBsZXQgeCA9IGUuY2xpZW50WCxcbiAgICAgICAgICAgIHkgPSBlLmNsaWVudFk7XG4gICAgICAgIGxldCBvbGRXaWR0aCA9IHRoaXMuYm94RWwub2Zmc2V0V2lkdGg7IC8v6YCJ5Y+W5qGG5Y+Y5YyW5YmN55qE5a695bqmXG4gICAgICAgIGxldCBvbGRIZWlnaHQgPSB0aGlzLmJveEVsLm9mZnNldEhlaWdodDsgLy/pgInlj5bmoYblj5jljJbliY3nmoTpq5jluqZcbiAgICAgICAgbGV0IHBvc2l0aW9uID0gdGhpcy5fZ2V0UG9zaXRpb24oKTtcbiAgICAgICAgbGV0IHRvcCA9IHBvc2l0aW9uLnRvcDtcbiAgICAgICAgbGV0IGxlZnQgPSBwb3NpdGlvbi5sZWZ0O1xuXG5cbiAgICAgICAgbGV0IG5ld1dpZHRoO1xuICAgICAgICBsZXQgbmV3SGVpZ2h0O1xuICAgICAgICBsZXQgbmV3TGVmdDtcbiAgICAgICAgbGV0IG5ld1RvcDtcblxuICAgICAgICAvLyDnuqbmnZ/mr5TkvovvvJrmoLnmja7lrr3luqborqHnrpfpq5jluqZcbiAgICAgICAgaWYgKGNvbnRhY3QuaW5kZXhPZignbGVmdCcpICE9IC0xKSB7XG4gICAgICAgICAgICBsZXQgYWRkV2lkdGggPSBsZWZ0IC0geDtcbiAgICAgICAgICAgIGlmICh0aGlzLmlzQ3JvcCAmJiBhZGRXaWR0aCA+PSAwICYmIHRoaXMuYm94RWwub2Zmc2V0TGVmdCA8PSAwKSB7XG4gICAgICAgICAgICAgICAgcmV0dXJuIGZhbHNlO1xuICAgICAgICAgICAgfVxuXG4gICAgICAgICAgICBuZXdXaWR0aCA9IG9sZFdpZHRoICsgYWRkV2lkdGg7XG4gICAgICAgICAgICBuZXdMZWZ0ID0gdGhpcy5ib3hFbC5vZmZzZXRMZWZ0IC0gYWRkV2lkdGg7XG4gICAgICAgIH1cbiAgICAgICAgaWYgKGNvbnRhY3QuaW5kZXhPZigncmlnaHQnKSAhPSAtMSkge1xuICAgICAgICAgICAgbGV0IGFkZFdpZHRoID0geCAtIGxlZnQgLSBvbGRXaWR0aDtcbiAgICAgICAgICAgIGlmICh0aGlzLmlzQ3JvcCAmJiBhZGRXaWR0aCA+PSAwICYmICh0aGlzLmNvbnRhaW5lckVsLmNsaWVudFdpZHRoIC0gKHRoaXMuYm94RWwub2Zmc2V0TGVmdCArIG9sZFdpZHRoICsgYWRkV2lkdGgpKSA8PSAwKSB7XG4gICAgICAgICAgICAgICAgcmV0dXJuIGZhbHNlO1xuICAgICAgICAgICAgfVxuXG4gICAgICAgICAgICBuZXdXaWR0aCA9IG9sZFdpZHRoICsgYWRkV2lkdGg7XG4gICAgICAgICAgICBuZXdMZWZ0ID0gdGhpcy5ib3hFbC5vZmZzZXRMZWZ0O1xuICAgICAgICB9XG4gICAgICAgIGlmIChjb250YWN0LmluZGV4T2YoJ3VwJykgIT0gLTEpIHtcbiAgICAgICAgICAgIGxldCBhZGRIZWlnaHQ7XG4gICAgICAgICAgICBpZiAodGhpcy5maXhSYXRpbykge1xuICAgICAgICAgICAgICAgIG5ld0hlaWdodCA9IE1hdGgucm91bmQobmV3V2lkdGggLyBkcmFnQm94UmF0aW8pO1xuICAgICAgICAgICAgICAgIGFkZEhlaWdodCA9IG5ld0hlaWdodCAtIG9sZEhlaWdodDtcbiAgICAgICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICAgICAgYWRkSGVpZ2h0ID0gdG9wIC0geTtcbiAgICAgICAgICAgICAgICBuZXdIZWlnaHQgPSBvbGRIZWlnaHQgKyBhZGRIZWlnaHQ7XG4gICAgICAgICAgICB9XG4gICAgICAgICAgICBuZXdUb3AgPSB0aGlzLmJveEVsLm9mZnNldFRvcCAtIGFkZEhlaWdodDtcblxuICAgICAgICAgICAgaWYgKHRoaXMuaXNDcm9wICYmIGFkZEhlaWdodCA+PSAwICYmIHRoaXMuYm94RWwub2Zmc2V0VG9wIDw9IDApIHtcbiAgICAgICAgICAgICAgICByZXR1cm4gZmFsc2U7XG4gICAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgICAgaWYgKGNvbnRhY3QuaW5kZXhPZignZG93bicpICE9IC0xKSB7XG4gICAgICAgICAgICBsZXQgYWRkSGVpZ2h0O1xuICAgICAgICAgICAgaWYgKHRoaXMuZml4UmF0aW8pIHtcbiAgICAgICAgICAgICAgICBuZXdIZWlnaHQgPSBNYXRoLnJvdW5kKG5ld1dpZHRoIC8gZHJhZ0JveFJhdGlvKTtcbiAgICAgICAgICAgICAgICBhZGRIZWlnaHQgPSBuZXdIZWlnaHQgLSBvbGRIZWlnaHQ7XG4gICAgICAgICAgICAgICAgbmV3VG9wID0gdGhpcy5ib3hFbC5vZmZzZXRUb3A7XG4gICAgICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgICAgIGFkZEhlaWdodCA9IHkgLSB0b3AgLSBvbGRIZWlnaHQ7XG4gICAgICAgICAgICAgICAgbmV3SGVpZ2h0ID0gb2xkSGVpZ2h0ICsgYWRkSGVpZ2h0O1xuICAgICAgICAgICAgfVxuXG4gICAgICAgICAgICBpZiAodGhpcy5pc0Nyb3AgJiYgYWRkSGVpZ2h0ID49IDAgJiYgKHRoaXMuY29udGFpbmVyRWwuY2xpZW50SGVpZ2h0IC0gKHRoaXMuYm94RWwub2Zmc2V0VG9wICsgb2xkSGVpZ2h0ICsgYWRkSGVpZ2h0KSkgPD0gMCkge1xuICAgICAgICAgICAgICAgIHJldHVybiBmYWxzZTtcbiAgICAgICAgICAgIH1cblxuICAgICAgICB9XG4gICAgICAgIGlmICh0aGlzLmlzQ3JvcCkge1xuICAgICAgICAgICAgbmV3V2lkdGggPSBNYXRoLm1pbihuZXdXaWR0aCwgdGhpcy5jb250YWluZXJFbC5vZmZzZXRXaWR0aCk7XG4gICAgICAgICAgICBuZXdIZWlnaHQgPSBNYXRoLm1pbihuZXdIZWlnaHQsIHRoaXMuY29udGFpbmVyRWwub2Zmc2V0SGVpZ2h0KTtcbiAgICAgICAgICAgIG5ld0xlZnQgPSBNYXRoLm1heChuZXdMZWZ0LCAwKTtcbiAgICAgICAgICAgIG5ld1RvcCA9IE1hdGgubWF4KG5ld1RvcCwgMCk7ICAgICAgXG4gICAgICAgIH1cbiAgICAgICAgXG4gICAgICAgIHRoaXMuYm94RWwuc3R5bGUud2lkdGggPSBuZXdXaWR0aCArICdweCc7XG4gICAgICAgIHRoaXMuYm94RWwuc3R5bGUuaGVpZ2h0ID0gbmV3SGVpZ2h0ICsgJ3B4JztcbiAgICAgICAgdGhpcy5ib3hFbC5zdHlsZS5sZWZ0ID0gbmV3TGVmdCArICdweCc7XG4gICAgICAgIHRoaXMuYm94RWwuc3R5bGUudG9wID0gbmV3VG9wICsgJ3B4JzsgICAgICAgICAgICAgICAgIFxuXG4gICAgfVxuXG4gICAgX2xpZ2h0KCkge1xuICAgICAgICBpZiAodGhpcy5pc0Nyb3ApIHtcbiAgICAgICAgICAgIHRoaXMuX3NldENob2ljZSgpO1xuICAgICAgICB9XG4gICAgfVxuICAgIC8v6K6+572u6YCJ5Y+W5qGG5Zu+54mH5Yy65Z+f5piO5Lqu5pi+56S6XG4gICAgX3NldENob2ljZSgpIHtcbiAgICAgICAgdmFyIHRvcCA9IHRoaXMuYm94RWwub2Zmc2V0VG9wO1xuICAgICAgICB2YXIgcmlnaHQgPSB0aGlzLmJveEVsLm9mZnNldExlZnQgKyB0aGlzLmJveEVsLm9mZnNldFdpZHRoO1xuICAgICAgICB2YXIgYm90dG9tID0gdGhpcy5ib3hFbC5vZmZzZXRUb3AgKyB0aGlzLmJveEVsLm9mZnNldEhlaWdodDtcbiAgICAgICAgdmFyIGxlZnQgPSB0aGlzLmJveEVsLm9mZnNldExlZnQ7XG4gICAgICAgIHRoaXMuaW1nTGlnaHQuc3R5bGUuY2xpcCA9IFwicmVjdChcIiArIHRvcCArIFwicHgsXCIgKyByaWdodCArIFwicHgsXCIgKyBib3R0b20gKyBcInB4LFwiICsgbGVmdCArIFwicHgpXCI7XG4gICAgfVxuXG4gICAgdXBkYXRlKCkge1xuICAgICAgICB0aGlzLiRkcmFnQm94LmNzcyh7XG4gICAgICAgICAgICB3aWR0aDogdGhpcy53aWR0aCxcbiAgICAgICAgICAgIGhlaWdodDogdGhpcy5oZWlnaHRcbiAgICAgICAgfSk7XG4gICAgfVxufVxuXG5leHBvcnQge1xuICAgIERyYWdCb3hcbn1cbiJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7OztBQUFBO0FBRUE7QUFDQTtBQUdBOzs7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBWkE7QUFlQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7OztBQUFBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFhQTtBQUNBO0FBY0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBRkE7QUFJQTtBQUNBO0FBQ0E7QUFHQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFMQTtBQUNBO0FBT0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUdBOzs7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFMQTtBQU9BO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBTEE7QUFDQTtBQU9BO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7OztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUZBO0FBSUE7OztBQUVBO0FBRUE7QUFBQTtBQUVBO0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFHQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBOzs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7OztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUZBO0FBSUE7Ozs7OzsiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/js/dragBox.js\n");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DragBox", function() { return DragBox; });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/js/util.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var DragBox =
+/*#__PURE__*/
+function () {
+  function DragBox(options) {
+    _classCallCheck(this, DragBox);
+
+    // 默认配置参数
+    var defaults = {
+      // 待编辑图片元素
+      el: '',
+      width: '100%',
+      height: '100%',
+      markText: 'producttest.en.made-in-china.com',
+      // 是否有明暗效果，主要是裁剪图片效果
+      isCrop: false,
+      fixRatio: false,
+      // 拖动触点回调函数
+      onDragPoint: function onDragPoint(boxData) {},
+      // 拖动框回调函数
+      onDragComplete: function onDragComplete(left, top) {}
+    };
+    options = _extends({}, defaults, options);
+    this.el = options.el;
+    this.width = options.width;
+    this.height = options.height;
+    this.markText = options.markText;
+    this.isCrop = options.isCrop;
+    this.fixRatio = options.fixRatio;
+    this.onDragPoint = options.onDragPoint;
+    this.onDragComplete = options.onDragComplete;
+    this.init();
+  }
+
+  _createClass(DragBox, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      this.$el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.el);
+      var src = this.$el.attr('src');
+      var $parent = this.$el.parent();
+      var dragBoxHtml = "<div class=\"dragbox-wrapper J-dragbox-wrapper\">\n                                <img class=\"J-source\" src=\"".concat(src, "\">\n                                <div class=\"drag-box J-drag-box\">\n                                    <div class=\"drag-point up-left J-drag-point\"></div>\n                                    <div class=\"drag-point up J-drag-point\"></div>\n                                    <div class=\"drag-point up-right J-drag-point\"></div>\n                                    <div class=\"drag-point right J-drag-point\"></div>\n                                    <div class=\"drag-point right-down J-drag-point\"></div>\n                                    <div class=\"drag-point down J-drag-point\"></div>\n                                    <div class=\"drag-point left-down J-drag-point\"></div>\n                                    <div class=\"drag-point left J-drag-point\"></div>\n                                    <div class=\"mark-txt J-mark-txt\">").concat(this.markText, "</div>\n                                </div>\n                            </div>");
+
+      if (this.isCrop) {
+        dragBoxHtml = "<div class=\"dragbox-wrapper J-dragbox-wrapper\">\n                                <img class=\"J-source img-dark\" src=\"".concat(src, "\">\n                                <img class=\"J-source img-light J-img-light\" src=\"").concat(src, "\">\n                                <div class=\"drag-box J-drag-box\">\n                                    <div class=\"drag-point up-left J-drag-point\"></div>\n                                    <div class=\"drag-point up J-drag-point\"></div>\n                                    <div class=\"drag-point up-right J-drag-point\"></div>\n                                    <div class=\"drag-point right J-drag-point\"></div>\n                                    <div class=\"drag-point right-down J-drag-point\"></div>\n                                    <div class=\"drag-point down J-drag-point\"></div>\n                                    <div class=\"drag-point left-down J-drag-point\"></div>\n                                    <div class=\"drag-point left J-drag-point\"></div>\n                                </div>\n                            </div>");
+      }
+
+      $parent.html(dragBoxHtml);
+      this.$dragBox = $parent.find('.J-drag-box');
+
+      if (!this.isCrop) {
+        this.$dragBox.css({
+          width: this.$dragBox.find('.J-mark-txt').width(),
+          height: this.$dragBox.find('.J-mark-txt').height()
+        });
+      }
+
+      this.$dragPoint = this.$dragBox.find('.J-drag-point');
+      this.boxEl = this.$dragBox.get(0);
+      this.containerEl = this.boxEl.parentNode;
+      this.imgLight = $parent.find('.J-img-light:first').get(0);
+      this.boxData = {
+        left: this.boxEl.offsetLeft,
+        top: this.boxEl.offsetTop,
+        width: this.boxEl.offsetWidth,
+        height: this.boxEl.offsetHeight,
+        ratio: this.boxEl.offsetWidth / this.boxEl.offsetHeight
+      };
+
+      this._bind();
+
+      var container = this.isCrop ? this.boxEl.parentNode : null;
+      Object(_util__WEBPACK_IMPORTED_MODULE_1__["drag"])(this.boxEl, this.boxEl, container, function (left, top) {
+        _this._light();
+
+        _this.onDragComplete(left, top);
+      });
+    }
+  }, {
+    key: "_bind",
+    value: function _bind() {
+      var _this2 = this;
+
+      var isDraging = false;
+      var contact = ""; //表示被按下的触点
+
+      var DRAGPOINT = ['up-left', 'up', 'up-right', 'right', 'right-down', 'down', 'left-down', 'left'];
+      var dragBoxRatio = this.boxData.width / this.boxData.height; //鼠标按下时
+
+      this.$dragPoint.on('mousedown', function (e) {
+        e.stopPropagation();
+        isDraging = true;
+        var index = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).index();
+        contact = DRAGPOINT[index];
+        dragBoxRatio = _this2.boxData.width / _this2.boxData.height;
+      });
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('mouseup', function (e) {
+        isDraging = false;
+        _this2.boxData = {
+          left: _this2.boxEl.offsetLeft,
+          top: _this2.boxEl.offsetTop,
+          width: _this2.boxEl.offsetWidth,
+          height: _this2.boxEl.offsetHeight,
+          ratio: _this2.boxEl.offsetWidth / _this2.boxEl.offsetHeight
+        };
+      });
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('mousemove', function (e) {
+        if (isDraging == true) {
+          _this2._move(e, contact, dragBoxRatio);
+
+          _this2._light();
+
+          _this2.boxData = {
+            left: _this2.boxEl.offsetLeft,
+            top: _this2.boxEl.offsetTop,
+            width: _this2.boxEl.offsetWidth,
+            height: _this2.boxEl.offsetHeight,
+            ratio: _this2.boxEl.offsetWidth / _this2.boxEl.offsetHeight
+          };
+
+          _this2.onDragPoint(_this2.boxData);
+        }
+      });
+    } //获取元素相对于屏幕左边及上边的距离，利用offsetLeft
+
+  }, {
+    key: "_getPosition",
+    value: function _getPosition() {
+      var el = this.boxEl;
+      var left = el.offsetLeft;
+      var top = el.offsetTop;
+      var parent = el.offsetParent;
+
+      while (parent != null) {
+        left += parent.offsetLeft;
+        top += parent.offsetTop;
+        parent = parent.offsetParent;
+      }
+
+      return {
+        "left": left,
+        "top": top
+      };
+    }
+  }, {
+    key: "_move",
+    value: function _move(e, contact, dragBoxRatio) {
+      var x = e.clientX,
+          y = e.clientY;
+      var oldWidth = this.boxEl.offsetWidth; //选取框变化前的宽度
+
+      var oldHeight = this.boxEl.offsetHeight; //选取框变化前的高度
+
+      var position = this._getPosition();
+
+      var top = position.top;
+      var left = position.left;
+      var newWidth;
+      var newHeight;
+      var newLeft;
+      var newTop; // 约束比例：根据宽度计算高度
+
+      if (contact.indexOf('left') != -1) {
+        var addWidth = left - x;
+
+        if (this.isCrop && addWidth >= 0 && this.boxEl.offsetLeft <= 0) {
+          return false;
+        }
+
+        newWidth = oldWidth + addWidth;
+        newLeft = this.boxEl.offsetLeft - addWidth;
+      }
+
+      if (contact.indexOf('right') != -1) {
+        var _addWidth = x - left - oldWidth;
+
+        if (this.isCrop && _addWidth >= 0 && this.containerEl.clientWidth - (this.boxEl.offsetLeft + oldWidth + _addWidth) <= 0) {
+          return false;
+        }
+
+        newWidth = oldWidth + _addWidth;
+        newLeft = this.boxEl.offsetLeft;
+      }
+
+      if (contact.indexOf('up') != -1) {
+        var addHeight;
+
+        if (this.fixRatio) {
+          newHeight = Math.round(newWidth / dragBoxRatio);
+          addHeight = newHeight - oldHeight;
+        } else {
+          addHeight = top - y;
+          newHeight = oldHeight + addHeight;
+        }
+
+        newTop = this.boxEl.offsetTop - addHeight;
+
+        if (this.isCrop && addHeight >= 0 && this.boxEl.offsetTop <= 0) {
+          return false;
+        }
+      }
+
+      if (contact.indexOf('down') != -1) {
+        var _addHeight;
+
+        if (this.fixRatio) {
+          newHeight = Math.round(newWidth / dragBoxRatio);
+          _addHeight = newHeight - oldHeight;
+          newTop = this.boxEl.offsetTop;
+        } else {
+          _addHeight = y - top - oldHeight;
+          newHeight = oldHeight + _addHeight;
+        }
+
+        if (this.isCrop && _addHeight >= 0 && this.containerEl.clientHeight - (this.boxEl.offsetTop + oldHeight + _addHeight) <= 0) {
+          return false;
+        }
+      }
+
+      if (this.isCrop) {
+        newWidth = Math.min(newWidth, this.containerEl.offsetWidth);
+        newHeight = Math.min(newHeight, this.containerEl.offsetHeight);
+        newLeft = Math.max(newLeft, 0);
+        newTop = Math.max(newTop, 0);
+      }
+
+      this.boxEl.style.width = newWidth + 'px';
+      this.boxEl.style.height = newHeight + 'px';
+      this.boxEl.style.left = newLeft + 'px';
+      this.boxEl.style.top = newTop + 'px';
+    }
+  }, {
+    key: "_light",
+    value: function _light() {
+      if (this.isCrop) {
+        this._setChoice();
+      }
+    } //设置选取框图片区域明亮显示
+
+  }, {
+    key: "_setChoice",
+    value: function _setChoice() {
+      var top = this.boxEl.offsetTop;
+      var right = this.boxEl.offsetLeft + this.boxEl.offsetWidth;
+      var bottom = this.boxEl.offsetTop + this.boxEl.offsetHeight;
+      var left = this.boxEl.offsetLeft;
+      this.imgLight.style.clip = "rect(" + top + "px," + right + "px," + bottom + "px," + left + "px)";
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      this.$dragBox.css({
+        width: this.width,
+        height: this.height
+      });
+
+      if (this.isCrop) {
+        this._setChoice();
+      }
+    }
+  }]);
+
+  return DragBox;
+}();
+
+
 
 /***/ }),
 
@@ -139,7 +1837,258 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ \"./src/js/util.js\");\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n\n\nvar ImgHandler =\n/*#__PURE__*/\nfunction () {\n  function ImgHandler(options) {\n    _classCallCheck(this, ImgHandler);\n\n    // 默认配置参数\n    var defaults = {\n      // 源图片元素\n      sourceImg: null,\n      rotateNum: 0,\n      cropW: '',\n      cropH: '',\n      // 裁剪后的图片类型\n      mime: 'image/jpeg',\n      // 水印相关参数，若watermarkImg存在则用图片水印，否则用文字水印。\n      // 是否添加水印\n      hasMark: true,\n      textAlign: 'start',\n      // 水印字体，值同css的font\n      markFont: '16px microsoft yahei',\n      // 水印字样式，可选值：color,gradient,pattern\n      markStyle: '#fff',\n      // 水印字文本\n      markText: 'UED',\n      // 水印字x轴位置\n      markX: 0,\n      // 水印字y轴位置\n      markY: 0,\n      // 压缩图片最大值KB\n      maxSize: 500,\n      // 逐步压缩质量幅度，即每次已多大幅度递减压缩质量，直到符合最小体积值\n      qualityStep: 0.1\n    };\n    options = _extends({}, defaults, options);\n    this.sourceImg = options.sourceImg;\n    this.rotateNum = options.rotateNum;\n    this.maxSize = options.maxSize;\n    this.cropW = options.cropW;\n    this.cropH = options.cropH;\n    this.mime = options.mime;\n    this.qualityStep = options.qualityStep;\n    this.hasMark = options.hasMark;\n    this.textAlign = options.textAlign;\n    this.markFont = options.markFont;\n    this.markStyle = options.markStyle;\n    this.markText = options.markText;\n    this.markX = options.markX;\n    this.markY = options.markY; // 全局变量\n\n    this.sx = 0;\n    this.sy = 0;\n    this.scaleRatio = 1;\n    this.results = [];\n    this.init();\n  }\n\n  _createClass(ImgHandler, [{\n    key: \"init\",\n    value: function init() {\n      var targetImg = this.sourceImg;\n      var sourceW0 = targetImg.width;\n      var sourceH0 = targetImg.height;\n\n      if (targetImg.nodeName.toLowerCase() === 'img') {\n        sourceW0 = targetImg.naturalWidth;\n        sourceH0 = targetImg.naturalHeight; // img to canvas\n\n        var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"getCanvas\"])(sourceW0, sourceH0);\n        var ctx = canvas.getContext('2d');\n        ctx.drawImage(targetImg, 0, 0);\n        targetImg = canvas;\n      }\n\n      this.result = targetImg;\n      this.results.push(this.result);\n    } // 重置\n\n  }, {\n    key: \"reset\",\n    value: function reset() {\n      this.rotateNum = 0;\n      this.scaleRatio = 1;\n      this.results = this.results.slice(0, 1);\n    } // 回退\n\n  }, {\n    key: \"rollback\",\n    value: function rollback() {\n      this.results.pop();\n    } // 旋转\n\n  }, {\n    key: \"rotate\",\n    value: function rotate() {\n      var targetImg = this.result;\n      var sourceW0 = targetImg.width;\n      var sourceH0 = targetImg.height;\n      var rotateDeg = this.rotateNum * 90;\n      var max = Math.max(sourceW0, sourceH0);\n      var tempCvs = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"getCanvas\"])(max, max),\n          tempCtx = tempCvs.getContext('2d');\n      tempCtx.translate(max / 2, max / 2);\n      tempCtx.rotate(rotateDeg * Math.PI / 180);\n      tempCtx.translate(-max / 2, -max / 2);\n      tempCtx.drawImage(targetImg, 0, 0);\n      var w = sourceW0,\n          h = sourceH0,\n          sx = 0,\n          sy = 0;\n\n      if (this.rotateNum === 1) {\n        w = sourceH0;\n        h = sourceW0;\n        sx = max - w;\n        sy = 0;\n      } else if (this.rotateNum === 2) {\n        w = sourceW0;\n        h = sourceH0;\n        sx = max - w;\n        sy = max - h;\n      } else if (this.rotateNum === 3) {\n        w = sourceH0;\n        h = sourceW0;\n        sx = 0;\n        sy = max - h;\n      } else {\n        w = sourceW0;\n        h = sourceH0;\n        sx = 0;\n        sy = 0;\n      }\n\n      var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"getCanvas\"])(w, h),\n          context = canvas.getContext('2d');\n      context.drawImage(tempCvs, sx, sy, w, h, 0, 0, w, h); // this.base64Data = canvas.toDataURL(this.mime);\n\n      this.result = canvas;\n      this.results.push(canvas);\n      return this;\n    } // 水印\n\n  }, {\n    key: \"mark\",\n    value: function mark() {\n      var targetImg = this.result;\n      var sourceW0 = targetImg.width;\n      var sourceH0 = targetImg.height;\n      var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"getCanvas\"])(sourceW0, sourceH0);\n      var dContext = canvas.getContext('2d');\n      dContext.drawImage(targetImg, 0, 0);\n\n      if (this.hasMark) {\n        dContext.textBaseline = \"top\";\n        dContext.textAlign = this.textAlign;\n        dContext.font = this.markFont;\n        dContext.fillStyle = this.markStyle;\n        dContext.fillText(this.markText, this.markX, this.markY);\n      } // this.base64Data = canvas.toDataURL(this.mime);\n\n\n      this.result = canvas;\n      this.results.push(canvas);\n      return this;\n    } // 裁剪\n\n  }, {\n    key: \"crop\",\n    value: function crop() {\n      var targetImg = this.result;\n      var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"getCanvas\"])(this.cropW, this.cropH);\n      var context = canvas.getContext('2d');\n      context.drawImage(targetImg, this.sx, this.sy, this.cropW, this.cropH, 0, 0, this.cropW, this.cropH); // this.base64Data = canvas.toDataURL(this.mime);\n\n      this.result = canvas;\n      this.results.push(canvas);\n      return this;\n    } // 缩放\n\n  }, {\n    key: \"scale\",\n    value: function scale() {\n      var targetImg = this.result;\n      var sourceW0 = targetImg.width;\n      var sourceH0 = targetImg.height;\n      var resultW = this.scaleRatio * sourceW0;\n      var resultH = this.scaleRatio * sourceH0;\n      var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"getCanvas\"])(resultW, resultH);\n      var context = canvas.getContext('2d');\n      context.drawImage(targetImg, 0, 0, sourceW0, sourceH0, 0, 0, resultW, resultH); // this.base64Data = canvas.toDataURL(this.mime);\n\n      this.result = canvas;\n      this.results.push(canvas);\n      return this;\n    } // 只对'image/jpeg'格式有效\n\n  }, {\n    key: \"compress\",\n    value: function compress(isSimple) {\n      var cvs = this.result;\n      var max = this.maxSize * 1024;\n      var quality = 1;\n      var qualityStep = this.qualityStep; // 质量压缩只支持'image/jpeg'，'image/webp'(chrome支持)\n\n      var qualityType = 'image/jpeg';\n      var data = cvs.toDataURL(qualityType, 1.0);\n      var size0 = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"getBase64Size\"])(data); // console.log('start compress: ' + Math.ceil(size0 / 1024));\n      // 简单粗暴\n\n      if (isSimple) {\n        while (size0 > max) {\n          quality = Math.floor(max / size0 * 10) / 10;\n          data = cvs.toDataURL(qualityType, quality);\n          size0 = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"getBase64Size\"])(data);\n        }\n      } else {\n        // 降低质量\n        while (size0 > max) {\n          quality -= qualityStep;\n          data = cvs.toDataURL(qualityType, quality);\n          size0 = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"getBase64Size\"])(data);\n        }\n      } // console.log('end compress: ' + Math.ceil(size0 / 1024));\n\n\n      var blobData = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"base64Data2Blob\"])(data, this.mime);\n      ;\n      var formdata = Object(_util__WEBPACK_IMPORTED_MODULE_0__[\"blob2FormData\"])(blobData);\n      return {\n        \"base64\": data,\n        \"blob\": blobData,\n        \"formdata\": formdata\n      };\n    }\n  }]);\n\n  return ImgHandler;\n}();\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (ImgHandler);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvanMvaW1nSGFuZGxlci5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy9pbWdIYW5kbGVyLmpzP2VjZWEiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtcbiAgICBnZXRDYW52YXMsXG4gICAgYmFzZTY0RGF0YTJCbG9iLFxuICAgIGJsb2IyRm9ybURhdGEsXG4gICAgZ2V0QmFzZTY0U2l6ZVxufSBmcm9tICcuL3V0aWwnO1xuXG5jbGFzcyBJbWdIYW5kbGVyIHtcblxuICAgIGNvbnN0cnVjdG9yKG9wdGlvbnMpIHtcblxuICAgICAgICAvLyDpu5jorqTphY3nva7lj4LmlbBcbiAgICAgICAgbGV0IGRlZmF1bHRzID0ge1xuICAgICAgICAgICAgLy8g5rqQ5Zu+54mH5YWD57SgXG4gICAgICAgICAgICBzb3VyY2VJbWc6IG51bGwsXG5cbiAgICAgICAgICAgIHJvdGF0ZU51bTogMCxcbiAgICAgICAgICBcbiAgICAgICAgICAgIGNyb3BXOiAnJyxcbiAgICAgICAgICAgIGNyb3BIOiAnJyxcblxuICAgICAgICAgICAgLy8g6KOB5Ymq5ZCO55qE5Zu+54mH57G75Z6LXG4gICAgICAgICAgICBtaW1lOiAnaW1hZ2UvanBlZycsICAgICAgICAgICAgXG5cbiAgICAgICAgICAgIC8vIOawtOWNsOebuOWFs+WPguaVsO+8jOiLpXdhdGVybWFya0ltZ+WtmOWcqOWImeeUqOWbvueJh+awtOWNsO+8jOWQpuWImeeUqOaWh+Wtl+awtOWNsOOAglxuICAgICAgICAgICAgLy8g5piv5ZCm5re75Yqg5rC05Y2wXG4gICAgICAgICAgICBoYXNNYXJrOiB0cnVlLFxuICAgICAgICAgICAgdGV4dEFsaWduOiAnc3RhcnQnLFxuICAgICAgICAgICAgLy8g5rC05Y2w5a2X5L2T77yM5YC85ZCMY3Nz55qEZm9udFxuICAgICAgICAgICAgbWFya0ZvbnQ6ICcxNnB4IG1pY3Jvc29mdCB5YWhlaScsXG4gICAgICAgICAgICAvLyDmsLTljbDlrZfmoLflvI/vvIzlj6/pgInlgLzvvJpjb2xvcixncmFkaWVudCxwYXR0ZXJuXG4gICAgICAgICAgICBtYXJrU3R5bGU6ICcjZmZmJyxcbiAgICAgICAgICAgIC8vIOawtOWNsOWtl+aWh+acrFxuICAgICAgICAgICAgbWFya1RleHQ6ICdVRUQnLFxuICAgICAgICAgICAgLy8g5rC05Y2w5a2XeOi9tOS9jee9rlxuICAgICAgICAgICAgbWFya1g6IDAsXG4gICAgICAgICAgICAvLyDmsLTljbDlrZd56L205L2N572uXG4gICAgICAgICAgICBtYXJrWTogMCxcblxuICAgICAgICAgICAgLy8g5Y6L57yp5Zu+54mH5pyA5aSn5YC8S0JcbiAgICAgICAgICAgIG1heFNpemU6IDUwMCxcbiAgICAgICAgICAgIC8vIOmAkOatpeWOi+e8qei0qOmHj+W5heW6pu+8jOWNs+avj+asoeW3suWkmuWkp+W5heW6pumAkuWHj+WOi+e8qei0qOmHj++8jOebtOWIsOespuWQiOacgOWwj+S9k+enr+WAvFxuICAgICAgICAgICAgcXVhbGl0eVN0ZXA6IDAuMVxuXG4gICAgICAgIH07XG5cblxuICAgICAgICBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7fSwgZGVmYXVsdHMsIG9wdGlvbnMpO1xuXG4gICAgICAgIHRoaXMuc291cmNlSW1nID0gb3B0aW9ucy5zb3VyY2VJbWc7XG4gICAgICAgIHRoaXMucm90YXRlTnVtID0gb3B0aW9ucy5yb3RhdGVOdW07XG4gICAgICAgIHRoaXMubWF4U2l6ZSA9IG9wdGlvbnMubWF4U2l6ZTtcbiAgICAgICAgdGhpcy5jcm9wVyA9IG9wdGlvbnMuY3JvcFc7XG4gICAgICAgIHRoaXMuY3JvcEggPSBvcHRpb25zLmNyb3BIO1xuXG4gICAgICAgIHRoaXMubWltZSA9IG9wdGlvbnMubWltZTtcbiAgICAgICAgdGhpcy5xdWFsaXR5U3RlcCA9IG9wdGlvbnMucXVhbGl0eVN0ZXA7XG5cbiAgICAgICAgdGhpcy5oYXNNYXJrID0gb3B0aW9ucy5oYXNNYXJrO1xuICAgICAgICB0aGlzLnRleHRBbGlnbiA9IG9wdGlvbnMudGV4dEFsaWduO1xuICAgICAgICB0aGlzLm1hcmtGb250ID0gb3B0aW9ucy5tYXJrRm9udDtcbiAgICAgICAgdGhpcy5tYXJrU3R5bGUgPSBvcHRpb25zLm1hcmtTdHlsZTtcbiAgICAgICAgdGhpcy5tYXJrVGV4dCA9IG9wdGlvbnMubWFya1RleHQ7XG4gICAgICAgIHRoaXMubWFya1ggPSBvcHRpb25zLm1hcmtYO1xuICAgICAgICB0aGlzLm1hcmtZID0gb3B0aW9ucy5tYXJrWTtcblxuXG4gICAgICAgIC8vIOWFqOWxgOWPmOmHj1xuICAgICAgICB0aGlzLnN4ID0gMDtcbiAgICAgICAgdGhpcy5zeSA9IDA7XG5cbiAgICAgICAgdGhpcy5zY2FsZVJhdGlvID0gMTtcblxuICAgICAgICB0aGlzLnJlc3VsdHMgPSBbXTtcblxuICAgICAgICB0aGlzLmluaXQoKTtcblxuICAgIH1cblxuXG5cblxuICAgIGluaXQoKSB7XG4gICAgICAgIGxldCB0YXJnZXRJbWcgPSB0aGlzLnNvdXJjZUltZztcbiAgICAgICAgbGV0IHNvdXJjZVcwID0gdGFyZ2V0SW1nLndpZHRoO1xuICAgICAgICBsZXQgc291cmNlSDAgPSB0YXJnZXRJbWcuaGVpZ2h0O1xuXG4gICAgICAgIGlmICh0YXJnZXRJbWcubm9kZU5hbWUudG9Mb3dlckNhc2UoKSA9PT0gJ2ltZycpIHtcbiAgICAgICAgICAgIHNvdXJjZVcwID0gdGFyZ2V0SW1nLm5hdHVyYWxXaWR0aDtcbiAgICAgICAgICAgIHNvdXJjZUgwID0gdGFyZ2V0SW1nLm5hdHVyYWxIZWlnaHQ7XG4gICAgICAgICAgICAvLyBpbWcgdG8gY2FudmFzXG4gICAgICAgICAgICBsZXQgY2FudmFzID0gZ2V0Q2FudmFzKHNvdXJjZVcwLCBzb3VyY2VIMCk7XG4gICAgICAgICAgICBsZXQgY3R4ID0gY2FudmFzLmdldENvbnRleHQoJzJkJyk7XG4gICAgICAgICAgICBjdHguZHJhd0ltYWdlKHRhcmdldEltZywgMCwgMCk7XG4gICAgICAgICAgICB0YXJnZXRJbWcgPSBjYW52YXM7XG4gICAgICAgIH1cblxuICAgICAgICB0aGlzLnJlc3VsdCA9IHRhcmdldEltZztcbiAgICAgICAgdGhpcy5yZXN1bHRzLnB1c2godGhpcy5yZXN1bHQpO1xuXG4gICAgfVxuXG4gICAgLy8g6YeN572uXG4gICAgcmVzZXQoKSB7XG4gICAgICAgIHRoaXMucm90YXRlTnVtID0gMDtcbiAgICAgICAgdGhpcy5zY2FsZVJhdGlvID0gMTtcbiAgICAgICAgdGhpcy5yZXN1bHRzID0gdGhpcy5yZXN1bHRzLnNsaWNlKDAsIDEpO1xuICAgIH1cbiAgICAvLyDlm57pgIBcbiAgICByb2xsYmFjaygpIHtcbiAgICAgICAgdGhpcy5yZXN1bHRzLnBvcCgpO1xuICAgIH1cbiAgICAvLyDml4vovaxcbiAgICByb3RhdGUoKSB7XG4gICAgICAgIGxldCB0YXJnZXRJbWcgPSB0aGlzLnJlc3VsdDtcbiAgICAgICAgbGV0IHNvdXJjZVcwID0gdGFyZ2V0SW1nLndpZHRoO1xuICAgICAgICBsZXQgc291cmNlSDAgPSB0YXJnZXRJbWcuaGVpZ2h0O1xuXG5cbiAgICAgICAgbGV0IHJvdGF0ZURlZyA9IHRoaXMucm90YXRlTnVtICogOTA7XG5cbiAgICAgICAgbGV0IG1heCA9IE1hdGgubWF4KHNvdXJjZVcwLCBzb3VyY2VIMCk7XG4gICAgICAgIGxldCB0ZW1wQ3ZzID0gZ2V0Q2FudmFzKG1heCwgbWF4KSxcbiAgICAgICAgICAgIHRlbXBDdHggPSB0ZW1wQ3ZzLmdldENvbnRleHQoJzJkJyk7XG5cbiAgICAgICAgdGVtcEN0eC50cmFuc2xhdGUobWF4IC8gMiwgbWF4IC8gMik7XG4gICAgICAgIHRlbXBDdHgucm90YXRlKHJvdGF0ZURlZyAqIE1hdGguUEkgLyAxODApO1xuICAgICAgICB0ZW1wQ3R4LnRyYW5zbGF0ZSgtbWF4IC8gMiwgLW1heCAvIDIpO1xuICAgICAgICB0ZW1wQ3R4LmRyYXdJbWFnZSh0YXJnZXRJbWcsIDAsIDApO1xuXG5cbiAgICAgICAgbGV0IHcgPSBzb3VyY2VXMCxcbiAgICAgICAgICAgIGggPSBzb3VyY2VIMCxcbiAgICAgICAgICAgIHN4ID0gMCxcbiAgICAgICAgICAgIHN5ID0gMDtcbiAgICAgICAgaWYgKHRoaXMucm90YXRlTnVtID09PSAxKSB7XG4gICAgICAgICAgICB3ID0gc291cmNlSDA7XG4gICAgICAgICAgICBoID0gc291cmNlVzA7XG4gICAgICAgICAgICBzeCA9IG1heCAtIHc7XG4gICAgICAgICAgICBzeSA9IDA7XG5cbiAgICAgICAgfSBlbHNlIGlmICh0aGlzLnJvdGF0ZU51bSA9PT0gMikge1xuICAgICAgICAgICAgdyA9IHNvdXJjZVcwO1xuICAgICAgICAgICAgaCA9IHNvdXJjZUgwO1xuICAgICAgICAgICAgc3ggPSBtYXggLSB3O1xuICAgICAgICAgICAgc3kgPSBtYXggLSBoO1xuICAgICAgICB9IGVsc2UgaWYgKHRoaXMucm90YXRlTnVtID09PSAzKSB7XG4gICAgICAgICAgICB3ID0gc291cmNlSDA7XG4gICAgICAgICAgICBoID0gc291cmNlVzA7XG4gICAgICAgICAgICBzeCA9IDA7XG4gICAgICAgICAgICBzeSA9IG1heCAtIGg7XG4gICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICB3ID0gc291cmNlVzA7XG4gICAgICAgICAgICBoID0gc291cmNlSDA7XG4gICAgICAgICAgICBzeCA9IDA7XG4gICAgICAgICAgICBzeSA9IDA7XG4gICAgICAgIH1cblxuICAgICAgICBsZXQgY2FudmFzID0gZ2V0Q2FudmFzKHcsIGgpLFxuICAgICAgICAgICAgY29udGV4dCA9IGNhbnZhcy5nZXRDb250ZXh0KCcyZCcpO1xuXG4gICAgICAgIGNvbnRleHQuZHJhd0ltYWdlKHRlbXBDdnMsIHN4LCBzeSwgdywgaCwgMCwgMCwgdywgaCk7XG5cbiAgICAgICAgLy8gdGhpcy5iYXNlNjREYXRhID0gY2FudmFzLnRvRGF0YVVSTCh0aGlzLm1pbWUpO1xuICAgICAgICB0aGlzLnJlc3VsdCA9IGNhbnZhcztcbiAgICAgICAgdGhpcy5yZXN1bHRzLnB1c2goY2FudmFzKTtcbiAgICAgICAgcmV0dXJuIHRoaXM7XG4gICAgfVxuXG4gICAgLy8g5rC05Y2wXG4gICAgbWFyaygpIHtcbiAgICAgICAgbGV0IHRhcmdldEltZyA9IHRoaXMucmVzdWx0O1xuICAgICAgICBsZXQgc291cmNlVzAgPSB0YXJnZXRJbWcud2lkdGg7XG4gICAgICAgIGxldCBzb3VyY2VIMCA9IHRhcmdldEltZy5oZWlnaHQ7XG5cbiAgICAgICAgbGV0IGNhbnZhcyA9IGdldENhbnZhcyhzb3VyY2VXMCwgc291cmNlSDApO1xuICAgICAgICBsZXQgZENvbnRleHQgPSBjYW52YXMuZ2V0Q29udGV4dCgnMmQnKTtcbiAgICAgICAgZENvbnRleHQuZHJhd0ltYWdlKHRhcmdldEltZywgMCwgMCk7XG4gICAgICAgIGlmICh0aGlzLmhhc01hcmspIHtcbiAgICAgICAgICAgIGRDb250ZXh0LnRleHRCYXNlbGluZSA9IFwidG9wXCI7XG4gICAgICAgICAgICBkQ29udGV4dC50ZXh0QWxpZ24gPSB0aGlzLnRleHRBbGlnbjtcbiAgICAgICAgICAgIGRDb250ZXh0LmZvbnQgPSB0aGlzLm1hcmtGb250O1xuICAgICAgICAgICAgZENvbnRleHQuZmlsbFN0eWxlID0gdGhpcy5tYXJrU3R5bGU7XG4gICAgICAgICAgICBkQ29udGV4dC5maWxsVGV4dCh0aGlzLm1hcmtUZXh0LCB0aGlzLm1hcmtYLCB0aGlzLm1hcmtZKTtcblxuICAgICAgICB9XG5cbiAgICAgICAgLy8gdGhpcy5iYXNlNjREYXRhID0gY2FudmFzLnRvRGF0YVVSTCh0aGlzLm1pbWUpO1xuICAgICAgICB0aGlzLnJlc3VsdCA9IGNhbnZhcztcbiAgICAgICAgdGhpcy5yZXN1bHRzLnB1c2goY2FudmFzKTtcbiAgICAgICAgcmV0dXJuIHRoaXM7XG4gICAgfVxuXG4gICAgLy8g6KOB5YmqXG4gICAgY3JvcCgpIHtcbiAgICAgICAgbGV0IHRhcmdldEltZyA9IHRoaXMucmVzdWx0O1xuXG4gICAgICAgIGxldCBjYW52YXMgPSBnZXRDYW52YXModGhpcy5jcm9wVywgdGhpcy5jcm9wSCk7XG4gICAgICAgIGxldCBjb250ZXh0ID0gY2FudmFzLmdldENvbnRleHQoJzJkJyk7XG4gICAgICAgIGNvbnRleHQuZHJhd0ltYWdlKHRhcmdldEltZywgdGhpcy5zeCwgdGhpcy5zeSwgdGhpcy5jcm9wVywgdGhpcy5jcm9wSCwgMCwgMCwgdGhpcy5jcm9wVywgdGhpcy5jcm9wSCk7XG5cbiAgICAgICAgLy8gdGhpcy5iYXNlNjREYXRhID0gY2FudmFzLnRvRGF0YVVSTCh0aGlzLm1pbWUpO1xuICAgICAgICB0aGlzLnJlc3VsdCA9IGNhbnZhcztcbiAgICAgICAgdGhpcy5yZXN1bHRzLnB1c2goY2FudmFzKTtcbiAgICAgICAgcmV0dXJuIHRoaXM7XG4gICAgfVxuICAgIC8vIOe8qeaUvlxuICAgIHNjYWxlKCkge1xuICAgICAgICBsZXQgdGFyZ2V0SW1nID0gdGhpcy5yZXN1bHQ7XG4gICAgICAgIGxldCBzb3VyY2VXMCA9IHRhcmdldEltZy53aWR0aDtcbiAgICAgICAgbGV0IHNvdXJjZUgwID0gdGFyZ2V0SW1nLmhlaWdodDtcblxuICAgICAgICBsZXQgcmVzdWx0VyA9IHRoaXMuc2NhbGVSYXRpbyAqIHNvdXJjZVcwO1xuICAgICAgICBsZXQgcmVzdWx0SCA9IHRoaXMuc2NhbGVSYXRpbyAqIHNvdXJjZUgwO1xuXG4gICAgICAgIGxldCBjYW52YXMgPSBnZXRDYW52YXMocmVzdWx0VywgcmVzdWx0SCk7XG4gICAgICAgIGxldCBjb250ZXh0ID0gY2FudmFzLmdldENvbnRleHQoJzJkJyk7XG4gICAgICAgIGNvbnRleHQuZHJhd0ltYWdlKHRhcmdldEltZywgMCwgMCwgc291cmNlVzAsIHNvdXJjZUgwLCAwLCAwLCByZXN1bHRXLCByZXN1bHRIKTtcblxuICAgICAgICAvLyB0aGlzLmJhc2U2NERhdGEgPSBjYW52YXMudG9EYXRhVVJMKHRoaXMubWltZSk7XG4gICAgICAgIHRoaXMucmVzdWx0ID0gY2FudmFzO1xuICAgICAgICB0aGlzLnJlc3VsdHMucHVzaChjYW52YXMpO1xuICAgICAgICByZXR1cm4gdGhpcztcbiAgICB9XG4gICAgLy8g5Y+q5a+5J2ltYWdlL2pwZWcn5qC85byP5pyJ5pWIXG4gICAgY29tcHJlc3MoaXNTaW1wbGUpIHtcbiAgICAgICAgbGV0IGN2cyA9IHRoaXMucmVzdWx0O1xuICAgICAgICBsZXQgbWF4ID0gdGhpcy5tYXhTaXplICogMTAyNDtcbiAgICAgICAgbGV0IHF1YWxpdHkgPSAxO1xuICAgICAgICBsZXQgcXVhbGl0eVN0ZXAgPSB0aGlzLnF1YWxpdHlTdGVwO1xuICAgICAgICAvLyDotKjph4/ljovnvKnlj6rmlK/mjIEnaW1hZ2UvanBlZyfvvIwnaW1hZ2Uvd2VicCcoY2hyb21l5pSv5oyBKVxuICAgICAgICBsZXQgcXVhbGl0eVR5cGUgPSAnaW1hZ2UvanBlZyc7XG5cbiAgICAgICAgbGV0IGRhdGEgPSBjdnMudG9EYXRhVVJMKHF1YWxpdHlUeXBlLCAxLjApO1xuICAgICAgICBsZXQgc2l6ZTAgPSBnZXRCYXNlNjRTaXplKGRhdGEpO1xuICAgICAgICAvLyBjb25zb2xlLmxvZygnc3RhcnQgY29tcHJlc3M6ICcgKyBNYXRoLmNlaWwoc2l6ZTAgLyAxMDI0KSk7XG4gICAgICAgIC8vIOeugOWNleeyl+aatFxuICAgICAgICBpZiAoaXNTaW1wbGUpIHtcbiAgICAgICAgICAgIHdoaWxlIChzaXplMCA+IG1heCkge1xuICAgICAgICAgICAgICAgIHF1YWxpdHkgPSBNYXRoLmZsb29yKG1heCAvIHNpemUwICogMTApIC8gMTA7XG4gICAgICAgICAgICAgICAgZGF0YSA9IGN2cy50b0RhdGFVUkwocXVhbGl0eVR5cGUsIHF1YWxpdHkpO1xuICAgICAgICAgICAgICAgIHNpemUwID0gZ2V0QmFzZTY0U2l6ZShkYXRhKTtcbiAgICAgICAgICAgIH1cblxuICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgICAgLy8g6ZmN5L2O6LSo6YePXG4gICAgICAgICAgICB3aGlsZSAoc2l6ZTAgPiBtYXgpIHtcbiAgICAgICAgICAgICAgICBxdWFsaXR5IC09IHF1YWxpdHlTdGVwO1xuICAgICAgICAgICAgICAgIGRhdGEgPSBjdnMudG9EYXRhVVJMKHF1YWxpdHlUeXBlLCBxdWFsaXR5KTtcbiAgICAgICAgICAgICAgICBzaXplMCA9IGdldEJhc2U2NFNpemUoZGF0YSk7XG4gICAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgICAgLy8gY29uc29sZS5sb2coJ2VuZCBjb21wcmVzczogJyArIE1hdGguY2VpbChzaXplMCAvIDEwMjQpKTtcblxuICAgICAgICBsZXQgYmxvYkRhdGEgPSBiYXNlNjREYXRhMkJsb2IoZGF0YSwgdGhpcy5taW1lKTs7ICAgIFxuICAgICAgICBsZXQgZm9ybWRhdGEgPSBibG9iMkZvcm1EYXRhKGJsb2JEYXRhKTtcbiAgICAgICAgXG4gICAgICAgIHJldHVybiB7XG4gICAgICAgICAgICBcImJhc2U2NFwiOiBkYXRhLFxuICAgICAgICAgICAgXCJibG9iXCI6IGJsb2JEYXRhLFxuICAgICAgICAgICAgXCJmb3JtZGF0YVwiOiBmb3JtZGF0YVxuICAgICAgICB9O1xuICAgIH1cblxufVxuXG5cbmV4cG9ydCBkZWZhdWx0IEltZ0hhbmRsZXJcbiJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBO0FBQ0E7QUFNQTs7O0FBRUE7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUVBO0FBQ0E7QUFFQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBOUJBO0FBbUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBR0E7QUFDQTtBQUVBO0FBRUE7QUFFQTtBQUVBO0FBQ0E7OztBQUlBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBOzs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7OztBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUdBO0FBRUE7QUFDQTtBQUFBO0FBR0E7QUFDQTtBQUNBO0FBQ0E7QUFHQTtBQUFBO0FBQUE7QUFBQTtBQUNBO0FBR0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBR0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7OztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFFQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7OztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUVBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBSEE7QUFLQTs7Ozs7O0FBS0EiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/js/imgHandler.js\n");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./src/js/util.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var ImgHandler =
+/*#__PURE__*/
+function () {
+  function ImgHandler(options) {
+    _classCallCheck(this, ImgHandler);
+
+    // 默认配置参数
+    var defaults = {
+      // 源图片元素
+      sourceImg: null,
+      rotateNum: 0,
+      cropW: '',
+      cropH: '',
+      // 裁剪后的图片类型
+      mime: 'image/jpeg',
+      // 水印相关参数，若watermarkImg存在则用图片水印，否则用文字水印。
+      // 是否添加水印
+      hasMark: true,
+      textAlign: 'start',
+      // 水印字体，值同css的font
+      markFont: '16px microsoft yahei',
+      // 水印字样式，可选值：color,gradient,pattern
+      markStyle: '#fff',
+      // 水印字文本
+      markText: 'UED',
+      // 水印字x轴位置
+      markX: 0,
+      // 水印字y轴位置
+      markY: 0,
+      // 压缩图片最大值KB
+      maxSize: 500,
+      // 逐步压缩质量幅度，即每次已多大幅度递减压缩质量，直到符合最小体积值
+      qualityStep: 0.1
+    };
+    options = _extends({}, defaults, options);
+    this.sourceImg = options.sourceImg;
+    this.rotateNum = options.rotateNum;
+    this.maxSize = options.maxSize;
+    this.cropW = options.cropW;
+    this.cropH = options.cropH;
+    this.mime = options.mime;
+    this.qualityStep = options.qualityStep;
+    this.hasMark = options.hasMark;
+    this.textAlign = options.textAlign;
+    this.markFont = options.markFont;
+    this.markStyle = options.markStyle;
+    this.markText = options.markText;
+    this.markX = options.markX;
+    this.markY = options.markY; // 全局变量
+
+    this.sx = 0;
+    this.sy = 0;
+    this.scaleRatio = 1;
+    this.results = [];
+    this.init();
+  }
+
+  _createClass(ImgHandler, [{
+    key: "init",
+    value: function init() {
+      var targetImg = this.sourceImg;
+      var sourceW0 = targetImg.width;
+      var sourceH0 = targetImg.height;
+
+      if (targetImg.nodeName.toLowerCase() === 'img') {
+        sourceW0 = targetImg.naturalWidth;
+        sourceH0 = targetImg.naturalHeight; // img to canvas
+
+        var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getCanvas"])(sourceW0, sourceH0);
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(targetImg, 0, 0);
+        targetImg = canvas;
+      }
+
+      this.result = targetImg;
+      this.results.push(this.result);
+    } // 重置
+
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.rotateNum = 0;
+      this.scaleRatio = 1;
+      this.results = this.results.slice(0, 1);
+    } // 回退
+
+  }, {
+    key: "rollback",
+    value: function rollback() {
+      this.results.pop();
+    } // 旋转
+
+  }, {
+    key: "rotate",
+    value: function rotate() {
+      var targetImg = this.result;
+      var sourceW0 = targetImg.width;
+      var sourceH0 = targetImg.height;
+      var rotateDeg = this.rotateNum * 90;
+      var max = Math.max(sourceW0, sourceH0);
+      var tempCvs = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getCanvas"])(max, max),
+          tempCtx = tempCvs.getContext('2d');
+      tempCtx.translate(max / 2, max / 2);
+      tempCtx.rotate(rotateDeg * Math.PI / 180);
+      tempCtx.translate(-max / 2, -max / 2);
+      tempCtx.drawImage(targetImg, 0, 0);
+      var w = sourceW0,
+          h = sourceH0,
+          sx = 0,
+          sy = 0;
+
+      if (this.rotateNum === 1) {
+        w = sourceH0;
+        h = sourceW0;
+        sx = max - w;
+        sy = 0;
+      } else if (this.rotateNum === 2) {
+        w = sourceW0;
+        h = sourceH0;
+        sx = max - w;
+        sy = max - h;
+      } else if (this.rotateNum === 3) {
+        w = sourceH0;
+        h = sourceW0;
+        sx = 0;
+        sy = max - h;
+      } else {
+        w = sourceW0;
+        h = sourceH0;
+        sx = 0;
+        sy = 0;
+      }
+
+      var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getCanvas"])(w, h),
+          context = canvas.getContext('2d');
+      context.drawImage(tempCvs, sx, sy, w, h, 0, 0, w, h); // this.base64Data = canvas.toDataURL(this.mime);
+
+      this.result = canvas;
+      this.results.push(canvas);
+      return this;
+    } // 水印
+
+  }, {
+    key: "mark",
+    value: function mark() {
+      var targetImg = this.result;
+      var sourceW0 = targetImg.width;
+      var sourceH0 = targetImg.height;
+      var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getCanvas"])(sourceW0, sourceH0);
+      var dContext = canvas.getContext('2d');
+      dContext.drawImage(targetImg, 0, 0);
+
+      if (this.hasMark) {
+        dContext.textBaseline = "top";
+        dContext.textAlign = this.textAlign;
+        dContext.font = this.markFont;
+        dContext.fillStyle = this.markStyle;
+        dContext.fillText(this.markText, this.markX, this.markY);
+      } // this.base64Data = canvas.toDataURL(this.mime);
+
+
+      this.result = canvas;
+      this.results.push(canvas);
+      return this;
+    } // 裁剪
+
+  }, {
+    key: "crop",
+    value: function crop() {
+      var targetImg = this.result;
+      var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getCanvas"])(this.cropW, this.cropH);
+      var context = canvas.getContext('2d');
+      context.drawImage(targetImg, this.sx, this.sy, this.cropW, this.cropH, 0, 0, this.cropW, this.cropH); // this.base64Data = canvas.toDataURL(this.mime);
+
+      this.result = canvas;
+      this.results.push(canvas);
+      return this;
+    } // 缩放
+
+  }, {
+    key: "scale",
+    value: function scale() {
+      var targetImg = this.result;
+      var sourceW0 = targetImg.width;
+      var sourceH0 = targetImg.height;
+      var resultW = this.scaleRatio * sourceW0;
+      var resultH = this.scaleRatio * sourceH0;
+      var canvas = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getCanvas"])(resultW, resultH);
+      var context = canvas.getContext('2d');
+      context.drawImage(targetImg, 0, 0, sourceW0, sourceH0, 0, 0, resultW, resultH); // this.base64Data = canvas.toDataURL(this.mime);
+
+      this.result = canvas;
+      this.results.push(canvas);
+      return this;
+    } // 只对'image/jpeg'格式有效
+
+  }, {
+    key: "compress",
+    value: function compress(isSimple) {
+      var cvs = this.result;
+      var max = this.maxSize * 1024;
+      var quality = 1;
+      var qualityStep = this.qualityStep; // 质量压缩只支持'image/jpeg'，'image/webp'(chrome支持)
+
+      var qualityType = 'image/jpeg';
+      var data = cvs.toDataURL(qualityType, 1.0);
+      var size0 = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getBase64Size"])(data); // console.log('start compress: ' + Math.ceil(size0 / 1024));
+      // 简单粗暴
+
+      if (isSimple) {
+        while (size0 > max) {
+          quality = Math.floor(max / size0 * 10) / 10;
+          data = cvs.toDataURL(qualityType, quality);
+          size0 = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getBase64Size"])(data);
+        }
+      } else {
+        // 降低质量
+        while (size0 > max) {
+          quality -= qualityStep;
+          data = cvs.toDataURL(qualityType, quality);
+          size0 = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getBase64Size"])(data);
+        }
+      } // console.log('end compress: ' + Math.ceil(size0 / 1024));
+
+
+      var blobData = Object(_util__WEBPACK_IMPORTED_MODULE_0__["base64Data2Blob"])(data, this.mime);
+      ;
+      var formdata = Object(_util__WEBPACK_IMPORTED_MODULE_0__["blob2FormData"])(blobData);
+      return {
+        "base64": data,
+        "blob": blobData,
+        "formdata": formdata
+      };
+    }
+  }]);
+
+  return ImgHandler;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (ImgHandler);
 
 /***/ }),
 
@@ -151,7 +2100,364 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"PipeImg\", function() { return PipeImg; });\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ \"./src/js/util.js\");\n/* harmony import */ var _imgHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./imgHandler */ \"./src/js/imgHandler.js\");\n/* harmony import */ var _dialog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dialog */ \"./src/js/dialog.js\");\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n\n\n\n\n\nvar PipeImg =\n/*#__PURE__*/\nfunction () {\n  function PipeImg(options) {\n    _classCallCheck(this, PipeImg);\n\n    // 默认配置参数\n    var defaults = {\n      debug: false,\n      // 必填，[{\"id\":\"567701\",\"url\":\"./images/Jellyfish.jpg\"}]\n      source: [],\n      // 上传图片地址\n      uploadUrl: '',\n      // 发送文件类型，可以使二进制流'blob'可以是表单数据'formdata'，默认二进制流\n      sendDataType: 'formdata',\n      // 图片编辑界面类型: '0'单图编辑, '1'批量水印\n      type: '0',\n      mime: 'image/jpeg',\n      // 保存图片最大体积\n      maxSize: 500,\n      markXPositionMargin: 15,\n      markYPositionMargin: 20,\n      // 文案\n      markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product SourcingFocus Service Co - Product Sourcing'],\n      closeBtnTxt: '关闭',\n      saveBtnTxt: '保存',\n      resetBtnTxt: '重置',\n      confirmBtnTxt: '确定',\n      cancelBtnTxt: '取消',\n      rotateMenuTxt: '旋转',\n      turnLeftTxt: '逆时针旋转',\n      turnRightTxt: '顺时针旋转',\n      cropMenuTxt: '裁剪',\n      scaleMenuTxt: '缩放',\n      markMenuTxt: '添加水印',\n      colorTxt: '颜色',\n      positionTxt: '位置',\n      opacityTxt: '透明度',\n      showRoomTxt: '展示厅',\n      companyNameTxt: '公司名称',\n      markAllMenuTxt: '批量添加水印',\n      tipTitleTxt: '提示',\n      tipContentTxt: '尚未保存，是否确定离开？',\n      tipConfirmBtnTxt: '确定',\n      // 初始化完成\n      onInited: function onInited() {},\n      // 上传保存完成\n      onComplete: function onComplete(response) {},\n      onClose: function onClose() {}\n    };\n    options = _extends({}, defaults, options);\n    this.debug = options.debug;\n    this.source = options.source;\n\n    if (!this.source) {\n      throw new Error('PipeImg: source is not found!');\n    }\n\n    if (!(Array.isArray(this.source) || typeof this.source === 'string')) {\n      throw new Error('PipeImg: source类型错误，只能为字符串或者数组！');\n    }\n\n    this.uploadUrl = options.uploadUrl;\n    this.sendDataType = options.sendDataType;\n    this.type = options.type;\n    this.mime = options.mime;\n    this.maxSize = options.maxSize;\n    this.markXPositionMargin = options.markXPositionMargin;\n    this.markYPositionMargin = options.markYPositionMargin;\n    this.markTextList = options.markTextList;\n    this.closeBtnTxt = options.closeBtnTxt;\n    this.saveBtnTxt = options.saveBtnTxt;\n    this.resetBtnTxt = options.resetBtnTxt;\n    this.confirmBtnTxt = options.confirmBtnTxt;\n    this.cancelBtnTxt = options.cancelBtnTxt;\n    this.rotateMenuTxt = options.rotateMenuTxt;\n    this.turnLeftTxt = options.turnLeftTxt;\n    this.turnRightTxt = options.turnRightTxt;\n    this.cropMenuTxt = options.cropMenuTxt;\n    this.scaleMenuTxt = options.scaleMenuTxt;\n    this.markMenuTxt = options.markMenuTxt;\n    this.colorTxt = options.colorTxt;\n    this.positionTxt = options.positionTxt;\n    this.opacityTxt = options.opacityTxt;\n    this.showRoomTxt = options.showRoomTxt;\n    this.companyNameTxt = options.companyNameTxt;\n    this.markAllMenuTxt = options.markAllMenuTxt;\n    this.tipTitleTxt = options.tipTitleTxt;\n    this.tipContentTxt = options.tipContentTxt;\n    this.tipConfirmBtnTxt = options.tipConfirmBtnTxt;\n    this.onInited = options.onInited;\n    this.onComplete = options.onComplete;\n    this.onClose = options.onClose;\n    this.resultList = [];\n    this.sourceImgList = [];\n    this.returnJson = [];\n    this.methods = [];\n    this.activeIndex = 0;\n\n    this._init();\n  }\n\n  _createClass(PipeImg, [{\n    key: \"_init\",\n    value: function _init() {\n      var _this = this;\n\n      this.returnJson = this.source;\n      var urlList = this.source.map(function (element, index) {\n        return element.url;\n      }); // 解决加载完成及跨域问题\n\n      Object(_util__WEBPACK_IMPORTED_MODULE_1__[\"loadImages\"])(urlList, function (images) {\n        _this.sourceImgList = images;\n\n        _this.onInited();\n\n        _this._executeMethods();\n      }, function () {\n        throw new Error('PipeImg: source load failure!');\n      });\n    }\n  }, {\n    key: \"_show\",\n    value: function _show(options) {\n      var _this2 = this;\n\n      if (options && options.selected) {\n        this.activeIndex = options.selected;\n      }\n\n      this.imgHandler = new _imgHandler__WEBPACK_IMPORTED_MODULE_2__[\"default\"]({\n        sourceImg: this.sourceImgList[this.activeIndex]\n      });\n      this.resultList.push(this.imgHandler.result);\n      this.dialog = new _dialog__WEBPACK_IMPORTED_MODULE_3__[\"default\"]({\n        debug: this.debug,\n        imgList: this.sourceImgList,\n        activeIndex: this.activeIndex,\n        type: this.type,\n        mime: this.mime,\n        markXPositionMargin: this.markXPositionMargin,\n        markYPositionMargin: this.markYPositionMargin,\n        markTextList: this.markTextList,\n        closeBtnTxt: this.closeBtnTxt,\n        saveBtnTxt: this.saveBtnTxt,\n        resetBtnTxt: this.resetBtnTxt,\n        confirmBtnTxt: this.confirmBtnTxt,\n        cancelBtnTxt: this.cancelBtnTxt,\n        rotateMenuTxt: this.rotateMenuTxt,\n        turnLeftTxt: this.turnLeftTxt,\n        turnRightTxt: this.turnRightTxt,\n        cropMenuTxt: this.cropMenuTxt,\n        scaleMenuTxt: this.scaleMenuTxt,\n        markMenuTxt: this.markMenuTxt,\n        colorTxt: this.colorTxt,\n        positionTxt: this.positionTxt,\n        opacityTxt: this.opacityTxt,\n        showRoomTxt: this.showRoomTxt,\n        companyNameTxt: this.companyNameTxt,\n        markAllMenuTxt: this.markAllMenuTxt,\n        tipTitleTxt: this.tipTitleTxt,\n        tipContentTxt: this.tipContentTxt,\n        tipConfirmBtnTxt: this.tipConfirmBtnTxt,\n        onSaveRotate: function onSaveRotate(options, cb) {\n          _this2._saveRotate(options, cb);\n        },\n        onSaveCrop: function onSaveCrop(options, cb) {\n          _this2._saveCrop(options, cb);\n        },\n        onSaveScale: function onSaveScale(options, cb) {\n          _this2._saveScale(options, cb);\n        },\n        onSaveMark: function onSaveMark(options, cb) {\n          _this2._saveMark(options, cb);\n        },\n        onReset: function onReset(cb) {\n          _this2._reset(cb);\n        },\n        onSave: function onSave(cb, index) {\n          _this2._save(cb, index);\n        },\n        onChangeActive: function onChangeActive(options, cb) {\n          _this2._changeActive(options, cb);\n        },\n        onSaveMarkAll: function onSaveMarkAll(options, cb) {\n          _this2._saveMarkAll(options, cb);\n        },\n        onClose: function onClose() {\n          _this2.onClose();\n        },\n        onComplete: function onComplete(result) {\n          _this2.onComplete(result);\n        }\n      });\n    }\n  }, {\n    key: \"_saveRotate\",\n    value: function _saveRotate(options, cb) {\n      this.imgHandler.rotateNum = options.rotateNum;\n      this.imgHandler.rotate();\n      this.resultList.push(this.imgHandler.result);\n      cb(this.imgHandler.result);\n    }\n  }, {\n    key: \"_saveCrop\",\n    value: function _saveCrop(options, cb) {\n      this.imgHandler.cropW = options.cropW;\n      this.imgHandler.cropH = options.cropH;\n      this.imgHandler.sx = options.sx;\n      this.imgHandler.sy = options.sy;\n      this.imgHandler.crop();\n      this.resultList.push(this.imgHandler.result);\n      cb(this.imgHandler.result);\n    }\n  }, {\n    key: \"_saveScale\",\n    value: function _saveScale(options, cb) {\n      this.imgHandler.scaleRatio = options.scaleRatio;\n      this.imgHandler.scale();\n      this.resultList.push(this.imgHandler.result);\n      cb(this.imgHandler.result);\n    }\n  }, {\n    key: \"_saveMark\",\n    value: function _saveMark(options, cb) {\n      this.imgHandler.markX = options.markX;\n      this.imgHandler.markY = options.markY;\n      this.imgHandler.markText = options.markText;\n      this.imgHandler.markFont = options.markFont;\n      this.imgHandler.markStyle = options.markStyle;\n      this.imgHandler.mark();\n      this.resultList.push(this.imgHandler.result);\n      cb(this.imgHandler.result);\n    }\n  }, {\n    key: \"_reset\",\n    value: function _reset(cb) {\n      this.rotateNum = 0;\n      this.scaleRatio = 1;\n      this.resultList = this.resultList.slice(0, 1);\n      this.imgHandler = new _imgHandler__WEBPACK_IMPORTED_MODULE_2__[\"default\"]({\n        sourceImg: this.resultList[0]\n      });\n      cb(this.resultList[0]);\n    }\n  }, {\n    key: \"_save\",\n    value: function _save(cb, index) {\n      var _this3 = this;\n\n      var compressData = this.imgHandler.compress();\n      var sendData = this.sendDataType === 'blob' ? compressData.blob : compressData.formdata;\n\n      if (this.debug) {\n        // 模拟返回\n        setTimeout(function () {\n          // let response = [{\"picHeight\":600,\"picWidth\":800,\"tempPhotoId\":\"573761\",\"url\":\"image?tid=40&amp;id=gCfpAUFcYRlB&amp;cache=0&amp;lan_code=0\"}];\n          var response = [{\n            \"picHeight\": 600,\n            \"picWidth\": 800,\n            \"tempPhotoId\": \"573761\",\n            \"url\": compressData.base64\n          }];\n\n          _this3._saveSuccess(response[0], index, cb);\n        }, 1000);\n      } else {\n        jquery__WEBPACK_IMPORTED_MODULE_0___default.a.ajax({\n          url: this.uploadUrl,\n          type: \"POST\",\n          data: sendData,\n          processData: false,\n          contentType: false,\n          success: function success(response) {\n            _this3._saveSuccess(response[0], index, cb);\n          },\n          error: function error() {\n            window.console && console.log('network-error: upload failure!');\n          }\n        });\n      }\n    }\n  }, {\n    key: \"_saveSuccess\",\n    value: function _saveSuccess(data, index, cb) {\n      data.url = data.url.replace(\"&amp;\", \"&\");\n      var img = new Image();\n      img.src = data.url;\n      this.resultList = [img];\n      this.sourceImgList[index] = img;\n      var o = {\n        \"id\": data.tempPhotoId,\n        \"url\": data.url,\n        \"picWidth\": data.picWidth,\n        \"picHeight\": data.picHeight\n      };\n      this.returnJson[index] = o;\n      cb && cb(this.returnJson);\n    }\n  }, {\n    key: \"_changeActive\",\n    value: function _changeActive(options, cb) {\n      this.activeIndex = options.activeIndex;\n      this.imgHandler = new _imgHandler__WEBPACK_IMPORTED_MODULE_2__[\"default\"]({\n        sourceImg: options.activeImg\n      });\n      this.resultList = [this.imgHandler.result];\n      cb && cb(this.imgHandler.result);\n    }\n  }, {\n    key: \"show\",\n    value: function show(options) {\n      this.methods.push({\n        \"name\": \"show\",\n        \"params\": options\n      });\n    }\n  }, {\n    key: \"_executeMethods\",\n    value: function _executeMethods() {\n      var _this4 = this;\n\n      this.methods.forEach(function (element) {\n        _this4['_' + element.name](element.params);\n      });\n      this.methods = [];\n    }\n  }]);\n\n  return PipeImg;\n}();\n\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvanMvcGlwZUltZy5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy9waXBlSW1nLmpzPzkyMjAiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICQgZnJvbSAnanF1ZXJ5JztcblxuaW1wb3J0IHtcbiAgICBsb2FkSW1hZ2VzXG59IGZyb20gJy4vdXRpbCc7XG5pbXBvcnQgSW1nSGFuZGxlciBmcm9tICcuL2ltZ0hhbmRsZXInO1xuaW1wb3J0IERpYWxvZyBmcm9tICcuL2RpYWxvZyc7XG5cbmNsYXNzIFBpcGVJbWcge1xuXG4gICAgY29uc3RydWN0b3Iob3B0aW9ucykge1xuICAgICAgICAvLyDpu5jorqTphY3nva7lj4LmlbBcbiAgICAgICAgbGV0IGRlZmF1bHRzID0ge1xuICAgICAgICAgICAgZGVidWc6IGZhbHNlLFxuICAgICAgICAgICAgLy8g5b+F5aGr77yMW3tcImlkXCI6XCI1Njc3MDFcIixcInVybFwiOlwiLi9pbWFnZXMvSmVsbHlmaXNoLmpwZ1wifV1cbiAgICAgICAgICAgIHNvdXJjZTogW10sXG4gICAgICAgICAgICAvLyDkuIrkvKDlm77niYflnLDlnYBcbiAgICAgICAgICAgIHVwbG9hZFVybDogJycsXG4gICAgICAgICAgICAvLyDlj5HpgIHmlofku7bnsbvlnovvvIzlj6/ku6Xkvb/kuozov5vliLbmtYEnYmxvYiflj6/ku6XmmK/ooajljZXmlbDmja4nZm9ybWRhdGEn77yM6buY6K6k5LqM6L+b5Yi25rWBXG4gICAgICAgICAgICBzZW5kRGF0YVR5cGU6ICdmb3JtZGF0YScsXG4gICAgICAgICAgICAvLyDlm77niYfnvJbovpHnlYzpnaLnsbvlnos6ICcwJ+WNleWbvue8lui+kSwgJzEn5om56YeP5rC05Y2wXG4gICAgICAgICAgICB0eXBlOiAnMCcsXG4gICAgICAgICAgICBtaW1lOiAnaW1hZ2UvanBlZycsXG4gICAgICAgICAgICAvLyDkv53lrZjlm77niYfmnIDlpKfkvZPnp69cbiAgICAgICAgICAgIG1heFNpemU6IDUwMCxcblxuICAgICAgICAgICAgbWFya1hQb3NpdGlvbk1hcmdpbjogMTUsXG4gICAgICAgICAgICBtYXJrWVBvc2l0aW9uTWFyZ2luOiAyMCxcbiAgICAgICAgICAgIC8vIOaWh+ahiFxuICAgICAgICAgICAgbWFya1RleHRMaXN0OiBbJ3Byb2R1Y3R0ZXN0LmVuLm1hZGUtaW4tY2hpbmEuY29tJywgJ0ZvY3VzIFNlcnZpY2UgQ28gLSBQcm9kdWN0IFNvdXJjaW5nRm9jdXMgU2VydmljZSBDbyAtIFByb2R1Y3QgU291cmNpbmcnXSxcbiAgICAgICAgICAgIGNsb3NlQnRuVHh0OiAn5YWz6ZetJyxcbiAgICAgICAgICAgIHNhdmVCdG5UeHQ6ICfkv53lrZgnLFxuICAgICAgICAgICAgcmVzZXRCdG5UeHQ6ICfph43nva4nLFxuICAgICAgICAgICAgY29uZmlybUJ0blR4dDogJ+ehruWumicsXG4gICAgICAgICAgICBjYW5jZWxCdG5UeHQ6ICflj5bmtognLFxuICAgICAgICAgICAgcm90YXRlTWVudVR4dDogJ+aXi+i9rCcsXG4gICAgICAgICAgICB0dXJuTGVmdFR4dDogJ+mAhuaXtumSiOaXi+i9rCcsXG4gICAgICAgICAgICB0dXJuUmlnaHRUeHQ6ICfpobrml7bpkojml4vovawnLFxuICAgICAgICAgICAgY3JvcE1lbnVUeHQ6ICfoo4HliaonLFxuICAgICAgICAgICAgc2NhbGVNZW51VHh0OiAn57yp5pS+JyxcbiAgICAgICAgICAgIG1hcmtNZW51VHh0OiAn5re75Yqg5rC05Y2wJyxcbiAgICAgICAgICAgIGNvbG9yVHh0OiAn6aKc6ImyJyxcbiAgICAgICAgICAgIHBvc2l0aW9uVHh0OiAn5L2N572uJyxcbiAgICAgICAgICAgIG9wYWNpdHlUeHQ6ICfpgI/mmI7luqYnLFxuICAgICAgICAgICAgc2hvd1Jvb21UeHQ6ICflsZXnpLrljoUnLFxuICAgICAgICAgICAgY29tcGFueU5hbWVUeHQ6ICflhazlj7jlkI3np7AnLFxuICAgICAgICAgICAgbWFya0FsbE1lbnVUeHQ6ICfmibnph4/mt7vliqDmsLTljbAnLFxuICAgICAgICAgICAgdGlwVGl0bGVUeHQ6ICfmj5DnpLonLFxuICAgICAgICAgICAgdGlwQ29udGVudFR4dDogJ+WwmuacquS/neWtmO+8jOaYr+WQpuehruWumuemu+W8gO+8nycsXG4gICAgICAgICAgICB0aXBDb25maXJtQnRuVHh0OiAn56Gu5a6aJyxcbiAgICAgICAgICAgIC8vIOWIneWni+WMluWujOaIkFxuICAgICAgICAgICAgb25Jbml0ZWQ6ICgpID0+IHt9LFxuICAgICAgICAgICAgLy8g5LiK5Lyg5L+d5a2Y5a6M5oiQXG4gICAgICAgICAgICBvbkNvbXBsZXRlOiAocmVzcG9uc2UpID0+IHt9LFxuICAgICAgICAgICAgb25DbG9zZTogKCkgPT4ge31cbiAgICAgICAgfTtcblxuICAgICAgICBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7fSwgZGVmYXVsdHMsIG9wdGlvbnMpO1xuICAgICAgICB0aGlzLmRlYnVnID0gb3B0aW9ucy5kZWJ1ZztcbiAgICAgICAgdGhpcy5zb3VyY2UgPSBvcHRpb25zLnNvdXJjZTtcbiAgICAgICAgaWYgKCF0aGlzLnNvdXJjZSkge1xuICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKCdQaXBlSW1nOiBzb3VyY2UgaXMgbm90IGZvdW5kIScpO1xuICAgICAgICB9XG4gICAgICAgIGlmICghKEFycmF5LmlzQXJyYXkodGhpcy5zb3VyY2UpIHx8IHR5cGVvZiB0aGlzLnNvdXJjZSA9PT0gJ3N0cmluZycpKSB7XG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoJ1BpcGVJbWc6IHNvdXJjZeexu+Wei+mUmeivr++8jOWPquiDveS4uuWtl+espuS4suaIluiAheaVsOe7hO+8gScpO1xuICAgICAgICB9XG4gICAgICAgIHRoaXMudXBsb2FkVXJsID0gb3B0aW9ucy51cGxvYWRVcmw7XG4gICAgICAgIHRoaXMuc2VuZERhdGFUeXBlID0gb3B0aW9ucy5zZW5kRGF0YVR5cGU7XG4gICAgICAgIHRoaXMudHlwZSA9IG9wdGlvbnMudHlwZTtcblxuICAgICAgICB0aGlzLm1pbWUgPSBvcHRpb25zLm1pbWU7XG4gICAgICAgIHRoaXMubWF4U2l6ZSA9IG9wdGlvbnMubWF4U2l6ZTtcblxuICAgICAgICB0aGlzLm1hcmtYUG9zaXRpb25NYXJnaW4gPSBvcHRpb25zLm1hcmtYUG9zaXRpb25NYXJnaW47XG4gICAgICAgIHRoaXMubWFya1lQb3NpdGlvbk1hcmdpbiA9IG9wdGlvbnMubWFya1lQb3NpdGlvbk1hcmdpbjtcbiAgICAgICAgdGhpcy5tYXJrVGV4dExpc3QgPSBvcHRpb25zLm1hcmtUZXh0TGlzdDtcbiAgICAgICAgdGhpcy5jbG9zZUJ0blR4dCA9IG9wdGlvbnMuY2xvc2VCdG5UeHQ7XG4gICAgICAgIHRoaXMuc2F2ZUJ0blR4dCA9IG9wdGlvbnMuc2F2ZUJ0blR4dDtcbiAgICAgICAgdGhpcy5yZXNldEJ0blR4dCA9IG9wdGlvbnMucmVzZXRCdG5UeHQ7XG4gICAgICAgIHRoaXMuY29uZmlybUJ0blR4dCA9IG9wdGlvbnMuY29uZmlybUJ0blR4dDtcbiAgICAgICAgdGhpcy5jYW5jZWxCdG5UeHQgPSBvcHRpb25zLmNhbmNlbEJ0blR4dDtcbiAgICAgICAgdGhpcy5yb3RhdGVNZW51VHh0ID0gb3B0aW9ucy5yb3RhdGVNZW51VHh0O1xuICAgICAgICB0aGlzLnR1cm5MZWZ0VHh0ID0gb3B0aW9ucy50dXJuTGVmdFR4dDtcbiAgICAgICAgdGhpcy50dXJuUmlnaHRUeHQgPSBvcHRpb25zLnR1cm5SaWdodFR4dDtcbiAgICAgICAgdGhpcy5jcm9wTWVudVR4dCA9IG9wdGlvbnMuY3JvcE1lbnVUeHQ7XG4gICAgICAgIHRoaXMuc2NhbGVNZW51VHh0ID0gb3B0aW9ucy5zY2FsZU1lbnVUeHQ7XG4gICAgICAgIHRoaXMubWFya01lbnVUeHQgPSBvcHRpb25zLm1hcmtNZW51VHh0O1xuICAgICAgICB0aGlzLmNvbG9yVHh0ID0gb3B0aW9ucy5jb2xvclR4dDtcbiAgICAgICAgdGhpcy5wb3NpdGlvblR4dCA9IG9wdGlvbnMucG9zaXRpb25UeHQ7XG4gICAgICAgIHRoaXMub3BhY2l0eVR4dCA9IG9wdGlvbnMub3BhY2l0eVR4dDtcbiAgICAgICAgdGhpcy5zaG93Um9vbVR4dCA9IG9wdGlvbnMuc2hvd1Jvb21UeHQ7XG4gICAgICAgIHRoaXMuY29tcGFueU5hbWVUeHQgPSBvcHRpb25zLmNvbXBhbnlOYW1lVHh0O1xuICAgICAgICB0aGlzLm1hcmtBbGxNZW51VHh0ID0gb3B0aW9ucy5tYXJrQWxsTWVudVR4dDtcbiAgICAgICAgdGhpcy50aXBUaXRsZVR4dCA9IG9wdGlvbnMudGlwVGl0bGVUeHQ7XG4gICAgICAgIHRoaXMudGlwQ29udGVudFR4dCA9IG9wdGlvbnMudGlwQ29udGVudFR4dDtcbiAgICAgICAgdGhpcy50aXBDb25maXJtQnRuVHh0ID0gb3B0aW9ucy50aXBDb25maXJtQnRuVHh0O1xuXG5cbiAgICAgICAgdGhpcy5vbkluaXRlZCA9IG9wdGlvbnMub25Jbml0ZWQ7XG4gICAgICAgIHRoaXMub25Db21wbGV0ZSA9IG9wdGlvbnMub25Db21wbGV0ZTtcbiAgICAgICAgdGhpcy5vbkNsb3NlID0gb3B0aW9ucy5vbkNsb3NlO1xuXG4gICAgICAgIHRoaXMucmVzdWx0TGlzdCA9IFtdO1xuICAgICAgICB0aGlzLnNvdXJjZUltZ0xpc3QgPSBbXTtcbiAgICAgICAgdGhpcy5yZXR1cm5Kc29uID0gW107XG4gICAgICAgIHRoaXMubWV0aG9kcyA9IFtdO1xuXG4gICAgICAgIHRoaXMuYWN0aXZlSW5kZXggPSAwO1xuXG4gICAgICAgIHRoaXMuX2luaXQoKTtcblxuICAgIH1cblxuICAgIF9pbml0KCkge1xuICAgICAgICB0aGlzLnJldHVybkpzb24gPSB0aGlzLnNvdXJjZTtcbiAgICAgICAgbGV0IHVybExpc3QgPSB0aGlzLnNvdXJjZS5tYXAoKGVsZW1lbnQsIGluZGV4KSA9PiB7XG4gICAgICAgICAgICByZXR1cm4gZWxlbWVudC51cmw7XG4gICAgICAgIH0pXG5cbiAgICAgICAgLy8g6Kej5Yaz5Yqg6L295a6M5oiQ5Y+K6Leo5Z+f6Zeu6aKYXG4gICAgICAgIGxvYWRJbWFnZXModXJsTGlzdCwgKGltYWdlcykgPT4ge1xuICAgICAgICAgICAgdGhpcy5zb3VyY2VJbWdMaXN0ID0gaW1hZ2VzO1xuXG5cblxuXG4gICAgICAgICAgICB0aGlzLm9uSW5pdGVkKCk7XG4gICAgICAgICAgICB0aGlzLl9leGVjdXRlTWV0aG9kcygpO1xuXG4gICAgICAgIH0sICgpID0+IHtcbiAgICAgICAgICAgIHRocm93IG5ldyBFcnJvcignUGlwZUltZzogc291cmNlIGxvYWQgZmFpbHVyZSEnKTtcbiAgICAgICAgfSlcblxuICAgIH1cbiAgICBfc2hvdyhvcHRpb25zKSB7XG4gICAgICAgIGlmIChvcHRpb25zICYmIG9wdGlvbnMuc2VsZWN0ZWQpIHtcbiAgICAgICAgICAgIHRoaXMuYWN0aXZlSW5kZXggPSBvcHRpb25zLnNlbGVjdGVkOyAgICAgICAgICAgICBcbiAgICAgICAgfVxuXG4gICAgICAgIHRoaXMuaW1nSGFuZGxlciA9IG5ldyBJbWdIYW5kbGVyKHtcbiAgICAgICAgICAgIHNvdXJjZUltZzogdGhpcy5zb3VyY2VJbWdMaXN0W3RoaXMuYWN0aXZlSW5kZXhdXG4gICAgICAgIH0pO1xuICAgICAgICB0aGlzLnJlc3VsdExpc3QucHVzaCh0aGlzLmltZ0hhbmRsZXIucmVzdWx0KTtcbiAgICAgICAgXG4gICAgICAgIHRoaXMuZGlhbG9nID0gbmV3IERpYWxvZyh7XG4gICAgICAgICAgICBkZWJ1ZzogdGhpcy5kZWJ1ZyxcbiAgICAgICAgICAgIGltZ0xpc3Q6IHRoaXMuc291cmNlSW1nTGlzdCxcbiAgICAgICAgICAgIGFjdGl2ZUluZGV4OiB0aGlzLmFjdGl2ZUluZGV4LFxuICAgICAgICAgICAgdHlwZTogdGhpcy50eXBlLFxuICAgICAgICAgICAgbWltZTogdGhpcy5taW1lLFxuXG4gICAgICAgICAgICBtYXJrWFBvc2l0aW9uTWFyZ2luOiB0aGlzLm1hcmtYUG9zaXRpb25NYXJnaW4sXG4gICAgICAgICAgICBtYXJrWVBvc2l0aW9uTWFyZ2luOiB0aGlzLm1hcmtZUG9zaXRpb25NYXJnaW4sXG4gICAgICAgICAgICBtYXJrVGV4dExpc3Q6IHRoaXMubWFya1RleHRMaXN0LFxuICAgICAgICAgICAgY2xvc2VCdG5UeHQ6IHRoaXMuY2xvc2VCdG5UeHQsXG4gICAgICAgICAgICBzYXZlQnRuVHh0OiB0aGlzLnNhdmVCdG5UeHQsXG4gICAgICAgICAgICByZXNldEJ0blR4dDogdGhpcy5yZXNldEJ0blR4dCxcbiAgICAgICAgICAgIGNvbmZpcm1CdG5UeHQ6IHRoaXMuY29uZmlybUJ0blR4dCxcbiAgICAgICAgICAgIGNhbmNlbEJ0blR4dDogdGhpcy5jYW5jZWxCdG5UeHQsXG4gICAgICAgICAgICByb3RhdGVNZW51VHh0OiB0aGlzLnJvdGF0ZU1lbnVUeHQsXG4gICAgICAgICAgICB0dXJuTGVmdFR4dDogdGhpcy50dXJuTGVmdFR4dCxcbiAgICAgICAgICAgIHR1cm5SaWdodFR4dDogdGhpcy50dXJuUmlnaHRUeHQsXG4gICAgICAgICAgICBjcm9wTWVudVR4dDogdGhpcy5jcm9wTWVudVR4dCxcbiAgICAgICAgICAgIHNjYWxlTWVudVR4dDogdGhpcy5zY2FsZU1lbnVUeHQsXG4gICAgICAgICAgICBtYXJrTWVudVR4dDogdGhpcy5tYXJrTWVudVR4dCxcbiAgICAgICAgICAgIGNvbG9yVHh0OiB0aGlzLmNvbG9yVHh0LFxuICAgICAgICAgICAgcG9zaXRpb25UeHQ6IHRoaXMucG9zaXRpb25UeHQsXG4gICAgICAgICAgICBvcGFjaXR5VHh0OiB0aGlzLm9wYWNpdHlUeHQsXG4gICAgICAgICAgICBzaG93Um9vbVR4dDogdGhpcy5zaG93Um9vbVR4dCxcbiAgICAgICAgICAgIGNvbXBhbnlOYW1lVHh0OiB0aGlzLmNvbXBhbnlOYW1lVHh0LFxuICAgICAgICAgICAgbWFya0FsbE1lbnVUeHQ6IHRoaXMubWFya0FsbE1lbnVUeHQsXG4gICAgICAgICAgICB0aXBUaXRsZVR4dDogdGhpcy50aXBUaXRsZVR4dCxcbiAgICAgICAgICAgIHRpcENvbnRlbnRUeHQ6IHRoaXMudGlwQ29udGVudFR4dCxcbiAgICAgICAgICAgIHRpcENvbmZpcm1CdG5UeHQ6IHRoaXMudGlwQ29uZmlybUJ0blR4dCxcblxuICAgICAgICAgICAgb25TYXZlUm90YXRlOiAob3B0aW9ucywgY2IpID0+IHtcbiAgICAgICAgICAgICAgICB0aGlzLl9zYXZlUm90YXRlKG9wdGlvbnMsIGNiKTtcbiAgICAgICAgICAgIH0sXG4gICAgICAgICAgICBvblNhdmVDcm9wOiAob3B0aW9ucywgY2IpID0+IHtcbiAgICAgICAgICAgICAgICB0aGlzLl9zYXZlQ3JvcChvcHRpb25zLCBjYik7XG4gICAgICAgICAgICB9LFxuICAgICAgICAgICAgb25TYXZlU2NhbGU6IChvcHRpb25zLCBjYikgPT4ge1xuICAgICAgICAgICAgICAgIHRoaXMuX3NhdmVTY2FsZShvcHRpb25zLCBjYik7XG4gICAgICAgICAgICB9LFxuICAgICAgICAgICAgb25TYXZlTWFyazogKG9wdGlvbnMsIGNiKSA9PiB7XG4gICAgICAgICAgICAgICAgdGhpcy5fc2F2ZU1hcmsob3B0aW9ucywgY2IpO1xuICAgICAgICAgICAgfSxcbiAgICAgICAgICAgIG9uUmVzZXQ6IChjYikgPT4ge1xuICAgICAgICAgICAgICAgIHRoaXMuX3Jlc2V0KGNiKTtcbiAgICAgICAgICAgIH0sXG4gICAgICAgICAgICBvblNhdmU6IChjYiwgaW5kZXgpID0+IHtcbiAgICAgICAgICAgICAgICB0aGlzLl9zYXZlKGNiLCBpbmRleCk7XG4gICAgICAgICAgICB9LFxuICAgICAgICAgICAgb25DaGFuZ2VBY3RpdmU6IChvcHRpb25zLCBjYikgPT4ge1xuICAgICAgICAgICAgICAgIHRoaXMuX2NoYW5nZUFjdGl2ZShvcHRpb25zLCBjYik7XG4gICAgICAgICAgICB9LFxuICAgICAgICAgICAgb25TYXZlTWFya0FsbDogKG9wdGlvbnMsIGNiKSA9PiB7XG4gICAgICAgICAgICAgICAgdGhpcy5fc2F2ZU1hcmtBbGwob3B0aW9ucywgY2IpO1xuICAgICAgICAgICAgfSxcbiAgICAgICAgICAgIG9uQ2xvc2U6ICgpID0+IHtcbiAgICAgICAgICAgICAgICB0aGlzLm9uQ2xvc2UoKTtcbiAgICAgICAgICAgIH0sXG4gICAgICAgICAgICBvbkNvbXBsZXRlOiAocmVzdWx0KSA9PiB7XG4gICAgICAgICAgICAgICAgdGhpcy5vbkNvbXBsZXRlKHJlc3VsdCk7XG4gICAgICAgICAgICB9XG4gICAgICAgIH0pO1xuICAgIH1cbiAgICBfc2F2ZVJvdGF0ZShvcHRpb25zLCBjYikge1xuICAgICAgICB0aGlzLmltZ0hhbmRsZXIucm90YXRlTnVtID0gb3B0aW9ucy5yb3RhdGVOdW07XG4gICAgICAgIHRoaXMuaW1nSGFuZGxlci5yb3RhdGUoKTtcbiAgICAgICAgdGhpcy5yZXN1bHRMaXN0LnB1c2godGhpcy5pbWdIYW5kbGVyLnJlc3VsdCk7XG4gICAgICAgIGNiKHRoaXMuaW1nSGFuZGxlci5yZXN1bHQpO1xuICAgIH1cbiAgICBfc2F2ZUNyb3Aob3B0aW9ucywgY2IpIHtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLmNyb3BXID0gb3B0aW9ucy5jcm9wVztcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLmNyb3BIID0gb3B0aW9ucy5jcm9wSDtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLnN4ID0gb3B0aW9ucy5zeDtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLnN5ID0gb3B0aW9ucy5zeTtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLmNyb3AoKTtcbiAgICAgICAgdGhpcy5yZXN1bHRMaXN0LnB1c2godGhpcy5pbWdIYW5kbGVyLnJlc3VsdCk7XG4gICAgICAgIGNiKHRoaXMuaW1nSGFuZGxlci5yZXN1bHQpO1xuICAgIH1cbiAgICBfc2F2ZVNjYWxlKG9wdGlvbnMsIGNiKSB7XG4gICAgICAgIHRoaXMuaW1nSGFuZGxlci5zY2FsZVJhdGlvID0gb3B0aW9ucy5zY2FsZVJhdGlvO1xuICAgICAgICB0aGlzLmltZ0hhbmRsZXIuc2NhbGUoKTtcbiAgICAgICAgdGhpcy5yZXN1bHRMaXN0LnB1c2godGhpcy5pbWdIYW5kbGVyLnJlc3VsdCk7XG4gICAgICAgIGNiKHRoaXMuaW1nSGFuZGxlci5yZXN1bHQpO1xuICAgIH1cbiAgICBfc2F2ZU1hcmsob3B0aW9ucywgY2IpIHtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLm1hcmtYID0gb3B0aW9ucy5tYXJrWDtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLm1hcmtZID0gb3B0aW9ucy5tYXJrWTtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLm1hcmtUZXh0ID0gb3B0aW9ucy5tYXJrVGV4dDtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLm1hcmtGb250ID0gb3B0aW9ucy5tYXJrRm9udDtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyLm1hcmtTdHlsZSA9IG9wdGlvbnMubWFya1N0eWxlO1xuICAgICAgICB0aGlzLmltZ0hhbmRsZXIubWFyaygpO1xuICAgICAgICB0aGlzLnJlc3VsdExpc3QucHVzaCh0aGlzLmltZ0hhbmRsZXIucmVzdWx0KTtcbiAgICAgICAgY2IodGhpcy5pbWdIYW5kbGVyLnJlc3VsdCk7XG4gICAgfVxuICAgIF9yZXNldChjYikge1xuICAgICAgICB0aGlzLnJvdGF0ZU51bSA9IDA7XG4gICAgICAgIHRoaXMuc2NhbGVSYXRpbyA9IDE7XG5cbiAgICAgICAgdGhpcy5yZXN1bHRMaXN0ID0gdGhpcy5yZXN1bHRMaXN0LnNsaWNlKDAsIDEpO1xuICAgICAgICB0aGlzLmltZ0hhbmRsZXIgPSBuZXcgSW1nSGFuZGxlcih7XG4gICAgICAgICAgICBzb3VyY2VJbWc6IHRoaXMucmVzdWx0TGlzdFswXVxuICAgICAgICB9KVxuICAgICAgICBjYih0aGlzLnJlc3VsdExpc3RbMF0pO1xuICAgIH1cbiAgICBfc2F2ZShjYiwgaW5kZXgpIHtcbiAgICAgICAgbGV0IGNvbXByZXNzRGF0YSA9IHRoaXMuaW1nSGFuZGxlci5jb21wcmVzcygpO1xuICAgICAgICBsZXQgc2VuZERhdGEgPSB0aGlzLnNlbmREYXRhVHlwZSA9PT0gJ2Jsb2InID8gY29tcHJlc3NEYXRhLmJsb2IgOiBjb21wcmVzc0RhdGEuZm9ybWRhdGE7XG5cbiAgICAgICAgaWYgKHRoaXMuZGVidWcpIHtcbiAgICAgICAgICAgIC8vIOaooeaLn+i/lOWbnlxuICAgICAgICAgICAgc2V0VGltZW91dCgoKSA9PiB7XG4gICAgICAgICAgICAgICAgLy8gbGV0IHJlc3BvbnNlID0gW3tcInBpY0hlaWdodFwiOjYwMCxcInBpY1dpZHRoXCI6ODAwLFwidGVtcFBob3RvSWRcIjpcIjU3Mzc2MVwiLFwidXJsXCI6XCJpbWFnZT90aWQ9NDAmYW1wO2lkPWdDZnBBVUZjWVJsQiZhbXA7Y2FjaGU9MCZhbXA7bGFuX2NvZGU9MFwifV07XG4gICAgICAgICAgICAgICAgbGV0IHJlc3BvbnNlID0gW3tcbiAgICAgICAgICAgICAgICAgICAgXCJwaWNIZWlnaHRcIjogNjAwLFxuICAgICAgICAgICAgICAgICAgICBcInBpY1dpZHRoXCI6IDgwMCxcbiAgICAgICAgICAgICAgICAgICAgXCJ0ZW1wUGhvdG9JZFwiOiBcIjU3Mzc2MVwiLFxuICAgICAgICAgICAgICAgICAgICBcInVybFwiOiBjb21wcmVzc0RhdGEuYmFzZTY0XG4gICAgICAgICAgICAgICAgfV07XG4gICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgdGhpcy5fc2F2ZVN1Y2Nlc3MocmVzcG9uc2VbMF0sIGluZGV4LCBjYik7XG4gICAgICAgICAgICB9LCAxMDAwKTtcbiAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAgICQuYWpheCh7XG4gICAgICAgICAgICAgICAgdXJsOiB0aGlzLnVwbG9hZFVybCxcbiAgICAgICAgICAgICAgICB0eXBlOiBcIlBPU1RcIixcbiAgICAgICAgICAgICAgICBkYXRhOiBzZW5kRGF0YSxcbiAgICAgICAgICAgICAgICBwcm9jZXNzRGF0YTogZmFsc2UsXG4gICAgICAgICAgICAgICAgY29udGVudFR5cGU6IGZhbHNlLFxuICAgICAgICAgICAgICAgIHN1Y2Nlc3M6IChyZXNwb25zZSkgPT4ge1xuICAgICAgICAgICAgICAgICAgICB0aGlzLl9zYXZlU3VjY2VzcyhyZXNwb25zZVswXSwgaW5kZXgsIGNiKTtcbiAgICAgICAgICAgICAgICB9LFxuICAgICAgICAgICAgICAgIGVycm9yOiAoKSA9PiB7XG4gICAgICAgICAgICAgICAgICAgIHdpbmRvdy5jb25zb2xlICYmIGNvbnNvbGUubG9nKCduZXR3b3JrLWVycm9yOiB1cGxvYWQgZmFpbHVyZSEnKTtcbiAgICAgICAgICAgICAgICB9XG4gICAgICAgICAgICB9KTtcbiAgICAgICAgfVxuXG4gICAgfVxuXG4gICAgX3NhdmVTdWNjZXNzKGRhdGEsIGluZGV4LCBjYikge1xuICAgICAgICBkYXRhLnVybCA9IGRhdGEudXJsLnJlcGxhY2UoXCImYW1wO1wiLCBcIiZcIik7XG4gICAgICAgIGxldCBpbWcgPSBuZXcgSW1hZ2UoKTtcbiAgICAgICAgaW1nLnNyYyA9IGRhdGEudXJsO1xuICAgICAgICB0aGlzLnJlc3VsdExpc3QgPSBbaW1nXTtcbiAgICAgICAgdGhpcy5zb3VyY2VJbWdMaXN0W2luZGV4XSA9IGltZztcbiAgICAgICAgXG4gICAgICAgIGxldCBvID0ge1xuICAgICAgICAgICAgXCJpZFwiOiBkYXRhLnRlbXBQaG90b0lkLFxuICAgICAgICAgICAgXCJ1cmxcIjogZGF0YS51cmwsXG4gICAgICAgICAgICBcInBpY1dpZHRoXCI6IGRhdGEucGljV2lkdGgsXG4gICAgICAgICAgICBcInBpY0hlaWdodFwiOiBkYXRhLnBpY0hlaWdodFxuICAgICAgICB9O1xuICAgICAgICB0aGlzLnJldHVybkpzb25baW5kZXhdID0gbztcbiAgICAgICAgY2IgJiYgY2IodGhpcy5yZXR1cm5Kc29uKTsgICAgICBcbiAgICB9XG4gICAgX2NoYW5nZUFjdGl2ZShvcHRpb25zLCBjYikge1xuICAgICAgICB0aGlzLmFjdGl2ZUluZGV4ID0gb3B0aW9ucy5hY3RpdmVJbmRleDtcbiAgICAgICAgdGhpcy5pbWdIYW5kbGVyID0gbmV3IEltZ0hhbmRsZXIoe1xuICAgICAgICAgICAgc291cmNlSW1nOiBvcHRpb25zLmFjdGl2ZUltZ1xuICAgICAgICB9KVxuICAgICAgICB0aGlzLnJlc3VsdExpc3QgPSBbdGhpcy5pbWdIYW5kbGVyLnJlc3VsdF07XG4gICAgICAgIGNiICYmIGNiKHRoaXMuaW1nSGFuZGxlci5yZXN1bHQpO1xuICAgIH1cblxuICAgIHNob3cob3B0aW9ucykge1xuICAgICAgICB0aGlzLm1ldGhvZHMucHVzaCh7XG4gICAgICAgICAgICBcIm5hbWVcIjogXCJzaG93XCIsXG4gICAgICAgICAgICBcInBhcmFtc1wiOiBvcHRpb25zXG4gICAgICAgIH0pO1xuICAgIH1cblxuICAgIF9leGVjdXRlTWV0aG9kcygpIHtcbiAgICAgICAgdGhpcy5tZXRob2RzLmZvckVhY2goZWxlbWVudCA9PiB7XG4gICAgICAgICAgICB0aGlzWydfJyArIGVsZW1lbnQubmFtZV0oZWxlbWVudC5wYXJhbXMpO1xuICAgICAgICB9KTtcbiAgICAgICAgdGhpcy5tZXRob2RzID0gW107XG4gICAgfVxuXG5cbn1cblxuZXhwb3J0IHtcbiAgICBQaXBlSW1nXG59XG4iXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7OztBQUFBO0FBRUE7QUFHQTtBQUNBO0FBQ0E7QUFDQTs7O0FBRUE7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUExQ0E7QUE2Q0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFHQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7OztBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFJQTtBQUNBO0FBQUE7QUFFQTtBQUNBO0FBQ0E7QUFFQTs7O0FBQ0E7QUFBQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBREE7QUFHQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUE1REE7QUE4REE7OztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7O0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7OztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFEQTtBQUdBO0FBQ0E7OztBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUpBO0FBQ0E7QUFNQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFYQTtBQWFBO0FBRUE7OztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFKQTtBQU1BO0FBQ0E7QUFDQTs7O0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFEQTtBQUdBO0FBQ0E7QUFDQTs7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFGQTtBQUlBOzs7QUFFQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7Ozs7Iiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/js/pipeImg.js\n");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PipeImg", function() { return PipeImg; });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/js/util.js");
+/* harmony import */ var _imgHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./imgHandler */ "./src/js/imgHandler.js");
+/* harmony import */ var _dialog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dialog */ "./src/js/dialog.js");
+/* harmony import */ var _css_pipeImg_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../css/pipeImg.scss */ "./src/css/pipeImg.scss");
+/* harmony import */ var _css_pipeImg_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_css_pipeImg_scss__WEBPACK_IMPORTED_MODULE_4__);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+
+var PipeImg =
+/*#__PURE__*/
+function () {
+  function PipeImg(options) {
+    _classCallCheck(this, PipeImg);
+
+    // 默认配置参数
+    var defaults = {
+      debug: false,
+      // 必填，[{"id":"567701","url":"./images/Jellyfish.jpg"}]
+      source: [],
+      // 上传图片地址
+      uploadUrl: '',
+      // 发送文件类型，可以使二进制流'blob'可以是表单数据'formdata'，默认二进制流
+      sendDataType: 'formdata',
+      // 图片编辑界面类型: '0'单图编辑, '1'批量水印
+      type: '0',
+      mime: 'image/jpeg',
+      // 保存图片最大体积
+      maxSize: 500,
+      // 直接选择水印文字位置水平垂直距离边框位置
+      markXPositionMargin: 15,
+      markYPositionMargin: 20,
+      // 文案
+      markTextList: ['producttest.en.made-in-china.com', 'Focus Service Co - Product SourcingFocus Service Co - Product Sourcing'],
+      closeBtnTxt: '关闭',
+      saveBtnTxt: '保存',
+      resetBtnTxt: '重置',
+      confirmBtnTxt: '确定',
+      cancelBtnTxt: '取消',
+      rotateMenuTxt: '旋转',
+      turnLeftTxt: '逆时针旋转',
+      turnRightTxt: '顺时针旋转',
+      cropMenuTxt: '裁剪',
+      scaleMenuTxt: '缩放',
+      markMenuTxt: '添加水印',
+      colorTxt: '颜色',
+      positionTxt: '位置',
+      opacityTxt: '透明度',
+      showRoomTxt: '展示厅',
+      companyNameTxt: '公司名称',
+      markAllMenuTxt: '批量添加水印',
+      tipTitleTxt: '提示',
+      tipContentTxt: '尚未保存，是否确定离开？',
+      tipConfirmBtnTxt: '确定',
+      // 初始化完成
+      onInited: function onInited() {},
+      // 上传保存完成
+      onComplete: function onComplete(response) {},
+      onClose: function onClose() {}
+    };
+    options = _extends({}, defaults, options);
+    this.debug = options.debug;
+    this.source = options.source;
+
+    if (!this.source) {
+      throw new Error('PipeImg: source is not found!');
+    }
+
+    if (!(Array.isArray(this.source) || typeof this.source === 'string')) {
+      throw new Error('PipeImg: source类型错误，只能为字符串或者数组！');
+    }
+
+    this.uploadUrl = options.uploadUrl;
+    this.sendDataType = options.sendDataType;
+    this.type = options.type;
+    this.mime = options.mime;
+    this.maxSize = options.maxSize;
+    this.markXPositionMargin = options.markXPositionMargin;
+    this.markYPositionMargin = options.markYPositionMargin;
+    this.markTextList = options.markTextList;
+    this.closeBtnTxt = options.closeBtnTxt;
+    this.saveBtnTxt = options.saveBtnTxt;
+    this.resetBtnTxt = options.resetBtnTxt;
+    this.confirmBtnTxt = options.confirmBtnTxt;
+    this.cancelBtnTxt = options.cancelBtnTxt;
+    this.rotateMenuTxt = options.rotateMenuTxt;
+    this.turnLeftTxt = options.turnLeftTxt;
+    this.turnRightTxt = options.turnRightTxt;
+    this.cropMenuTxt = options.cropMenuTxt;
+    this.scaleMenuTxt = options.scaleMenuTxt;
+    this.markMenuTxt = options.markMenuTxt;
+    this.colorTxt = options.colorTxt;
+    this.positionTxt = options.positionTxt;
+    this.opacityTxt = options.opacityTxt;
+    this.showRoomTxt = options.showRoomTxt;
+    this.companyNameTxt = options.companyNameTxt;
+    this.markAllMenuTxt = options.markAllMenuTxt;
+    this.tipTitleTxt = options.tipTitleTxt;
+    this.tipContentTxt = options.tipContentTxt;
+    this.tipConfirmBtnTxt = options.tipConfirmBtnTxt;
+    this.onInited = options.onInited;
+    this.onComplete = options.onComplete;
+    this.onClose = options.onClose;
+    this.resultList = [];
+    this.sourceImgList = [];
+    this.returnJson = [];
+    this.methods = [];
+    this.activeIndex = 0;
+
+    this._init();
+  }
+
+  _createClass(PipeImg, [{
+    key: "_init",
+    value: function _init() {
+      var _this = this;
+
+      this.returnJson = this.source;
+      var urlList = this.source.map(function (element, index) {
+        return element.url;
+      }); // 解决加载完成及跨域问题
+
+      Object(_util__WEBPACK_IMPORTED_MODULE_1__["loadImages"])(urlList, function (images) {
+        _this.sourceImgList = images;
+
+        _this.onInited();
+
+        _this._executeMethods();
+      }, function () {
+        throw new Error('PipeImg: source load failure!');
+      });
+    }
+  }, {
+    key: "_show",
+    value: function _show(options) {
+      if (options && options.selected) {
+        this.activeIndex = options.selected;
+      }
+
+      this.imgHandler = new _imgHandler__WEBPACK_IMPORTED_MODULE_2__["default"]({
+        sourceImg: this.sourceImgList[this.activeIndex]
+      });
+      this.resultList.push(this.imgHandler.result);
+      this.dialog.renderImgList(this.sourceImgList, this.activeIndex);
+    }
+  }, {
+    key: "_saveRotate",
+    value: function _saveRotate(options, cb) {
+      this.imgHandler.rotateNum = options.rotateNum;
+      this.imgHandler.rotate();
+      this.resultList.push(this.imgHandler.result);
+      cb(this.imgHandler.result);
+    }
+  }, {
+    key: "_saveCrop",
+    value: function _saveCrop(options, cb) {
+      this.imgHandler.cropW = options.cropW;
+      this.imgHandler.cropH = options.cropH;
+      this.imgHandler.sx = options.sx;
+      this.imgHandler.sy = options.sy;
+      this.imgHandler.crop();
+      this.resultList.push(this.imgHandler.result);
+      cb(this.imgHandler.result);
+    }
+  }, {
+    key: "_saveScale",
+    value: function _saveScale(options, cb) {
+      this.imgHandler.scaleRatio = options.scaleRatio;
+      this.imgHandler.scale();
+      this.resultList.push(this.imgHandler.result);
+      cb(this.imgHandler.result);
+    }
+  }, {
+    key: "_saveMark",
+    value: function _saveMark(options, cb) {
+      this.imgHandler.markX = options.markX;
+      this.imgHandler.markY = options.markY;
+      this.imgHandler.markText = options.markText;
+      this.imgHandler.markFont = options.markFont;
+      this.imgHandler.markStyle = options.markStyle;
+      this.imgHandler.mark();
+      this.resultList.push(this.imgHandler.result);
+      cb(this.imgHandler.result);
+    }
+  }, {
+    key: "_reset",
+    value: function _reset(cb) {
+      this.rotateNum = 0;
+      this.scaleRatio = 1;
+      this.resultList = this.resultList.slice(0, 1);
+      this.imgHandler = new _imgHandler__WEBPACK_IMPORTED_MODULE_2__["default"]({
+        sourceImg: this.resultList[0]
+      });
+      cb(this.resultList[0]);
+    }
+  }, {
+    key: "_save",
+    value: function _save(cb, index) {
+      var _this2 = this;
+
+      var compressData = this.imgHandler.compress();
+      var sendData = this.sendDataType === 'blob' ? compressData.blob : compressData.formdata;
+
+      if (this.debug) {
+        // 模拟返回
+        setTimeout(function () {
+          // let response = [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":"image?tid=40&amp;id=gCfpAUFcYRlB&amp;cache=0&amp;lan_code=0"}];
+          var response = [{
+            "picHeight": 600,
+            "picWidth": 800,
+            "tempPhotoId": "573761",
+            "url": compressData.base64
+          }];
+
+          _this2._saveSuccess(response[0], index, cb);
+        }, 1000);
+      } else {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default.a.ajax({
+          url: this.uploadUrl,
+          type: "POST",
+          data: sendData,
+          processData: false,
+          contentType: false,
+          success: function success(response) {
+            _this2._saveSuccess(response[0], index, cb);
+          },
+          error: function error() {
+            window.console && console.log('network-error: upload failure!');
+          }
+        });
+      }
+    }
+  }, {
+    key: "_saveSuccess",
+    value: function _saveSuccess(data, index, cb) {
+      data.url = data.url.replace("&amp;", "&");
+      var img = new Image();
+      img.src = data.url;
+      this.resultList = [img];
+      this.sourceImgList[index] = img;
+      var o = {
+        "id": data.tempPhotoId,
+        "url": data.url,
+        "picWidth": data.picWidth,
+        "picHeight": data.picHeight
+      };
+      this.returnJson[index] = o;
+      cb && cb(this.returnJson);
+    }
+  }, {
+    key: "_changeActive",
+    value: function _changeActive(options, cb) {
+      this.activeIndex = options.activeIndex;
+      this.imgHandler = new _imgHandler__WEBPACK_IMPORTED_MODULE_2__["default"]({
+        sourceImg: options.activeImg
+      });
+      this.resultList = [this.imgHandler.result];
+      cb && cb(this.imgHandler.result);
+    }
+  }, {
+    key: "show",
+    value: function show(options) {
+      var _this3 = this;
+
+      this.dialog = new _dialog__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        debug: this.debug,
+        activeIndex: this.activeIndex,
+        type: this.type,
+        mime: this.mime,
+        markXPositionMargin: this.markXPositionMargin,
+        markYPositionMargin: this.markYPositionMargin,
+        markTextList: this.markTextList,
+        closeBtnTxt: this.closeBtnTxt,
+        saveBtnTxt: this.saveBtnTxt,
+        resetBtnTxt: this.resetBtnTxt,
+        confirmBtnTxt: this.confirmBtnTxt,
+        cancelBtnTxt: this.cancelBtnTxt,
+        rotateMenuTxt: this.rotateMenuTxt,
+        turnLeftTxt: this.turnLeftTxt,
+        turnRightTxt: this.turnRightTxt,
+        cropMenuTxt: this.cropMenuTxt,
+        scaleMenuTxt: this.scaleMenuTxt,
+        markMenuTxt: this.markMenuTxt,
+        colorTxt: this.colorTxt,
+        positionTxt: this.positionTxt,
+        opacityTxt: this.opacityTxt,
+        showRoomTxt: this.showRoomTxt,
+        companyNameTxt: this.companyNameTxt,
+        markAllMenuTxt: this.markAllMenuTxt,
+        tipTitleTxt: this.tipTitleTxt,
+        tipContentTxt: this.tipContentTxt,
+        tipConfirmBtnTxt: this.tipConfirmBtnTxt,
+        onSaveRotate: function onSaveRotate(options, cb) {
+          _this3._saveRotate(options, cb);
+        },
+        onSaveCrop: function onSaveCrop(options, cb) {
+          _this3._saveCrop(options, cb);
+        },
+        onSaveScale: function onSaveScale(options, cb) {
+          _this3._saveScale(options, cb);
+        },
+        onSaveMark: function onSaveMark(options, cb) {
+          _this3._saveMark(options, cb);
+        },
+        onReset: function onReset(cb) {
+          _this3._reset(cb);
+        },
+        onSave: function onSave(cb, index) {
+          _this3._save(cb, index);
+        },
+        onChangeActive: function onChangeActive(options, cb) {
+          _this3._changeActive(options, cb);
+        },
+        onSaveMarkAll: function onSaveMarkAll(options, cb) {
+          _this3._saveMarkAll(options, cb);
+        },
+        onClose: function onClose() {
+          _this3.onClose();
+        },
+        onComplete: function onComplete(result) {
+          _this3.onComplete(result);
+        }
+      });
+      this.methods.push({
+        "name": "show",
+        "params": options
+      });
+    }
+  }, {
+    key: "_executeMethods",
+    value: function _executeMethods() {
+      var _this4 = this;
+
+      this.methods.forEach(function (element) {
+        _this4['_' + element.name](element.params);
+      });
+      this.methods = [];
+    }
+  }]);
+
+  return PipeImg;
+}();
+
+
 
 /***/ }),
 
@@ -163,7 +2469,163 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! template */ \"template\");\n/* harmony import */ var template__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(template__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _thinSelect_tpl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./thinSelect.tpl */ \"./src/js/thinSelect.tpl\");\n/* harmony import */ var _thinSelect_tpl__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_thinSelect_tpl__WEBPACK_IMPORTED_MODULE_2__);\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n\n\n\n\nvar ThinSelect =\n/*#__PURE__*/\nfunction () {\n  function ThinSelect(options) {\n    _classCallCheck(this, ThinSelect);\n\n    var defaults = {\n      el: '',\n      template: _thinSelect_tpl__WEBPACK_IMPORTED_MODULE_2___default.a\n    };\n    options = _extends({}, defaults, options);\n    this.el = options.el;\n    this.template = options.template;\n    this.$el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.el);\n    this.selectObj = {\n      'txt': '',\n      'optionsObj': []\n    };\n\n    this._init();\n  }\n\n  _createClass(ThinSelect, [{\n    key: \"_init\",\n    value: function _init() {\n      var _this = this;\n\n      this.$el.find('option').each(function (index, element) {\n        var $option = jquery__WEBPACK_IMPORTED_MODULE_0___default()(element);\n        var selected = $option.prop('selected');\n        var optionVal = $option.val();\n        var optionTxt = $option.text();\n        var optionObj = {\n          'val': optionVal,\n          'txt': optionTxt,\n          'selected': selected\n        };\n\n        if (selected) {\n          _this.selectObj.txt = optionTxt;\n        }\n\n        _this.selectObj.optionsObj.push(optionObj);\n      });\n      var templateHtml = template__WEBPACK_IMPORTED_MODULE_1___default()(this.template, {\n        'txt': this.selectObj.txt,\n        optionList: this.selectObj.optionsObj\n      });\n      this.$el.hide();\n      jquery__WEBPACK_IMPORTED_MODULE_0___default()(templateHtml).insertBefore(this.$el);\n      this.$thinSelect = this.$el.prev();\n\n      this._bind();\n    }\n  }, {\n    key: \"_bind\",\n    value: function _bind() {\n      var _this2 = this;\n\n      this.$thinSelect.find('.J-select-title').on('click', function (e) {\n        e.stopPropagation();\n\n        var $list = _this2.$thinSelect.find('.J-select-list');\n\n        if ($list.is(':visible')) {\n          $list.hide();\n\n          _this2.$thinSelect.find('.J-arrow').removeClass('active');\n        } else {\n          $list.show();\n\n          _this2.$thinSelect.find('.J-arrow').addClass('active');\n        }\n      });\n      this.$thinSelect.find('.J-opt').on('click', function (e) {\n        e.stopPropagation();\n        var txt = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('selected').text();\n\n        _this2.$thinSelect.find('.J-text').text(txt);\n\n        _this2.$thinSelect.find('.J-select-list').hide();\n\n        _this2.$thinSelect.find('.J-arrow').removeClass('active');\n\n        _this2.$activeItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent();\n\n        _this2.$activeItem.siblings().find('.J-opt').removeClass('selected');\n\n        _this2._updateSource();\n      });\n      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('click.thinSelect', function (e) {\n        _this2.$thinSelect.find('.J-select-list').hide();\n\n        _this2.$thinSelect.find('.J-arrow').removeClass('active');\n      });\n    }\n  }, {\n    key: \"_updateSource\",\n    value: function _updateSource() {\n      var index = this.$activeItem.index();\n      this.$el.find('option').eq(index).prop('selected', true);\n      this.$el.trigger('change');\n    }\n  }, {\n    key: \"destroy\",\n    value: function destroy() {\n      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).off('click.thinSelect');\n      this.$thinSelect.remove();\n    }\n  }, {\n    key: \"select\",\n    value: function select(index) {\n      var $item = this.$thinSelect.find('.J-opt').parent().eq(index);\n      $item.siblings().find('.J-opt').removeClass('selected');\n      var txt = $item.find('.J-opt').addClass('selected').text();\n      this.$thinSelect.find('.J-text').text(txt);\n    }\n  }]);\n\n  return ThinSelect;\n}();\n\nThinSelect.use = function (el) {\n  if (!el) {\n    throw new Error('ThinSelect: el is not found!');\n  }\n\n  var instances = [];\n  jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).each(function (index, element) {\n    var instance = new ThinSelect({\n      'el': element\n    });\n    instances.push(instance);\n  });\n  return instances;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (ThinSelect);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvanMvdGhpblNlbGVjdC5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy90aGluU2VsZWN0LmpzP2Y2Y2YiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICQgZnJvbSAnanF1ZXJ5JztcbmltcG9ydCB0ZW1wbGF0ZSBmcm9tICd0ZW1wbGF0ZSc7XG5cbmltcG9ydCB0cGwgZnJvbSAnLi90aGluU2VsZWN0LnRwbCc7XG5cbmNsYXNzIFRoaW5TZWxlY3R7XG4gICAgY29uc3RydWN0b3Iob3B0aW9ucykge1xuICAgICAgICBsZXQgZGVmYXVsdHMgPSB7XG4gICAgICAgICAgICBlbDogJycsXG4gICAgICAgICAgICB0ZW1wbGF0ZTogdHBsLFxuICAgICAgICB9O1xuICAgICAgICBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7fSwgZGVmYXVsdHMsIG9wdGlvbnMpO1xuICAgICAgICB0aGlzLmVsID0gb3B0aW9ucy5lbDtcbiAgICAgICAgdGhpcy50ZW1wbGF0ZSA9IG9wdGlvbnMudGVtcGxhdGU7XG4gICAgICAgIHRoaXMuJGVsID0gJCh0aGlzLmVsKTtcblxuICAgICAgICB0aGlzLnNlbGVjdE9iaiA9IHtcbiAgICAgICAgICAgICd0eHQnOiAnJyxcbiAgICAgICAgICAgICdvcHRpb25zT2JqJzogW11cbiAgICAgICAgfTtcbiAgICAgICAgdGhpcy5faW5pdCgpO1xuICAgIH1cbiAgICBfaW5pdCgpIHtcbiAgICAgICAgXG4gICAgICAgIHRoaXMuJGVsLmZpbmQoJ29wdGlvbicpLmVhY2goKGluZGV4LCBlbGVtZW50KSA9PiB7XG4gICAgICAgICAgICBsZXQgJG9wdGlvbiA9ICQoZWxlbWVudCk7XG4gICAgICAgICAgICBsZXQgc2VsZWN0ZWQgPSAkb3B0aW9uLnByb3AoJ3NlbGVjdGVkJyk7XG4gICAgICAgICAgICBsZXQgb3B0aW9uVmFsID0gJG9wdGlvbi52YWwoKTtcbiAgICAgICAgICAgIGxldCBvcHRpb25UeHQgPSAkb3B0aW9uLnRleHQoKTtcbiAgICAgICAgICAgIGxldCBvcHRpb25PYmogPSB7XG4gICAgICAgICAgICAgICAgJ3ZhbCc6IG9wdGlvblZhbCxcbiAgICAgICAgICAgICAgICAndHh0Jzogb3B0aW9uVHh0LFxuICAgICAgICAgICAgICAgICdzZWxlY3RlZCc6IHNlbGVjdGVkXG4gICAgICAgICAgICB9O1xuICAgICAgICAgICAgaWYgKHNlbGVjdGVkKSB7XG4gICAgICAgICAgICAgICAgdGhpcy5zZWxlY3RPYmoudHh0ID0gb3B0aW9uVHh0O1xuICAgICAgICAgICAgfVxuICAgICAgICAgICAgXG4gICAgICAgICAgICB0aGlzLnNlbGVjdE9iai5vcHRpb25zT2JqLnB1c2gob3B0aW9uT2JqKTtcbiAgICAgICAgfSk7XG5cbiAgICAgICAgbGV0IHRlbXBsYXRlSHRtbCA9IHRlbXBsYXRlKHRoaXMudGVtcGxhdGUsIHtcbiAgICAgICAgICAgICd0eHQnOiB0aGlzLnNlbGVjdE9iai50eHQsXG4gICAgICAgICAgICBvcHRpb25MaXN0OiB0aGlzLnNlbGVjdE9iai5vcHRpb25zT2JqXG4gICAgICAgIH0pO1xuXG5cbiAgICAgICAgdGhpcy4kZWwuaGlkZSgpO1xuICAgICAgICAkKHRlbXBsYXRlSHRtbCkuaW5zZXJ0QmVmb3JlKHRoaXMuJGVsKTtcbiAgICAgICAgdGhpcy4kdGhpblNlbGVjdCA9IHRoaXMuJGVsLnByZXYoKTtcblxuICAgICAgICB0aGlzLl9iaW5kKCk7XG4gICAgfVxuICAgIF9iaW5kKCkge1xuICAgICAgICB0aGlzLiR0aGluU2VsZWN0LmZpbmQoJy5KLXNlbGVjdC10aXRsZScpLm9uKCdjbGljaycsIChlKSA9PiB7XG4gICAgICAgICAgICBlLnN0b3BQcm9wYWdhdGlvbigpO1xuICAgICAgICAgICAgbGV0ICRsaXN0ID0gdGhpcy4kdGhpblNlbGVjdC5maW5kKCcuSi1zZWxlY3QtbGlzdCcpO1xuICAgICAgICAgICAgaWYoJGxpc3QuaXMoJzp2aXNpYmxlJykpe1xuICAgICAgICAgICAgICAgICRsaXN0LmhpZGUoKTtcbiAgICAgICAgICAgICAgICB0aGlzLiR0aGluU2VsZWN0LmZpbmQoJy5KLWFycm93JykucmVtb3ZlQ2xhc3MoJ2FjdGl2ZScpO1xuICAgICAgICAgICAgfWVsc2V7XG4gICAgICAgICAgICAgICAgJGxpc3Quc2hvdygpO1xuICAgICAgICAgICAgICAgIHRoaXMuJHRoaW5TZWxlY3QuZmluZCgnLkotYXJyb3cnKS5hZGRDbGFzcygnYWN0aXZlJyk7XG4gICAgICAgICAgICB9XG4gICAgICAgIH0pXG4gICAgICAgIHRoaXMuJHRoaW5TZWxlY3QuZmluZCgnLkotb3B0Jykub24oJ2NsaWNrJywgKGUpID0+IHtcbiAgICAgICAgICAgIGUuc3RvcFByb3BhZ2F0aW9uKCk7XG4gICAgICAgICAgICBsZXQgdHh0ID0gJChlLnRhcmdldCkuYWRkQ2xhc3MoJ3NlbGVjdGVkJykudGV4dCgpO1xuICAgICAgICAgICAgdGhpcy4kdGhpblNlbGVjdC5maW5kKCcuSi10ZXh0JykudGV4dCh0eHQpO1xuXG4gICAgICAgICAgICB0aGlzLiR0aGluU2VsZWN0LmZpbmQoJy5KLXNlbGVjdC1saXN0JykuaGlkZSgpO1xuICAgICAgICAgICAgdGhpcy4kdGhpblNlbGVjdC5maW5kKCcuSi1hcnJvdycpLnJlbW92ZUNsYXNzKCdhY3RpdmUnKTtcblxuICAgICAgICAgICAgdGhpcy4kYWN0aXZlSXRlbSA9ICQoZS50YXJnZXQpLnBhcmVudCgpO1xuICAgICAgICAgICAgdGhpcy4kYWN0aXZlSXRlbS5zaWJsaW5ncygpLmZpbmQoJy5KLW9wdCcpLnJlbW92ZUNsYXNzKCdzZWxlY3RlZCcpO1xuXG4gICAgICAgICAgICB0aGlzLl91cGRhdGVTb3VyY2UoKTtcbiAgICAgICAgfSlcblxuICAgICAgICAkKGRvY3VtZW50KS5vbignY2xpY2sudGhpblNlbGVjdCcsIChlKSA9PiB7XG4gICAgICAgICAgICB0aGlzLiR0aGluU2VsZWN0LmZpbmQoJy5KLXNlbGVjdC1saXN0JykuaGlkZSgpOyAgICAgXG4gICAgICAgICAgICB0aGlzLiR0aGluU2VsZWN0LmZpbmQoJy5KLWFycm93JykucmVtb3ZlQ2xhc3MoJ2FjdGl2ZScpOyAgICAgXG4gICAgICAgIH0pXG4gICAgfVxuICAgIFxuICAgIF91cGRhdGVTb3VyY2UoKSB7XG4gICAgICAgIGxldCBpbmRleCA9IHRoaXMuJGFjdGl2ZUl0ZW0uaW5kZXgoKTtcbiAgICAgICAgdGhpcy4kZWwuZmluZCgnb3B0aW9uJykuZXEoaW5kZXgpLnByb3AoJ3NlbGVjdGVkJywgdHJ1ZSk7XG4gICAgICAgIHRoaXMuJGVsLnRyaWdnZXIoJ2NoYW5nZScpO1xuICAgIH1cbiAgICBkZXN0cm95KCkge1xuICAgICAgICAkKGRvY3VtZW50KS5vZmYoJ2NsaWNrLnRoaW5TZWxlY3QnKTtcbiAgICAgICAgdGhpcy4kdGhpblNlbGVjdC5yZW1vdmUoKTtcbiAgICB9XG4gICAgc2VsZWN0KGluZGV4KSB7XG4gICAgICAgIGxldCAkaXRlbSA9IHRoaXMuJHRoaW5TZWxlY3QuZmluZCgnLkotb3B0JykucGFyZW50KCkuZXEoaW5kZXgpO1xuICAgICAgICAkaXRlbS5zaWJsaW5ncygpLmZpbmQoJy5KLW9wdCcpLnJlbW92ZUNsYXNzKCdzZWxlY3RlZCcpO1xuICAgICAgICBsZXQgdHh0ID0gJGl0ZW0uZmluZCgnLkotb3B0JykuYWRkQ2xhc3MoJ3NlbGVjdGVkJykudGV4dCgpO1xuICAgICAgICB0aGlzLiR0aGluU2VsZWN0LmZpbmQoJy5KLXRleHQnKS50ZXh0KHR4dCk7XG4gICAgfVxufVxuXG5UaGluU2VsZWN0LnVzZSA9IChlbCkgPT4ge1xuICAgIGlmICghZWwpIHtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKCdUaGluU2VsZWN0OiBlbCBpcyBub3QgZm91bmQhJyk7XG4gICAgfVxuICAgIGxldCBpbnN0YW5jZXMgPSBbXTtcbiAgICAkKGVsKS5lYWNoKChpbmRleCwgZWxlbWVudCkgPT4ge1xuICAgICAgICBsZXQgaW5zdGFuY2UgPSBuZXcgVGhpblNlbGVjdCh7J2VsJzogZWxlbWVudH0pO1xuICAgICAgICBpbnN0YW5jZXMucHVzaChpbnN0YW5jZSk7XG4gICAgfSlcbiAgICByZXR1cm4gaW5zdGFuY2VzO1xufVxuXG5leHBvcnQgZGVmYXVsdCBUaGluU2VsZWN0XG4iXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7OztBQUFBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7OztBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUZBO0FBSUE7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFGQTtBQUNBO0FBR0E7QUFDQTtBQUNBOzs7QUFBQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFIQTtBQUNBO0FBSUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBRkE7QUFNQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7OztBQUNBO0FBQUE7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBOzs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7O0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOzs7Ozs7QUFHQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQUE7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./src/js/thinSelect.js\n");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! template */ "template");
+/* harmony import */ var template__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(template__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _thinSelect_tpl__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./thinSelect.tpl */ "./src/js/thinSelect.tpl");
+/* harmony import */ var _thinSelect_tpl__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_thinSelect_tpl__WEBPACK_IMPORTED_MODULE_2__);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+var ThinSelect =
+/*#__PURE__*/
+function () {
+  function ThinSelect(options) {
+    _classCallCheck(this, ThinSelect);
+
+    var defaults = {
+      el: '',
+      template: _thinSelect_tpl__WEBPACK_IMPORTED_MODULE_2___default.a
+    };
+    options = _extends({}, defaults, options);
+    this.el = options.el;
+    this.template = options.template;
+    this.$el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.el);
+    this.selectObj = {
+      'txt': '',
+      'optionsObj': []
+    };
+
+    this._init();
+  }
+
+  _createClass(ThinSelect, [{
+    key: "_init",
+    value: function _init() {
+      var _this = this;
+
+      this.$el.find('option').each(function (index, element) {
+        var $option = jquery__WEBPACK_IMPORTED_MODULE_0___default()(element);
+        var selected = $option.prop('selected');
+        var optionVal = $option.val();
+        var optionTxt = $option.text();
+        var optionObj = {
+          'val': optionVal,
+          'txt': optionTxt,
+          'selected': selected
+        };
+
+        if (selected) {
+          _this.selectObj.txt = optionTxt;
+        }
+
+        _this.selectObj.optionsObj.push(optionObj);
+      });
+      var templateHtml = template__WEBPACK_IMPORTED_MODULE_1___default()(this.template, {
+        'txt': this.selectObj.txt,
+        optionList: this.selectObj.optionsObj
+      });
+      this.$el.hide();
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(templateHtml).insertBefore(this.$el);
+      this.$thinSelect = this.$el.prev();
+
+      this._bind();
+    }
+  }, {
+    key: "_bind",
+    value: function _bind() {
+      var _this2 = this;
+
+      this.$thinSelect.find('.J-select-title').on('click', function (e) {
+        e.stopPropagation();
+
+        var $list = _this2.$thinSelect.find('.J-select-list');
+
+        if ($list.is(':visible')) {
+          $list.hide();
+
+          _this2.$thinSelect.find('.J-arrow').removeClass('active');
+        } else {
+          $list.show();
+
+          _this2.$thinSelect.find('.J-arrow').addClass('active');
+        }
+      });
+      this.$thinSelect.find('.J-opt').on('click', function (e) {
+        e.stopPropagation();
+        var txt = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('selected').text();
+
+        _this2.$thinSelect.find('.J-text').text(txt);
+
+        _this2.$thinSelect.find('.J-select-list').hide();
+
+        _this2.$thinSelect.find('.J-arrow').removeClass('active');
+
+        _this2.$activeItem = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent();
+
+        _this2.$activeItem.siblings().find('.J-opt').removeClass('selected');
+
+        _this2._updateSource();
+      });
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('click.thinSelect', function (e) {
+        _this2.$thinSelect.find('.J-select-list').hide();
+
+        _this2.$thinSelect.find('.J-arrow').removeClass('active');
+      });
+    }
+  }, {
+    key: "_updateSource",
+    value: function _updateSource() {
+      var index = this.$activeItem.index();
+      this.$el.find('option').eq(index).prop('selected', true);
+      this.$el.trigger('change');
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).off('click.thinSelect');
+      this.$thinSelect.remove();
+    }
+  }, {
+    key: "select",
+    value: function select(index) {
+      var $item = this.$thinSelect.find('.J-opt').parent().eq(index);
+      $item.siblings().find('.J-opt').removeClass('selected');
+      var txt = $item.find('.J-opt').addClass('selected').text();
+      this.$thinSelect.find('.J-text').text(txt);
+    }
+  }]);
+
+  return ThinSelect;
+}();
+
+ThinSelect.use = function (el) {
+  if (!el) {
+    throw new Error('ThinSelect: el is not found!');
+  }
+
+  var instances = [];
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).each(function (index, element) {
+    var instance = new ThinSelect({
+      'el': element
+    });
+    instances.push(instance);
+  });
+  return instances;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ThinSelect);
 
 /***/ }),
 
@@ -174,7 +2636,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jque
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<div class=\\\"thin-select\\\">\\n\\t<div class=\\\"select-title J-select-title\\\">\\n\\t\\t<div class=\\\"select-selected\\\">\\n\\t\\t\\t<span class=\\\"J-text\\\">{{=txt}}</span>\\n\\t\\t</div>\\n\\t\\t<div class=\\\"select-arrow J-arrow\\\">\\n\\t\\t\\t<i class=\\\"ob-icon icon-down\\\"></i>\\n\\t\\t</div>\\n\\t</div>\\n\\t<div class=\\\"select-list J-select-list\\\">\\n\\t\\t<ul class=\\\"select-list-wrap J-select-tab-cnt\\\">\\n\\t\\t\\t{{ for(var i=0; i < optionList.length; i++) { }} \\n\\t\\t\\t\\t<li>\\n\\t\\t\\t\\t\\t<a href=\\\"javascript:void(0)\\\" class=\\\"select-opt J-opt {{=optionList[i].selected ? 'selected' : ''}}\\\" data-val=\\\"{{=optionList[i].val}}\\\">{{=optionList[i].txt}}</a>\\n\\t\\t\\t\\t</li>\\n\\t\\t\\t{{ } }}\\n\\t\\t</ul>\\n\\t</div>\\n</div>\\n\"//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvanMvdGhpblNlbGVjdC50cGwuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvanMvdGhpblNlbGVjdC50cGw/ODNkZSJdLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IFwiPGRpdiBjbGFzcz1cXFwidGhpbi1zZWxlY3RcXFwiPlxcblxcdDxkaXYgY2xhc3M9XFxcInNlbGVjdC10aXRsZSBKLXNlbGVjdC10aXRsZVxcXCI+XFxuXFx0XFx0PGRpdiBjbGFzcz1cXFwic2VsZWN0LXNlbGVjdGVkXFxcIj5cXG5cXHRcXHRcXHQ8c3BhbiBjbGFzcz1cXFwiSi10ZXh0XFxcIj57ez10eHR9fTwvc3Bhbj5cXG5cXHRcXHQ8L2Rpdj5cXG5cXHRcXHQ8ZGl2IGNsYXNzPVxcXCJzZWxlY3QtYXJyb3cgSi1hcnJvd1xcXCI+XFxuXFx0XFx0XFx0PGkgY2xhc3M9XFxcIm9iLWljb24gaWNvbi1kb3duXFxcIj48L2k+XFxuXFx0XFx0PC9kaXY+XFxuXFx0PC9kaXY+XFxuXFx0PGRpdiBjbGFzcz1cXFwic2VsZWN0LWxpc3QgSi1zZWxlY3QtbGlzdFxcXCI+XFxuXFx0XFx0PHVsIGNsYXNzPVxcXCJzZWxlY3QtbGlzdC13cmFwIEotc2VsZWN0LXRhYi1jbnRcXFwiPlxcblxcdFxcdFxcdHt7IGZvcih2YXIgaT0wOyBpIDwgb3B0aW9uTGlzdC5sZW5ndGg7IGkrKykgeyB9fSBcXG5cXHRcXHRcXHRcXHQ8bGk+XFxuXFx0XFx0XFx0XFx0XFx0PGEgaHJlZj1cXFwiamF2YXNjcmlwdDp2b2lkKDApXFxcIiBjbGFzcz1cXFwic2VsZWN0LW9wdCBKLW9wdCB7ez1vcHRpb25MaXN0W2ldLnNlbGVjdGVkID8gJ3NlbGVjdGVkJyA6ICcnfX1cXFwiIGRhdGEtdmFsPVxcXCJ7ez1vcHRpb25MaXN0W2ldLnZhbH19XFxcIj57ez1vcHRpb25MaXN0W2ldLnR4dH19PC9hPlxcblxcdFxcdFxcdFxcdDwvbGk+XFxuXFx0XFx0XFx0e3sgfSB9fVxcblxcdFxcdDwvdWw+XFxuXFx0PC9kaXY+XFxuPC9kaXY+XFxuXCIiXSwibWFwcGluZ3MiOiJBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/js/thinSelect.tpl\n");
+module.exports = "<div class=\"thin-select\">\n\t<div class=\"select-title J-select-title\">\n\t\t<div class=\"select-selected\">\n\t\t\t<span class=\"J-text\">{{=txt}}</span>\n\t\t</div>\n\t\t<div class=\"select-arrow J-arrow\">\n\t\t\t<i class=\"ob-icon icon-down\"></i>\n\t\t</div>\n\t</div>\n\t<div class=\"select-list J-select-list\">\n\t\t<ul class=\"select-list-wrap J-select-tab-cnt\">\n\t\t\t{{ for(var i=0; i < optionList.length; i++) { }} \n\t\t\t\t<li>\n\t\t\t\t\t<a href=\"javascript:void(0)\" class=\"select-opt J-opt {{=optionList[i].selected ? 'selected' : ''}}\" data-val=\"{{=optionList[i].val}}\">{{=optionList[i].txt}}</a>\n\t\t\t\t</li>\n\t\t\t{{ } }}\n\t\t</ul>\n\t</div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/js/thumbnail.tpl":
+/*!******************************!*\
+  !*** ./src/js/thumbnail.tpl ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\r\n    {{ for(var i=0;i<imgList.length;i++) { }} \r\n    <div class=\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\">\r\n        <div class=\"img-inner\">\r\n            <a href=\"javascript:void(0)\">\r\n            <img src=\"{{-imgList[i].src}}\">\r\n            <span class=\"circle\"></span>\r\n            </a>\r\n        </div>\r\n\r\n    </div>\r\n\r\n    {{ } }}"
 
 /***/ }),
 
@@ -186,7 +2659,356 @@ eval("module.exports = \"<div class=\\\"thin-select\\\">\\n\\t<div class=\\\"sel
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"drag\", function() { return drag; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"loadImage\", function() { return loadImage; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"loadImages\", function() { return loadImages; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getCanvas\", function() { return getCanvas; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getBase64Size\", function() { return getBase64Size; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"compress\", function() { return compress; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"base64Data2Blob\", function() { return base64Data2Blob; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"blob2FormData\", function() { return blob2FormData; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"chooseFile\", function() { return chooseFile; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"uploadFile\", function() { return uploadFile; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getImgPromise\", function() { return getImgPromise; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"_$\", function() { return _$; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"img2cvs\", function() { return img2cvs; });\n//拖拽\nfunction drag(moveElement, dragBar, container, cb) {\n  if (!moveElement) return;\n  dragBar = dragBar || moveElement;\n  var draging = false,\n      x0,\n      y0,\n      mLeft0,\n      mTop0,\n      mLeft1,\n      mTop1;\n\n  var mousedownHandler = function mousedownHandler(e) {\n    e = e || window.event;\n    x0 = e.clientX;\n    y0 = e.clientY;\n    mLeft0 = moveElement.offsetLeft;\n    mTop0 = moveElement.offsetTop;\n    draging = true;\n  };\n\n  var mousemoveHandler = function mousemoveHandler(e) {\n    e = e || window.event;\n\n    if (draging) {\n      var x1 = e.clientX,\n          y1 = e.clientY;\n      mLeft1 = x1 - x0 + mLeft0;\n      mTop1 = y1 - y0 + mTop0;\n\n      if (container) {\n        // 计算可移动位置的大小， 保证元素不会超过可移动范围\n        // 此处就是父元素的宽度减去子元素宽度\n        var width = container.clientWidth - moveElement.offsetWidth;\n        var height = container.clientHeight - moveElement.offsetHeight; // min方法保证不会超过右边界，max保证不会超过左边界\n\n        mLeft1 = Math.min(Math.max(0, mLeft1), width);\n        mTop1 = Math.min(Math.max(0, mTop1), height);\n      }\n\n      moveElement.style.left = mLeft1 + 'px';\n      moveElement.style.top = mTop1 + 'px';\n      typeof cb === 'function' && cb(mLeft1, mTop1);\n    }\n  };\n\n  var mouseupHandler = function mouseupHandler(e) {\n    draging = false;\n  };\n\n  if (window.addEventListener) {\n    dragBar.addEventListener('mousedown', mousedownHandler, false);\n    document.addEventListener('mousemove', mousemoveHandler, false);\n    document.addEventListener('mouseup', mouseupHandler, false);\n  }\n}\n\nfunction getImgPromise(src) {\n  return new Promise(function (resolve, reject) {\n    var image = new Image(); // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）\n\n    image.setAttribute('crossorigin', 'anonymous');\n    image.src = src;\n\n    image.onload = function () {\n      resolve(image);\n    };\n\n    image.onerror = function () {\n      reject('Error: image error!');\n    };\n  });\n} // 加载图片\n\n\nfunction loadImage(src, success, failure) {\n  var image = new Image(); // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）\n\n  image.setAttribute('crossorigin', 'anonymous');\n  image.src = src;\n\n  image.onload = function () {\n    typeof success === 'function' && success(image);\n  };\n\n  image.onerror = function () {\n    typeof failure === 'function' && failure();\n  };\n}\n\nfunction loadImages(srcList, success, failure) {\n  if (typeof srcList === 'string') {\n    srcList = [srcList];\n  }\n\n  var images = [];\n  var index = srcList.length;\n\n  var _loadImage = function _loadImage() {\n    if (index === 0) {\n      return false;\n    }\n\n    var image = new Image(); // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）\n\n    image.setAttribute('crossorigin', 'anonymous');\n    image.src = srcList[--index];\n\n    image.onload = function () {\n      images.unshift(image);\n\n      if (images.length === srcList.length) {\n        typeof success === 'function' && success(images);\n        return false;\n      }\n\n      _loadImage();\n    };\n\n    image.onerror = function () {\n      typeof failure === 'function' && failure();\n    };\n  };\n\n  _loadImage();\n} // 创建cavas\n\n\nfunction getCanvas(width, height) {\n  var canvas = document.createElement('canvas');\n  canvas.width = width;\n  canvas.height = height;\n  return canvas;\n} //获取base64图片大小\n\n\nfunction getBase64Size(base64Data) {\n  // 'data:image/jpeg;base64,xxxxxx...xxx='\n  var str = base64Data.replace(/^data:image\\/[\\w]*;base64,$/, '');\n  var equalIndex = str.indexOf('=');\n\n  if (equalIndex > 0) {\n    str = str.substring(0, equalIndex);\n  }\n\n  var strLength = str.length;\n  return parseInt(strLength - strLength / 8 * 2);\n} // 只对'image/jpeg'格式有效\n\n\nfunction compress(img, max, isSimple) {\n  var cvs = img;\n\n  if (cvs.nodeName.toLowerCase() === 'img') {\n    cvs = img2cvs(cvs);\n  }\n\n  var quality = 1;\n  var minWH = 800;\n  var scaleRatio = 0.9;\n  var qualityStep = 0.1; // 质量压缩只支持'image/jpeg'，'image/webp'(chrome支持)\n\n  var qualityType = 'image/jpeg';\n  var width = cvs.width;\n  var height = cvs.height;\n  var cvsRatio = width / height;\n  var data = cvs.toDataURL(qualityType, 1.0);\n  var size0 = getBase64Size(data); // console.log('start compress: ' + Math.ceil(size0 / 1024));\n\n  if (isSimple) {\n    while (size0 > max) {\n      quality = Math.floor(max / size0 * 10) / 10;\n      data = cvs.toDataURL(qualityType, quality);\n      size0 = getBase64Size(data);\n    }\n  } else {\n    // 优先缩放\n    while (size0 > max && (width > minWH || height > minWH)) {\n      var newWidth = void 0,\n          newHeight = void 0;\n\n      if (cvsRatio > 1) {\n        newWidth = width * scaleRatio > minWH ? width * scaleRatio : minWH;\n        newHeight = newWidth / cvsRatio;\n      } else {\n        newHeight = height * scaleRatio > minWH ? height * scaleRatio : minWH;\n        newWidth = newHeight * cvsRatio;\n      }\n\n      var canvas = getCanvas(newWidth, newHeight),\n          ctx = canvas.getContext(\"2d\");\n      ctx.drawImage(cvs, 0, 0, newWidth, newHeight);\n      data = canvas.toDataURL(qualityType, 1.0);\n      size0 = getBase64Size(data);\n      width = newWidth;\n      height = newHeight;\n      cvs = canvas;\n    } // 降低质量\n\n\n    while (size0 > max) {\n      quality -= qualityStep;\n      data = cvs.toDataURL(qualityType, quality);\n      size0 = getBase64Size(data);\n    }\n  } // console.log('end compress: ' + Math.ceil(size0 / 1024));\n\n\n  return data;\n}\n\nfunction base64Data2Blob(base64Data, mime) {\n  var binStr = atob(base64Data.split(',')[1]),\n      len = binStr.length,\n      arr = new Uint8Array(len);\n\n  if (!mime) {\n    // mime = base64Data.split(',')[0].split(':')[1].split(';')[0];\n    mime = base64Data.substring(base64Data.indexOf('data:') + 5, base64Data.indexOf(';base64'));\n  }\n\n  for (var i = 0; i < len; i++) {\n    arr[i] = binStr.charCodeAt(i);\n  }\n\n  return new Blob([arr], {\n    type: mime\n  });\n}\n\nfunction blob2FormData(blob, fileName) {\n  var formData = new FormData();\n  formData.append('file', blob);\n\n  if (!fileName) {\n    fileName = new Date().getTime();\n  }\n\n  formData.append(\"fileName\", fileName);\n  return formData;\n} // canvas转成blob对象，type值为image/jpeg或者image/webp时，可使用encoderOptions（0-1）设置图片展示质量。\n\n\nfunction canvas2Blob(canvas, callback, type, quality) {\n  // Polyfill\n  if (!HTMLCanvasElement.prototype.toBlob) {\n    Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {\n      value: function value(callback, type, quality) {\n        var binStr = atob(this.toDataURL('image/jpeg', quality).split(',')[1]),\n            len = binStr.length,\n            arr = new Uint8Array(len);\n\n        for (var i = 0; i < len; i++) {\n          arr[i] = binStr.charCodeAt(i);\n        }\n\n        callback(new Blob([arr], {\n          type: type || 'image/png'\n        }));\n      }\n    });\n  }\n\n  canvas.toBlob(callback, type, quality);\n}\n\nfunction uploadFile(formData, url) {\n  var xmlHttp = new XMLHttpRequest();\n  xmlHttp.open('POST', url); //注意跨域问题\n\n  xmlHttp.send(formData);\n\n  xmlHttp.onreadystatechange = function () {\n    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {\n      console.log(xmlHttp.responseText);\n    } else {\n      console.log(xmlHttp.statusText);\n    }\n  };\n} // 选择文件\n\n\nfunction chooseFile(btn, cb, validFileCallback) {\n  var $btn = typeof btn === \"string\" ? document.querySelector(btn) : btn;\n  var $file = $btn.querySelector('input[type=file]');\n\n  if (!$file) {\n    var fileNode = document.createElement('input');\n    fileNode.setAttribute('type', 'file');\n    fileNode.style.cssText = 'display: none;';\n    $btn.appendChild(fileNode);\n    $file = $btn.querySelector('input[type=file]');\n  }\n\n  $file.addEventListener('change', function (e) {\n    if (this.files.length > 0) {\n      var oFile = this.files[0];\n      var validFile = true;\n\n      if (typeof validFileCallback === 'function' && validFileCallback(oFile) === false) {\n        validFile = false;\n      }\n\n      if (validFile) {\n        var reader = new FileReader();\n        reader.readAsDataURL(oFile);\n\n        reader.onload = function () {\n          typeof cb === 'function' && cb(this.result);\n        };\n      } else {\n        console.log('onValidateFile function return false');\n      }\n    }\n  }, false); // 阻止冒泡导致两次触发selectBtn\n\n  $file.addEventListener('click', function (e) {\n    e.stopPropagation();\n  });\n  $file.click();\n}\n\nfunction _$(ele) {\n  return typeof ele === 'string' ? document.querySelector(ele) : ele;\n}\n\nfunction img2cvs(img) {\n  var canvas = document.createElement('canvas');\n  var ctx = canvas.getContext('2d');\n  canvas.width = img.naturalWidth;\n  canvas.height = img.naturalHeight;\n  ctx.drawImage(img, 0, 0);\n  return canvas;\n}\n\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvanMvdXRpbC5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9qcy91dGlsLmpzP2Y2NDQiXSwic291cmNlc0NvbnRlbnQiOlsiLy/mi5bmi71cbmZ1bmN0aW9uIGRyYWcobW92ZUVsZW1lbnQsIGRyYWdCYXIsIGNvbnRhaW5lciwgY2IpIHtcbiAgICBpZiAoIW1vdmVFbGVtZW50KSByZXR1cm47XG4gICAgZHJhZ0JhciA9IGRyYWdCYXIgfHwgbW92ZUVsZW1lbnQ7XG5cbiAgICB2YXIgZHJhZ2luZyA9IGZhbHNlLFxuICAgICAgICB4MCwgeTAsIG1MZWZ0MCwgbVRvcDAsIG1MZWZ0MSwgbVRvcDE7XG5cbiAgICB2YXIgbW91c2Vkb3duSGFuZGxlciA9IGZ1bmN0aW9uIChlKSB7XG4gICAgICAgIGUgPSBlIHx8IHdpbmRvdy5ldmVudDtcbiAgICAgICAgeDAgPSBlLmNsaWVudFg7XG4gICAgICAgIHkwID0gZS5jbGllbnRZO1xuICAgICAgICBtTGVmdDAgPSBtb3ZlRWxlbWVudC5vZmZzZXRMZWZ0O1xuICAgICAgICBtVG9wMCA9IG1vdmVFbGVtZW50Lm9mZnNldFRvcDtcblxuICAgICAgICBkcmFnaW5nID0gdHJ1ZTtcblxuICAgIH07XG4gICAgdmFyIG1vdXNlbW92ZUhhbmRsZXIgPSBmdW5jdGlvbiAoZSkge1xuICAgICAgICBlID0gZSB8fCB3aW5kb3cuZXZlbnQ7XG4gICAgICAgIGlmIChkcmFnaW5nKSB7XG4gICAgICAgICAgICB2YXIgeDEgPSBlLmNsaWVudFgsXG4gICAgICAgICAgICAgICAgeTEgPSBlLmNsaWVudFk7XG4gICAgICAgICAgICBtTGVmdDEgPSB4MSAtIHgwICsgbUxlZnQwO1xuICAgICAgICAgICAgbVRvcDEgPSB5MSAtIHkwICsgbVRvcDA7XG5cblxuICAgICAgICAgICAgaWYgKGNvbnRhaW5lcikge1xuICAgICAgICAgICAgICAgIC8vIOiuoeeul+WPr+enu+WKqOS9jee9rueahOWkp+Wwj++8jCDkv53or4HlhYPntKDkuI3kvJrotoXov4flj6/np7vliqjojIPlm7RcbiAgICAgICAgICAgICAgICAvLyDmraTlpITlsLHmmK/niLblhYPntKDnmoTlrr3luqblh4/ljrvlrZDlhYPntKDlrr3luqZcbiAgICAgICAgICAgICAgICB2YXIgd2lkdGggPSBjb250YWluZXIuY2xpZW50V2lkdGggLSBtb3ZlRWxlbWVudC5vZmZzZXRXaWR0aDtcbiAgICAgICAgICAgICAgICB2YXIgaGVpZ2h0ID0gY29udGFpbmVyLmNsaWVudEhlaWdodCAtIG1vdmVFbGVtZW50Lm9mZnNldEhlaWdodDtcbiAgICAgICAgICAgICAgICAvLyBtaW7mlrnms5Xkv53or4HkuI3kvJrotoXov4flj7PovrnnlYzvvIxtYXjkv53or4HkuI3kvJrotoXov4flt6bovrnnlYxcbiAgICAgICAgICAgICAgICBtTGVmdDEgPSBNYXRoLm1pbihNYXRoLm1heCgwLCBtTGVmdDEpLCB3aWR0aCk7XG4gICAgICAgICAgICAgICAgbVRvcDEgPSBNYXRoLm1pbihNYXRoLm1heCgwLCBtVG9wMSksIGhlaWdodCk7XG4gICAgICAgICAgICB9XG5cblxuICAgICAgICAgICAgbW92ZUVsZW1lbnQuc3R5bGUubGVmdCA9IG1MZWZ0MSArICdweCc7XG4gICAgICAgICAgICBtb3ZlRWxlbWVudC5zdHlsZS50b3AgPSBtVG9wMSArICdweCc7XG5cbiAgICAgICAgICAgIHR5cGVvZiBjYiA9PT0gJ2Z1bmN0aW9uJyAmJiBjYihtTGVmdDEsIG1Ub3AxKTtcbiAgICAgICAgfVxuICAgIH07XG4gICAgdmFyIG1vdXNldXBIYW5kbGVyID0gZnVuY3Rpb24gKGUpIHtcbiAgICAgICAgZHJhZ2luZyA9IGZhbHNlO1xuICAgIH1cblxuICAgIGlmICh3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcikge1xuICAgICAgICBkcmFnQmFyLmFkZEV2ZW50TGlzdGVuZXIoJ21vdXNlZG93bicsIG1vdXNlZG93bkhhbmRsZXIsIGZhbHNlKTtcbiAgICAgICAgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignbW91c2Vtb3ZlJywgbW91c2Vtb3ZlSGFuZGxlciwgZmFsc2UpO1xuICAgICAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdtb3VzZXVwJywgbW91c2V1cEhhbmRsZXIsIGZhbHNlKTtcbiAgICB9XG59XG5cbmZ1bmN0aW9uIGdldEltZ1Byb21pc2Uoc3JjKSB7XG4gICAgcmV0dXJuIG5ldyBQcm9taXNlKChyZXNvbHZlLCByZWplY3QpID0+IHtcbiAgICAgICAgbGV0IGltYWdlID0gbmV3IEltYWdlKCk7XG4gICAgICAgIC8vIOi3qOWfn+aKpemUmeWkhOeQhu+8iEZhaWxlZCB0byBleGVjdXRlICd0b0RhdGFVUkwnIG9uICdIVE1MQ2FudmFzRWxlbWVudCc6IFRhaW50ZWQgY2FudmFzZXMgbWF5IG5vdCBiZSBleHBvcnRlZC7vvIlcbiAgICAgICAgaW1hZ2Uuc2V0QXR0cmlidXRlKCdjcm9zc29yaWdpbicsICdhbm9ueW1vdXMnKTtcbiAgICAgICAgaW1hZ2Uuc3JjID0gc3JjO1xuICAgICAgICBpbWFnZS5vbmxvYWQgPSAoKSA9PiB7XG4gICAgICAgICAgICByZXNvbHZlKGltYWdlKTtcbiAgICAgICAgfTtcbiAgICAgICAgaW1hZ2Uub25lcnJvciA9ICgpID0+IHtcbiAgICAgICAgICAgIHJlamVjdCgnRXJyb3I6IGltYWdlIGVycm9yIScpO1xuICAgICAgICB9O1xuICAgIH0pO1xufVxuLy8g5Yqg6L295Zu+54mHXG5mdW5jdGlvbiBsb2FkSW1hZ2Uoc3JjLCBzdWNjZXNzLCBmYWlsdXJlKSB7XG4gICAgdmFyIGltYWdlID0gbmV3IEltYWdlKCk7XG4gICAgLy8g6Leo5Z+f5oql6ZSZ5aSE55CG77yIRmFpbGVkIHRvIGV4ZWN1dGUgJ3RvRGF0YVVSTCcgb24gJ0hUTUxDYW52YXNFbGVtZW50JzogVGFpbnRlZCBjYW52YXNlcyBtYXkgbm90IGJlIGV4cG9ydGVkLu+8iVxuICAgIGltYWdlLnNldEF0dHJpYnV0ZSgnY3Jvc3NvcmlnaW4nLCAnYW5vbnltb3VzJyk7XG4gICAgaW1hZ2Uuc3JjID0gc3JjO1xuICAgIGltYWdlLm9ubG9hZCA9IGZ1bmN0aW9uICgpIHtcbiAgICAgICAgdHlwZW9mIHN1Y2Nlc3MgPT09ICdmdW5jdGlvbicgJiYgc3VjY2VzcyhpbWFnZSk7XG4gICAgfTtcbiAgICBpbWFnZS5vbmVycm9yID0gZnVuY3Rpb24gKCkge1xuICAgICAgICB0eXBlb2YgZmFpbHVyZSA9PT0gJ2Z1bmN0aW9uJyAmJiBmYWlsdXJlKCk7XG4gICAgfTtcbn1cblxuZnVuY3Rpb24gbG9hZEltYWdlcyhzcmNMaXN0LCBzdWNjZXNzLCBmYWlsdXJlKSB7XG4gICAgaWYgKHR5cGVvZiBzcmNMaXN0ID09PSAnc3RyaW5nJykge1xuICAgICAgICBzcmNMaXN0ID0gW3NyY0xpc3RdO1xuICAgIH1cbiAgICB2YXIgaW1hZ2VzID0gW107XG4gICAgdmFyIGluZGV4ID0gc3JjTGlzdC5sZW5ndGg7XG4gICAgdmFyIF9sb2FkSW1hZ2UgPSAoKSA9PiB7XG4gICAgICAgIGlmIChpbmRleCA9PT0gMCkge1xuICAgICAgICAgICAgcmV0dXJuIGZhbHNlO1xuICAgICAgICB9XG4gICAgICAgIHZhciBpbWFnZSA9IG5ldyBJbWFnZSgpO1xuICAgICAgICAvLyDot6jln5/miqXplJnlpITnkIbvvIhGYWlsZWQgdG8gZXhlY3V0ZSAndG9EYXRhVVJMJyBvbiAnSFRNTENhbnZhc0VsZW1lbnQnOiBUYWludGVkIGNhbnZhc2VzIG1heSBub3QgYmUgZXhwb3J0ZWQu77yJXG4gICAgICAgIGltYWdlLnNldEF0dHJpYnV0ZSgnY3Jvc3NvcmlnaW4nLCAnYW5vbnltb3VzJyk7XG4gICAgICAgIGltYWdlLnNyYyA9IHNyY0xpc3RbLS1pbmRleF07XG4gICAgICAgIGltYWdlLm9ubG9hZCA9IGZ1bmN0aW9uICgpIHtcbiAgICAgICAgICAgIGltYWdlcy51bnNoaWZ0KGltYWdlKTtcbiAgICAgICAgICAgIGlmIChpbWFnZXMubGVuZ3RoID09PSBzcmNMaXN0Lmxlbmd0aCkge1xuICAgICAgICAgICAgICAgIHR5cGVvZiBzdWNjZXNzID09PSAnZnVuY3Rpb24nICYmIHN1Y2Nlc3MoaW1hZ2VzKTtcbiAgICAgICAgICAgICAgICByZXR1cm4gZmFsc2U7XG4gICAgICAgICAgICB9XG4gICAgICAgICAgICBfbG9hZEltYWdlKCk7XG4gICAgICAgIH07XG4gICAgICAgIGltYWdlLm9uZXJyb3IgPSBmdW5jdGlvbiAoKSB7XG4gICAgICAgICAgICB0eXBlb2YgZmFpbHVyZSA9PT0gJ2Z1bmN0aW9uJyAmJiBmYWlsdXJlKCk7XG4gICAgICAgIH07XG4gICAgfTtcbiAgICBfbG9hZEltYWdlKCk7XG5cbn1cbi8vIOWIm+W7umNhdmFzXG5mdW5jdGlvbiBnZXRDYW52YXMod2lkdGgsIGhlaWdodCkge1xuICAgIHZhciBjYW52YXMgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdjYW52YXMnKTtcbiAgICBjYW52YXMud2lkdGggPSB3aWR0aDtcbiAgICBjYW52YXMuaGVpZ2h0ID0gaGVpZ2h0O1xuICAgIHJldHVybiBjYW52YXM7XG59XG5cbi8v6I635Y+WYmFzZTY05Zu+54mH5aSn5bCPXG5mdW5jdGlvbiBnZXRCYXNlNjRTaXplKGJhc2U2NERhdGEpIHtcbiAgICAvLyAnZGF0YTppbWFnZS9qcGVnO2Jhc2U2NCx4eHh4eHguLi54eHg9J1xuICAgIHZhciBzdHIgPSBiYXNlNjREYXRhLnJlcGxhY2UoL15kYXRhOmltYWdlXFwvW1xcd10qO2Jhc2U2NCwkLywgJycpO1xuICAgIHZhciBlcXVhbEluZGV4ID0gc3RyLmluZGV4T2YoJz0nKTtcbiAgICBpZiAoZXF1YWxJbmRleCA+IDApIHtcbiAgICAgICAgc3RyID0gc3RyLnN1YnN0cmluZygwLCBlcXVhbEluZGV4KTtcbiAgICB9XG4gICAgdmFyIHN0ckxlbmd0aCA9IHN0ci5sZW5ndGg7XG4gICAgcmV0dXJuIHBhcnNlSW50KHN0ckxlbmd0aCAtIChzdHJMZW5ndGggLyA4KSAqIDIpO1xufVxuLy8g5Y+q5a+5J2ltYWdlL2pwZWcn5qC85byP5pyJ5pWIXG5mdW5jdGlvbiBjb21wcmVzcyhpbWcsIG1heCwgaXNTaW1wbGUpIHtcbiAgICBsZXQgY3ZzID0gaW1nO1xuICAgIGlmIChjdnMubm9kZU5hbWUudG9Mb3dlckNhc2UoKSA9PT0gJ2ltZycpIHtcbiAgICAgICAgY3ZzID0gaW1nMmN2cyhjdnMpO1xuICAgIH1cbiAgICBsZXQgcXVhbGl0eSA9IDE7XG4gICAgbGV0IG1pbldIID0gODAwO1xuICAgIGxldCBzY2FsZVJhdGlvID0gMC45O1xuICAgIGxldCBxdWFsaXR5U3RlcCA9IDAuMTtcbiAgICAvLyDotKjph4/ljovnvKnlj6rmlK/mjIEnaW1hZ2UvanBlZyfvvIwnaW1hZ2Uvd2VicCcoY2hyb21l5pSv5oyBKVxuICAgIGxldCBxdWFsaXR5VHlwZSA9ICdpbWFnZS9qcGVnJztcblxuICAgIGxldCB3aWR0aCA9IGN2cy53aWR0aDtcbiAgICBsZXQgaGVpZ2h0ID0gY3ZzLmhlaWdodDtcbiAgICBsZXQgY3ZzUmF0aW8gPSB3aWR0aCAvIGhlaWdodDtcbiAgICBsZXQgZGF0YSA9IGN2cy50b0RhdGFVUkwocXVhbGl0eVR5cGUsIDEuMCk7XG4gICAgbGV0IHNpemUwID0gZ2V0QmFzZTY0U2l6ZShkYXRhKTtcbiAgICAvLyBjb25zb2xlLmxvZygnc3RhcnQgY29tcHJlc3M6ICcgKyBNYXRoLmNlaWwoc2l6ZTAgLyAxMDI0KSk7XG4gICAgaWYgKGlzU2ltcGxlKSB7XG4gICAgICAgIHdoaWxlIChzaXplMCA+IG1heCkge1xuICAgICAgICAgICAgcXVhbGl0eSA9IE1hdGguZmxvb3IobWF4IC8gc2l6ZTAgKiAxMCkgLyAxMDtcbiAgICAgICAgICAgIGRhdGEgPSBjdnMudG9EYXRhVVJMKHF1YWxpdHlUeXBlLCBxdWFsaXR5KTtcbiAgICAgICAgICAgIHNpemUwID0gZ2V0QmFzZTY0U2l6ZShkYXRhKTtcbiAgICAgICAgfVxuXG4gICAgfSBlbHNlIHtcbiAgICAgICAgLy8g5LyY5YWI57yp5pS+XG4gICAgICAgIHdoaWxlIChzaXplMCA+IG1heCAmJiAod2lkdGggPiBtaW5XSCB8fCBoZWlnaHQgPiBtaW5XSCkpIHtcbiAgICAgICAgICAgIGxldCBuZXdXaWR0aCwgbmV3SGVpZ2h0O1xuICAgICAgICAgICAgaWYgKGN2c1JhdGlvID4gMSkge1xuICAgICAgICAgICAgICAgIG5ld1dpZHRoID0gd2lkdGggKiBzY2FsZVJhdGlvID4gbWluV0ggPyB3aWR0aCAqIHNjYWxlUmF0aW8gOiBtaW5XSDtcbiAgICAgICAgICAgICAgICBuZXdIZWlnaHQgPSBuZXdXaWR0aCAvIGN2c1JhdGlvO1xuICAgICAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAgICAgICBuZXdIZWlnaHQgPSBoZWlnaHQgKiBzY2FsZVJhdGlvID4gbWluV0ggPyBoZWlnaHQgKiBzY2FsZVJhdGlvIDogbWluV0g7XG4gICAgICAgICAgICAgICAgbmV3V2lkdGggPSBuZXdIZWlnaHQgKiBjdnNSYXRpbztcbiAgICAgICAgICAgIH1cblxuICAgICAgICAgICAgbGV0IGNhbnZhcyA9IGdldENhbnZhcyhuZXdXaWR0aCwgbmV3SGVpZ2h0KSxcbiAgICAgICAgICAgICAgICBjdHggPSBjYW52YXMuZ2V0Q29udGV4dChcIjJkXCIpO1xuICAgICAgICAgICAgY3R4LmRyYXdJbWFnZShjdnMsIDAsIDAsIG5ld1dpZHRoLCBuZXdIZWlnaHQpO1xuXG4gICAgICAgICAgICBkYXRhID0gY2FudmFzLnRvRGF0YVVSTChxdWFsaXR5VHlwZSwgMS4wKTtcbiAgICAgICAgICAgIHNpemUwID0gZ2V0QmFzZTY0U2l6ZShkYXRhKTtcbiAgICAgICAgICAgIHdpZHRoID0gbmV3V2lkdGg7XG4gICAgICAgICAgICBoZWlnaHQgPSBuZXdIZWlnaHQ7XG4gICAgICAgICAgICBjdnMgPSBjYW52YXM7XG4gICAgICAgIH1cbiAgICAgICAgLy8g6ZmN5L2O6LSo6YePXG4gICAgICAgIHdoaWxlIChzaXplMCA+IG1heCkge1xuICAgICAgICAgICAgcXVhbGl0eSAtPSBxdWFsaXR5U3RlcDtcbiAgICAgICAgICAgIGRhdGEgPSBjdnMudG9EYXRhVVJMKHF1YWxpdHlUeXBlLCBxdWFsaXR5KTtcbiAgICAgICAgICAgIHNpemUwID0gZ2V0QmFzZTY0U2l6ZShkYXRhKTtcbiAgICAgICAgfVxuICAgIH1cbiAgICAvLyBjb25zb2xlLmxvZygnZW5kIGNvbXByZXNzOiAnICsgTWF0aC5jZWlsKHNpemUwIC8gMTAyNCkpO1xuICAgIHJldHVybiBkYXRhO1xufVxuXG5cbmZ1bmN0aW9uIGJhc2U2NERhdGEyQmxvYihiYXNlNjREYXRhLCBtaW1lKSB7XG4gICAgdmFyIGJpblN0ciA9IGF0b2IoYmFzZTY0RGF0YS5zcGxpdCgnLCcpWzFdKSxcbiAgICAgICAgbGVuID0gYmluU3RyLmxlbmd0aCxcbiAgICAgICAgYXJyID0gbmV3IFVpbnQ4QXJyYXkobGVuKTtcbiAgICBpZiAoIW1pbWUpIHtcbiAgICAgICAgLy8gbWltZSA9IGJhc2U2NERhdGEuc3BsaXQoJywnKVswXS5zcGxpdCgnOicpWzFdLnNwbGl0KCc7JylbMF07XG4gICAgICAgIG1pbWUgPSBiYXNlNjREYXRhLnN1YnN0cmluZyhiYXNlNjREYXRhLmluZGV4T2YoJ2RhdGE6JykgKyA1LCBiYXNlNjREYXRhLmluZGV4T2YoJztiYXNlNjQnKSk7XG4gICAgfVxuXG4gICAgZm9yICh2YXIgaSA9IDA7IGkgPCBsZW47IGkrKykge1xuICAgICAgICBhcnJbaV0gPSBiaW5TdHIuY2hhckNvZGVBdChpKTtcbiAgICB9XG5cbiAgICByZXR1cm4gbmV3IEJsb2IoW2Fycl0sIHtcbiAgICAgICAgdHlwZTogbWltZVxuICAgIH0pO1xuXG59XG5cbmZ1bmN0aW9uIGJsb2IyRm9ybURhdGEoYmxvYiwgZmlsZU5hbWUpIHtcbiAgICB2YXIgZm9ybURhdGEgPSBuZXcgRm9ybURhdGEoKTtcbiAgICBmb3JtRGF0YS5hcHBlbmQoJ2ZpbGUnLCBibG9iKTtcbiAgICBpZiAoIWZpbGVOYW1lKSB7XG4gICAgICAgIGZpbGVOYW1lID0gbmV3IERhdGUoKS5nZXRUaW1lKCk7XG4gICAgfVxuICAgIGZvcm1EYXRhLmFwcGVuZChcImZpbGVOYW1lXCIsIGZpbGVOYW1lKTtcblxuICAgIHJldHVybiBmb3JtRGF0YTtcbn1cblxuLy8gY2FudmFz6L2s5oiQYmxvYuWvueixoe+8jHR5cGXlgLzkuLppbWFnZS9qcGVn5oiW6ICFaW1hZ2Uvd2VicOaXtu+8jOWPr+S9v+eUqGVuY29kZXJPcHRpb25z77yIMC0x77yJ6K6+572u5Zu+54mH5bGV56S66LSo6YeP44CCXG5mdW5jdGlvbiBjYW52YXMyQmxvYihjYW52YXMsIGNhbGxiYWNrLCB0eXBlLCBxdWFsaXR5KSB7XG4gICAgLy8gUG9seWZpbGxcbiAgICBpZiAoIUhUTUxDYW52YXNFbGVtZW50LnByb3RvdHlwZS50b0Jsb2IpIHtcbiAgICAgICAgT2JqZWN0LmRlZmluZVByb3BlcnR5KEhUTUxDYW52YXNFbGVtZW50LnByb3RvdHlwZSwgJ3RvQmxvYicsIHtcbiAgICAgICAgICAgIHZhbHVlOiBmdW5jdGlvbiAoY2FsbGJhY2ssIHR5cGUsIHF1YWxpdHkpIHtcblxuICAgICAgICAgICAgICAgIHZhciBiaW5TdHIgPSBhdG9iKHRoaXMudG9EYXRhVVJMKCdpbWFnZS9qcGVnJywgcXVhbGl0eSkuc3BsaXQoJywnKVsxXSksXG4gICAgICAgICAgICAgICAgICAgIGxlbiA9IGJpblN0ci5sZW5ndGgsXG4gICAgICAgICAgICAgICAgICAgIGFyciA9IG5ldyBVaW50OEFycmF5KGxlbik7XG5cbiAgICAgICAgICAgICAgICBmb3IgKHZhciBpID0gMDsgaSA8IGxlbjsgaSsrKSB7XG4gICAgICAgICAgICAgICAgICAgIGFycltpXSA9IGJpblN0ci5jaGFyQ29kZUF0KGkpO1xuICAgICAgICAgICAgICAgIH1cblxuICAgICAgICAgICAgICAgIGNhbGxiYWNrKG5ldyBCbG9iKFthcnJdLCB7XG4gICAgICAgICAgICAgICAgICAgIHR5cGU6IHR5cGUgfHwgJ2ltYWdlL3BuZydcbiAgICAgICAgICAgICAgICB9KSk7XG4gICAgICAgICAgICB9XG4gICAgICAgIH0pO1xuICAgIH1cblxuICAgIGNhbnZhcy50b0Jsb2IoY2FsbGJhY2ssIHR5cGUsIHF1YWxpdHkpO1xufVxuXG5mdW5jdGlvbiB1cGxvYWRGaWxlKGZvcm1EYXRhLCB1cmwpIHtcblxuICAgIHZhciB4bWxIdHRwID0gbmV3IFhNTEh0dHBSZXF1ZXN0KCk7XG4gICAgeG1sSHR0cC5vcGVuKCdQT1NUJywgdXJsKTsgLy/ms6jmhI/ot6jln5/pl67pophcbiAgICB4bWxIdHRwLnNlbmQoZm9ybURhdGEpO1xuICAgIHhtbEh0dHAub25yZWFkeXN0YXRlY2hhbmdlID0gZnVuY3Rpb24gKCkge1xuICAgICAgICBpZiAoeG1sSHR0cC5yZWFkeVN0YXRlID09IDQgJiYgeG1sSHR0cC5zdGF0dXMgPT0gMjAwKSB7XG4gICAgICAgICAgICBjb25zb2xlLmxvZyh4bWxIdHRwLnJlc3BvbnNlVGV4dCk7XG4gICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICBjb25zb2xlLmxvZyh4bWxIdHRwLnN0YXR1c1RleHQpO1xuICAgICAgICB9XG4gICAgfTtcbn1cbi8vIOmAieaLqeaWh+S7tlxuZnVuY3Rpb24gY2hvb3NlRmlsZShidG4sIGNiLCB2YWxpZEZpbGVDYWxsYmFjaykge1xuICAgIGxldCAkYnRuID0gdHlwZW9mIGJ0biA9PT0gXCJzdHJpbmdcIiA/IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYnRuKSA6IGJ0bjtcbiAgICBsZXQgJGZpbGUgPSAkYnRuLnF1ZXJ5U2VsZWN0b3IoJ2lucHV0W3R5cGU9ZmlsZV0nKTtcbiAgICBpZiAoISRmaWxlKSB7XG4gICAgICAgIGxldCBmaWxlTm9kZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2lucHV0Jyk7XG4gICAgICAgIGZpbGVOb2RlLnNldEF0dHJpYnV0ZSgndHlwZScsICdmaWxlJyk7XG5cbiAgICAgICAgZmlsZU5vZGUuc3R5bGUuY3NzVGV4dCA9ICdkaXNwbGF5OiBub25lOyc7XG4gICAgICAgICRidG4uYXBwZW5kQ2hpbGQoZmlsZU5vZGUpO1xuICAgICAgICAkZmlsZSA9ICRidG4ucXVlcnlTZWxlY3RvcignaW5wdXRbdHlwZT1maWxlXScpO1xuICAgIH1cblxuICAgICRmaWxlLmFkZEV2ZW50TGlzdGVuZXIoJ2NoYW5nZScsIGZ1bmN0aW9uIChlKSB7XG4gICAgICAgIGlmICh0aGlzLmZpbGVzLmxlbmd0aCA+IDApIHtcblxuICAgICAgICAgICAgbGV0IG9GaWxlID0gdGhpcy5maWxlc1swXTtcblxuICAgICAgICAgICAgbGV0IHZhbGlkRmlsZSA9IHRydWU7XG4gICAgICAgICAgICBpZiAodHlwZW9mIHZhbGlkRmlsZUNhbGxiYWNrID09PSAnZnVuY3Rpb24nICYmIHZhbGlkRmlsZUNhbGxiYWNrKG9GaWxlKSA9PT0gZmFsc2UpIHtcbiAgICAgICAgICAgICAgICB2YWxpZEZpbGUgPSBmYWxzZTtcbiAgICAgICAgICAgIH1cblxuICAgICAgICAgICAgaWYgKHZhbGlkRmlsZSkge1xuICAgICAgICAgICAgICAgIGxldCByZWFkZXIgPSBuZXcgRmlsZVJlYWRlcigpO1xuICAgICAgICAgICAgICAgIHJlYWRlci5yZWFkQXNEYXRhVVJMKG9GaWxlKTtcblxuICAgICAgICAgICAgICAgIHJlYWRlci5vbmxvYWQgPSBmdW5jdGlvbiAoKSB7XG4gICAgICAgICAgICAgICAgICAgIHR5cGVvZiBjYiA9PT0gJ2Z1bmN0aW9uJyAmJiBjYih0aGlzLnJlc3VsdCk7XG4gICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAgICAgICBjb25zb2xlLmxvZygnb25WYWxpZGF0ZUZpbGUgZnVuY3Rpb24gcmV0dXJuIGZhbHNlJylcbiAgICAgICAgICAgIH1cblxuICAgICAgICB9XG4gICAgfSwgZmFsc2UpO1xuXG4gICAgLy8g6Zi75q2i5YaS5rOh5a+86Ie05Lik5qyh6Kem5Y+Rc2VsZWN0QnRuXG4gICAgJGZpbGUuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCAoZSkgPT4ge1xuICAgICAgICBlLnN0b3BQcm9wYWdhdGlvbigpO1xuICAgIH0pXG5cbiAgICAkZmlsZS5jbGljaygpO1xuXG59XG5cbmZ1bmN0aW9uIF8kKGVsZSkge1xuICAgIHJldHVybiB0eXBlb2YgZWxlID09PSAnc3RyaW5nJyA/IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoZWxlKSA6IGVsZTtcbn1cblxuZnVuY3Rpb24gaW1nMmN2cyhpbWcpIHtcbiAgICB2YXIgY2FudmFzID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnY2FudmFzJyk7XG4gICAgdmFyIGN0eCA9IGNhbnZhcy5nZXRDb250ZXh0KCcyZCcpO1xuICAgIGNhbnZhcy53aWR0aCA9IGltZy5uYXR1cmFsV2lkdGg7XG4gICAgY2FudmFzLmhlaWdodCA9IGltZy5uYXR1cmFsSGVpZ2h0O1xuICAgIGN0eC5kcmF3SW1hZ2UoaW1nLCAwLCAwKTtcbiAgICByZXR1cm4gY2FudmFzO1xufVxuXG5leHBvcnQge1xuICAgIGRyYWcsXG4gICAgbG9hZEltYWdlLFxuICAgIGxvYWRJbWFnZXMsXG4gICAgZ2V0Q2FudmFzLFxuICAgIGdldEJhc2U2NFNpemUsXG4gICAgY29tcHJlc3MsXG4gICAgYmFzZTY0RGF0YTJCbG9iLFxuICAgIGJsb2IyRm9ybURhdGEsXG4gICAgY2hvb3NlRmlsZSxcbiAgICB1cGxvYWRGaWxlLFxuICAgIGdldEltZ1Byb21pc2UsXG4gICAgXyQsXG4gICAgaW1nMmN2c1xufVxuIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFFQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUFBO0FBRUE7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUVBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUVBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFFQTtBQUNBO0FBQUE7QUFBQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQURBO0FBSUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFBQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQUE7QUFBQTtBQUNBO0FBR0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBREE7QUFHQTtBQWRBO0FBZ0JBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQUE7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUVBO0FBQ0E7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBRUE7QUFDQTtBQUNBO0FBRUE7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7Iiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/js/util.js\n");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "drag", function() { return drag; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadImage", function() { return loadImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadImages", function() { return loadImages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCanvas", function() { return getCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getBase64Size", function() { return getBase64Size; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "compress", function() { return compress; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "base64Data2Blob", function() { return base64Data2Blob; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "blob2FormData", function() { return blob2FormData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "chooseFile", function() { return chooseFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadFile", function() { return uploadFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getImgPromise", function() { return getImgPromise; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_$", function() { return _$; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "img2cvs", function() { return img2cvs; });
+//拖拽
+function drag(moveElement, dragBar, container, cb) {
+  if (!moveElement) return;
+  dragBar = dragBar || moveElement;
+  var draging = false,
+      x0,
+      y0,
+      mLeft0,
+      mTop0,
+      mLeft1,
+      mTop1;
+
+  var mousedownHandler = function mousedownHandler(e) {
+    e = e || window.event;
+    x0 = e.clientX;
+    y0 = e.clientY;
+    mLeft0 = moveElement.offsetLeft;
+    mTop0 = moveElement.offsetTop;
+    draging = true;
+  };
+
+  var mousemoveHandler = function mousemoveHandler(e) {
+    e = e || window.event;
+
+    if (draging) {
+      var x1 = e.clientX,
+          y1 = e.clientY;
+      mLeft1 = x1 - x0 + mLeft0;
+      mTop1 = y1 - y0 + mTop0;
+
+      if (container) {
+        // 计算可移动位置的大小， 保证元素不会超过可移动范围
+        // 此处就是父元素的宽度减去子元素宽度
+        var width = container.clientWidth - moveElement.offsetWidth;
+        var height = container.clientHeight - moveElement.offsetHeight; // min方法保证不会超过右边界，max保证不会超过左边界
+
+        mLeft1 = Math.min(Math.max(0, mLeft1), width);
+        mTop1 = Math.min(Math.max(0, mTop1), height);
+      }
+
+      moveElement.style.left = mLeft1 + 'px';
+      moveElement.style.top = mTop1 + 'px';
+      typeof cb === 'function' && cb(mLeft1, mTop1);
+    }
+  };
+
+  var mouseupHandler = function mouseupHandler(e) {
+    draging = false;
+  };
+
+  if (window.addEventListener) {
+    dragBar.addEventListener('mousedown', mousedownHandler, false);
+    document.addEventListener('mousemove', mousemoveHandler, false);
+    document.addEventListener('mouseup', mouseupHandler, false);
+  }
+}
+
+function getImgPromise(src) {
+  return new Promise(function (resolve, reject) {
+    var image = new Image(); // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
+
+    image.setAttribute('crossorigin', 'anonymous');
+    image.src = src;
+
+    image.onload = function () {
+      resolve(image);
+    };
+
+    image.onerror = function () {
+      reject('Error: image error!');
+    };
+  });
+} // 加载图片
+
+
+function loadImage(src, success, failure) {
+  var image = new Image(); // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
+
+  image.setAttribute('crossorigin', 'anonymous');
+  image.src = src;
+
+  image.onload = function () {
+    typeof success === 'function' && success(image);
+  };
+
+  image.onerror = function () {
+    typeof failure === 'function' && failure();
+  };
+}
+
+function loadImages(srcList, success, failure) {
+  if (typeof srcList === 'string') {
+    srcList = [srcList];
+  }
+
+  var images = [];
+  var index = srcList.length;
+
+  var _loadImage = function _loadImage() {
+    if (index === 0) {
+      return false;
+    }
+
+    var image = new Image(); // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
+
+    image.setAttribute('crossorigin', 'anonymous');
+    image.src = srcList[--index];
+
+    image.onload = function () {
+      images.unshift(image);
+
+      if (images.length === srcList.length) {
+        typeof success === 'function' && success(images);
+        return false;
+      }
+
+      _loadImage();
+    };
+
+    image.onerror = function () {
+      typeof failure === 'function' && failure();
+    };
+  };
+
+  _loadImage();
+} // 创建cavas
+
+
+function getCanvas(width, height) {
+  var canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  return canvas;
+} //获取base64图片大小
+
+
+function getBase64Size(base64Data) {
+  // 'data:image/jpeg;base64,xxxxxx...xxx='
+  var str = base64Data.replace(/^data:image\/[\w]*;base64,$/, '');
+  var equalIndex = str.indexOf('=');
+
+  if (equalIndex > 0) {
+    str = str.substring(0, equalIndex);
+  }
+
+  var strLength = str.length;
+  return parseInt(strLength - strLength / 8 * 2);
+} // 只对'image/jpeg'格式有效
+
+
+function compress(img, max, isSimple) {
+  var cvs = img;
+
+  if (cvs.nodeName.toLowerCase() === 'img') {
+    cvs = img2cvs(cvs);
+  }
+
+  var quality = 1;
+  var minWH = 800;
+  var scaleRatio = 0.9;
+  var qualityStep = 0.1; // 质量压缩只支持'image/jpeg'，'image/webp'(chrome支持)
+
+  var qualityType = 'image/jpeg';
+  var width = cvs.width;
+  var height = cvs.height;
+  var cvsRatio = width / height;
+  var data = cvs.toDataURL(qualityType, 1.0);
+  var size0 = getBase64Size(data); // console.log('start compress: ' + Math.ceil(size0 / 1024));
+
+  if (isSimple) {
+    while (size0 > max) {
+      quality = Math.floor(max / size0 * 10) / 10;
+      data = cvs.toDataURL(qualityType, quality);
+      size0 = getBase64Size(data);
+    }
+  } else {
+    // 优先缩放
+    while (size0 > max && (width > minWH || height > minWH)) {
+      var newWidth = void 0,
+          newHeight = void 0;
+
+      if (cvsRatio > 1) {
+        newWidth = width * scaleRatio > minWH ? width * scaleRatio : minWH;
+        newHeight = newWidth / cvsRatio;
+      } else {
+        newHeight = height * scaleRatio > minWH ? height * scaleRatio : minWH;
+        newWidth = newHeight * cvsRatio;
+      }
+
+      var canvas = getCanvas(newWidth, newHeight),
+          ctx = canvas.getContext("2d");
+      ctx.drawImage(cvs, 0, 0, newWidth, newHeight);
+      data = canvas.toDataURL(qualityType, 1.0);
+      size0 = getBase64Size(data);
+      width = newWidth;
+      height = newHeight;
+      cvs = canvas;
+    } // 降低质量
+
+
+    while (size0 > max) {
+      quality -= qualityStep;
+      data = cvs.toDataURL(qualityType, quality);
+      size0 = getBase64Size(data);
+    }
+  } // console.log('end compress: ' + Math.ceil(size0 / 1024));
+
+
+  return data;
+}
+
+function base64Data2Blob(base64Data, mime) {
+  var binStr = atob(base64Data.split(',')[1]),
+      len = binStr.length,
+      arr = new Uint8Array(len);
+
+  if (!mime) {
+    // mime = base64Data.split(',')[0].split(':')[1].split(';')[0];
+    mime = base64Data.substring(base64Data.indexOf('data:') + 5, base64Data.indexOf(';base64'));
+  }
+
+  for (var i = 0; i < len; i++) {
+    arr[i] = binStr.charCodeAt(i);
+  }
+
+  return new Blob([arr], {
+    type: mime
+  });
+}
+
+function blob2FormData(blob, fileName) {
+  var formData = new FormData();
+  formData.append('file', blob);
+
+  if (!fileName) {
+    fileName = new Date().getTime();
+  }
+
+  formData.append("fileName", fileName);
+  return formData;
+} // canvas转成blob对象，type值为image/jpeg或者image/webp时，可使用encoderOptions（0-1）设置图片展示质量。
+
+
+function canvas2Blob(canvas, callback, type, quality) {
+  // Polyfill
+  if (!HTMLCanvasElement.prototype.toBlob) {
+    Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
+      value: function value(callback, type, quality) {
+        var binStr = atob(this.toDataURL('image/jpeg', quality).split(',')[1]),
+            len = binStr.length,
+            arr = new Uint8Array(len);
+
+        for (var i = 0; i < len; i++) {
+          arr[i] = binStr.charCodeAt(i);
+        }
+
+        callback(new Blob([arr], {
+          type: type || 'image/png'
+        }));
+      }
+    });
+  }
+
+  canvas.toBlob(callback, type, quality);
+}
+
+function uploadFile(formData, url) {
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open('POST', url); //注意跨域问题
+
+  xmlHttp.send(formData);
+
+  xmlHttp.onreadystatechange = function () {
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+      console.log(xmlHttp.responseText);
+    } else {
+      console.log(xmlHttp.statusText);
+    }
+  };
+} // 选择文件
+
+
+function chooseFile(btn, cb, validFileCallback) {
+  var $btn = typeof btn === "string" ? document.querySelector(btn) : btn;
+  var $file = $btn.querySelector('input[type=file]');
+
+  if (!$file) {
+    var fileNode = document.createElement('input');
+    fileNode.setAttribute('type', 'file');
+    fileNode.style.cssText = 'display: none;';
+    $btn.appendChild(fileNode);
+    $file = $btn.querySelector('input[type=file]');
+  }
+
+  $file.addEventListener('change', function (e) {
+    if (this.files.length > 0) {
+      var oFile = this.files[0];
+      var validFile = true;
+
+      if (typeof validFileCallback === 'function' && validFileCallback(oFile) === false) {
+        validFile = false;
+      }
+
+      if (validFile) {
+        var reader = new FileReader();
+        reader.readAsDataURL(oFile);
+
+        reader.onload = function () {
+          typeof cb === 'function' && cb(this.result);
+        };
+      } else {
+        console.log('onValidateFile function return false');
+      }
+    }
+  }, false); // 阻止冒泡导致两次触发selectBtn
+
+  $file.addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
+  $file.click();
+}
+
+function _$(ele) {
+  return typeof ele === 'string' ? document.querySelector(ele) : ele;
+}
+
+function img2cvs(img) {
+  var canvas = document.createElement('canvas');
+  var ctx = canvas.getContext('2d');
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+  ctx.drawImage(img, 0, 0);
+  return canvas;
+}
+
+
 
 /***/ }),
 
@@ -197,7 +3019,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = __WEBPACK_EXTERNAL_MODULE_jquery__;//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoianF1ZXJ5LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2V4dGVybmFsIHtcImNvbW1vbmpzXCI6XCJqUXVlcnlcIixcImNvbW1vbmpzMlwiOlwialF1ZXJ5XCIsXCJhbWRcIjpcImpRdWVyeVwiLFwicm9vdFwiOlwialF1ZXJ5XCJ9PzI5YTMiXSwic291cmNlc0NvbnRlbnQiOlsibW9kdWxlLmV4cG9ydHMgPSBfX1dFQlBBQ0tfRVhURVJOQUxfTU9EVUxFX2pxdWVyeV9fOyJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///jquery\n");
+module.exports = __WEBPACK_EXTERNAL_MODULE_jquery__;
 
 /***/ }),
 
@@ -208,9 +3030,10 @@ eval("module.exports = __WEBPACK_EXTERNAL_MODULE_jquery__;//# sourceURL=[module]
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = __WEBPACK_EXTERNAL_MODULE_template__;//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGVtcGxhdGUuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vZXh0ZXJuYWwge1wiY29tbW9uanNcIjpcInRlbXBsYXRlXCIsXCJjb21tb25qczJcIjpcInRlbXBsYXRlXCIsXCJhbWRcIjpcInRlbXBsYXRlXCIsXCJyb290XCI6XCJ0ZW1wbGF0ZVwifT8zNzEwIl0sInNvdXJjZXNDb250ZW50IjpbIm1vZHVsZS5leHBvcnRzID0gX19XRUJQQUNLX0VYVEVSTkFMX01PRFVMRV90ZW1wbGF0ZV9fOyJdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///template\n");
+module.exports = __WEBPACK_EXTERNAL_MODULE_template__;
 
 /***/ })
 
 /******/ });
 });
+//# sourceMappingURL=pipeImg.js.map

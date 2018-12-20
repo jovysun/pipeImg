@@ -183,6 +183,10 @@ $color-txt: #999ba7;
             align-items:center;
             justify-content:center;
             overflow: hidden;
+            background: url(../assets/loading.gif) center center no-repeat;
+            &.loaded{
+                background: none;
+            }
             
             .scale-img-wrapper{
                 position: absolute;

@@ -6,6 +6,8 @@ import {
 import ImgHandler from './imgHandler';
 import Dialog from './dialog';
 
+import '../css/pipeImg.scss';
+
 class PipeImg {
 
     constructor(options) {
@@ -23,7 +25,7 @@ class PipeImg {
             mime: 'image/jpeg',
             // 保存图片最大体积
             maxSize: 500,
-
+            // 直接选择水印文字位置水平垂直距离边框位置
             markXPositionMargin: 15,
             markYPositionMargin: 20,
             // 文案
@@ -122,8 +124,6 @@ class PipeImg {
             this.sourceImgList = images;
 
 
-
-
             this.onInited();
             this._executeMethods();
 
@@ -142,68 +142,7 @@ class PipeImg {
         });
         this.resultList.push(this.imgHandler.result);
         
-        this.dialog = new Dialog({
-            debug: this.debug,
-            imgList: this.sourceImgList,
-            activeIndex: this.activeIndex,
-            type: this.type,
-            mime: this.mime,
-
-            markXPositionMargin: this.markXPositionMargin,
-            markYPositionMargin: this.markYPositionMargin,
-            markTextList: this.markTextList,
-            closeBtnTxt: this.closeBtnTxt,
-            saveBtnTxt: this.saveBtnTxt,
-            resetBtnTxt: this.resetBtnTxt,
-            confirmBtnTxt: this.confirmBtnTxt,
-            cancelBtnTxt: this.cancelBtnTxt,
-            rotateMenuTxt: this.rotateMenuTxt,
-            turnLeftTxt: this.turnLeftTxt,
-            turnRightTxt: this.turnRightTxt,
-            cropMenuTxt: this.cropMenuTxt,
-            scaleMenuTxt: this.scaleMenuTxt,
-            markMenuTxt: this.markMenuTxt,
-            colorTxt: this.colorTxt,
-            positionTxt: this.positionTxt,
-            opacityTxt: this.opacityTxt,
-            showRoomTxt: this.showRoomTxt,
-            companyNameTxt: this.companyNameTxt,
-            markAllMenuTxt: this.markAllMenuTxt,
-            tipTitleTxt: this.tipTitleTxt,
-            tipContentTxt: this.tipContentTxt,
-            tipConfirmBtnTxt: this.tipConfirmBtnTxt,
-
-            onSaveRotate: (options, cb) => {
-                this._saveRotate(options, cb);
-            },
-            onSaveCrop: (options, cb) => {
-                this._saveCrop(options, cb);
-            },
-            onSaveScale: (options, cb) => {
-                this._saveScale(options, cb);
-            },
-            onSaveMark: (options, cb) => {
-                this._saveMark(options, cb);
-            },
-            onReset: (cb) => {
-                this._reset(cb);
-            },
-            onSave: (cb, index) => {
-                this._save(cb, index);
-            },
-            onChangeActive: (options, cb) => {
-                this._changeActive(options, cb);
-            },
-            onSaveMarkAll: (options, cb) => {
-                this._saveMarkAll(options, cb);
-            },
-            onClose: () => {
-                this.onClose();
-            },
-            onComplete: (result) => {
-                this.onComplete(result);
-            }
-        });
+        this.dialog.renderImgList(this.sourceImgList, this.activeIndex);
     }
     _saveRotate(options, cb) {
         this.imgHandler.rotateNum = options.rotateNum;
@@ -307,6 +246,68 @@ class PipeImg {
     }
 
     show(options) {
+        this.dialog = new Dialog({
+            debug: this.debug,
+            activeIndex: this.activeIndex,
+            type: this.type,
+            mime: this.mime,
+
+            markXPositionMargin: this.markXPositionMargin,
+            markYPositionMargin: this.markYPositionMargin,
+            markTextList: this.markTextList,
+            closeBtnTxt: this.closeBtnTxt,
+            saveBtnTxt: this.saveBtnTxt,
+            resetBtnTxt: this.resetBtnTxt,
+            confirmBtnTxt: this.confirmBtnTxt,
+            cancelBtnTxt: this.cancelBtnTxt,
+            rotateMenuTxt: this.rotateMenuTxt,
+            turnLeftTxt: this.turnLeftTxt,
+            turnRightTxt: this.turnRightTxt,
+            cropMenuTxt: this.cropMenuTxt,
+            scaleMenuTxt: this.scaleMenuTxt,
+            markMenuTxt: this.markMenuTxt,
+            colorTxt: this.colorTxt,
+            positionTxt: this.positionTxt,
+            opacityTxt: this.opacityTxt,
+            showRoomTxt: this.showRoomTxt,
+            companyNameTxt: this.companyNameTxt,
+            markAllMenuTxt: this.markAllMenuTxt,
+            tipTitleTxt: this.tipTitleTxt,
+            tipContentTxt: this.tipContentTxt,
+            tipConfirmBtnTxt: this.tipConfirmBtnTxt,
+
+            onSaveRotate: (options, cb) => {
+                this._saveRotate(options, cb);
+            },
+            onSaveCrop: (options, cb) => {
+                this._saveCrop(options, cb);
+            },
+            onSaveScale: (options, cb) => {
+                this._saveScale(options, cb);
+            },
+            onSaveMark: (options, cb) => {
+                this._saveMark(options, cb);
+            },
+            onReset: (cb) => {
+                this._reset(cb);
+            },
+            onSave: (cb, index) => {
+                this._save(cb, index);
+            },
+            onChangeActive: (options, cb) => {
+                this._changeActive(options, cb);
+            },
+            onSaveMarkAll: (options, cb) => {
+                this._saveMarkAll(options, cb);
+            },
+            onClose: () => {
+                this.onClose();
+            },
+            onComplete: (result) => {
+                this.onComplete(result);
+            }
+        });
+
         this.methods.push({
             "name": "show",
             "params": options

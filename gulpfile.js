@@ -7,14 +7,14 @@ const browserSync = require('browser-sync').create(), //自动刷新
 const sass = require('gulp-sass');
 
 gulp.task('copy', function () {
-    return gulp.src('src/css/font/*')
-        .pipe(gulp.dest('dist/css/font'))
+    return gulp.src('src/css/common/font/*')
+        .pipe(gulp.dest('dist/css/common/font'))
 });
 // scss文件编译成css
 gulp.task('sass', function () {
-    return gulp.src(['src/css/pipeImg.scss','src/css/common.scss','src/css/pipeImg.bundle.scss'])
+    return gulp.src(['src/css/common/common.scss'])
         .pipe(sass())
-        .pipe(gulp.dest('dist/css'))
+        .pipe(gulp.dest('dist/css/common'))
         .pipe(reload({
             stream: true
         }));

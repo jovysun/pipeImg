@@ -1,20 +1,17 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
-    mode: 'development',
     entry: {
         'pipeImg': './src/js/pipeImg.js'
     },
     output: {
-        path: __dirname + "/dist/js",
+        path: path.resolve(__dirname, "dist/js"),
         filename: "[name].js",
         libraryTarget: 'umd'
-    },  
-    devtool: 'cheap-module-eval-source-map',
-    devServer: {
-        contentBase: './',
-        compress: true,
-        port: 9000
     },
+
+    devtool: 'cheap-module-source-map',
     module: {
         rules: [{
                 test: /\.js$/,
@@ -25,11 +22,14 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: [
-                    "style-loader", // creates style nodes from JS strings
-                    "css-loader", // translates CSS into CommonJS
-                    "sass-loader" // compiles Sass to CSS
-                ]
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        "css-loader", // translates CSS into CommonJS
+                        "sass-loader" // compiles Sass to CSS
+                    ]
+                })
+
             },
             {
                 test: /\.css$/,
@@ -50,7 +50,7 @@ module.exports = {
                 use: 'raw-loader'
             },
             {
-                test: /\.(png|woff|woff2|svg|ttf|eot)$/,
+                test: /\.(gif|jpg|png|woff|woff2|svg|ttf|eot)$/,
                 use: {
                     loader: 'url-loader',
                     options: {
@@ -75,9 +75,13 @@ module.exports = {
         }
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: __dirname + "/src/test.html"
-        })
+        new CleanWebpackPlugin(['dist/js']),
+        // 抽取 CSS 文件
+        new ExtractTextPlugin({
+            filename: '[name].css',
+            allChunks: true,
+            ignoreOrder: true
+        })        
     ]
 
 }

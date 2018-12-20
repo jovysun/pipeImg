@@ -1,18 +1,20 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
-    mode: 'production',
     entry: {
-        'pipeImg.bundle': './src/js/pipeImg.bundle.js',
         'pipeImg': './src/js/pipeImg.js'
     },
     output: {
         path: path.resolve(__dirname, "dist/js"),
-        filename: "[name].min.js",
+        filename: "[name].js",
         libraryTarget: 'umd'
+    },  
+    devtool: 'cheap-module-eval-source-map',
+    devServer: {
+        contentBase: './',
+        compress: false,
+        port: 9000
     },
-
-    devtool: 'cheap-module-source-map',
     module: {
         rules: [{
                 test: /\.js$/,
@@ -48,7 +50,7 @@ module.exports = {
                 use: 'raw-loader'
             },
             {
-                test: /\.(png|woff|woff2|svg|ttf|eot)$/,
+                test: /\.(gif|jpg|png|woff|woff2|svg|ttf|eot)$/,
                 use: {
                     loader: 'url-loader',
                     options: {
@@ -73,7 +75,9 @@ module.exports = {
         }
     },
     plugins: [
-        new CleanWebpackPlugin(['dist/js/*.min.*'])
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname + "/src/test.html")
+        })
     ]
 
 }
