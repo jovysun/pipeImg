@@ -429,42 +429,73 @@ class Dialog {
             this._getRotateNum(1);
             this._updateRotate();
         })
+
+        this.$cropPanel.find('.J-num-width,.J-num-height').on('keyup blur', (e) => {
+            let $input = $(e.currentTarget);
+            $input.val($input.val().replace(/[^\d]/g,''));
+        })
         // 裁剪++++++++++++
         this.$inputCropWidth.on('input', (e) => {
-            let value = parseInt($(e.target).val());
+            let $input = $(e.currentTarget);
+            let value = $input.val() != '' ? parseInt($input.val()) : 0;
+            if (value > this.activeData.w0) {
+                // 此刻slice比substr与substring骄傲
+                $input.val($input.val().slice(0, -1));
+                return
+            }
+            value = value < 50 ? 50 : value;
             this.cropW = value;
             if (this.fixRatio) {
                 this.cropH = Math.round(value / this.activeData.imgRatio);
                 this.$inputCropHeight.val(this.cropH);
             }
-            
 
-            // this.cropBox.width = value / this.activeData.ratio;
-            // if (this.cropBox.fixRatio) {
-            //     this.cropBox.height = this.cropBox.width / this.cropBox.boxData.ratio;
-            //     this.$inputCropHeight.val(value / this.activeData.imgRatio);
-            // }
             this._updateCrop();
-        })
+        }).on('blur', (e) => {
+            let $input = $(e.currentTarget);
+            let value = $input.val() != '' ? parseInt($input.val()) : 0;
+            if (value < 50) {
+                $input.val(50);
+                if (this.fixRatio) {
+                    this.$inputCropHeight.val(Math.round(50 / this.activeData.imgRatio));
+                }
+                this.cropW = 50;
+                this.cropH = this.$inputCropHeight.val();
+                this._updateCrop();
+            }
+        });
         this.$inputCropHeight.on('input', (e) => {
-            let value = parseInt($(e.target).val());
+            let $input = $(e.currentTarget);
+            let value =  $input.val() != '' ? parseInt( $input.val()) : 0;
+            if (value > this.activeData.h0) {
+                $input.val($input.val().slice(0, -1));
+                return
+            }
+            value = value < 50 ? 50 : value;
             this.cropH = value;
             if (this.fixRatio) {
                 this.cropW = Math.round(value * this.activeData.imgRatio);
                 this.$inputCropWidth.val(this.cropW);
             }
 
-
-            // this.cropBox.height = value / this.activeData.ratio;
-            // if (this.cropBox.fixRatio) {
-            //     this.cropBox.width = this.cropBox.height * this.cropBox.boxData.ratio;
-            // }
             this._updateCrop();
-        })
+        }).on('blur', (e) => {
+            let $input = $(e.currentTarget);
+            let value = $input.val() != '' ? parseInt($input.val()) : 0;
+            if (value < 50) {
+                $input.val(50);
+                if (this.fixRatio) {
+                    this.$inputCropWidth.val(Math.round(50 * this.activeData.imgRatio));
+                }
+
+                this.cropW = this.$inputCropWidth.val();
+                this.cropH = 50;
+                this._updateCrop();
+            }
+        });
         this.$radioCropFix.on('change', (e) => {
             this.fixRatio = !this.fixRatio;
-            // this.cropBox.fixRatio = !this.cropBox.fixRatio;
-        })
+        });
 
         // 缩放++++++++++++++
         this.$inputScaleWidth.on('input', (e) => {
@@ -472,14 +503,14 @@ class Dialog {
             value = value >= 0 ? value : 0;
             this.scaleRatio = value / this.activeData.w0;
             this._updateScale();
-        })
+        });
         this.$inputScaleHeight.on('input', (e) => {
             let value = parseInt($(e.target).val());
             value = value >= 0 ? value : 0;
             this.scaleRatio = value / this.activeData.h0;
 
             this._updateScale();
-        })
+        });
         // IE11下change事件连续触发
         this.$rangeScaleRatio.on('change', (e) => {
             let $this = $(e.target);
@@ -487,7 +518,7 @@ class Dialog {
             let value = parseInt($this.val());
             this.scaleRatio = value / max;
             this._updateScale();
-        })
+        });
         // chrome下input事件连续触发，change只有停止拖动时触发
         this.$rangeScaleRatio.on('input', (e) => {
             let $this = $(e.target);
@@ -495,7 +526,7 @@ class Dialog {
             let value = parseInt($this.val());
             this.scaleRatio = value / max;
             this._updateScale();
-        })
+        });
         // 水印++++++++++++++
         this.$radioMarkColor.on('change', () => {
             this._updateMark();

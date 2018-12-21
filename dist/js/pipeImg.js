@@ -574,43 +574,87 @@ function () {
         _this2._getRotateNum(1);
 
         _this2._updateRotate();
+      });
+      this.$cropPanel.find('.J-num-width,.J-num-height').on('keyup blur', function (e) {
+        var $input = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
+        $input.val($input.val().replace(/[^\d]/g, ''));
       }); // 裁剪++++++++++++
 
       this.$inputCropWidth.on('input', function (e) {
-        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());
+        var $input = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
+        var value = $input.val() != '' ? parseInt($input.val()) : 0;
+
+        if (value > _this2.activeData.w0) {
+          // 此刻slice比substr与substring骄傲
+          $input.val($input.val().slice(0, -1));
+          return;
+        }
+
+        value = value < 50 ? 50 : value;
         _this2.cropW = value;
 
         if (_this2.fixRatio) {
           _this2.cropH = Math.round(value / _this2.activeData.imgRatio);
 
           _this2.$inputCropHeight.val(_this2.cropH);
-        } // this.cropBox.width = value / this.activeData.ratio;
-        // if (this.cropBox.fixRatio) {
-        //     this.cropBox.height = this.cropBox.width / this.cropBox.boxData.ratio;
-        //     this.$inputCropHeight.val(value / this.activeData.imgRatio);
-        // }
-
+        }
 
         _this2._updateCrop();
+      }).on('blur', function (e) {
+        var $input = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
+        var value = $input.val() != '' ? parseInt($input.val()) : 0;
+
+        if (value < 50) {
+          $input.val(50);
+
+          if (_this2.fixRatio) {
+            _this2.$inputCropHeight.val(Math.round(50 / _this2.activeData.imgRatio));
+          }
+
+          _this2.cropW = 50;
+          _this2.cropH = _this2.$inputCropHeight.val();
+
+          _this2._updateCrop();
+        }
       });
       this.$inputCropHeight.on('input', function (e) {
-        var value = parseInt(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val());
+        var $input = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
+        var value = $input.val() != '' ? parseInt($input.val()) : 0;
+
+        if (value > _this2.activeData.h0) {
+          $input.val($input.val().slice(0, -1));
+          return;
+        }
+
+        value = value < 50 ? 50 : value;
         _this2.cropH = value;
 
         if (_this2.fixRatio) {
           _this2.cropW = Math.round(value * _this2.activeData.imgRatio);
 
           _this2.$inputCropWidth.val(_this2.cropW);
-        } // this.cropBox.height = value / this.activeData.ratio;
-        // if (this.cropBox.fixRatio) {
-        //     this.cropBox.width = this.cropBox.height * this.cropBox.boxData.ratio;
-        // }
-
+        }
 
         _this2._updateCrop();
+      }).on('blur', function (e) {
+        var $input = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
+        var value = $input.val() != '' ? parseInt($input.val()) : 0;
+
+        if (value < 50) {
+          $input.val(50);
+
+          if (_this2.fixRatio) {
+            _this2.$inputCropWidth.val(Math.round(50 * _this2.activeData.imgRatio));
+          }
+
+          _this2.cropW = _this2.$inputCropWidth.val();
+          _this2.cropH = 50;
+
+          _this2._updateCrop();
+        }
       });
       this.$radioCropFix.on('change', function (e) {
-        _this2.fixRatio = !_this2.fixRatio; // this.cropBox.fixRatio = !this.cropBox.fixRatio;
+        _this2.fixRatio = !_this2.fixRatio;
       }); // 缩放++++++++++++++
 
       this.$inputScaleWidth.on('input', function (e) {
