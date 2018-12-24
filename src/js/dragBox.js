@@ -188,6 +188,9 @@ class DragBox {
             }
 
             newWidth = oldWidth + addWidth;
+            if (this.isCrop && newWidth <= 1) {
+                return false;
+            }
             newLeft = this.boxEl.offsetLeft - addWidth;
         }
         if (contact.indexOf('right') != -1) {
@@ -202,22 +205,27 @@ class DragBox {
         if (contact.indexOf('up') != -1) {
             let addHeight;
             if (this.fixRatio) {
-                newHeight = Math.round(newWidth / dragBoxRatio);
+                newHeight = Math.floor(newWidth / dragBoxRatio);
                 addHeight = newHeight - oldHeight;
             } else {
                 addHeight = top - y;
                 newHeight = oldHeight + addHeight;
             }
-            newTop = this.boxEl.offsetTop - addHeight;
 
+            if (this.isCrop && newHeight <= 1) {
+                return false;
+            }
             if (this.isCrop && addHeight >= 0 && this.boxEl.offsetTop <= 0) {
                 return false;
             }
+
+            newTop = this.boxEl.offsetTop - addHeight;
+
         }
         if (contact.indexOf('down') != -1) {
             let addHeight;
             if (this.fixRatio) {
-                newHeight = Math.round(newWidth / dragBoxRatio);
+                newHeight = Math.floor(newWidth / dragBoxRatio);
                 addHeight = newHeight - oldHeight;
                 newTop = this.boxEl.offsetTop;
             } else {

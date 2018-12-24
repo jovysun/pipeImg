@@ -42,7 +42,7 @@
             <div class="content-footer">
                 <input class="num-width J-num-width" type="text">
                 <input class="J-fix-ratio" id="fixRatio" type="checkbox" name="fixRatio" hidden>
-                <label class="fix" for="fixRatio"><i class="ob-icon icon-lock"></i></label>
+                <label class="fix" for="fixRatio" title="{{=constrainTxt}}"><i class="ob-icon icon-lock"></i></label>
                 <input class="num-height J-num-height" type="text">
                 <span class="txt">px</span>
 
@@ -65,7 +65,7 @@
                 <span class="txt">X</span>
                 <input class="num-height J-num-height" type="text">
                 <span class="txt">px</span>
-                <input class="scale-range J-scale-range" type="range" name="scaleRatio" min="5" max="100" step="1" defaultValue="100" value="100">
+                <input class="scale-range J-scale-range" type="range" name="scaleRatio" min="50" max="100" step="1" value="100">
 
                 <div class="pipeImg-buttons">
                     <a class="pipeImg-button button-main J-button-save" href="javascript:void(0)">{{=saveBtnTxt}}</a>

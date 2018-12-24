@@ -50,6 +50,7 @@ class PipeImg {
             tipTitleTxt: '提示',
             tipContentTxt: '尚未保存，是否确定离开？',
             tipConfirmBtnTxt: '确定',
+            constrainTxt: '约束比例',
             // 初始化完成
             onInited: () => {},
             // 上传保存完成
@@ -96,6 +97,7 @@ class PipeImg {
         this.tipTitleTxt = options.tipTitleTxt;
         this.tipContentTxt = options.tipContentTxt;
         this.tipConfirmBtnTxt = options.tipConfirmBtnTxt;
+        this.constrainTxt = options.constrainTxt;
 
 
         this.onInited = options.onInited;
@@ -275,6 +277,7 @@ class PipeImg {
             tipTitleTxt: this.tipTitleTxt,
             tipContentTxt: this.tipContentTxt,
             tipConfirmBtnTxt: this.tipConfirmBtnTxt,
+            constrainTxt: this.constrainTxt,
 
             onSaveRotate: (options, cb) => {
                 this._saveRotate(options, cb);

@@ -3,7 +3,7 @@ import template from 'template';
 
 import {
     drag,
-    loadImage
+    isRealNum
 } from './util';
 import {
     DragBox
@@ -49,6 +49,7 @@ class Dialog {
             tipTitleTxt: '提示',
             tipContentTxt: '尚未保存，是否确定离开？',
             tipConfirmBtnTxt: '确定',
+            constrainTxt: '约束比例',
 
             onSaveRotate: (args, cb) => {},
             onSaveCrop: (args, cb) => {},
@@ -95,6 +96,7 @@ class Dialog {
         this.tipTitleTxt = options.tipTitleTxt;
         this.tipContentTxt = options.tipContentTxt;
         this.tipConfirmBtnTxt = options.tipConfirmBtnTxt;
+        this.constrainTxt = options.constrainTxt;
 
         this.onSaveRotate = options.onSaveRotate;
         this.onSaveCrop = options.onSaveCrop;
@@ -134,7 +136,8 @@ class Dialog {
             markAllMenuTxt: this.markAllMenuTxt,
             tipTitleTxt: this.tipTitleTxt,
             tipContentTxt: this.tipContentTxt,
-            tipConfirmBtnTxt: this.tipConfirmBtnTxt
+            tipConfirmBtnTxt: this.tipConfirmBtnTxt,
+            constrainTxt: this.constrainTxt
         });
 
         let html = '<div class="pipeImg-dialog J-pipe-dialog" onselectstart="return false" ondragstart="return false"><div class="pipe-mask J-pipe-mask"></div>' + templateHtml + '</div>';
@@ -240,7 +243,7 @@ class Dialog {
             },
             onDragPoint: (boxData) => {
                 this.$markPanel.find('.J-mark-txt').css({
-                    'font-size': Math.round(parseInt(this.markBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
+                    'font-size': Math.floor(parseInt(this.markBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
                 });
                 this.markBox.$dragBox.find('.J-mark-txt').css({
                     'display': 'block'
@@ -258,7 +261,7 @@ class Dialog {
             },
             onDragPoint: (boxData) => {
                 this.$markAllPanel.find('.J-mark-txt').css({
-                    'font-size': Math.round(parseInt(this.markAllBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
+                    'font-size': Math.floor(parseInt(this.markAllBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
                 });
                 this.markAllBox.$dragBox.find('.J-mark-txt').css({
                     'display': 'block'
@@ -430,23 +433,42 @@ class Dialog {
             this._updateRotate();
         })
 
-        this.$cropPanel.find('.J-num-width,.J-num-height').on('keyup blur', (e) => {
-            let $input = $(e.currentTarget);
-            $input.val($input.val().replace(/[^\d]/g,''));
-        })
+        // this.$cropPanel.find('.J-num-width,.J-num-height').on('keyup blur', (e) => {
+        //     let $input = $(e.currentTarget);
+        //     $input.val($input.val().replace(/[^\d]/g,''));
+        // })
         // 裁剪++++++++++++
         this.$inputCropWidth.on('input', (e) => {
             let $input = $(e.currentTarget);
-            let value = $input.val() != '' ? parseInt($input.val()) : 0;
+
+
+            let value = $input.val();
+            $input.val($input.val().replace(/[^\d]/g,''));
+            
+            if (value === '') {
+                return;
+            } else {
+                value = parseInt($input.val())
+            }
+
+
+            // let value = $input.val() != '' ? parseInt($input.val()) : 0;
             if (value > this.activeData.w0) {
-                // 此刻slice比substr与substring骄傲
+                // 此刻slice比substr与substring好用
                 $input.val($input.val().slice(0, -1));
                 return
             }
-            value = value < 50 ? 50 : value;
+            if (value < 50) {
+                if (value <= this.activeData.w0) {
+                    value = this.activeData.w0;
+                } else {
+                    value = 50;
+                }
+            }
+            
             this.cropW = value;
             if (this.fixRatio) {
-                this.cropH = Math.round(value / this.activeData.imgRatio);
+                this.cropH = Math.floor(value / this.activeData.imgRatio);
                 this.$inputCropHeight.val(this.cropH);
             }
 
@@ -454,27 +476,53 @@ class Dialog {
         }).on('blur', (e) => {
             let $input = $(e.currentTarget);
             let value = $input.val() != '' ? parseInt($input.val()) : 0;
+
             if (value < 50) {
-                $input.val(50);
-                if (this.fixRatio) {
-                    this.$inputCropHeight.val(Math.round(50 / this.activeData.imgRatio));
+                if (value <= this.activeData.w0) {
+                    value = this.activeData.w0;
+                } else {
+                    value = 50;
                 }
-                this.cropW = 50;
+
+                $input.val(value);
+                if (this.fixRatio) {
+                    this.$inputCropHeight.val(Math.floor(value / this.activeData.imgRatio));
+                }
+                this.cropW = value;
                 this.cropH = this.$inputCropHeight.val();
                 this._updateCrop();
             }
+
         });
         this.$inputCropHeight.on('input', (e) => {
             let $input = $(e.currentTarget);
-            let value =  $input.val() != '' ? parseInt( $input.val()) : 0;
+
+            let value = $input.val();
+            $input.val($input.val().replace(/[^\d]/g,''));
+            
+            if (value === '') {
+                return;
+            } else {
+                value = parseInt($input.val())
+            }
+
+            // let value =  $input.val() != '' ? parseInt( $input.val()) : 0;
             if (value > this.activeData.h0) {
                 $input.val($input.val().slice(0, -1));
                 return
             }
-            value = value < 50 ? 50 : value;
+
+            if (value < 50) {
+                if (value <= this.activeData.h0) {
+                    value = this.activeData.h0;
+                } else {
+                    value = 50;
+                }
+            }
+
             this.cropH = value;
             if (this.fixRatio) {
-                this.cropW = Math.round(value * this.activeData.imgRatio);
+                this.cropW = Math.floor(value * this.activeData.imgRatio);
                 this.$inputCropWidth.val(this.cropW);
             }
 
@@ -482,34 +530,89 @@ class Dialog {
         }).on('blur', (e) => {
             let $input = $(e.currentTarget);
             let value = $input.val() != '' ? parseInt($input.val()) : 0;
+
             if (value < 50) {
-                $input.val(50);
+                if (value <= this.activeData.h0) {
+                    value = this.activeData.h0;
+                } else {
+                    value = 50;
+                }
+                
+
+                $input.val(value);
                 if (this.fixRatio) {
-                    this.$inputCropWidth.val(Math.round(50 * this.activeData.imgRatio));
+                    this.$inputCropWidth.val(Math.floor(value * this.activeData.imgRatio));
                 }
 
                 this.cropW = this.$inputCropWidth.val();
-                this.cropH = 50;
+                this.cropH = value;
                 this._updateCrop();
             }
+
         });
         this.$radioCropFix.on('change', (e) => {
             this.fixRatio = !this.fixRatio;
+            this.cropBox.fixRatio = this.fixRatio;
         });
 
         // 缩放++++++++++++++
         this.$inputScaleWidth.on('input', (e) => {
-            let value = parseInt($(e.target).val());
-            value = value >= 0 ? value : 0;
-            this.scaleRatio = value / this.activeData.w0;
-            this._updateScale();
+            let $input = $(e.currentTarget);
+            let value = $input.val();
+            $input.val($input.val().replace(/[^\d]/g,''));
+            
+            if (value === '') {
+                return;
+            } else {
+                value = parseInt($input.val())
+            }
+
+            if (value > this.activeData.w0) {
+                $input.val($input.val().slice(0, -1));
+                return
+            }
+
+            if (value > 50) {
+                this.scaleRatio = value / this.activeData.w0;
+                this._updateScale();
+            }
+
+        }).on('blur', (e) => {
+            let $input = $(e.currentTarget);
+            let value = $input.val();
+            if (value === '' || parseInt(value) < 50) {
+                value = Math.floor(parseInt(this.$inputScaleHeight.val()) * this.activeData.imgRatio);
+                $input.val(value);
+            }
         });
         this.$inputScaleHeight.on('input', (e) => {
-            let value = parseInt($(e.target).val());
-            value = value >= 0 ? value : 0;
-            this.scaleRatio = value / this.activeData.h0;
+            let $input = $(e.currentTarget);
+            let value = $input.val();
+            $input.val($input.val().replace(/[^\d]/g,''));
+            
+            if (value === '') {
+                return;
+            } else {
+                value = parseInt($input.val())
+            }
 
-            this._updateScale();
+            if (value > this.activeData.h0) {
+                $input.val($input.val().slice(0, -1));
+                return
+            }
+
+            if (value > 50) {
+                this.scaleRatio = value / this.activeData.h0;
+                this._updateScale();
+            }
+
+        }).on('blur', (e) => {
+            let $input = $(e.currentTarget);
+            let value = $input.val();
+            if (value === '' || parseInt(value) < 50) {
+                value = Math.floor(parseInt(this.$inputScaleWidth.val()) / this.activeData.imgRatio);
+                $input.val(value);
+            }
         });
         // IE11下change事件连续触发
         this.$rangeScaleRatio.on('change', (e) => {
@@ -711,9 +814,9 @@ class Dialog {
         this.cropW = this.$inputCropWidth.val();
         this.cropH = this.$inputCropHeight.val();
 
-        // this.cropBox.fixRatio = this.$radioCropFix.prop('checked');
-        // this.cropBox.width = this.$inputCropWidth.val() / this.activeData.ratio;
-        // this.cropBox.height = this.$inputCropHeight.val() / this.activeData.ratio;
+        this.cropBox.width = this.cropW / this.activeData.ratio;
+        this.cropBox.height = this.cropH / this.activeData.ratio;
+        this.cropBox.fixRatio = this.fixRatio;
     }
     _updateCrop() {
         this.cropBox.width = this.cropW / this.activeData.ratio;
@@ -724,7 +827,7 @@ class Dialog {
         this._updateIsChange(true);
     }
     _saveCrop() {
-        if (this.cropBox.boxData.left === 0 && this.cropBox.boxData.top === 0 && this.cropBox.boxData.width === Math.round(this.activeData.w1) && this.cropBox.boxData.height === Math.round(this.activeData.h1)) {
+        if (this.cropBox.boxData.left === 0 && this.cropBox.boxData.top === 0 && this.cropBox.boxData.width === Math.floor(this.activeData.w1) && this.cropBox.boxData.height === Math.floor(this.activeData.h1)) {
             return false;
         }
         let options = {
@@ -776,29 +879,28 @@ class Dialog {
             'cursor': 'move'
         })
         // 初始化滑块值
-        $scaleRange.val($scaleRange.attr('defaultValue'));
+        $scaleRange.attr('max', this.activeData.w0);
+        $scaleRange.val(this.activeData.w0);
 
         this.scaleRatio = 1;
     }
     _updateScale() {
-        let scaleRatio = this.scaleRatio;
+        let max = parseInt(this.$rangeScaleRatio.attr('max'));
 
-        let $scaleRange = this.$rangeScaleRatio;
-        let $scaleNumWidth = this.$inputScaleWidth;
-        let $scaleNumHeight = this.$inputScaleHeight;
-        let max = parseInt($scaleRange.attr('max'));
-
-        if ($scaleNumWidth.val() != this.activeData.w0 * scaleRatio) {
-            $scaleNumWidth.val(this.activeData.w0 * scaleRatio);
+        let newWidth = Math.floor(this.activeData.w0 * this.scaleRatio);
+        let newHeight = Math.floor(this.activeData.h0 * this.scaleRatio);
+        let newRange = Math.floor(max * this.scaleRatio);
+        if (this.$inputScaleWidth.val() != newWidth) {
+            this.$inputScaleWidth.val(newWidth);
         }
-        if ($scaleNumHeight.val() != this.activeData.h0 * scaleRatio) {
-            $scaleNumHeight.val(this.activeData.h0 * scaleRatio);
+        if (this.$inputScaleHeight.val() != newHeight) {
+            this.$inputScaleHeight.val(newHeight);
         }
-        if ($scaleRange.val() != max * scaleRatio) {
-            $scaleRange.val(max * scaleRatio);
+        if (this.$rangeScaleRatio.val() != newRange) {
+            this.$rangeScaleRatio.val(newRange);
         }
 
-        this.$el.find('.J-panel').not('.J-mark-all-panel').find('.J-source').css({
+        this.$scalePanel.find('.J-source').css({
             'transform': `scale(${this.scaleRatio})`
         });
 
@@ -1036,8 +1138,8 @@ class Dialog {
 
 
     _showSize(w0, h0) {
-        w0 = Math.round(w0);
-        h0 = Math.round(h0);
+        w0 = Math.floor(w0);
+        h0 = Math.floor(h0);
         // 显示活动图片原始宽高
         let $numWidth = this.$el.find('.J-num-width');
         let $numHeight = this.$el.find('.J-num-height');

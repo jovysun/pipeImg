@@ -315,6 +315,16 @@ function img2cvs(img) {
     ctx.drawImage(img, 0, 0);
     return canvas;
 }
+function isRealNum(val) {
+    if (typeof val !== 'number') {
+        return false;
+    }
+    if (!isNaN(val)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 export {
     drag,
@@ -329,5 +339,6 @@ export {
     uploadFile,
     getImgPromise,
     _$,
-    img2cvs
+    img2cvs,
+    isRealNum
 }
