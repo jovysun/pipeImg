@@ -331,11 +331,17 @@ function () {
 
       this.$el.find('.J-img-box').removeClass('loading');
       this.imgList = imgList;
-      this.activeIndex = activeIndex;
-      var $imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
-      $imgsThumbnail.html(template__WEBPACK_IMPORTED_MODULE_1___default()(this.thumbnailTpl, {
+      this.activeIndex = activeIndex; // let $imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
+
+      this.$el.find('.J-pipe-footer').find('.J-imgs-thumbnail').html(template__WEBPACK_IMPORTED_MODULE_1___default()(this.thumbnailTpl, {
         imgList: this.imgList,
-        activeIndex: this.activeIndex
+        activeIndex: this.activeIndex,
+        markType: '0'
+      }));
+      this.$markAllPanel.find('.J-imgs-thumbnail').html(template__WEBPACK_IMPORTED_MODULE_1___default()(this.thumbnailTpl, {
+        imgList: this.imgList,
+        activeIndex: this.activeIndex,
+        markType: '1'
       }));
       this.activeImg = this.imgList[this.activeIndex];
 
@@ -1514,6 +1520,7 @@ function () {
       var $activeThumb = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
       var index = $activeThumb.index();
       this.onSave(function (data) {
+        // [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":"image?tid=40&amp;id=gCfpAUFcYRlB&amp;cache=0&amp;lan_code=0"}];
         if (!(data && data[index] && data[index].url)) {
           window.console && console.log('save: data error!');
           return false;
@@ -1523,7 +1530,7 @@ function () {
 
         $activeThumb.addClass('new').find('img').attr('src', newSrc);
 
-        _this10.$markAllPanel.find('.J-img-thumbnail').eq(index).find('img').attr('src', newSrc); // 更新imgList
+        _this10.$markAllPanel.find('.J-img-thumbnail').eq(index).find('img').attr('src', newSrc).attr('title', data[index].picWidth + 'px * ' + data[index].picHeight + 'px'); // 更新imgList
 
 
         _this10.imgList[index] = $activeThumb.find('img').get(0);
@@ -2798,7 +2805,7 @@ module.exports = "<div class=\"thin-select\">\n\t<div class=\"select-title J-sel
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n    {{ for(var i=0;i<imgList.length;i++) { }} \r\n    <div class=\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\">\r\n        <div class=\"img-inner\">\r\n            <a href=\"javascript:void(0)\">\r\n            <img src=\"{{-imgList[i].src}}\">\r\n            <span class=\"circle\"></span>\r\n            </a>\r\n        </div>\r\n\r\n    </div>\r\n\r\n    {{ } }}"
+module.exports = "\r\n    {{ for(var i=0;i<imgList.length;i++) { }} \r\n    <div class=\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\">\r\n        <div class=\"img-inner\">\r\n            <a href=\"javascript:void(0)\">\r\n            {{ if(markType === '1') { }}   \r\n            <img src=\"{{-imgList[i].src}}\" title=\"{{-imgList[i].width}}px * {{-imgList[i].height}}px\">\r\n            {{ }else{ }}\r\n                <img src=\"{{-imgList[i].src}}\" title=\"{{-imgList[i].src}}\">\r\n            {{ } }}\r\n            <span class=\"circle\"></span>\r\n            </a>\r\n        </div>\r\n\r\n    </div>\r\n\r\n    {{ } }}"
 
 /***/ }),
 

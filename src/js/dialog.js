@@ -208,12 +208,17 @@ class Dialog {
         this.imgList = imgList;
         this.activeIndex = activeIndex;
 
-        let $imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
-        $imgsThumbnail.html(template(this.thumbnailTpl, {
+        // let $imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
+        this.$el.find('.J-pipe-footer').find('.J-imgs-thumbnail').html(template(this.thumbnailTpl, {
             imgList: this.imgList,
-            activeIndex: this.activeIndex
+            activeIndex: this.activeIndex,
+            markType: '0'
         }))
-
+        this.$markAllPanel.find('.J-imgs-thumbnail').html(template(this.thumbnailTpl, {
+            imgList: this.imgList,
+            activeIndex: this.activeIndex,
+            markType: '1'
+        }));
 
         this.activeImg = this.imgList[this.activeIndex];
         this._updateActiveData();
@@ -1281,6 +1286,8 @@ class Dialog {
         let $activeThumb = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
         let index = $activeThumb.index();
         this.onSave((data) => {  
+            // [{"picHeight":600,"picWidth":800,"tempPhotoId":"573761","url":"image?tid=40&amp;id=gCfpAUFcYRlB&amp;cache=0&amp;lan_code=0"}];
+
             if (!(data && data[index] && data[index].url)) {
                 window.console && console.log('save: data error!');
                 return false;
@@ -1288,7 +1295,7 @@ class Dialog {
             let newSrc = data[index].url.replace("&amp;", "&");
             // 更新单图和批量模式缩略图
             $activeThumb.addClass('new').find('img').attr('src', newSrc);            
-            this.$markAllPanel.find('.J-img-thumbnail').eq(index).find('img').attr('src', newSrc);
+            this.$markAllPanel.find('.J-img-thumbnail').eq(index).find('img').attr('src', newSrc).attr('title', data[index].picWidth + 'px * ' + data[index].picHeight + 'px');
             // 更新imgList
             this.imgList[index] = $activeThumb.find('img').get(0);
 
