@@ -57,7 +57,7 @@ class DragBox {
             dragBoxHtml = `<div class="dragbox-wrapper J-dragbox-wrapper">
                                 <img class="J-source img-dark" src="${src}">
                                 <img class="J-source img-light J-img-light" src="${src}">
-                                <div class="drag-box J-drag-box">
+                                <div class="drag-box style-2 J-drag-box">
                                     <div class="drag-point up-left J-drag-point"></div>
                                     <div class="drag-point up J-drag-point"></div>
                                     <div class="drag-point up-right J-drag-point"></div>

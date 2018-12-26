@@ -309,6 +309,7 @@ function () {
       this.$selectMarkAllTxt = this.$markAllPanel.find('.J-select-mark');
       this.$buttons = this.$el.find('.J-button-save, .J-button-reset, .J-button-confirm, .J-button-cancel, .J-button-confirm-all, .J-button-cancel-all'); // 全局变量
 
+      this.loaded = false;
       this.MARKTYPE = {
         'SINGLE': '0',
         'MULTIPLE': '1'
@@ -331,7 +332,13 @@ function () {
 
       this.$el.find('.J-img-box').removeClass('loading');
       this.imgList = imgList;
-      this.activeIndex = activeIndex; // let $imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
+      this.activeIndex = activeIndex;
+      this.activeImg = this.imgList[this.activeIndex];
+
+      this._updateActiveData(); // 初始化自定义select
+
+
+      this.markSelects = _thinSelect__WEBPACK_IMPORTED_MODULE_6__["default"].use(this.$el.find('.J-select-mark')); // 初始化缩略图
 
       this.$el.find('.J-pipe-footer').find('.J-imgs-thumbnail').html(template__WEBPACK_IMPORTED_MODULE_1___default()(this.thumbnailTpl, {
         imgList: this.imgList,
@@ -342,11 +349,7 @@ function () {
         imgList: this.imgList,
         activeIndex: this.activeIndex,
         markType: '1'
-      }));
-      this.activeImg = this.imgList[this.activeIndex];
-
-      this._updateActiveData(); // 初始化裁剪框
-
+      })); // 初始化裁剪框
 
       this.cropBox = new _dragBox__WEBPACK_IMPORTED_MODULE_3__["DragBox"]({
         el: this.$cropPanel.find('.J-source'),
@@ -401,18 +404,23 @@ function () {
           });
         }
       });
+      this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
+      this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
       this.type === this.MARKTYPE.MULTIPLE && this.showModel(this.type);
 
       this._refresh();
 
-      this.markSelects = _thinSelect__WEBPACK_IMPORTED_MODULE_6__["default"].use(this.$el.find('.J-select-mark'));
+      this._updateMarkTxt();
+
+      this._updateMarkTxt(this.MARKTYPE.MULTIPLE);
 
       this._setMarkPosition();
 
-      this._setMarkPosition(this.MARKTYPE.MULTIPLE);
+      this._setMarkPosition(this.MARKTYPE.MULTIPLE); // 图片加载完成，激活首屏按钮
 
-      this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
-      this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
+
+      this.loaded = true;
+      this.$el.find('.J-menu-btn,.J-btn-rotate-left,.J-btn-rotate-right,.J-menu-btn-mark-all,.J-menu-btn-mark').addClass('active');
     }
   }, {
     key: "_bind",
@@ -455,12 +463,18 @@ function () {
 
         _this2._updateActiveImg($thumbnail.index());
 
+        _this2._updateMarkTxt(_this2.MARKTYPE.MULTIPLE);
+
         _this2._setMarkPosition(_this2.MARKTYPE.MULTIPLE);
 
         _this2._initData();
       }); // 菜单切换
 
       this.$el.find('.J-menu-btn').on('click', function (e) {
+        if (!_this2.loaded) {
+          return;
+        }
+
         var run = function run() {
           var $item = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget).parent();
           var index = $item.index();
@@ -511,14 +525,12 @@ function () {
 
 
         if (_this2.$markAllPanel.hasClass('active')) {
-          // 切换到单图编辑模式重置活动图片
-          var $thumbnail = _this2.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
-
-          _this2._updateActiveImg($thumbnail.index());
-        }
-
-        if (_this2.$markAllPanel.hasClass('active') && _this2.isChange) {
           _this2._confirm(function () {
+            // 切换到单图编辑模式重置活动图片
+            var $thumbnail = _this2.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
+
+            _this2._updateActiveImg($thumbnail.index());
+
             run();
 
             _this2._updateIsChange(false);
@@ -543,14 +555,14 @@ function () {
           _this2._updateIsChange(false);
         };
 
-        if (_this2.isChange) {
-          _this2._confirm(run);
-        } else {
-          run();
-        }
+        _this2._confirm(run);
       }); // 切换批量水印
 
       this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark-all', function (e) {
+        if (!_this2.loaded) {
+          return;
+        }
+
         var run = function run() {
           var $thumbnail = _this2.$markAllPanel.find('.J-img-thumbnail.active');
 
@@ -574,20 +586,24 @@ function () {
       // 逆时针旋转
 
       this.$btnRotateLeft.on('click', function () {
+        if (!_this2.loaded) {
+          return;
+        }
+
         _this2._getRotateNum(-1);
 
         _this2._updateRotate();
       }); // 顺时针旋转
 
       this.$btnRotateRight.on('click', function () {
+        if (!_this2.loaded) {
+          return;
+        }
+
         _this2._getRotateNum(1);
 
         _this2._updateRotate();
-      }); // this.$cropPanel.find('.J-num-width,.J-num-height').on('keyup blur', (e) => {
-      //     let $input = $(e.currentTarget);
-      //     $input.val($input.val().replace(/[^\d]/g,''));
-      // })
-      // 裁剪++++++++++++
+      }); // 裁剪++++++++++++
 
       this.$inputCropWidth.on('input', function (e) {
         var $input = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
@@ -1185,6 +1201,14 @@ function () {
       });
     }
   }, {
+    key: "_updateMarkTxt",
+    value: function _updateMarkTxt(type) {
+      var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
+      $panel.find('.J-mark-txt').css({
+        'font-size': Math.floor(this.markFontSize0 / this.activeData.ratio) + 'px'
+      });
+    }
+  }, {
     key: "_initMark",
     value: function _initMark(type) {
       var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
@@ -1192,9 +1216,8 @@ function () {
       $panel.find('.J-position:first').prop('checked', true);
       $panel.find('.J-opacity:first').val($panel.find('.J-opacity:first').attr('defaultValue'));
       $panel.find('.J-select-mark option:first').prop('selected', true);
-      $panel.find('.J-mark-txt').css({
-        'font-size': this.markFontSize0 + 'px'
-      });
+
+      this._updateMarkTxt(type);
 
       if (type === this.MARKTYPE.MULTIPLE) {
         this.markSelects[1].select(0);
@@ -1215,6 +1238,8 @@ function () {
   }, {
     key: "_updateMark",
     value: function _updateMark(type) {
+      this._updateMarkTxt(type);
+
       this._setMarkStyle(type);
 
       this._setMarkPosition(type);
@@ -1251,7 +1276,9 @@ function () {
       var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
       var $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;
       var $markTxt = $panel.find('.J-mark-txt');
-      var markFont = Math.floor(parseInt($markTxt.css('font-size')) * this.activeData.ratio) + 'px / ' + Math.floor(parseInt($markTxt.css('line-height')) * this.activeData.ratio) + 'px ' + $markTxt.css('font-family');
+      var fontSize = Math.floor(parseInt($markTxt.css('font-size')) * this.activeData.ratio);
+      var lineHeight = Math.floor(parseInt($markTxt.css('line-height')) * this.activeData.ratio);
+      var markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markTxt.css('font-family');
       var $opacity = $panel.find('.J-opacity');
       var opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));
       var colorVal = $panel.find('.J-color:checked').val();
@@ -1263,8 +1290,8 @@ function () {
 
       var txtVal = $panel.find('.J-select-mark').val();
       var text = this.markTextList[txtVal];
-      var markX = Math.floor(parseInt($dragBox.css('left')) * this.activeData.ratio);
-      var markY = Math.floor(parseInt($dragBox.css('top')) * this.activeData.ratio);
+      var markX = Math.floor(parseInt($dragBox.css('left')) * this.activeData.ratio) + parseInt($dragBox.css('border-width'));
+      var markY = Math.floor(parseInt($dragBox.css('top')) * this.activeData.ratio + (lineHeight - fontSize) / 2) + parseInt($dragBox.css('border-width'));
       var POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
       var positionVal = $panel.find('.J-position:checked').val();
       var dragBoxWrapperWidth = this.activeData.w1;
@@ -1279,23 +1306,23 @@ function () {
           break;
 
         case 'upLeft':
-          markX = (0 + 15) * this.activeData.ratio;
-          markY = (0 + 20) * this.activeData.ratio;
+          markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
+          markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
           break;
 
         case 'upRight':
-          markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
-          markY = (0 + 20) * this.activeData.ratio;
+          markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
+          markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
           break;
 
         case 'downLeft':
-          markX = (0 + 15) * this.activeData.ratio;
-          markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
+          markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
+          markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
           break;
 
         case 'downRight':
-          markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
-          markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
+          markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
+          markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
           break;
 
         default:
@@ -1678,7 +1705,7 @@ function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"pipeImg-wrapper J-pipe-wrapper\">\r\n    <div class=\"pipeImg-header\">\r\n        <ul class=\"pipeImg-menu\">\r\n            <li class=\"pipeImg-item J-item active\"><a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-refresh\"></i>{{=rotateMenuTxt}}</a></li>\r\n            <li class=\"pipeImg-item J-item\"><a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-crop\"></i>{{=cropMenuTxt}}</a></li>\r\n            <li class=\"pipeImg-item J-item\"><a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-scaling\"></i>{{=scaleMenuTxt}}</a></li>\r\n            <li class=\"pipeImg-item J-item J-item-mark\">\r\n                <a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-add-l\"></i>{{=markMenuTxt}}</a>\r\n                <div class=\"pipeImg-btn J-menu-txt\" style=\"display:none;\"><i class=\"ob-icon icon-add-l\"></i>{{=markMenuTxt}}</div>\r\n                <div class=\"pipeImg-item item-sub\">\r\n                    <a class=\"pipeImg-btn J-menu-btn-mark-all\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-batch\"></i>{{=markAllMenuTxt}}</a>\r\n                    <a class=\"pipeImg-btn J-menu-btn-mark\" href=\"javascript:void(0)\" style=\"display:none;\"><i class=\"ob-icon icon-add-l\"></i>{{=markMenuTxt}}</a>\r\n                </div>\r\n            </li>\r\n        </ul>\r\n        <a class=\"pipeImg-btn btn-close J-button-close\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-delete\"></i>{{=closeBtnTxt}}</a>\r\n    </div>\r\n    <div class=\"pipeImg-content\">\r\n        <!-- 旋转面板 -->\r\n        <div class=\"pipeImg-panel rotate-panel active J-panel J-rotate-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <div class=\"size\">\r\n                    <span class=\"J-num-width\">1</span>*<span class=\"J-num-height\">1</span>px\r\n                </div>\r\n                <a class=\"pipeImg-btn btn-rotate J-btn-rotate-left\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-rotate-l\"></i>{{=turnLeftTxt}}</a>\r\n                <a class=\"pipeImg-btn btn-rotate J-btn-rotate-right\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-rotate-r\"></i>{{=turnRightTxt}}</a>\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-main J-button-save\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-reset J-button-reset\" href=\"javascript:void(0)\">{{=resetBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <!-- 裁剪面板 -->\r\n        <div class=\"pipeImg-panel J-panel J-crop-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <input class=\"num-width J-num-width\" type=\"text\">\r\n                <input class=\"J-fix-ratio\" id=\"fixRatio\" type=\"checkbox\" name=\"fixRatio\" hidden>\r\n                <label class=\"fix\" for=\"fixRatio\" title=\"{{=constrainTxt}}\"><i class=\"ob-icon icon-lock\"></i></label>\r\n                <input class=\"num-height J-num-height\" type=\"text\">\r\n                <span class=\"txt\">px</span>\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-main J-button-save\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-reset J-button-reset\" href=\"javascript:void(0)\">{{=resetBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <!-- 缩放面板 -->\r\n        <div class=\"pipeImg-panel scale-panel J-panel J-scale-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <div class=\"scale-img-wrapper J-scale-img-wrapper\">\r\n                    <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n                </div>\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <input class=\"num-width J-num-width\" type=\"text\">\r\n                <span class=\"txt\">X</span>\r\n                <input class=\"num-height J-num-height\" type=\"text\">\r\n                <span class=\"txt\">px</span>\r\n                <input class=\"scale-range J-scale-range\" type=\"range\" name=\"scaleRatio\" min=\"50\" max=\"100\" step=\"1\" value=\"100\">\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-main J-button-save\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-reset J-button-reset\" href=\"javascript:void(0)\">{{=resetBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <!-- 添加水印面板 -->\r\n        <div class=\"pipeImg-panel J-panel J-mark-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=colorTxt}}:</div> \r\n                    <input class=\"J-color\" id=\"colorWhite\" type=\"radio\" name=\"color\" value=\"0\" autocomplete=\"off\" hidden>        \r\n                    <label class=\"color\" for=\"colorWhite\"></label>\r\n                    <input class=\"J-color\" id=\"colorBlack\" type=\"radio\" name=\"color\" value=\"1\" checked autocomplete=\"off\" hidden>\r\n                    <label class=\"color color-black\" for=\"colorBlack\"></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=positionTxt}}:</div>\r\n                    <input class=\"J-position\" id=\"positionCenter\" type=\"radio\" name=\"position\" value=\"0\" autocomplete=\"off\" checked hidden>\r\n                    <label class=\"position center\" for=\"positionCenter\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftTop\" type=\"radio\" name=\"position\" value=\"1\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-top\" for=\"positionLeftTop\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightTop\" type=\"radio\" name=\"position\" value=\"2\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-top\" for=\"positionRightTop\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftBottom\" type=\"radio\" name=\"position\" value=\"3\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-bottom\" for=\"positionLeftBottom\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightBottom\" type=\"radio\" name=\"position\" value=\"4\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-bottom\" for=\"positionRightBottom\"><span class=\"line\"></span></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=opacityTxt}}:</div>\r\n                    <input class=\"opacity-range J-opacity\" name=\"opacity\" type=\"range\" min=\"10\" max=\"100\" step=\"1\" defaultValue=\"80\" value=\"80\">\r\n                </div>\r\n\r\n                <select class=\"J-select-mark\" name=\"markTxt\">\r\n                    <option value=\"0\" selected=\"selected\">{{=showRoomTxt}}</option>\r\n                    <option value=\"1\">{{=companyNameTxt}}</option>\r\n                </select>\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-confirm J-button-confirm\" href=\"javascript:void(0)\">{{=confirmBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-cancel J-button-cancel\" href=\"javascript:void(0)\">{{=cancelBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <!-- 批量添加水印 -->\r\n        <div class=\"pipeImg-panel panel-mark-all J-panel J-mark-all-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"imgs-thumbnail J-imgs-thumbnail\">\r\n                {{ for(var i=0;i<imgList.length;i++) { }} \r\n                <div class=\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\">\r\n                    <a href=\"javascript:void(0)\">\r\n                        <img src=\"{{-imgList[i].src}}\">\r\n                        <span class=\"circle\"></span>\r\n                    </a>\r\n                </div>\r\n\r\n                {{ } }}\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=colorTxt}}:</div> \r\n                    <input class=\"J-color\" id=\"colorWhiteAll\" type=\"radio\" name=\"colorAll\" value=\"0\" autocomplete=\"off\" hidden>        \r\n                    <label class=\"color\" for=\"colorWhiteAll\"></label>\r\n                    <input class=\"J-color\" id=\"colorBlackAll\" type=\"radio\" name=\"colorAll\" value=\"1\" checked autocomplete=\"off\" hidden>\r\n                    <label class=\"color color-black\" for=\"colorBlackAll\"></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=positionTxt}}:</div>\r\n                    <input class=\"J-position\" id=\"positionCenterAll\" type=\"radio\" name=\"positionAll\" value=\"0\" autocomplete=\"off\" checked hidden>\r\n                    <label class=\"position center\" for=\"positionCenterAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftTopAll\" type=\"radio\" name=\"positionAll\" value=\"1\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-top\" for=\"positionLeftTopAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightTopAll\" type=\"radio\" name=\"positionAll\" value=\"2\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-top\" for=\"positionRightTopAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftBottomAll\" type=\"radio\" name=\"positionAll\" value=\"3\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-bottom\" for=\"positionLeftBottomAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightBottomAll\" type=\"radio\" name=\"positionAll\" value=\"4\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-bottom\" for=\"positionRightBottomAll\"><span class=\"line\"></span></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=opacityTxt}}:</div>\r\n                    <input class=\"opacity-range J-opacity\" name=\"opacityAll\" type=\"range\" min=\"10\" max=\"100\" step=\"1\" defaultValue=\"80\" value=\"80\">\r\n                </div>\r\n\r\n                <select class=\"J-select-mark\" name=\"markTxtAll\">\r\n                    <option value=\"0\" selected=\"selected\">{{=showRoomTxt}}</option>\r\n                    <option value=\"1\">{{=companyNameTxt}}</option>\r\n                </select>\r\n                \r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n    <div class=\"pipeImg-footer J-pipe-footer\">\r\n        <div class=\"imgs-thumbnail J-imgs-thumbnail\">\r\n            {{ for(var i=0;i<imgList.length;i++) { }} \r\n            <div class=\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\">\r\n                <div class=\"img-inner\">\r\n                    <a href=\"javascript:void(0)\">\r\n                    <img src=\"{{-imgList[i].src}}\">\r\n                    <span class=\"circle\"></span>\r\n                    </a>\r\n                </div>\r\n\r\n            </div>\r\n\r\n            {{ } }}\r\n        </div>  \r\n\r\n        <div class=\"pipeImg-buttons\">\r\n            <a class=\"pipeImg-button button-confirm J-button-confirm-all\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n            <a class=\"pipeImg-button button-cancel J-button-cancel-all\" href=\"javascript:void(0)\">{{=cancelBtnTxt}}</a>\r\n        </div>            \r\n    </div>\r\n\r\n</div>\r\n\r\n<div class=\"pipeImg-tip J-pipeImg-tip\">\r\n    <div class=\"pipeImg-tip-header\">{{=tipTitleTxt}}</div>\r\n    <div class=\"pipeImg-tip-main\">\r\n        <div class=\"pipeImg-tip-content\">{{=tipContentTxt}}</div>\r\n        <a class=\"pipeImg-button button-confirm J-tip-confirm\" href=\"javascript:void(0)\">{{=tipConfirmBtnTxt}}</a>\r\n        <a class=\"pipeImg-button button-cancel J-tip-cancel\" href=\"javascript:void(0)\">{{=cancelBtnTxt}}</a>        \r\n    </div>\r\n</div>\r\n\r\n<div class=\"pipeImg-progress-bar J-pipeImg-progress\">\r\n    <div class=\"pipeImg-progress-val\"></div>\r\n</div>"
+module.exports = "<div class=\"pipeImg-wrapper J-pipe-wrapper\">\r\n    <div class=\"pipeImg-header\">\r\n        <ul class=\"pipeImg-menu\">\r\n            <li class=\"pipeImg-item J-item active\"><a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-refresh\"></i>{{=rotateMenuTxt}}</a></li>\r\n            <li class=\"pipeImg-item J-item\"><a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-crop\"></i>{{=cropMenuTxt}}</a></li>\r\n            <li class=\"pipeImg-item J-item\"><a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-scaling\"></i>{{=scaleMenuTxt}}</a></li>\r\n            <li class=\"pipeImg-item J-item J-item-mark\">\r\n                <a class=\"pipeImg-btn J-menu-btn\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-add-l\"></i>{{=markMenuTxt}}</a>\r\n                <div class=\"pipeImg-btn J-menu-txt\" style=\"display:none;\"><i class=\"ob-icon icon-add-l\"></i>{{=markMenuTxt}}</div>\r\n                <div class=\"pipeImg-item item-sub\">\r\n                    <a class=\"pipeImg-btn J-menu-btn-mark-all\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-batch\"></i>{{=markAllMenuTxt}}</a>\r\n                    <a class=\"pipeImg-btn J-menu-btn-mark\" href=\"javascript:void(0)\" style=\"display:none;\"><i class=\"ob-icon icon-add-l\"></i>{{=markMenuTxt}}</a>\r\n                </div>\r\n            </li>\r\n        </ul>\r\n        <a class=\"pipeImg-btn btn-close active J-button-close\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-delete\"></i>{{=closeBtnTxt}}</a>\r\n    </div>\r\n    <div class=\"pipeImg-content\">\r\n        <!-- 旋转面板 -->\r\n        <div class=\"pipeImg-panel rotate-panel active J-panel J-rotate-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <div class=\"size\">\r\n                    <span class=\"J-num-width\">0</span>*<span class=\"J-num-height\">0</span>px\r\n                </div>\r\n                <a class=\"pipeImg-btn btn-rotate J-btn-rotate-left\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-rotate-l\"></i>{{=turnLeftTxt}}</a>\r\n                <a class=\"pipeImg-btn btn-rotate J-btn-rotate-right\" href=\"javascript:void(0)\"><i class=\"ob-icon icon-rotate-r\"></i>{{=turnRightTxt}}</a>\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-main J-button-save\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-reset J-button-reset\" href=\"javascript:void(0)\">{{=resetBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <!-- 裁剪面板 -->\r\n        <div class=\"pipeImg-panel J-panel J-crop-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <input class=\"num-width J-num-width\" type=\"text\">\r\n                <input class=\"J-fix-ratio\" id=\"fixRatio\" type=\"checkbox\" name=\"fixRatio\" hidden>\r\n                <label class=\"fix\" for=\"fixRatio\" title=\"{{=constrainTxt}}\"><i class=\"ob-icon icon-lock\"></i></label>\r\n                <input class=\"num-height J-num-height\" type=\"text\">\r\n                <span class=\"txt\">px</span>\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-main J-button-save\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-reset J-button-reset\" href=\"javascript:void(0)\">{{=resetBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <!-- 缩放面板 -->\r\n        <div class=\"pipeImg-panel scale-panel J-panel J-scale-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <div class=\"scale-img-wrapper J-scale-img-wrapper\">\r\n                    <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n                </div>\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <input class=\"num-width J-num-width\" type=\"text\">\r\n                <span class=\"txt\">X</span>\r\n                <input class=\"num-height J-num-height\" type=\"text\">\r\n                <span class=\"txt\">px</span>\r\n                <input class=\"scale-range J-scale-range\" type=\"range\" name=\"scaleRatio\" min=\"50\" max=\"100\" step=\"1\" value=\"100\">\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-main J-button-save\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-reset J-button-reset\" href=\"javascript:void(0)\">{{=resetBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <!-- 添加水印面板 -->\r\n        <div class=\"pipeImg-panel J-panel J-mark-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=colorTxt}}:</div> \r\n                    <input class=\"J-color\" id=\"colorWhite\" type=\"radio\" name=\"color\" value=\"0\" autocomplete=\"off\" hidden>        \r\n                    <label class=\"color\" for=\"colorWhite\"></label>\r\n                    <input class=\"J-color\" id=\"colorBlack\" type=\"radio\" name=\"color\" value=\"1\" checked autocomplete=\"off\" hidden>\r\n                    <label class=\"color color-black\" for=\"colorBlack\"></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=positionTxt}}:</div>\r\n                    <input class=\"J-position\" id=\"positionCenter\" type=\"radio\" name=\"position\" value=\"0\" autocomplete=\"off\" checked hidden>\r\n                    <label class=\"position center\" for=\"positionCenter\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftTop\" type=\"radio\" name=\"position\" value=\"1\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-top\" for=\"positionLeftTop\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightTop\" type=\"radio\" name=\"position\" value=\"2\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-top\" for=\"positionRightTop\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftBottom\" type=\"radio\" name=\"position\" value=\"3\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-bottom\" for=\"positionLeftBottom\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightBottom\" type=\"radio\" name=\"position\" value=\"4\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-bottom\" for=\"positionRightBottom\"><span class=\"line\"></span></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=opacityTxt}}:</div>\r\n                    <input class=\"opacity-range J-opacity\" name=\"opacity\" type=\"range\" min=\"10\" max=\"100\" step=\"1\" defaultValue=\"80\" value=\"80\">\r\n                </div>\r\n\r\n                <select class=\"J-select-mark\" name=\"markTxt\">\r\n                    <option value=\"0\" selected=\"selected\">{{=showRoomTxt}}</option>\r\n                    <option value=\"1\">{{=companyNameTxt}}</option>\r\n                </select>\r\n\r\n                <div class=\"pipeImg-buttons\">\r\n                    <a class=\"pipeImg-button button-confirm J-button-confirm\" href=\"javascript:void(0)\">{{=confirmBtnTxt}}</a>\r\n                    <a class=\"pipeImg-button button-cancel J-button-cancel\" href=\"javascript:void(0)\">{{=cancelBtnTxt}}</a>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n        <!-- 批量添加水印 -->\r\n        <div class=\"pipeImg-panel panel-mark-all J-panel J-mark-all-panel\">\r\n            <div class=\"img-box J-img-box\">\r\n                <img class=\"J-source\" src=\"{{-imgList[activeIndex].src}}\">\r\n            </div>\r\n            <div class=\"imgs-thumbnail J-imgs-thumbnail\">\r\n                {{ for(var i=0;i<imgList.length;i++) { }} \r\n                <div class=\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\">\r\n                    <a href=\"javascript:void(0)\">\r\n                        <img src=\"{{-imgList[i].src}}\">\r\n                        <span class=\"circle\"></span>\r\n                    </a>\r\n                </div>\r\n\r\n                {{ } }}\r\n            </div>\r\n            <div class=\"content-footer\">\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=colorTxt}}:</div> \r\n                    <input class=\"J-color\" id=\"colorWhiteAll\" type=\"radio\" name=\"colorAll\" value=\"0\" autocomplete=\"off\" hidden>        \r\n                    <label class=\"color\" for=\"colorWhiteAll\"></label>\r\n                    <input class=\"J-color\" id=\"colorBlackAll\" type=\"radio\" name=\"colorAll\" value=\"1\" checked autocomplete=\"off\" hidden>\r\n                    <label class=\"color color-black\" for=\"colorBlackAll\"></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=positionTxt}}:</div>\r\n                    <input class=\"J-position\" id=\"positionCenterAll\" type=\"radio\" name=\"positionAll\" value=\"0\" autocomplete=\"off\" checked hidden>\r\n                    <label class=\"position center\" for=\"positionCenterAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftTopAll\" type=\"radio\" name=\"positionAll\" value=\"1\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-top\" for=\"positionLeftTopAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightTopAll\" type=\"radio\" name=\"positionAll\" value=\"2\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-top\" for=\"positionRightTopAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionLeftBottomAll\" type=\"radio\" name=\"positionAll\" value=\"3\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position left-bottom\" for=\"positionLeftBottomAll\"><span class=\"line\"></span></label>\r\n                    <input class=\"J-position\" id=\"positionRightBottomAll\" type=\"radio\" name=\"positionAll\" value=\"4\" autocomplete=\"off\" hidden>\r\n                    <label class=\"position right-bottom\" for=\"positionRightBottomAll\"><span class=\"line\"></span></label>\r\n                </div>\r\n                <div class=\"pipeImg-item\">\r\n                    <div class=\"txt-label\">{{=opacityTxt}}:</div>\r\n                    <input class=\"opacity-range J-opacity\" name=\"opacityAll\" type=\"range\" min=\"10\" max=\"100\" step=\"1\" defaultValue=\"80\" value=\"80\">\r\n                </div>\r\n\r\n                <select class=\"J-select-mark\" name=\"markTxtAll\">\r\n                    <option value=\"0\" selected=\"selected\">{{=showRoomTxt}}</option>\r\n                    <option value=\"1\">{{=companyNameTxt}}</option>\r\n                </select>\r\n                \r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n    <div class=\"pipeImg-footer J-pipe-footer\">\r\n        <div class=\"imgs-thumbnail J-imgs-thumbnail\">\r\n            {{ for(var i=0;i<imgList.length;i++) { }} \r\n            <div class=\"img-thumbnail {{=i === activeIndex ? 'active' : ''}} J-img-thumbnail\">\r\n                <div class=\"img-inner\">\r\n                    <a href=\"javascript:void(0)\">\r\n                    <img src=\"{{-imgList[i].src}}\">\r\n                    <span class=\"circle\"></span>\r\n                    </a>\r\n                </div>\r\n\r\n            </div>\r\n\r\n            {{ } }}\r\n        </div>  \r\n\r\n        <div class=\"pipeImg-buttons\">\r\n            <a class=\"pipeImg-button button-confirm J-button-confirm-all\" href=\"javascript:void(0)\">{{=saveBtnTxt}}</a>\r\n            <a class=\"pipeImg-button button-cancel J-button-cancel-all\" href=\"javascript:void(0)\">{{=cancelBtnTxt}}</a>\r\n        </div>            \r\n    </div>\r\n\r\n</div>\r\n\r\n<div class=\"pipeImg-tip J-pipeImg-tip\">\r\n    <div class=\"pipeImg-tip-header\">{{=tipTitleTxt}}</div>\r\n    <div class=\"pipeImg-tip-main\">\r\n        <div class=\"pipeImg-tip-content\">{{=tipContentTxt}}</div>\r\n        <a class=\"pipeImg-button button-confirm J-tip-confirm\" href=\"javascript:void(0)\">{{=tipConfirmBtnTxt}}</a>\r\n        <a class=\"pipeImg-button button-cancel J-tip-cancel\" href=\"javascript:void(0)\">{{=cancelBtnTxt}}</a>        \r\n    </div>\r\n</div>\r\n\r\n<div class=\"pipeImg-progress-bar J-pipeImg-progress\">\r\n    <div class=\"pipeImg-progress-val\"></div>\r\n</div>"
 
 /***/ }),
 
@@ -1750,7 +1777,7 @@ function () {
       var dragBoxHtml = "<div class=\"dragbox-wrapper J-dragbox-wrapper\">\n                                <img class=\"J-source\" src=\"".concat(src, "\">\n                                <div class=\"drag-box J-drag-box\">\n                                    <div class=\"drag-point up-left J-drag-point\"></div>\n                                    <div class=\"drag-point up J-drag-point\"></div>\n                                    <div class=\"drag-point up-right J-drag-point\"></div>\n                                    <div class=\"drag-point right J-drag-point\"></div>\n                                    <div class=\"drag-point right-down J-drag-point\"></div>\n                                    <div class=\"drag-point down J-drag-point\"></div>\n                                    <div class=\"drag-point left-down J-drag-point\"></div>\n                                    <div class=\"drag-point left J-drag-point\"></div>\n                                    <div class=\"mark-txt J-mark-txt\">").concat(this.markText, "</div>\n                                </div>\n                            </div>");
 
       if (this.isCrop) {
-        dragBoxHtml = "<div class=\"dragbox-wrapper J-dragbox-wrapper\">\n                                <img class=\"J-source img-dark\" src=\"".concat(src, "\">\n                                <img class=\"J-source img-light J-img-light\" src=\"").concat(src, "\">\n                                <div class=\"drag-box J-drag-box\">\n                                    <div class=\"drag-point up-left J-drag-point\"></div>\n                                    <div class=\"drag-point up J-drag-point\"></div>\n                                    <div class=\"drag-point up-right J-drag-point\"></div>\n                                    <div class=\"drag-point right J-drag-point\"></div>\n                                    <div class=\"drag-point right-down J-drag-point\"></div>\n                                    <div class=\"drag-point down J-drag-point\"></div>\n                                    <div class=\"drag-point left-down J-drag-point\"></div>\n                                    <div class=\"drag-point left J-drag-point\"></div>\n                                </div>\n                            </div>");
+        dragBoxHtml = "<div class=\"dragbox-wrapper J-dragbox-wrapper\">\n                                <img class=\"J-source img-dark\" src=\"".concat(src, "\">\n                                <img class=\"J-source img-light J-img-light\" src=\"").concat(src, "\">\n                                <div class=\"drag-box style-2 J-drag-box\">\n                                    <div class=\"drag-point up-left J-drag-point\"></div>\n                                    <div class=\"drag-point up J-drag-point\"></div>\n                                    <div class=\"drag-point up-right J-drag-point\"></div>\n                                    <div class=\"drag-point right J-drag-point\"></div>\n                                    <div class=\"drag-point right-down J-drag-point\"></div>\n                                    <div class=\"drag-point down J-drag-point\"></div>\n                                    <div class=\"drag-point left-down J-drag-point\"></div>\n                                    <div class=\"drag-point left J-drag-point\"></div>\n                                </div>\n                            </div>");
       }
 
       $parent.html(dragBoxHtml);

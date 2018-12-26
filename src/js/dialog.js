@@ -208,8 +208,17 @@ class Dialog {
 
         this.imgList = imgList;
         this.activeIndex = activeIndex;
+        this.activeImg = this.imgList[this.activeIndex];
+        this._updateActiveData();
+        
 
-        // let $imgsThumbnail = this.$el.find('.J-imgs-thumbnail');
+        
+        
+        
+        // 初始化自定义select
+        this.markSelects = ThinSelect.use(this.$el.find('.J-select-mark'));
+
+        // 初始化缩略图
         this.$el.find('.J-pipe-footer').find('.J-imgs-thumbnail').html(template(this.thumbnailTpl, {
             imgList: this.imgList,
             activeIndex: this.activeIndex,
@@ -221,10 +230,6 @@ class Dialog {
             markType: '1'
         }));
 
-        this.activeImg = this.imgList[this.activeIndex];
-        this._updateActiveData();
-
-
         // 初始化裁剪框
         this.cropBox = new DragBox({
             el: this.$cropPanel.find('.J-source'),
@@ -234,10 +239,14 @@ class Dialog {
                 this._updateIsChange(true);
             }
         });
+
         // 初始化缩放
         let $scaleImgWrapper = this.$scalePanel.find('.J-scale-img-wrapper');
         let imgEl = this.$scalePanel.find('.J-source').get(0);
         drag(imgEl, imgEl, $scaleImgWrapper.get(0));
+
+
+
         // 初始化水印框
         this.markBox = new DragBox({
             el: this.$markPanel.find('.J-source'),
@@ -256,6 +265,10 @@ class Dialog {
                 });
             }
         });
+        
+
+
+
         // 初始化批量水印框
         this.markAllBox = new DragBox({
             el: this.$markAllPanel.find('.J-source'),
@@ -275,19 +288,21 @@ class Dialog {
             }
         });
 
+        this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
+        this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
 
         this.type === this.MARKTYPE.MULTIPLE && this.showModel(this.type);
         this._refresh();
 
-
-        this.markSelects = ThinSelect.use(this.$el.find('.J-select-mark'));
-
+        this._updateMarkTxt();
+        this._updateMarkTxt(this.MARKTYPE.MULTIPLE);
         this._setMarkPosition();
         this._setMarkPosition(this.MARKTYPE.MULTIPLE);
 
-        this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
-        this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
 
+
+
+        // 图片加载完成，激活首屏按钮
         this.loaded = true;
         this.$el.find('.J-menu-btn,.J-btn-rotate-left,.J-btn-rotate-right,.J-menu-btn-mark-all,.J-menu-btn-mark').addClass('active');
     }
@@ -324,6 +339,7 @@ class Dialog {
             this.$markAllPanel.find('.J-source').attr('src', $thumbnailImg.attr('src'));
 
             this._updateActiveImg($thumbnail.index());
+            this._updateMarkTxt(this.MARKTYPE.MULTIPLE);
             this._setMarkPosition(this.MARKTYPE.MULTIPLE);
             this._initData();
 
@@ -378,12 +394,11 @@ class Dialog {
 
             // 离开批量水印模式提示
             if (this.$markAllPanel.hasClass('active')) {
-                // 切换到单图编辑模式重置活动图片
-                let $thumbnail = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
-                this._updateActiveImg($thumbnail.index());
-            }
-            if (this.$markAllPanel.hasClass('active') && this.isChange) {
                 this._confirm(() => {
+                    // 切换到单图编辑模式重置活动图片
+                    let $thumbnail = this.$el.find('.J-pipe-footer').find('.J-img-thumbnail.active');
+                    this._updateActiveImg($thumbnail.index());
+
                     run();
                     this._updateIsChange(false);
                 })                
@@ -404,11 +419,7 @@ class Dialog {
                 this._initMark();
                 this._updateIsChange(false);
             };
-            if (this.isChange) {
-                this._confirm(run);             
-            } else {
-                run();
-            }
+            this._confirm(run);
 
         })
         // 切换批量水印
@@ -452,10 +463,6 @@ class Dialog {
             this._updateRotate();
         })
 
-        // this.$cropPanel.find('.J-num-width,.J-num-height').on('keyup blur', (e) => {
-        //     let $input = $(e.currentTarget);
-        //     $input.val($input.val().replace(/[^\d]/g,''));
-        // })
         // 裁剪++++++++++++
         this.$inputCropWidth.on('input', (e) => {
             let $input = $(e.currentTarget);
@@ -1012,7 +1019,12 @@ class Dialog {
         });
 
     }
-
+    _updateMarkTxt(type) {
+        let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
+        $panel.find('.J-mark-txt').css({
+            'font-size': Math.floor(this.markFontSize0 / this.activeData.ratio) + 'px'
+        });
+    }
     _initMark(type) {
         let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
         $panel.find('.J-color:last').prop('checked', true);
@@ -1020,9 +1032,7 @@ class Dialog {
         $panel.find('.J-opacity:first').val($panel.find('.J-opacity:first').attr('defaultValue'));
         $panel.find('.J-select-mark option:first').prop('selected', true);
 
-        $panel.find('.J-mark-txt').css({
-            'font-size': this.markFontSize0 + 'px'
-        });
+        this._updateMarkTxt(type);
 
         if (type === this.MARKTYPE.MULTIPLE) {
             this.markSelects[1].select(0);
@@ -1041,7 +1051,7 @@ class Dialog {
         this._setMarkPosition(type);
     }
     _updateMark(type) {
-
+        this._updateMarkTxt(type);
         this._setMarkStyle(type);
         this._setMarkPosition(type);
 
@@ -1067,7 +1077,10 @@ class Dialog {
         let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
         let $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;
         let $markTxt = $panel.find('.J-mark-txt');
-        let markFont = Math.floor(parseInt($markTxt.css('font-size')) * this.activeData.ratio) + 'px / ' + Math.floor(parseInt($markTxt.css('line-height')) * this.activeData.ratio) + 'px ' + $markTxt.css('font-family');
+
+        let fontSize = Math.floor(parseInt($markTxt.css('font-size')) * this.activeData.ratio);
+        let lineHeight = Math.floor(parseInt($markTxt.css('line-height')) * this.activeData.ratio);
+        let markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markTxt.css('font-family');
         let $opacity = $panel.find('.J-opacity');
         let opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));
         let colorVal = $panel.find('.J-color:checked').val();
@@ -1081,8 +1094,8 @@ class Dialog {
         let text = this.markTextList[txtVal];
 
 
-        let markX = Math.floor(parseInt($dragBox.css('left')) * this.activeData.ratio);
-        let markY = Math.floor(parseInt($dragBox.css('top')) * this.activeData.ratio);
+        let markX = Math.floor(parseInt($dragBox.css('left')) * this.activeData.ratio) + parseInt($dragBox.css('border-width'));
+        let markY = Math.floor(parseInt($dragBox.css('top')) * this.activeData.ratio  + (lineHeight - fontSize) / 2) + parseInt($dragBox.css('border-width'));
 
 
         const POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
@@ -1100,20 +1113,20 @@ class Dialog {
                 markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
                 break;
             case 'upLeft':
-                markX = (0 + 15) * this.activeData.ratio;
-                markY = (0 + 20) * this.activeData.ratio;
+                markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
+                markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
                 break;
             case 'upRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
-                markY = (0 + 20) * this.activeData.ratio;
+                markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
+                markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
                 break;
             case 'downLeft':
-                markX = (0 + 15) * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
+                markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
+                markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
                 break;
             case 'downRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth - 15) * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight - 20) * this.activeData.ratio;
+                markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
+                markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
                 break;
             default:
                 break;
