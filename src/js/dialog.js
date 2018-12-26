@@ -258,7 +258,7 @@ class Dialog {
             },
             onDragPoint: (boxData) => {
                 this.$markPanel.find('.J-mark-txt').css({
-                    'font-size': Math.floor(parseInt(this.markBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
+                    'font-size': Math.round(parseInt(this.markBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
                 });
                 this.markBox.$dragBox.find('.J-mark-txt').css({
                     'display': 'block'
@@ -280,7 +280,7 @@ class Dialog {
             },
             onDragPoint: (boxData) => {
                 this.$markAllPanel.find('.J-mark-txt').css({
-                    'font-size': Math.floor(parseInt(this.markAllBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
+                    'font-size': Math.round(parseInt(this.markAllBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
                 });
                 this.markAllBox.$dragBox.find('.J-mark-txt').css({
                     'display': 'block'
@@ -958,8 +958,8 @@ class Dialog {
         let $markTxt = $dragBox.find('.J-mark-txt');
 
 
-        let markX = parseInt($dragBox.css('left')) * this.activeData.ratio;
-        let markY = parseInt($dragBox.css('top')) * this.activeData.ratio;
+        let markX = parseInt($dragBox.css('left'));
+        let markY = parseInt($dragBox.css('top'));
 
         let positionVal = $panel.find('.J-position:checked').val();
 
@@ -970,32 +970,32 @@ class Dialog {
 
         switch (POSITION[positionVal]) {
             case 'center':
-                markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
+                markX = (dragBoxWrapperWidth - dragBoxWidth) / 2;
+                markY = (dragBoxWrapperHeight - dragBoxHeight) / 2;
                 break;
             case 'upLeft':
-                markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
-                markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
+                markX = this.markXPositionMargin;
+                markY = this.markYPositionMargin;
                 break;
             case 'upRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
-                markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
+                markX = dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin;
+                markY = this.markYPositionMargin;
                 break;
             case 'downLeft':
-                markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
+                markX = this.markXPositionMargin;
+                markY = dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin;
                 break;
             case 'downRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
+                markX = dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin;
+                markY = dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin;
                 break;
             default:
                 break;
         }
 
         $dragBox.css({
-            'left': Math.floor(markX / this.activeData.ratio),
-            'top': Math.floor(markY / this.activeData.ratio),
+            'left': Math.floor(markX),
+            'top': Math.floor(markY),
             'width': Math.ceil(dragBoxWidth),
             'height': Math.ceil(dragBoxHeight)
         })
@@ -1022,8 +1022,19 @@ class Dialog {
     _updateMarkTxt(type) {
         let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
         $panel.find('.J-mark-txt').css({
-            'font-size': Math.floor(this.markFontSize0 / this.activeData.ratio) + 'px'
+            'font-size': Math.round(this.markFontSize0 / this.activeData.ratio) + 'px'
         });
+
+        if (type === this.MARKTYPE.MULTIPLE) {
+            this.markAllBox.$dragBox.find('.J-mark-txt').css({
+                'display': 'inline-block'
+            });
+
+        } else {
+            this.markBox.$dragBox.find('.J-mark-txt').css({
+                'display': 'inline-block'
+            });
+        }
     }
     _initMark(type) {
         let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
@@ -1036,15 +1047,9 @@ class Dialog {
 
         if (type === this.MARKTYPE.MULTIPLE) {
             this.markSelects[1].select(0);
-            this.markAllBox.$dragBox.find('.J-mark-txt').css({
-                'display': 'inline-block'
-            });
 
         } else {
             this.markSelects[0].select(0);
-            this.markBox.$dragBox.find('.J-mark-txt').css({
-                'display': 'inline-block'
-            });
         }
 
         this._setMarkStyle(type);
@@ -1078,8 +1083,8 @@ class Dialog {
         let $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;
         let $markTxt = $panel.find('.J-mark-txt');
 
-        let fontSize = Math.floor(parseInt($markTxt.css('font-size')) * this.activeData.ratio);
-        let lineHeight = Math.floor(parseInt($markTxt.css('line-height')) * this.activeData.ratio);
+        let fontSize = Math.round(parseInt($markTxt.css('font-size')) * this.activeData.ratio);
+        let lineHeight = Math.round(parseInt($markTxt.css('line-height')) * this.activeData.ratio);
         let markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markTxt.css('font-family');
         let $opacity = $panel.find('.J-opacity');
         let opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));
@@ -1094,8 +1099,8 @@ class Dialog {
         let text = this.markTextList[txtVal];
 
 
-        let markX = Math.floor(parseInt($dragBox.css('left')) * this.activeData.ratio) + parseInt($dragBox.css('border-width'));
-        let markY = Math.floor(parseInt($dragBox.css('top')) * this.activeData.ratio  + (lineHeight - fontSize) / 2) + parseInt($dragBox.css('border-width'));
+        let markX = parseInt($dragBox.css('left'));
+        let markY = parseInt($dragBox.css('top'));
 
 
         const POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
@@ -1109,28 +1114,31 @@ class Dialog {
 
         switch (POSITION[positionVal]) {
             case 'center':
-                markX = (dragBoxWrapperWidth - dragBoxWidth) / 2 * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight) / 2 * this.activeData.ratio;
+                markX = (dragBoxWrapperWidth - dragBoxWidth) / 2;
+                markY = (dragBoxWrapperHeight - dragBoxHeight) / 2;
                 break;
             case 'upLeft':
-                markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
-                markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
+                markX = this.markXPositionMargin;
+                markY = this.markYPositionMargin;
                 break;
             case 'upRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
-                markY = (0 + this.markYPositionMargin) * this.activeData.ratio;
+                markX = dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin;
+                markY = this.markYPositionMargin;
                 break;
             case 'downLeft':
-                markX = (0 + this.markXPositionMargin) * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
+                markX = this.markXPositionMargin;
+                markY = dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin;
                 break;
             case 'downRight':
-                markX = (dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin) * this.activeData.ratio;
-                markY = (dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin) * this.activeData.ratio;
+                markX = dragBoxWrapperWidth - dragBoxWidth - this.markXPositionMargin;
+                markY = dragBoxWrapperHeight - dragBoxHeight - this.markYPositionMargin;
                 break;
             default:
                 break;
         }
+
+        markX = Math.round(markX * this.activeData.ratio) + parseInt($dragBox.css('border-width'));
+        markY = Math.round(markY * this.activeData.ratio  + (lineHeight - fontSize) / 2) + parseInt($dragBox.css('border-width'));
 
         return {
             markX: markX,
@@ -1150,6 +1158,7 @@ class Dialog {
             });
             this.activeImg = element;
             this._updateActiveData();
+            this._updateMarkTxt(this.MARKTYPE.MULTIPLE);
             let options = this._getMarkParams(this.MARKTYPE.MULTIPLE);
             this.onSaveMark(options, (img) => {});
             this.onSave((data) => {
