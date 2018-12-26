@@ -86,7 +86,7 @@ $color-txt: #999ba7;
         line-height: 40px;
         color: $color-txt;
         font-size: 12px;
-        &:hover{
+        &.active:hover{
             color: #fff;
         }
         &.btn-close{

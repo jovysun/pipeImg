@@ -13,7 +13,7 @@
                 </div>
             </li>
         </ul>
-        <a class="pipeImg-btn btn-close J-button-close" href="javascript:void(0)"><i class="ob-icon icon-delete"></i>{{=closeBtnTxt}}</a>
+        <a class="pipeImg-btn btn-close active J-button-close" href="javascript:void(0)"><i class="ob-icon icon-delete"></i>{{=closeBtnTxt}}</a>
     </div>
     <div class="pipeImg-content">
         <!-- 旋转面板 -->
@@ -23,7 +23,7 @@
             </div>
             <div class="content-footer">
                 <div class="size">
-                    <span class="J-num-width">1</span>*<span class="J-num-height">1</span>px
+                    <span class="J-num-width">0</span>*<span class="J-num-height">0</span>px
                 </div>
                 <a class="pipeImg-btn btn-rotate J-btn-rotate-left" href="javascript:void(0)"><i class="ob-icon icon-rotate-l"></i>{{=turnLeftTxt}}</a>
                 <a class="pipeImg-btn btn-rotate J-btn-rotate-right" href="javascript:void(0)"><i class="ob-icon icon-rotate-r"></i>{{=turnRightTxt}}</a>

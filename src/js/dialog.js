@@ -189,6 +189,7 @@ class Dialog {
         this.$buttons = this.$el.find('.J-button-save, .J-button-reset, .J-button-confirm, .J-button-cancel, .J-button-confirm-all, .J-button-cancel-all');
 
         // 全局变量
+        this.loaded = false;
         this.MARKTYPE = {'SINGLE': '0', 'MULTIPLE': '1'};
         this.isChange = false;
         this.rotateNum = 0;
@@ -287,7 +288,8 @@ class Dialog {
         this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
         this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
 
-        
+        this.loaded = true;
+        this.$el.find('.J-menu-btn,.J-btn-rotate-left,.J-btn-rotate-right,.J-menu-btn-mark-all,.J-menu-btn-mark').addClass('active');
     }
     _bind() {
         // 切换编辑图片
@@ -329,6 +331,9 @@ class Dialog {
 
         // 菜单切换
         this.$el.find('.J-menu-btn').on('click', (e) => {
+            if (!this.loaded) {
+                return;
+            }
             let run = () => { 
                 let $item = $(e.currentTarget).parent();
                 let index = $item.index();
@@ -408,6 +413,9 @@ class Dialog {
         })
         // 切换批量水印
         this.$el.find('.J-item-mark').on('click', '.J-menu-btn-mark-all', (e) => {
+            if (!this.loaded) {
+                return;
+            }
             let run = () => {
                 let $thumbnail = this.$markAllPanel.find('.J-img-thumbnail.active');
 
@@ -429,11 +437,17 @@ class Dialog {
         // 旋转++++++++++++++++
         // 逆时针旋转
         this.$btnRotateLeft.on('click', () => {
+            if (!this.loaded) {
+                return;
+            }
             this._getRotateNum(-1);
             this._updateRotate();
         })
         // 顺时针旋转
         this.$btnRotateRight.on('click', () => {
+            if (!this.loaded) {
+                return;
+            }
             this._getRotateNum(1);
             this._updateRotate();
         })

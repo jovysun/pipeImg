@@ -17,7 +17,7 @@ $shadow-color: rgba(0, 33, 66, .1);
 
 .thin-select {
 	@extend %inline-block;
-	min-width: 90px;
+	min-width: 100px;
 	padding-right: 16px;
 	position: relative;
 	line-height: 1.5;
