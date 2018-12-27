@@ -91,10 +91,18 @@ function loadImages(srcList, success, failure) {
         if (index === 0) {
             return false;
         }
-        var image = new Image();
+        var image = new Image();       
+        var src = srcList[--index];
+
+        // IE11对于同域的设置'crossorigin'会导致无法获得image的原始尺寸
+        // "//image.made-in-china.com/9f7j00CwUvHERGufQt/sun123.jpg"
+        // "/image?tid=40&id=ktfKUAkzRwMB&cache=0&lan_code=0"
         // 跨域报错处理（Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported.）
-        image.setAttribute('crossorigin', 'anonymous');
-        image.src = srcList[--index];
+        if (/^(?:http|\/\/)/.test(src) && src.indexOf(window.location.host) === -1) {
+          image.setAttribute('crossorigin', 'anonymous');
+        }
+        image.src = src;
+
         image.onload = function () {
             images.unshift(image);
             if (images.length === srcList.length) {
