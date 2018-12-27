@@ -18,6 +18,7 @@ class DragBox {
             fixRatio: false,
             // 拖动触点回调函数
             onDragPoint: (boxData) => {},
+            onDragPointComplete: (boxData) => {},
             // 拖动框回调函数
             onDragComplete: (left, top) => {}
         };
@@ -30,6 +31,7 @@ class DragBox {
         this.isCrop = options.isCrop;
         this.fixRatio = options.fixRatio;
         this.onDragPoint = options.onDragPoint;
+        this.onDragPointComplete = options.onDragPointComplete;
         this.onDragComplete = options.onDragComplete;
 
         this.init();
@@ -127,6 +129,7 @@ class DragBox {
                 height: this.boxEl.offsetHeight,
                 ratio: this.boxEl.offsetWidth / this.boxEl.offsetHeight
             };
+            this.onDragPointComplete(this.boxData);
         })
         $(document).on('mousemove', (e) => {
             if (isDraging == true) {

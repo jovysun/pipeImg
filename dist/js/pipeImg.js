@@ -376,11 +376,16 @@ function () {
         },
         onDragPoint: function onDragPoint(boxData) {
           _this.$markPanel.find('.J-mark-txt').css({
-            'font-size': Math.round(parseInt(_this.markBox.$dragBox.css('height')) / _this.markLineHeight0 * _this.markFontSize0)
-          });
+            'font-size': Math.floor(parseInt(_this.markBox.$dragBox.css('height')) / _this.markLineHeight0 * _this.markFontSize0)
+          }); // this.markBox.$dragBox.find('.J-mark-txt').css({
+          //     'display': 'block'
+          // });
 
-          _this.markBox.$dragBox.find('.J-mark-txt').css({
-            'display': 'block'
+        },
+        onDragPointComplete: function onDragPointComplete(boxData) {
+          _this.markBox.$dragBox.css({
+            'width': _this.markBox.$dragBox.find('.J-mark-txt').css('width'),
+            'height': _this.markBox.$dragBox.find('.J-mark-txt').css('height')
           });
         }
       }); // 初始化批量水印框
@@ -397,10 +402,16 @@ function () {
         onDragPoint: function onDragPoint(boxData) {
           _this.$markAllPanel.find('.J-mark-txt').css({
             'font-size': Math.round(parseInt(_this.markAllBox.$dragBox.css('height')) / _this.markLineHeight0 * _this.markFontSize0)
-          });
+          }); // this.markAllBox.$dragBox.find('.J-mark-txt').css({
+          //     'display': 'block'
+          // });
+          // this.markAllBox.$dragBox.css('width', this.markAllBox.$dragBox.find('.J-mark-txt').css('width'));
 
-          _this.markAllBox.$dragBox.find('.J-mark-txt').css({
-            'display': 'block'
+        },
+        onDragPointComplete: function onDragPointComplete(boxData) {
+          _this.markAllBox.$dragBox.css({
+            'width': _this.markAllBox.$dragBox.find('.J-mark-txt').css('width'),
+            'height': _this.markAllBox.$dragBox.find('.J-mark-txt').css('height')
           });
         }
       });
@@ -1175,10 +1186,10 @@ function () {
       }
 
       $dragBox.css({
-        'left': Math.floor(markX),
-        'top': Math.floor(markY),
-        'width': Math.ceil(dragBoxWidth),
-        'height': Math.ceil(dragBoxHeight)
+        'left': markX,
+        'top': markY,
+        'width': dragBoxWidth,
+        'height': dragBoxHeight
       });
     }
   }, {
@@ -1242,7 +1253,9 @@ function () {
   }, {
     key: "_updateMark",
     value: function _updateMark(type) {
-      this._updateMarkTxt(type);
+      if (type === this.MARKTYPE.MULTIPLE) {
+        this._updateMarkTxt(type);
+      }
 
       this._setMarkStyle(type);
 
@@ -1759,6 +1772,7 @@ function () {
       fixRatio: false,
       // 拖动触点回调函数
       onDragPoint: function onDragPoint(boxData) {},
+      onDragPointComplete: function onDragPointComplete(boxData) {},
       // 拖动框回调函数
       onDragComplete: function onDragComplete(left, top) {}
     };
@@ -1770,6 +1784,7 @@ function () {
     this.isCrop = options.isCrop;
     this.fixRatio = options.fixRatio;
     this.onDragPoint = options.onDragPoint;
+    this.onDragPointComplete = options.onDragPointComplete;
     this.onDragComplete = options.onDragComplete;
     this.init();
   }
@@ -1846,6 +1861,8 @@ function () {
           height: _this2.boxEl.offsetHeight,
           ratio: _this2.boxEl.offsetWidth / _this2.boxEl.offsetHeight
         };
+
+        _this2.onDragPointComplete(_this2.boxData);
       });
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('mousemove', function (e) {
         if (isDraging == true) {

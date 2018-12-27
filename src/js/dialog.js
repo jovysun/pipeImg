@@ -258,12 +258,20 @@ class Dialog {
             },
             onDragPoint: (boxData) => {
                 this.$markPanel.find('.J-mark-txt').css({
-                    'font-size': Math.round(parseInt(this.markBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
+                    'font-size': Math.floor(parseInt(this.markBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
                 });
-                this.markBox.$dragBox.find('.J-mark-txt').css({
-                    'display': 'block'
+                // this.markBox.$dragBox.find('.J-mark-txt').css({
+                //     'display': 'block'
+                // });
+
+            },
+            onDragPointComplete: (boxData) => {
+                this.markBox.$dragBox.css({
+                    'width': this.markBox.$dragBox.find('.J-mark-txt').css('width'),
+                    'height': this.markBox.$dragBox.find('.J-mark-txt').css('height')
                 });
             }
+
         });
         
 
@@ -282,8 +290,15 @@ class Dialog {
                 this.$markAllPanel.find('.J-mark-txt').css({
                     'font-size': Math.round(parseInt(this.markAllBox.$dragBox.css('height')) / this.markLineHeight0 * this.markFontSize0)
                 });
-                this.markAllBox.$dragBox.find('.J-mark-txt').css({
-                    'display': 'block'
+                // this.markAllBox.$dragBox.find('.J-mark-txt').css({
+                //     'display': 'block'
+                // });
+                // this.markAllBox.$dragBox.css('width', this.markAllBox.$dragBox.find('.J-mark-txt').css('width'));
+            },
+            onDragPointComplete: (boxData) => {
+                this.markAllBox.$dragBox.css({
+                    'width': this.markAllBox.$dragBox.find('.J-mark-txt').css('width'),
+                    'height': this.markAllBox.$dragBox.find('.J-mark-txt').css('height')
                 });
             }
         });
@@ -993,10 +1008,10 @@ class Dialog {
         }
 
         $dragBox.css({
-            'left': Math.floor(markX),
-            'top': Math.floor(markY),
-            'width': Math.ceil(dragBoxWidth),
-            'height': Math.ceil(dragBoxHeight)
+            'left': markX,
+            'top': markY,
+            'width': dragBoxWidth,
+            'height': dragBoxHeight
         })
     }
     _setMarkStyle(type) {
@@ -1023,7 +1038,6 @@ class Dialog {
         $panel.find('.J-mark-txt').css({
             'font-size': Math.round(this.markFontSize0 / this.activeData.ratio) + 'px'
         });
-
         if (type === this.MARKTYPE.MULTIPLE) {
             this.markAllBox.$dragBox.find('.J-mark-txt').css({
                 'display': 'inline-block'
@@ -1034,6 +1048,7 @@ class Dialog {
                 'display': 'inline-block'
             });
         }
+
     }
     _initMark(type) {
         let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
@@ -1055,7 +1070,10 @@ class Dialog {
         this._setMarkPosition(type);
     }
     _updateMark(type) {
-        this._updateMarkTxt(type);
+        if (type === this.MARKTYPE.MULTIPLE) {
+            this._updateMarkTxt(type);
+        }
+        
         this._setMarkStyle(type);
         this._setMarkPosition(type);
 
