@@ -86,7 +86,7 @@ $color-txt: #999ba7;
         line-height: 40px;
         color: $color-txt;
         font-size: 12px;
-        &.active:hover{
+        &.loaded:hover{
             color: #fff;
         }
         &.btn-close{
@@ -94,6 +94,9 @@ $color-txt: #999ba7;
             right: 0;
             top: 0;
             border-left: 1px solid #48495d;
+            &:hover{
+                color: #fff;
+            }
         }
     }
     

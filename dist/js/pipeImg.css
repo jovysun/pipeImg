@@ -218,13 +218,15 @@
     line-height: 40px;
     color: #999ba7;
     font-size: 12px; }
-    .pipeImg-wrapper .pipeImg-btn.active:hover {
+    .pipeImg-wrapper .pipeImg-btn.loaded:hover {
       color: #fff; }
     .pipeImg-wrapper .pipeImg-btn.btn-close {
       position: absolute;
       right: 0;
       top: 0;
       border-left: 1px solid #48495d; }
+      .pipeImg-wrapper .pipeImg-btn.btn-close:hover {
+        color: #fff; }
   .pipeImg-wrapper .pipeImg-buttons {
     position: absolute;
     right: 10px;

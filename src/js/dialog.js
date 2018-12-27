@@ -304,7 +304,7 @@ class Dialog {
 
         // 图片加载完成，激活首屏按钮
         this.loaded = true;
-        this.$el.find('.J-menu-btn,.J-btn-rotate-left,.J-btn-rotate-right,.J-menu-btn-mark-all,.J-menu-btn-mark').addClass('active');
+        this.$el.find('.J-menu-btn,.J-btn-rotate-left,.J-btn-rotate-right,.J-menu-btn-mark-all,.J-menu-btn-mark').addClass('loaded');
     }
     _bind() {
         // 切换编辑图片
@@ -354,7 +354,6 @@ class Dialog {
                 let $item = $(e.currentTarget).parent();
                 let index = $item.index();
                 let oldActiveIndex = $item.parent().find('.active:first').index();
-
 
                 this.showModel(this.MARKTYPE.SINGLE);
                 this.showMenu(index);

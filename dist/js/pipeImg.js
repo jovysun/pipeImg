@@ -420,7 +420,7 @@ function () {
 
 
       this.loaded = true;
-      this.$el.find('.J-menu-btn,.J-btn-rotate-left,.J-btn-rotate-right,.J-menu-btn-mark-all,.J-menu-btn-mark').addClass('active');
+      this.$el.find('.J-menu-btn,.J-btn-rotate-left,.J-btn-rotate-right,.J-menu-btn-mark-all,.J-menu-btn-mark').addClass('loaded');
     }
   }, {
     key: "_bind",
