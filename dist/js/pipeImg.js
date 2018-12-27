@@ -1333,8 +1333,8 @@ function () {
           break;
       }
 
-      markX = Math.round(markX * this.activeData.ratio) + parseInt($dragBox.css('border-width'));
-      markY = Math.round(markY * this.activeData.ratio + (lineHeight - fontSize) / 2) + parseInt($dragBox.css('border-width'));
+      markX = Math.round(markX * this.activeData.ratio);
+      markY = Math.round(markY * this.activeData.ratio + (lineHeight - fontSize) / 2);
       return {
         markX: markX,
         markY: markY,

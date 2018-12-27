@@ -77,3 +77,4 @@ let defaults = {
 ## 问题归纳
 + 中文版chrome最小字体12px
 + IE11对于同域的设置'crossorigin'会导致无法获得image的原始尺寸
++ ie11/safari /火狐  $('.J-drag-box').css('border-width')值为""
