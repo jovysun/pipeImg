@@ -370,9 +370,8 @@ function () {
         fixRatio: true,
         markText: this.markTextList[0],
         onDragComplete: function onDragComplete(left, top) {
-          _this.$markPanel.find('.J-position').prop('checked', false);
+          _this.$markPanel.find('.J-position').prop('checked', false); // this._updateIsChange(true);
 
-          _this._updateIsChange(true);
         },
         onDragPoint: function onDragPoint(boxData) {
           _this.$markPanel.find('.J-mark-txt').css({
@@ -386,7 +385,9 @@ function () {
           _this.markBox.$dragBox.css({
             'width': _this.markBox.$dragBox.find('.J-mark-txt').css('width'),
             'height': _this.markBox.$dragBox.find('.J-mark-txt').css('height')
-          });
+          }); // this.markFontSize0 = parseInt(this.markBox.$dragBox.find('.J-mark-txt').css('font-size')) * this.activeData.ratio;
+          // this.markLineHeight0 = parseInt(this.markBox.$dragBox.find('.J-mark-txt').css('line-height')) * this.activeData.ratio;        
+
         }
       }); // 初始化批量水印框
 
@@ -395,9 +396,8 @@ function () {
         fixRatio: true,
         markText: this.markTextList[0],
         onDragComplete: function onDragComplete(left, top) {
-          _this.$markAllPanel.find('.J-position').prop('checked', false);
+          _this.$markAllPanel.find('.J-position').prop('checked', false); // this._updateIsChange(true);
 
-          _this._updateIsChange(true);
         },
         onDragPoint: function onDragPoint(boxData) {
           _this.$markAllPanel.find('.J-mark-txt').css({
@@ -409,14 +409,22 @@ function () {
 
         },
         onDragPointComplete: function onDragPointComplete(boxData) {
+          var $markTxt = _this.markAllBox.$dragBox.find('.J-mark-txt');
+
           _this.markAllBox.$dragBox.css({
-            'width': _this.markAllBox.$dragBox.find('.J-mark-txt').css('width'),
-            'height': _this.markAllBox.$dragBox.find('.J-mark-txt').css('height')
+            'width': $markTxt.css('width'),
+            'height': $markTxt.css('height')
           });
+
+          _this.markAllFontSize1 = parseInt($markTxt.css('font-size')) * _this.activeData.ratio;
+          _this.markAllLineHeight1 = parseInt($markTxt.css('line-height')) * _this.activeData.ratio;
         }
-      });
-      this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
-      this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
+      }); // 初始值
+
+      this.markFontSize1 = this.markFontSize0 = parseInt(this.markBox.$dragBox.find('.J-mark-txt').css('font-size'));
+      this.markLineHeight1 = this.markLineHeight0 = parseInt(this.markBox.$dragBox.find('.J-mark-txt').css('line-height'));
+      this.markAllFontSize1 = this.markAllFontSize0 = parseInt(this.markAllBox.$dragBox.find('.J-mark-txt').css('font-size'));
+      this.markAllLineHeight1 = this.markAllLineHeight0 = parseInt(this.markAllBox.$dragBox.find('.J-mark-txt').css('line-height'));
       this.type === this.MARKTYPE.MULTIPLE && this.showModel(this.type);
 
       this._refresh();
@@ -530,6 +538,7 @@ function () {
 
 
           if (index === 3) {
+            // this._updateMarkTxt();
             _this2._initMark();
           }
         }; // 离开批量水印模式提示
@@ -825,11 +834,10 @@ function () {
         _this2._updateMark();
       });
       this.$selectMarkTxt.on('change', function () {
-        _this2.markBox.$dragBox.find('.J-mark-txt').css({
-          'display': 'inline-block',
-          'font-size': _this2.markFontSize0
-        });
-
+        // this.markBox.$dragBox.find('.J-mark-txt').css({
+        //     'display': 'inline-block',
+        //     'font-size': this.markFontSize0
+        // });
         _this2._updateMark();
       });
       this.$radioMarkPosition.on('change', function () {
@@ -846,11 +854,10 @@ function () {
         _this2._updateMark(_this2.MARKTYPE.MULTIPLE);
       });
       this.$selectMarkAllTxt.on('change', function () {
-        _this2.markAllBox.$dragBox.find('.J-mark-txt').css({
-          'display': 'inline-block',
-          'font-size': _this2.markFontSize0
-        });
-
+        // this.markAllBox.$dragBox.find('.J-mark-txt').css({
+        //     'display': 'inline-block',
+        //     'font-size': this.markFontSize0
+        // });
         _this2._updateMark(_this2.MARKTYPE.MULTIPLE);
       });
       this.$radioMarkAllPosition.on('change', function () {
@@ -1215,18 +1222,21 @@ function () {
     key: "_updateMarkTxt",
     value: function _updateMarkTxt(type) {
       var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
-      $panel.find('.J-mark-txt').css({
-        'font-size': Math.round(this.markFontSize0 / this.activeData.ratio) + 'px'
-      });
 
-      if (type === this.MARKTYPE.MULTIPLE) {
-        this.markAllBox.$dragBox.find('.J-mark-txt').css({
-          'display': 'inline-block'
-        });
+      if (type === this.MARKTYPE.MULTIPLE && this.markAllFontSize0 !== this.markAllFontSize1) {
+        $panel.find('.J-mark-txt').css({
+          'font-size': Math.round(this.markAllFontSize1 / this.activeData.ratio) + 'px'
+        }); // this.markAllBox.$dragBox.find('.J-mark-txt').css({
+        //     'display': 'inline-block'
+        // });
       } else {
-        this.markBox.$dragBox.find('.J-mark-txt').css({
-          'display': 'inline-block'
-        });
+        if (this.markFontSize0 !== this.markFontSize1) {}
+
+        $panel.find('.J-mark-txt').css({
+          'font-size': Math.round(this.markFontSize1 / this.activeData.ratio) + 'px'
+        }); // this.markBox.$dragBox.find('.J-mark-txt').css({
+        //     'display': 'inline-block'
+        // });
       }
     }
   }, {
@@ -1238,7 +1248,19 @@ function () {
       $panel.find('.J-opacity:first').val($panel.find('.J-opacity:first').attr('defaultValue'));
       $panel.find('.J-select-mark option:first').prop('selected', true);
 
-      this._updateMarkTxt(type);
+      if (type === this.MARKTYPE.MULTIPLE) {
+        $panel.find('.J-mark-txt').css({
+          'font-size': Math.round(this.markAllFontSize0 / this.activeData.ratio) + 'px'
+        }); // this.markAllBox.$dragBox.find('.J-mark-txt').css({
+        //     'display': 'inline-block'
+        // });
+      } else {
+        $panel.find('.J-mark-txt').css({
+          'font-size': Math.round(this.markFontSize0 / this.activeData.ratio) + 'px'
+        }); // this.markBox.$dragBox.find('.J-mark-txt').css({
+        //     'display': 'inline-block'
+        // });
+      }
 
       if (type === this.MARKTYPE.MULTIPLE) {
         this.markSelects[1].select(0);
@@ -1253,10 +1275,9 @@ function () {
   }, {
     key: "_updateMark",
     value: function _updateMark(type) {
-      if (type === this.MARKTYPE.MULTIPLE) {
-        this._updateMarkTxt(type);
-      }
-
+      // if (type === this.MARKTYPE.MULTIPLE) {
+      //     this._updateMarkTxt(type);
+      // }
       this._setMarkStyle(type);
 
       this._setMarkPosition(type);

@@ -254,7 +254,8 @@ class Dialog {
             markText: this.markTextList[0],
             onDragComplete: (left, top) => {
                 this.$markPanel.find('.J-position').prop('checked', false);
-                this._updateIsChange(true);
+
+                // this._updateIsChange(true);
             },
             onDragPoint: (boxData) => {
                 this.$markPanel.find('.J-mark-txt').css({
@@ -270,6 +271,9 @@ class Dialog {
                     'width': this.markBox.$dragBox.find('.J-mark-txt').css('width'),
                     'height': this.markBox.$dragBox.find('.J-mark-txt').css('height')
                 });
+                // this.markFontSize0 = parseInt(this.markBox.$dragBox.find('.J-mark-txt').css('font-size')) * this.activeData.ratio;
+                // this.markLineHeight0 = parseInt(this.markBox.$dragBox.find('.J-mark-txt').css('line-height')) * this.activeData.ratio;        
+
             }
 
         });
@@ -284,7 +288,7 @@ class Dialog {
             markText: this.markTextList[0],
             onDragComplete: (left, top) => {
                 this.$markAllPanel.find('.J-position').prop('checked', false);
-                this._updateIsChange(true);
+                // this._updateIsChange(true);
             },
             onDragPoint: (boxData) => {
                 this.$markAllPanel.find('.J-mark-txt').css({
@@ -296,15 +300,23 @@ class Dialog {
                 // this.markAllBox.$dragBox.css('width', this.markAllBox.$dragBox.find('.J-mark-txt').css('width'));
             },
             onDragPointComplete: (boxData) => {
+                let $markTxt = this.markAllBox.$dragBox.find('.J-mark-txt');
                 this.markAllBox.$dragBox.css({
-                    'width': this.markAllBox.$dragBox.find('.J-mark-txt').css('width'),
-                    'height': this.markAllBox.$dragBox.find('.J-mark-txt').css('height')
+                    'width': $markTxt.css('width'),
+                    'height': $markTxt.css('height')
                 });
+                this.markAllFontSize1 = parseInt($markTxt.css('font-size')) * this.activeData.ratio;
+                this.markAllLineHeight1 = parseInt($markTxt.css('line-height')) * this.activeData.ratio;    
+
             }
         });
 
-        this.markFontSize0 = parseInt(this.$el.find('.J-mark-txt').css('font-size'));
-        this.markLineHeight0 = parseInt(this.$el.find('.J-mark-txt').css('line-height'));
+        // 初始值
+        this.markFontSize1 = this.markFontSize0 = parseInt(this.markBox.$dragBox.find('.J-mark-txt').css('font-size'));
+        this.markLineHeight1 = this.markLineHeight0 = parseInt(this.markBox.$dragBox.find('.J-mark-txt').css('line-height'));
+        this.markAllFontSize1 = this.markAllFontSize0 = parseInt(this.markAllBox.$dragBox.find('.J-mark-txt').css('font-size'));
+        this.markAllLineHeight1 = this.markAllLineHeight0 = parseInt(this.markAllBox.$dragBox.find('.J-mark-txt').css('line-height'));
+
 
         this.type === this.MARKTYPE.MULTIPLE && this.showModel(this.type);
         this._refresh();
@@ -400,7 +412,9 @@ class Dialog {
                 }
                 // 进入水印
                 if (index === 3) {
+                    // this._updateMarkTxt();
                     this._initMark();
+                    
                 }
              
             };
@@ -681,10 +695,10 @@ class Dialog {
             this._updateMark();
         })
         this.$selectMarkTxt.on('change', () => {
-            this.markBox.$dragBox.find('.J-mark-txt').css({
-                'display': 'inline-block',
-                'font-size': this.markFontSize0
-            });
+            // this.markBox.$dragBox.find('.J-mark-txt').css({
+            //     'display': 'inline-block',
+            //     'font-size': this.markFontSize0
+            // });
 
             this._updateMark();
         })
@@ -703,10 +717,10 @@ class Dialog {
             this._updateMark(this.MARKTYPE.MULTIPLE);
         })
         this.$selectMarkAllTxt.on('change', () => {
-            this.markAllBox.$dragBox.find('.J-mark-txt').css({
-                'display': 'inline-block',
-                'font-size': this.markFontSize0
-            });
+            // this.markAllBox.$dragBox.find('.J-mark-txt').css({
+            //     'display': 'inline-block',
+            //     'font-size': this.markFontSize0
+            // });
             this._updateMark(this.MARKTYPE.MULTIPLE);
         })
         this.$radioMarkAllPosition.on('change', () => {
@@ -1035,18 +1049,25 @@ class Dialog {
     }
     _updateMarkTxt(type) {
         let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
-        $panel.find('.J-mark-txt').css({
-            'font-size': Math.round(this.markFontSize0 / this.activeData.ratio) + 'px'
-        });
-        if (type === this.MARKTYPE.MULTIPLE) {
-            this.markAllBox.$dragBox.find('.J-mark-txt').css({
-                'display': 'inline-block'
+
+        if (type === this.MARKTYPE.MULTIPLE && this.markAllFontSize0 !== this.markAllFontSize1) {
+            $panel.find('.J-mark-txt').css({
+                'font-size': Math.round(this.markAllFontSize1 / this.activeData.ratio) + 'px'
             });
+            // this.markAllBox.$dragBox.find('.J-mark-txt').css({
+            //     'display': 'inline-block'
+            // });
 
         } else {
-            this.markBox.$dragBox.find('.J-mark-txt').css({
-                'display': 'inline-block'
+            if (this.markFontSize0 !== this.markFontSize1) {
+                
+            }
+            $panel.find('.J-mark-txt').css({
+                'font-size': Math.round(this.markFontSize1 / this.activeData.ratio) + 'px'
             });
+            // this.markBox.$dragBox.find('.J-mark-txt').css({
+            //     'display': 'inline-block'
+            // });
         }
 
     }
@@ -1057,7 +1078,22 @@ class Dialog {
         $panel.find('.J-opacity:first').val($panel.find('.J-opacity:first').attr('defaultValue'));
         $panel.find('.J-select-mark option:first').prop('selected', true);
 
-        this._updateMarkTxt(type);
+        if (type === this.MARKTYPE.MULTIPLE) {
+            $panel.find('.J-mark-txt').css({
+                'font-size': Math.round(this.markAllFontSize0 / this.activeData.ratio) + 'px'
+            });
+            // this.markAllBox.$dragBox.find('.J-mark-txt').css({
+            //     'display': 'inline-block'
+            // });
+
+        } else {
+            $panel.find('.J-mark-txt').css({
+                'font-size': Math.round(this.markFontSize0 / this.activeData.ratio) + 'px'
+            });
+            // this.markBox.$dragBox.find('.J-mark-txt').css({
+            //     'display': 'inline-block'
+            // });
+        }
 
         if (type === this.MARKTYPE.MULTIPLE) {
             this.markSelects[1].select(0);
@@ -1070,9 +1106,9 @@ class Dialog {
         this._setMarkPosition(type);
     }
     _updateMark(type) {
-        if (type === this.MARKTYPE.MULTIPLE) {
-            this._updateMarkTxt(type);
-        }
+        // if (type === this.MARKTYPE.MULTIPLE) {
+        //     this._updateMarkTxt(type);
+        // }
         
         this._setMarkStyle(type);
         this._setMarkPosition(type);
