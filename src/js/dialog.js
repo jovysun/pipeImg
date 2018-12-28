@@ -881,7 +881,7 @@ class Dialog {
         this._updateIsChange(true);
     }
     _saveCrop() {
-        if (this.cropBox.boxData.left === 0 && this.cropBox.boxData.top === 0 && this.cropBox.boxData.width === Math.floor(this.activeData.w1) && this.cropBox.boxData.height === Math.floor(this.activeData.h1)) {
+        if (this.cropBox.boxData.left === 0 && this.cropBox.boxData.top === 0 && Math.floor(this.cropBox.boxData.width) === Math.floor(this.activeData.w1) && Math.floor(this.cropBox.boxData.height) === Math.floor(this.activeData.h1)) {
             return false;
         }
         let options = {

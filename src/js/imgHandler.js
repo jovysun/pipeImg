@@ -197,6 +197,13 @@ class ImgHandler {
 
         let canvas = getCanvas(this.cropW, this.cropH);
         let context = canvas.getContext('2d');
+
+        // 由于safari对于cropW小数值绘制图片为全黑问题，作以下处理
+        this.sx = Math.floor(this.sx);
+        this.sy = Math.floor(this.sy);
+        this.cropW = Math.floor(this.cropW);
+        this.cropH = Math.floor(this.cropH);
+
         context.drawImage(targetImg, this.sx, this.sy, this.cropW, this.cropH, 0, 0, this.cropW, this.cropH);
 
         // this.base64Data = canvas.toDataURL(this.mime);
