@@ -177,12 +177,17 @@ class ImgHandler {
         let dContext = canvas.getContext('2d');
         dContext.drawImage(targetImg, 0, 0);
         if (this.hasMark) {
-            dContext.textBaseline = "top";
-            dContext.textAlign = this.textAlign;
-            dContext.font = this.markFont;
-            dContext.fillStyle = this.markStyle;
-            dContext.fillText(this.markText, this.markX, this.markY);
+            let txtCvs = getCanvas(284, 22);
+            let txtCxt = txtCvs.getContext('2d');
 
+            txtCxt.textBaseline = "top";
+            txtCxt.textAlign = this.textAlign;
+            // chrome 下字号小于12px会被自动转成12px
+            // "3px / 4px Roboto, Arial, "Microsoft YaHei", sans-serif"
+            txtCxt.font = this.markFont;
+            txtCxt.fillStyle = this.markStyle;
+            txtCxt.fillText(this.markText, 0, 0);
+            dContext.drawImage(txtCvs, 0, 0, 284, 22, this.markX, this.markY, 284*0.4, 22*0.4);
         }
 
         // this.base64Data = canvas.toDataURL(this.mime);

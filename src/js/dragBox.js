@@ -52,7 +52,10 @@ class DragBox {
                                     <div class="drag-point down J-drag-point"></div>
                                     <div class="drag-point left-down J-drag-point"></div>
                                     <div class="drag-point left J-drag-point"></div>
-                                    <div class="mark-txt J-mark-txt">${this.markText}</div>
+ 
+                                    <svg class="J-mark-svg">
+                                        <text x="0" y="1em">${this.markText}</text>
+                                    </svg>
                                 </div>
                             </div>`;
         if (this.isCrop) {
@@ -75,10 +78,19 @@ class DragBox {
         $parent.html(dragBoxHtml);
         this.$dragBox = $parent.find('.J-drag-box');
         if (!this.isCrop) {
+            this.$markSvg = this.$dragBox.find('svg');
+            let bBox = this.$dragBox.find('svg text').get(0).getBBox();
+            let w = Math.round(bBox.width);
+            let h = Math.round(bBox.height);
+            this.$dragBox.find('svg').css({
+                height: h
+            })
+            this.$dragBox.find('svg').get(0).setAttribute('viewBox', '0 0 ' + w + ' ' + h);
             this.$dragBox.css({
-                width: this.$dragBox.find('.J-mark-txt').width(),
-                height: this.$dragBox.find('.J-mark-txt').height()
+                width: w,
+                height: h
             });
+            
         }
 
         this.$dragPoint = this.$dragBox.find('.J-drag-point');
@@ -129,6 +141,7 @@ class DragBox {
                 height: this.boxEl.offsetHeight,
                 ratio: this.boxEl.offsetWidth / this.boxEl.offsetHeight
             };
+            
             this.onDragPointComplete(this.boxData);
         })
         $(document).on('mousemove', (e) => {
@@ -144,6 +157,7 @@ class DragBox {
                     ratio: this.boxEl.offsetWidth / this.boxEl.offsetHeight
                 };
 
+                this._updateSvg();
                 this.onDragPoint(this.boxData);
             }
         })
@@ -268,7 +282,32 @@ class DragBox {
         var left = this.boxEl.offsetLeft;
         this.imgLight.style.clip = "rect(" + top + "px," + right + "px," + bottom + "px," + left + "px)";
     }
+    _updateSvg() {
+        this.$dragBox.find('svg').css({
+            width: this.boxData.width,
+            height: this.boxData.height
+        })
+    }
 
+    updateTxt(options) {
+        let text = options.text;
+        let color = options.color;
+        text && this.$dragBox.find('svg text').text(text);
+        color && this.$dragBox.find('svg text').get(0).setAttribute('fill', color);
+        let bBox = this.$dragBox.find('svg text').get(0).getBBox();
+        
+        let w = Math.round(bBox.width);
+        let h = Math.round(bBox.height);
+        this.$dragBox.find('svg').css({
+            width: w,
+            height: h
+        })
+        this.$dragBox.find('svg').get(0).setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+        this.$dragBox.css({
+            width: w,
+            height: h
+        });
+    }
     update() {
         this.$dragBox.css({
             width: this.width,

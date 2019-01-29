@@ -26,11 +26,16 @@
         font-size: 18px;
         color: #000;
         display: inline-block;
-        line-height: 1.5;
+        // line-height: 1.5;
         white-space: nowrap;
         // padding: 0 5px;
         text-align: center;
         vertical-align: top;
+    }
+    svg{
+        text{
+            font-size: 18px;
+        }
     }
 
     .drag-box {

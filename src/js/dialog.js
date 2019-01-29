@@ -984,7 +984,7 @@ class Dialog {
         let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
         let $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;
         let $markTxt = $dragBox.find('.J-mark-txt');
-
+        let $markSvg = $dragBox.find('.J-mark-svg');
 
         let markX = parseInt($dragBox.css('left'));
         let markY = parseInt($dragBox.css('top'));
@@ -993,8 +993,10 @@ class Dialog {
 
         let dragBoxWrapperWidth = this.activeData.w1;
         let dragBoxWrapperHeight = this.activeData.h1;
-        let dragBoxWidth = $markTxt.outerWidth();
-        let dragBoxHeight = $markTxt.outerHeight();
+        // let dragBoxWidth = $markTxt.outerWidth();
+        // let dragBoxHeight = $markTxt.outerHeight();
+        let dragBoxWidth = $markSvg.outerWidth();
+        let dragBoxHeight = $markSvg.outerHeight();
 
         switch (POSITION[positionVal]) {
             case 'center':
@@ -1030,6 +1032,7 @@ class Dialog {
     }
     _setMarkStyle(type) {
         let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
+        let markBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox : this.markBox;
 
         let $markTxt = $panel.find('.J-mark-txt');
         let colorVal = $panel.find('.J-color:checked').val();
@@ -1042,9 +1045,29 @@ class Dialog {
         }
         let text = this.markTextList[txtVal];
 
-        $markTxt.text(text).css({
-            'color': color
+        // $markTxt.text(text).css({
+        //     'color': color
+        // });
+        // if (type) {
+            
+        // } else {
+            
+        // }
+        // this.markBox = new DragBox({
+        //     el: this.$markPanel.find('.J-source'),
+        //     fixRatio: true,
+        //     markText: text,
+        //     onDragComplete: (left, top) => {
+        //         this.$markPanel.find('.J-position').prop('checked', false);
+        //     }
+
+        // });
+
+        markBox.updateTxt({
+            text: text,
+            color: color
         });
+       
 
     }
     _updateMarkTxt(type) {
@@ -1093,6 +1116,14 @@ class Dialog {
             // this.markBox.$dragBox.find('.J-mark-txt').css({
             //     'display': 'inline-block'
             // });
+            
+            let markSvg = $panel.find('.J-mark-svg').get(0);
+            let w = Math.round(parseInt(markSvg.getAttribute('viewBox').split(' ')[2]) / this.activeData.ratio);
+            let h = Math.round(parseInt(markSvg.getAttribute('viewBox').split(' ')[3]) / this.activeData.ratio);
+            $panel.find('.J-mark-svg').css({
+                width: w,
+                height: h
+            })
         }
 
         if (type === this.MARKTYPE.MULTIPLE) {
@@ -1136,9 +1167,22 @@ class Dialog {
         let $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;
         let $markTxt = $panel.find('.J-mark-txt');
 
-        let fontSize = Math.round(parseInt($markTxt.css('font-size')) * this.activeData.ratio);
-        let lineHeight = Math.round(parseInt($markTxt.css('line-height')) * this.activeData.ratio);
-        let markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markTxt.css('font-family');
+        // let fontSize = Math.round(parseInt($markTxt.css('font-size')) * this.activeData.ratio);
+        // let lineHeight = Math.round(parseInt($markTxt.css('line-height')) * this.activeData.ratio);
+        // let markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markTxt.css('font-family');
+
+        let $markSvg = $panel.find('.J-mark-svg');
+        let svgHeight = parseInt($markSvg.css('height'));
+        let fontSize0 = parseInt($markSvg.find('text').css('font-size'));
+        // '0 0 183 22'
+        let lineHeight0 = parseInt($markSvg.get(0).getAttribute('viewBox').split(' ').pop());
+        let svgTextRatio = svgHeight / lineHeight0;
+
+        let fontSize = Math.round(fontSize0 * svgTextRatio * this.activeData.ratio);
+        let lineHeight = Math.round(svgHeight * this.activeData.ratio);
+        let markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markSvg.parent().css('font-family');
+
+
         let $opacity = $panel.find('.J-opacity');
         let opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));
         let colorVal = $panel.find('.J-color:checked').val();
