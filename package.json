@@ -9,10 +9,17 @@
     "server": "webpack-dev-server --open  --mode development --config webpack.server.js",
     "start": "npm run server"
   },
-  "keywords": ["canvas","roate","crop","scale","watermark","compress"],
+  "keywords": [
+    "canvas",
+    "roate",
+    "crop",
+    "scale",
+    "watermark",
+    "compress"
+  ],
   "author": "sun",
   "license": "ISC",
-  "repository":{
+  "repository": {
     "type": "git",
     "url": ""
   },
@@ -40,6 +47,7 @@
   },
   "dependencies": {
     "autoprefixer": "^8.6.0",
+    "npm": "^6.7.0",
     "postcss-loader": "^2.1.5"
   }
 }
