@@ -168,11 +168,14 @@ class PipeImg {
         cb(this.imgHandler.result);
     }
     _saveMark(options, cb) {
-        this.imgHandler.markX = options.markX;
-        this.imgHandler.markY = options.markY;
-        this.imgHandler.markText = options.markText;
-        this.imgHandler.markFont = options.markFont;
-        this.imgHandler.markStyle = options.markStyle;
+        // this.imgHandler.markX = options.markX;
+        // this.imgHandler.markY = options.markY;
+        // this.imgHandler.markText = options.markText;
+        // this.imgHandler.markFont = options.markFont;
+        // this.imgHandler.markStyle = options.markStyle;
+        
+        this.imgHandler.markTxtCvs = options;
+ 
         this.imgHandler.mark();
         this.resultList.push(this.imgHandler.result);
         cb(this.imgHandler.result);

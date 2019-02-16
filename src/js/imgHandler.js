@@ -177,17 +177,47 @@ class ImgHandler {
         let dContext = canvas.getContext('2d');
         dContext.drawImage(targetImg, 0, 0);
         if (this.hasMark) {
-            let txtCvs = getCanvas(284, 22);
-            let txtCxt = txtCvs.getContext('2d');
 
-            txtCxt.textBaseline = "top";
-            txtCxt.textAlign = this.textAlign;
-            // chrome 下字号小于12px会被自动转成12px
-            // "3px / 4px Roboto, Arial, "Microsoft YaHei", sans-serif"
-            txtCxt.font = this.markFont;
-            txtCxt.fillStyle = this.markStyle;
-            txtCxt.fillText(this.markText, 0, 0);
-            dContext.drawImage(txtCvs, 0, 0, 284, 22, this.markX, this.markY, 284*0.4, 22*0.4);
+            // dContext.textBaseline = "top";
+            // dContext.textAlign = this.textAlign;
+            // dContext.font = this.markFont;
+            // dContext.fillStyle = this.markStyle;
+            // dContext.fillText(this.markText, this.markX, this.markY);
+
+            // let markTxtCvs = {
+            //     width: 284,
+            //     height: 22,
+            //     font0: "18px / 24px Roboto, Arial, 'Microsoft YaHei', sans-serif",
+            //     font1: this.markFont,
+            //     color: this.markStyle,
+            //     text: this.markText,
+            //     x: this.markX,
+            //     y: this.markY,
+            //     fontRatio: 1
+            // }; 
+            let markTxtCvs = this.markTxtCvs;
+            // TODO 优化只在chrome浏览器下用缩放canvas，其他直接用字体，因为缩放会模糊（解决方案整体放大数倍，待验证）。
+            if(markTxtCvs.font1 < 12){
+                let txtCvs = getCanvas(markTxtCvs.width, markTxtCvs.height);
+                let txtCxt = txtCvs.getContext('2d');
+    
+                txtCxt.textBaseline = "top";
+                txtCxt.textAlign = "start";
+                // "3px / 4px Roboto, Arial, "Microsoft YaHei", sans-serif"
+                txtCxt.font = markTxtCvs.font0;
+                txtCxt.fillStyle = markTxtCvs.color;
+                txtCxt.fillText(markTxtCvs.text, 0, 0);
+                var fontRatio = parseInt(markTxtCvs.font1) / parseInt(markTxtCvs.font0);
+                dContext.drawImage(txtCvs, 0, 0, markTxtCvs.width, markTxtCvs.height, markTxtCvs.x, markTxtCvs.y, markTxtCvs.width*fontRatio, markTxtCvs.height*fontRatio);
+            }else{
+                dContext.textBaseline = "top";
+                dContext.textAlign = "start";
+                dContext.font = markTxtCvs.font1;
+                dContext.fillStyle = markTxtCvs.color;
+                dContext.fillText(markTxtCvs.text, markTxtCvs.x, markTxtCvs.y);                
+            }
+
+            
         }
 
         // this.base64Data = canvas.toDataURL(this.mime);

@@ -1181,6 +1181,7 @@ class Dialog {
         let fontSize = Math.round(fontSize0 * svgTextRatio * this.activeData.ratio);
         let lineHeight = Math.round(svgHeight * this.activeData.ratio);
         let markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markSvg.parent().css('font-family');
+        let markFont0 = fontSize0 + 'px / ' + svgHeight + 'px ' + $markSvg.parent().css('font-family');
 
 
         let $opacity = $panel.find('.J-opacity');
@@ -1206,8 +1207,10 @@ class Dialog {
 
         let dragBoxWrapperWidth = this.activeData.w1;
         let dragBoxWrapperHeight = this.activeData.h1;
-        let dragBoxWidth = $markTxt.outerWidth();
-        let dragBoxHeight = $markTxt.outerHeight();
+        // let dragBoxWidth = $markTxt.outerWidth();
+        // let dragBoxHeight = $markTxt.outerHeight();        
+        let dragBoxWidth = $markSvg.outerWidth();
+        let dragBoxHeight = $markSvg.outerHeight();
 
         switch (POSITION[positionVal]) {
             case 'center':
@@ -1237,13 +1240,18 @@ class Dialog {
         markX = Math.round(markX * this.activeData.ratio);
         markY = Math.round(markY * this.activeData.ratio  + (lineHeight - fontSize) / 2);
 
-        return {
-            markX: markX,
-            markY: markY,
-            markText: text,
-            markFont: markFont,
-            markStyle: color
-        }        
+        let markTxtCvs = {
+            width: dragBoxWidth,
+            height: dragBoxHeight,
+            font0: markFont0,
+            font1: markFont,
+            color: color,
+            text: text,
+            x: markX,
+            y: markY
+        }; 
+
+        return markTxtCvs      
     }
     _saveMarkAll() {
         let num = 0;

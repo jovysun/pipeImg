@@ -9,10 +9,17 @@
     "server": "webpack-dev-server --open  --mode development --config webpack.server.js",
     "start": "npm run server"
   },
-  "keywords": ["canvas","roate","crop","scale","watermark","compress"],
+  "keywords": [
+    "canvas",
+    "roate",
+    "crop",
+    "scale",
+    "watermark",
+    "compress"
+  ],
   "author": "sun",
   "license": "ISC",
-  "repository":{
+  "repository": {
     "type": "git",
     "url": ""
   },
@@ -29,7 +36,7 @@
     "gulp-clean": "^0.4.0",
     "gulp-sass": "^4.0.2",
     "html-webpack-plugin": "^3.2.0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.11.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.2",
     "style-loader": "^0.21.0",
