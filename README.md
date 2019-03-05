@@ -1,8 +1,9 @@
 # pipeImg
 > 关键词：旋转 缩放 裁剪 水印 压缩 HTML5 图片编辑
 ## 前言
-之前网页裁剪都是用flash实现，随着升级改造及现在只要求支持IE11以上的现代浏览器，因此考虑用HTML5来实现。
-
+整体都测试完了，最后发现在chrome下面添加水印时有最小12px问题，dev分支正在开发完善中。
+## 效果展示
+![效果图](1.gif)
 ## 命令执行
 效果查看
 ```
@@ -75,7 +76,7 @@ let defaults = {
 ```
 
 ## 问题归纳
-+ 中文版chrome最小字体12px
-+ IE11对于同域的设置'crossorigin'会导致无法获得image的原始尺寸
-+ ie11/safari /火狐  $('.J-drag-box').css('border-width')值为""
-+ safari下drawImage设置裁剪宽度cropW为小数时，例如500.2px，绘制有问题（变成全黑图片），经验证与超出图片宽度，例如501px，一样现象
++ 中文版chrome最小字体12px。（修复中）
++ IE11对于同域的设置'crossorigin'会导致无法获得image的原始尺寸。（完成）
++ ie11/safari /火狐  $('.J-drag-box').css('border-width')值为""。（完成）
++ safari下drawImage设置裁剪宽度cropW为小数时，例如500.2px，绘制有问题（变成全黑图片），经验证与超出图片宽度，例如501px，一样现象。（完成）
