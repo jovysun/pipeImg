@@ -1,7 +1,7 @@
 # pipeImg
 > 关键词：旋转 缩放 裁剪 水印 压缩 HTML5 图片编辑
 ## 前言
-整体都测试完了，最后发现在chrome下面添加水印时有最小12px问题，dev分支正在开发完善中。
+整体都测试完了，最后发现在chrome下面添加水印时有最小12px问题，dev分支已修复。
 ## 效果展示
 ![效果图](images/1.gif)
 ## 命令执行
@@ -76,7 +76,7 @@ let defaults = {
 ```
 
 ## 问题归纳
-+ 中文版chrome最小字体12px。（修复中）
++ 中文版chrome最小字体12px。（完成）
 + IE11对于同域的设置'crossorigin'会导致无法获得image的原始尺寸。（完成）
 + ie11/safari /火狐  $('.J-drag-box').css('border-width')值为""。（完成）
 + safari下drawImage设置裁剪宽度cropW为小数时，例如500.2px，绘制有问题（变成全黑图片），经验证与超出图片宽度，例如501px，一样现象。（完成）
