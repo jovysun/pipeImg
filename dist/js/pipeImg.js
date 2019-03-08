@@ -1154,13 +1154,16 @@ function () {
       var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
       var $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;
       var $markTxt = $dragBox.find('.J-mark-txt');
+      var $markSvg = $dragBox.find('.J-mark-svg');
       var markX = parseInt($dragBox.css('left'));
       var markY = parseInt($dragBox.css('top'));
       var positionVal = $panel.find('.J-position:checked').val();
       var dragBoxWrapperWidth = this.activeData.w1;
-      var dragBoxWrapperHeight = this.activeData.h1;
-      var dragBoxWidth = $markTxt.outerWidth();
-      var dragBoxHeight = $markTxt.outerHeight();
+      var dragBoxWrapperHeight = this.activeData.h1; // let dragBoxWidth = $markTxt.outerWidth();
+      // let dragBoxHeight = $markTxt.outerHeight();
+
+      var dragBoxWidth = $markSvg.outerWidth();
+      var dragBoxHeight = $markSvg.outerHeight();
 
       switch (POSITION[positionVal]) {
         case 'center':
@@ -1203,6 +1206,7 @@ function () {
     key: "_setMarkStyle",
     value: function _setMarkStyle(type) {
       var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
+      var markBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox : this.markBox;
       var $markTxt = $panel.find('.J-mark-txt');
       var colorVal = $panel.find('.J-color:checked').val();
       var opacityVal = parseInt($panel.find('.J-opacity').val()) / parseInt($panel.find('.J-opacity').attr('max'));
@@ -1213,9 +1217,24 @@ function () {
         color = "rgba(0, 0, 0, ".concat(opacityVal, ")");
       }
 
-      var text = this.markTextList[txtVal];
-      $markTxt.text(text).css({
-        'color': color
+      var text = this.markTextList[txtVal]; // $markTxt.text(text).css({
+      //     'color': color
+      // });
+      // if (type) {
+      // } else {
+      // }
+      // this.markBox = new DragBox({
+      //     el: this.$markPanel.find('.J-source'),
+      //     fixRatio: true,
+      //     markText: text,
+      //     onDragComplete: (left, top) => {
+      //         this.$markPanel.find('.J-position').prop('checked', false);
+      //     }
+      // });
+
+      markBox.updateTxt({
+        text: text,
+        color: color
       });
     }
   }, {
@@ -1260,6 +1279,14 @@ function () {
         }); // this.markBox.$dragBox.find('.J-mark-txt').css({
         //     'display': 'inline-block'
         // });
+
+        var markSvg = $panel.find('.J-mark-svg').get(0);
+        var w = Math.round(parseInt(markSvg.getAttribute('viewBox').split(' ')[2]) / this.activeData.ratio);
+        var h = Math.round(parseInt(markSvg.getAttribute('viewBox').split(' ')[3]) / this.activeData.ratio);
+        $panel.find('.J-mark-svg').css({
+          width: w,
+          height: h
+        });
       }
 
       if (type === this.MARKTYPE.MULTIPLE) {
@@ -1313,10 +1340,20 @@ function () {
     value: function _getMarkParams(type) {
       var $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
       var $dragBox = type === this.MARKTYPE.MULTIPLE ? this.markAllBox.$dragBox : this.markBox.$dragBox;
-      var $markTxt = $panel.find('.J-mark-txt');
-      var fontSize = Math.round(parseInt($markTxt.css('font-size')) * this.activeData.ratio);
-      var lineHeight = Math.round(parseInt($markTxt.css('line-height')) * this.activeData.ratio);
-      var markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markTxt.css('font-family');
+      var $markTxt = $panel.find('.J-mark-txt'); // let fontSize = Math.round(parseInt($markTxt.css('font-size')) * this.activeData.ratio);
+      // let lineHeight = Math.round(parseInt($markTxt.css('line-height')) * this.activeData.ratio);
+      // let markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markTxt.css('font-family');
+
+      var $markSvg = $panel.find('.J-mark-svg');
+      var svgHeight = parseInt($markSvg.css('height'));
+      var fontSize0 = parseInt($markSvg.find('text').css('font-size')); // '0 0 183 22'
+
+      var lineHeight0 = parseInt($markSvg.get(0).getAttribute('viewBox').split(' ').pop());
+      var svgTextRatio = svgHeight / lineHeight0;
+      var fontSize = Math.round(fontSize0 * svgTextRatio * this.activeData.ratio);
+      var lineHeight = Math.round(svgHeight * this.activeData.ratio);
+      var markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markSvg.parent().css('font-family');
+      var markFont0 = fontSize0 + 'px / ' + svgHeight + 'px ' + $markSvg.parent().css('font-family');
       var $opacity = $panel.find('.J-opacity');
       var opacityVal = parseInt($opacity.val()) / parseInt($opacity.attr('max'));
       var colorVal = $panel.find('.J-color:checked').val();
@@ -1333,9 +1370,11 @@ function () {
       var POSITION = ['center', 'upLeft', 'upRight', 'downLeft', 'downRight'];
       var positionVal = $panel.find('.J-position:checked').val();
       var dragBoxWrapperWidth = this.activeData.w1;
-      var dragBoxWrapperHeight = this.activeData.h1;
-      var dragBoxWidth = $markTxt.outerWidth();
-      var dragBoxHeight = $markTxt.outerHeight();
+      var dragBoxWrapperHeight = this.activeData.h1; // let dragBoxWidth = $markTxt.outerWidth();
+      // let dragBoxHeight = $markTxt.outerHeight();        
+
+      var dragBoxWidth = $markSvg.outerWidth();
+      var dragBoxHeight = $markSvg.outerHeight();
 
       switch (POSITION[positionVal]) {
         case 'center':
@@ -1369,13 +1408,17 @@ function () {
 
       markX = Math.round(markX * this.activeData.ratio);
       markY = Math.round(markY * this.activeData.ratio + (lineHeight - fontSize) / 2);
-      return {
-        markX: markX,
-        markY: markY,
-        markText: text,
-        markFont: markFont,
-        markStyle: color
+      var markTxtCvs = {
+        width: dragBoxWidth,
+        height: dragBoxHeight,
+        font0: markFont0,
+        font1: markFont,
+        color: color,
+        text: text,
+        x: markX,
+        y: markY
       };
+      return markTxtCvs;
     }
   }, {
     key: "_saveMarkAll",
@@ -1818,7 +1861,7 @@ function () {
       this.$el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.el);
       var src = this.$el.attr('src');
       var $parent = this.$el.parent();
-      var dragBoxHtml = "<div class=\"dragbox-wrapper J-dragbox-wrapper\">\n                                <img class=\"J-source\" src=\"".concat(src, "\">\n                                <div class=\"drag-box J-drag-box\">\n                                    <div class=\"drag-point up-left J-drag-point\"></div>\n                                    <div class=\"drag-point up J-drag-point\"></div>\n                                    <div class=\"drag-point up-right J-drag-point\"></div>\n                                    <div class=\"drag-point right J-drag-point\"></div>\n                                    <div class=\"drag-point right-down J-drag-point\"></div>\n                                    <div class=\"drag-point down J-drag-point\"></div>\n                                    <div class=\"drag-point left-down J-drag-point\"></div>\n                                    <div class=\"drag-point left J-drag-point\"></div>\n                                    <div class=\"mark-txt J-mark-txt\">").concat(this.markText, "</div>\n                                </div>\n                            </div>");
+      var dragBoxHtml = "<div class=\"dragbox-wrapper J-dragbox-wrapper\">\n                                <img class=\"J-source\" src=\"".concat(src, "\">\n                                <div class=\"drag-box J-drag-box\">\n                                    <div class=\"drag-point up-left J-drag-point\"></div>\n                                    <div class=\"drag-point up J-drag-point\"></div>\n                                    <div class=\"drag-point up-right J-drag-point\"></div>\n                                    <div class=\"drag-point right J-drag-point\"></div>\n                                    <div class=\"drag-point right-down J-drag-point\"></div>\n                                    <div class=\"drag-point down J-drag-point\"></div>\n                                    <div class=\"drag-point left-down J-drag-point\"></div>\n                                    <div class=\"drag-point left J-drag-point\"></div>\n \n                                    <svg class=\"J-mark-svg\">\n                                        <text x=\"0\" y=\"1em\">").concat(this.markText, "</text>\n                                    </svg>\n                                </div>\n                            </div>");
 
       if (this.isCrop) {
         dragBoxHtml = "<div class=\"dragbox-wrapper J-dragbox-wrapper\">\n                                <img class=\"J-source img-dark\" src=\"".concat(src, "\">\n                                <img class=\"J-source img-light J-img-light\" src=\"").concat(src, "\">\n                                <div class=\"drag-box style-2 J-drag-box\">\n                                    <div class=\"drag-point up-left J-drag-point\"></div>\n                                    <div class=\"drag-point up J-drag-point\"></div>\n                                    <div class=\"drag-point up-right J-drag-point\"></div>\n                                    <div class=\"drag-point right J-drag-point\"></div>\n                                    <div class=\"drag-point right-down J-drag-point\"></div>\n                                    <div class=\"drag-point down J-drag-point\"></div>\n                                    <div class=\"drag-point left-down J-drag-point\"></div>\n                                    <div class=\"drag-point left J-drag-point\"></div>\n                                </div>\n                            </div>");
@@ -1828,9 +1871,17 @@ function () {
       this.$dragBox = $parent.find('.J-drag-box');
 
       if (!this.isCrop) {
+        this.$markSvg = this.$dragBox.find('svg');
+        var bBox = this.$dragBox.find('svg text').get(0).getBBox();
+        var w = Math.round(bBox.width);
+        var h = Math.round(bBox.height);
+        this.$dragBox.find('svg').css({
+          height: h
+        });
+        this.$dragBox.find('svg').get(0).setAttribute('viewBox', '0 0 ' + w + ' ' + h);
         this.$dragBox.css({
-          width: this.$dragBox.find('.J-mark-txt').width(),
-          height: this.$dragBox.find('.J-mark-txt').height()
+          width: w,
+          height: h
         });
       }
 
@@ -1898,6 +1949,8 @@ function () {
             height: _this2.boxEl.offsetHeight,
             ratio: _this2.boxEl.offsetWidth / _this2.boxEl.offsetHeight
           };
+
+          _this2._updateSvg();
 
           _this2.onDragPoint(_this2.boxData);
         }
@@ -2035,6 +2088,34 @@ function () {
       var bottom = this.boxEl.offsetTop + this.boxEl.offsetHeight;
       var left = this.boxEl.offsetLeft;
       this.imgLight.style.clip = "rect(" + top + "px," + right + "px," + bottom + "px," + left + "px)";
+    }
+  }, {
+    key: "_updateSvg",
+    value: function _updateSvg() {
+      this.$dragBox.find('svg').css({
+        width: this.boxData.width,
+        height: this.boxData.height
+      });
+    }
+  }, {
+    key: "updateTxt",
+    value: function updateTxt(options) {
+      var text = options.text;
+      var color = options.color;
+      text && this.$dragBox.find('svg text').text(text);
+      color && this.$dragBox.find('svg text').get(0).setAttribute('fill', color);
+      var bBox = this.$dragBox.find('svg text').get(0).getBBox();
+      var w = Math.round(bBox.width);
+      var h = Math.round(bBox.height);
+      this.$dragBox.find('svg').css({
+        width: w,
+        height: h
+      });
+      this.$dragBox.find('svg').get(0).setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+      this.$dragBox.css({
+        width: w,
+        height: h
+      });
     }
   }, {
     key: "update",
@@ -2230,11 +2311,42 @@ function () {
       dContext.drawImage(targetImg, 0, 0);
 
       if (this.hasMark) {
-        dContext.textBaseline = "top";
-        dContext.textAlign = this.textAlign;
-        dContext.font = this.markFont;
-        dContext.fillStyle = this.markStyle;
-        dContext.fillText(this.markText, this.markX, this.markY);
+        // dContext.textBaseline = "top";
+        // dContext.textAlign = this.textAlign;
+        // dContext.font = this.markFont;
+        // dContext.fillStyle = this.markStyle;
+        // dContext.fillText(this.markText, this.markX, this.markY);
+        // let markTxtCvs = {
+        //     width: 284,
+        //     height: 22,
+        //     font0: "18px / 24px Roboto, Arial, 'Microsoft YaHei', sans-serif",
+        //     font1: this.markFont,
+        //     color: this.markStyle,
+        //     text: this.markText,
+        //     x: this.markX,
+        //     y: this.markY,
+        //     fontRatio: 1
+        // }; 
+        var markTxtCvs = this.markTxtCvs; // TODO 优化只在chrome浏览器下用缩放canvas，其他直接用字体，因为缩放会模糊（解决方案整体放大数倍，待验证）。
+
+        if (markTxtCvs.font1 < 12) {
+          var txtCvs = Object(_util__WEBPACK_IMPORTED_MODULE_0__["getCanvas"])(markTxtCvs.width, markTxtCvs.height);
+          var txtCxt = txtCvs.getContext('2d');
+          txtCxt.textBaseline = "top";
+          txtCxt.textAlign = "start"; // "3px / 4px Roboto, Arial, "Microsoft YaHei", sans-serif"
+
+          txtCxt.font = markTxtCvs.font0;
+          txtCxt.fillStyle = markTxtCvs.color;
+          txtCxt.fillText(markTxtCvs.text, 0, 0);
+          var fontRatio = parseInt(markTxtCvs.font1) / parseInt(markTxtCvs.font0);
+          dContext.drawImage(txtCvs, 0, 0, markTxtCvs.width, markTxtCvs.height, markTxtCvs.x, markTxtCvs.y, markTxtCvs.width * fontRatio, markTxtCvs.height * fontRatio);
+        } else {
+          dContext.textBaseline = "top";
+          dContext.textAlign = "start";
+          dContext.font = markTxtCvs.font1;
+          dContext.fillStyle = markTxtCvs.color;
+          dContext.fillText(markTxtCvs.text, markTxtCvs.x, markTxtCvs.y);
+        }
       } // this.base64Data = canvas.toDataURL(this.mime);
 
 
@@ -2524,11 +2636,12 @@ function () {
   }, {
     key: "_saveMark",
     value: function _saveMark(options, cb) {
-      this.imgHandler.markX = options.markX;
-      this.imgHandler.markY = options.markY;
-      this.imgHandler.markText = options.markText;
-      this.imgHandler.markFont = options.markFont;
-      this.imgHandler.markStyle = options.markStyle;
+      // this.imgHandler.markX = options.markX;
+      // this.imgHandler.markY = options.markY;
+      // this.imgHandler.markText = options.markText;
+      // this.imgHandler.markFont = options.markFont;
+      // this.imgHandler.markStyle = options.markStyle;
+      this.imgHandler.markTxtCvs = options;
       this.imgHandler.mark();
       this.resultList.push(this.imgHandler.result);
       cb(this.imgHandler.result);

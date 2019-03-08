@@ -1074,7 +1074,7 @@ class Dialog {
         let $panel = type === this.MARKTYPE.MULTIPLE ? this.$markAllPanel : this.$markPanel;
 
         if (type === this.MARKTYPE.MULTIPLE && this.markAllFontSize0 !== this.markAllFontSize1) {
-            $panel.find('.J-mark-txt').css({
+            $panel.find('.J-mark-svg text').css({
                 'font-size': Math.round(this.markAllFontSize1 / this.activeData.ratio) + 'px'
             });
             // this.markAllBox.$dragBox.find('.J-mark-txt').css({
@@ -1085,7 +1085,7 @@ class Dialog {
             if (this.markFontSize0 !== this.markFontSize1) {
                 
             }
-            $panel.find('.J-mark-txt').css({
+            $panel.find('.J-mark-svg text').css({
                 'font-size': Math.round(this.markFontSize1 / this.activeData.ratio) + 'px'
             });
             // this.markBox.$dragBox.find('.J-mark-txt').css({
@@ -1175,13 +1175,14 @@ class Dialog {
         let svgHeight = parseInt($markSvg.css('height'));
         let fontSize0 = parseInt($markSvg.find('text').css('font-size'));
         // '0 0 183 22'
-        let lineHeight0 = parseInt($markSvg.get(0).getAttribute('viewBox').split(' ').pop());
+        let viewBoxData = $markSvg.get(0).getAttribute('viewBox').split(' ');
+        let lineHeight0 = parseInt(viewBoxData[3]);
         let svgTextRatio = svgHeight / lineHeight0;
 
         let fontSize = Math.round(fontSize0 * svgTextRatio * this.activeData.ratio);
-        let lineHeight = Math.round(svgHeight * this.activeData.ratio);
+        let lineHeight = Math.round(svgHeight * svgTextRatio * this.activeData.ratio);
         let markFont = fontSize + 'px / ' + lineHeight + 'px ' + $markSvg.parent().css('font-family');
-        let markFont0 = fontSize0 + 'px / ' + svgHeight + 'px ' + $markSvg.parent().css('font-family');
+        let markFont0 = Math.round(fontSize0 * this.activeData.ratio) + 'px / ' + Math.round(svgHeight * this.activeData.ratio) + 'px ' + $markSvg.parent().css('font-family');
 
 
         let $opacity = $panel.find('.J-opacity');
@@ -1209,8 +1210,8 @@ class Dialog {
         let dragBoxWrapperHeight = this.activeData.h1;
         // let dragBoxWidth = $markTxt.outerWidth();
         // let dragBoxHeight = $markTxt.outerHeight();        
-        let dragBoxWidth = $markSvg.outerWidth();
-        let dragBoxHeight = $markSvg.outerHeight();
+        let dragBoxWidth = viewBoxData[2];
+        let dragBoxHeight = viewBoxData[3];
 
         switch (POSITION[positionVal]) {
             case 'center':
@@ -1241,8 +1242,8 @@ class Dialog {
         markY = Math.round(markY * this.activeData.ratio  + (lineHeight - fontSize) / 2);
 
         let markTxtCvs = {
-            width: dragBoxWidth,
-            height: dragBoxHeight,
+            width: Math.round(dragBoxWidth* this.activeData.ratio),
+            height: Math.round(dragBoxHeight* this.activeData.ratio),
             font0: markFont0,
             font1: markFont,
             color: color,

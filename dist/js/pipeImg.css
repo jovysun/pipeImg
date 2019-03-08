@@ -93,10 +93,11 @@
     font-size: 18px;
     color: #000;
     display: inline-block;
-    line-height: 1.5;
     white-space: nowrap;
     text-align: center;
     vertical-align: top; }
+  .dragbox-wrapper svg text {
+    font-size: 18px; }
   .dragbox-wrapper .drag-box {
     position: absolute;
     left: 0;

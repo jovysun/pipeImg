@@ -197,7 +197,7 @@ class ImgHandler {
             // }; 
             let markTxtCvs = this.markTxtCvs;
             // TODO 优化只在chrome浏览器下用缩放canvas，其他直接用字体，因为缩放会模糊（解决方案整体放大数倍，待验证）。
-            if(markTxtCvs.font1 < 12){
+            if(parseInt(markTxtCvs.font1) < 12){
                 let txtCvs = getCanvas(markTxtCvs.width, markTxtCvs.height);
                 let txtCxt = txtCvs.getContext('2d');
     
@@ -208,7 +208,7 @@ class ImgHandler {
                 txtCxt.fillStyle = markTxtCvs.color;
                 txtCxt.fillText(markTxtCvs.text, 0, 0);
                 var fontRatio = parseInt(markTxtCvs.font1) / parseInt(markTxtCvs.font0);
-                dContext.drawImage(txtCvs, 0, 0, markTxtCvs.width, markTxtCvs.height, markTxtCvs.x, markTxtCvs.y, markTxtCvs.width*fontRatio, markTxtCvs.height*fontRatio);
+                dContext.drawImage(txtCvs, 0, 0, markTxtCvs.width, markTxtCvs.height, markTxtCvs.x, markTxtCvs.y, Math.ceil(markTxtCvs.width*fontRatio), Math.ceil(markTxtCvs.height*fontRatio));
             }else{
                 dContext.textBaseline = "top";
                 dContext.textAlign = "start";
