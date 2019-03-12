@@ -75,7 +75,7 @@ let defaults = {
 ```
 
 ## 问题归纳
-+ 中文版chrome最小字体12px
-+ IE11对于同域的设置'crossorigin'会导致无法获得image的原始尺寸
-+ ie11/safari /火狐  $('.J-drag-box').css('border-width')值为""
-+ safari下drawImage设置裁剪宽度cropW为小数时，例如500.2px，绘制有问题（变成全黑图片），经验验证与超出图片宽度，例如501px，一样现象
++ 中文版chrome最小字体12px。（dev分支已修复）
++ IE11对于同域的设置'crossorigin'会导致无法获得image的原始尺寸。（完成）
++ ie11/safari /火狐  $('.J-drag-box').css('border-width')值为""。（完成）
++ safari下drawImage设置裁剪宽度cropW为小数时，例如500.2px，绘制有问题（变成全黑图片），经验证与超出图片宽度，例如501px，一样现象。（完成）
